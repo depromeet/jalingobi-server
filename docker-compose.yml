@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  spring-boot:
+    restart: 'on-failure'
+    build:
+      context: './Module-API'
+      dockerfile: Dockerfile
+    container_name: 'module-api-server'
+    ports:
+      - '8080:8080'
