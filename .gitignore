@@ -1,5 +1,5 @@
 ### CUSTOM ###
-*.yml
+application*.yml
 
 HELP.md
 .gradle
@@ -38,3 +38,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Mac OS ###
+.DS_Store
