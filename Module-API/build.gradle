@@ -11,3 +11,11 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+task copyPrivate(type: Copy) {
+    copy {
+        from '../13th-1team-backend-private'
+        include "application-api.yml"
+        into 'src/main/resources'
+    }
+}

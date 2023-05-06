@@ -1,10 +1,19 @@
-dependencies {
-}
-
 bootJar {
     enabled = false
 }
 
 jar {
     enabled = true
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-autoconfigure'
+}
+
+task copyPrivate(type: Copy) {
+    copy {
+        from '../13th-1team-backend-private'
+        include "application-domain.yml"
+        into 'src/main/resources'
+    }
 }

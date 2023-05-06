@@ -44,11 +44,3 @@ subprojects {
         useJUnitPlatform()
     }
 }
-
-task copyPrivate(type: Copy) {
-    copy {
-        from '13th-1team-backend-private'
-        include "*.yml"
-        into 'src/main/resources'
-    }
-}

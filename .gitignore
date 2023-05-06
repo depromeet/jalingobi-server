@@ -1,5 +1,5 @@
 ### CUSTOM ###
-.yml
+*.yml
 
 HELP.md
 .gradle
