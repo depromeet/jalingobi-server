@@ -50,6 +50,8 @@ spotless {
     java {
         target("**/*.java")
         googleJavaFormat()  // 구글 자바 포맷 적용
+        indentWithTabs(2)
+        indentWithSpaces(4)
         importOrder()  // import 순서 정의
         removeUnusedImports()   // 사용하지 않는 import 제거
         trimTrailingWhitespace()   // 공백 제거
