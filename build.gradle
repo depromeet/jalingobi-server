@@ -1,5 +1,6 @@
 plugins {
     id 'org.springframework.boot' version '2.7.11'
+    id 'com.diffplug.spotless' version '6.11.0'
     id 'java'
 //    id("io.freefair.lombok") version "8.0.1"
 }
@@ -42,5 +43,16 @@ subprojects {
 
     test {
         useJUnitPlatform()
+    }
+}
+
+spotless {
+    java {
+        target("**/*.java")
+        googleJavaFormat()  // 구글 자바 포맷 적용
+        importOrder()  // import 순서 정의
+        removeUnusedImports()   // 사용하지 않는 import 제거
+        trimTrailingWhitespace()   // 공백 제거
+        endWithNewline()  // 끝부분 New Line 처리
     }
 }
