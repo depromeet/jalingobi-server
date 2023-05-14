@@ -57,6 +57,4 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files:
-            - './Module-API/build/jacoco/index.xml'
-            - './Module-Domain/build/jacoco/index.xml'
+          files: '**/build/jacoco/index.xml'
