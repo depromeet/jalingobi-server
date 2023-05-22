@@ -5,6 +5,8 @@ plugins {
 //    id("io.freefair.lombok") version "8.0.1"
 }
 
+//apply from: rootProject.file('gradle/install-git-hooks.gradle')
+
 repositories {
     mavenCentral()
 }
@@ -95,3 +97,9 @@ spotless {
         endWithNewline()  // 끝부분 New Line 처리
     }
 }
+
+tasks.register('updateGitHooks', Copy) {
+    from './scripts/pre-commit'
+    into './.git/hooks'
+}
+compileJava.dependsOn updateGitHooks
