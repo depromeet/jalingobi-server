@@ -2,10 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.11'
     id 'com.diffplug.spotless' version '6.11.0'
-//    id("io.freefair.lombok") version "8.0.1"
 }
-
-//apply from: rootProject.file('gradle/install-git-hooks.gradle')
 
 repositories {
     mavenCentral()
@@ -99,7 +96,7 @@ spotless {
 }
 
 tasks.register('updateGitHooks', Copy) {
-    from './scripts/pre-commit'
+    from './scripts/pre-commit.sh'
     into './.git/hooks'
 }
 compileJava.dependsOn updateGitHooks
