@@ -96,7 +96,8 @@ spotless {
 }
 
 tasks.register('updateGitHooks', Copy) {
-    from './scripts/pre-commit.sh'
+    from './scripts/pre-commit'
     into './.git/hooks'
+    fileMode 0775
 }
 compileJava.dependsOn updateGitHooks
