@@ -1,4 +1,4 @@
-package depromeet.dto;
+package depromeet.response;
 
 
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package depromeet.exception;
 
 
-import depromeet.dto.CommonResponse;
+import depromeet.response.CommonResponse;
 import depromeet.service.ResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

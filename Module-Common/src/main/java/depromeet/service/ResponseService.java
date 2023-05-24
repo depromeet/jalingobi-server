@@ -1,9 +1,9 @@
 package depromeet.service;
 
 
-import depromeet.dto.CommonResponse;
-import depromeet.dto.Response;
 import depromeet.exception.CustomExceptionStatus;
+import depromeet.response.CommonResponse;
+import depromeet.response.Response;
 import org.springframework.stereotype.Service;
 
 @Service
