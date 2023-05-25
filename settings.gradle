@@ -1,4 +1,5 @@
 rootProject.name = 'server-1th'
 include 'Module-API'
 include 'Module-Domain'
+include 'Module-Common'
 
