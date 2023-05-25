@@ -102,3 +102,10 @@ tasks.register('updateGitHooks', Copy) {
     fileMode 0775
 }
 compileJava.dependsOn updateGitHooks
+
+project(':Module-API') {
+    dependencies {
+        implementation project(':Module-Domain')
+        implementation project(':Module-Common')
+    }
+}
