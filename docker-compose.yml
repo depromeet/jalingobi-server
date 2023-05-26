@@ -6,6 +6,8 @@ services:
     build:
       context: './Module-API'
       dockerfile: Dockerfile
+      args:
+        PROFILE: local
     container_name: 'module-api-server'
     ports:
       - '8080:8080'
