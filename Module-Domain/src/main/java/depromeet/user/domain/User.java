@@ -1,13 +1,21 @@
 package depromeet.user.domain;
 
+// import javax.persistence.Entity;
+// import javax.persistence.Id;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
-@Entity
+import lombok.Getter;
+
+// @Entity
+@Getter
 public class User {
 
-    @Id private Long id;
+    //    @Id
+    private Long id;
+
+    private String socialId;
+
+    private UserRole role;
 
     // 추가
 
