@@ -1,0 +1,55 @@
+name: Deploy to ECR
+
+on:
+  push:
+    branches: release/test
+
+jobs:
+  build:
+    name: Build Image
+    runs-on: ubuntu-latest
+
+    # jdk setting
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+            # gradle Caching
+            #       - name: Gradle Cashing
+            #         uses: actions/cache@v3
+            #         with:
+            #           path: |
+            #             ~/.gradle/caches
+            #             ~/.gradle/wrapper
+            #           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+            #           restore-keys: |
+            #             ${{ runner.os }}-gradle-
+
+      # gradle privilege
+      - name: Grant Execute Permission For Gradlew
+        run: chmod +x gradlew
+
+      # build
+      - name: Build With Gradle
+        run: ./gradlew build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        run: |
+          docker build -t dpm-repo ./Module-API --build-arg PROFILE=test
+          docker tag dpm-repo:latest ${{ secrets.AWS_ECR_URI }}:latest
+          docker push ${{ secrets.AWS_ECR_URI }}:latest
