@@ -11,3 +11,12 @@ services:
     container_name: 'module-api-server'
     ports:
       - '8080:8080'
+    depends_on:
+      - redis
+  redis:
+    restart: 'on-failure'
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+

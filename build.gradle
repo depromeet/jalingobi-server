@@ -8,7 +8,7 @@ repositories {
     mavenCentral()
 }
 
-//jar.enabled = false
+jar.enabled = false
 bootJar.enabled = false
 
 subprojects {
