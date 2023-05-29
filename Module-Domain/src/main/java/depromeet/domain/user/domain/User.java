@@ -3,13 +3,13 @@ package depromeet.domain.user.domain;
 
 import depromeet.domain.config.BaseTime;
 import javax.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Builder
 @Getter
-@Entity
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
 public class User extends BaseTime {
 
     @Id
@@ -25,8 +25,10 @@ public class User extends BaseTime {
     @Column(length = 10, nullable = false)
     private Role role;
 
-    // 추가
-
-    // 검증
-
+    public static User registerUser(
+            String nickname, String email, String socialId, Platform platform) {
+        Profile profile = Profile.createProfile(nickname, email, null);
+        Social social = Social.createSocial(socialId, platform);
+        return User.builder().profile(profile).social(social).role(Role.USER).build();
+    }
 }
