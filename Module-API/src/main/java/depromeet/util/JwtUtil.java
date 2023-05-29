@@ -2,8 +2,8 @@ package depromeet.util;
 
 
 import depromeet.exception.CustomExceptionStatus;
-import depromeet.user.domain.User;
-import depromeet.user.domain.UserRole;
+import depromeet.domain.user.domain.User;
+import depromeet.domain.user.domain.UserRole;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

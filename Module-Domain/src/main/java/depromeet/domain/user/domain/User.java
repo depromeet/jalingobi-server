@@ -1,4 +1,4 @@
-package depromeet.user.domain;
+package depromeet.domain.user.domain;
 
 // import javax.persistence.Entity;
 // import javax.persistence.Id;
