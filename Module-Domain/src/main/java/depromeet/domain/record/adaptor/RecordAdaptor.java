@@ -1,5 +1,6 @@
 package depromeet.domain.record.adaptor;
 
+
 import depromeet.annotation.Adaptor;
 import depromeet.domain.record.repository.RecordRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,5 +9,4 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RecordAdaptor {
     private final RecordRepository recordRepository;
-
 }

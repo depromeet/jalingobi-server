@@ -1,12 +1,11 @@
 package depromeet.domain.record.domain;
 
 
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Entity
 @Table(name = "challenge_record")
@@ -25,7 +24,7 @@ public class Record {
     private Long userId;
 
     @Column(nullable = false)
-	private int price;
+    private int price;
 
     @Column(length = 20)
     private String name;
