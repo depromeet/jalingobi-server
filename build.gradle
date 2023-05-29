@@ -40,6 +40,7 @@ subprojects {
         annotationProcessor 'org.projectlombok:lombok'
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-autoconfigure'
+        testImplementation 'org.springframework.security:spring-security-test'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         runtimeOnly 'com.h2database:h2'
     }
@@ -90,6 +91,7 @@ subprojects {
 spotless {
     java {
         target("**/*.java")
+        targetExclude("**/SecurityConfig.java")
         googleJavaFormat().aosp()  // 구글 자바 포맷 적용
         importOrder()  // import 순서 정의
         removeUnusedImports()   // 사용하지 않는 import 제거
@@ -104,10 +106,3 @@ tasks.register('updateGitHooks', Copy) {
     fileMode 0775
 }
 compileJava.dependsOn updateGitHooks
-
-project(':Module-API') {
-    dependencies {
-        implementation project(':Module-Domain')
-        implementation project(':Module-Common')
-    }
-}
