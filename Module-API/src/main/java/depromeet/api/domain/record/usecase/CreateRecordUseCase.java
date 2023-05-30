@@ -30,7 +30,6 @@ public class CreateRecordUseCase {
                         recordMapper.toEntity(
                                 challengeRoomId, currentUser.getId(), createRecordRequest));
 
-        // response 형식에 맞춰서 return 해야함.
         return recordMapper.toCreateRecordResponse(record, currentUser);
     }
 }

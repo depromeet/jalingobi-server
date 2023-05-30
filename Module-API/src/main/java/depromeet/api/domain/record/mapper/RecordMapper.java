@@ -5,6 +5,7 @@ import depromeet.api.domain.record.dto.request.CreateRecordRequest;
 import depromeet.api.domain.record.dto.response.CreateRecordResponse;
 import depromeet.common.annotation.Mapper;
 import depromeet.domain.record.domain.Record;
+import depromeet.domain.record.domain.RecordEvaluation;
 import depromeet.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
 
@@ -21,7 +22,7 @@ public class RecordMapper {
                 createRecordRequest.getName(),
                 createRecordRequest.getContent(),
                 createRecordRequest.getImgUrl(),
-                createRecordRequest.getEvaluation());
+                RecordEvaluation.getEnumTypeByValue(createRecordRequest.getEvaluation()));
     }
 
     public CreateRecordResponse toCreateRecordResponse(Record record, User user) {
