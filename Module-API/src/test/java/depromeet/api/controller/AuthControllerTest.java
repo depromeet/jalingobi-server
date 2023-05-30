@@ -1,16 +1,18 @@
 package depromeet.api.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import depromeet.api.config.security.filter.JwtRequestFilter;
 import depromeet.api.domain.auth.controller.AuthController;
 import depromeet.api.domain.auth.service.AuthService;
 import depromeet.api.domain.auth.usecase.KakaoAuthUseCase;
+import depromeet.api.util.CookieUtil;
 import depromeet.common.response.ResponseService;
+import javax.servlet.http.Cookie;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +44,9 @@ public class AuthControllerTest {
 
     @MockBean KakaoAuthUseCase kakaoAuthUseCase;
 
-    @MockBean AuthService authUseCase;
+    @MockBean CookieUtil cookieUtil;
+
+    @MockBean AuthService authService;
 
     @Test
     @DisplayName("Refresh Token을 이용한 Access Token 재발급")
@@ -50,6 +54,7 @@ public class AuthControllerTest {
         String token = "access-token";
         String refreshToken = "refresh-token";
         String newAccessToken = "new-access-token";
+        Cookie cookie = new Cookie("REFRESH_TOKEN", refreshToken);
 
         MockHttpServletRequestBuilder requestBuilder =
                 MockMvcRequestBuilders.post("/auth/refresh")
@@ -57,7 +62,8 @@ public class AuthControllerTest {
                         .header("REFRESH-TOKEN", refreshToken)
                         .contentType(MediaType.APPLICATION_JSON);
 
-        when(authUseCase.checkRefreshToken(anyString(), anyString())).thenReturn(newAccessToken);
+        when(cookieUtil.getCookie(any(), anyString())).thenReturn(cookie);
+        when(authService.checkRefreshToken(anyString(), anyString())).thenReturn(newAccessToken);
 
         mockMvc.perform(requestBuilder)
                 .andDo(print())
