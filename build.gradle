@@ -39,6 +39,7 @@ subprojects {
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
         implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
         implementation 'org.springframework.boot:spring-boot-autoconfigure'
         testImplementation 'org.springframework.security:spring-security-test'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
