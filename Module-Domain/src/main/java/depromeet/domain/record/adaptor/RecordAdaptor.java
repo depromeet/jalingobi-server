@@ -1,7 +1,7 @@
 package depromeet.domain.record.adaptor;
 
 
-import depromeet.annotation.Adaptor;
+import depromeet.common.annotation.Adaptor;
 import depromeet.domain.record.repository.RecordRepository;
 import lombok.RequiredArgsConstructor;
 

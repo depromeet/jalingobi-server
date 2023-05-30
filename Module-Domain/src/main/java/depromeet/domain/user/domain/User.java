@@ -1,24 +1,34 @@
 package depromeet.domain.user.domain;
 
-// import javax.persistence.Entity;
-// import javax.persistence.Id;
 
+import depromeet.domain.config.BaseTime;
+import javax.persistence.*;
+import lombok.*;
 
-import lombok.Getter;
-
-// @Entity
+@Builder
 @Getter
-public class User {
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
+public class User extends BaseTime {
 
-    //    @Id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
-    private String socialId;
+    @Embedded private Profile profile;
 
-    private UserRole role;
+    @Embedded private Social social;
 
-    // 추가
+    @Enumerated(EnumType.STRING)
+    @Column(length = 10, nullable = false)
+    private Role role;
 
-    // 검증
-
+    public static User registerUser(
+            String nickname, String email, String socialId, Platform platform) {
+        Profile profile = Profile.createProfile(nickname, email, null);
+        Social social = Social.createSocial(socialId, platform);
+        return User.builder().profile(profile).social(social).role(Role.USER).build();
+    }
 }
