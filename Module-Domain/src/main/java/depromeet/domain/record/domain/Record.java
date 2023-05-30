@@ -27,15 +27,16 @@ public class Record extends BaseTime {
     @Column(nullable = false)
     private int price;
 
-    @Column(length = 20)
+    @Column(length = 20, nullable = false)
     private String name;
 
-    @Column(length = 80)
+    @Column(length = 80, nullable = false)
     private String content;
 
     @Column private String imgUrl;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private RecordEvaluation evaluation;
 
     /** 생성 메서드 */
