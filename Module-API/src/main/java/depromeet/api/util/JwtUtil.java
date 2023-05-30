@@ -1,13 +1,13 @@
-package depromeet.util;
+package depromeet.api.util;
 
 
-import depromeet.domain.user.domain.User;
-import depromeet.domain.user.domain.UserRole;
-import depromeet.exception.CustomExceptionStatus;
+import depromeet.common.exception.CustomExceptionStatus;
+import depromeet.common.temp.TokenInfo;
+import depromeet.domain.user.domain.Platform;
+import depromeet.domain.user.domain.Role;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ public class JwtUtil {
 
     private final UserDetailsService userDetailsService;
 
-    static final long TOKEN_VALIDATION_SECOND = 60 * 60L;
+    static final long ACCESS_TOKEN_VALIDATION_SECOND = 60 * 60L;
     static final long REFRESH_TOKEN_VALIDATION_SECOND = 60 * 60 * 24 * 7L;
     public static final String ACCESS_TOKEN_NAME = "accessToken";
     public static final String REFRESH_TOKEN_NAME = "refreshToken";
@@ -33,14 +33,13 @@ public class JwtUtil {
     @Value("${spring.jwt.secret}")
     private String SECRET_KEY;
 
-    private Key getSigningKey(String secretKey) {
-        byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
-        return Keys.hmacShaKeyFor(keyBytes);
+    private Key getSigningKey() {
+        return Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
 
     public Claims extractAllClaims(String token) throws ExpiredJwtException {
         return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey(SECRET_KEY))
+                .setSigningKey(getSigningKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -64,16 +63,23 @@ public class JwtUtil {
         return expiration.before(new Date());
     }
 
-    public String generateToken(User user) {
-        return doGenerateToken(user.getSocialId(), TOKEN_VALIDATION_SECOND, user.getRole());
+    public TokenInfo generateTokenInfo(String socialId, Platform platform, Role role) {
+        String accessToken = generateAccessToken(socialId, role, platform);
+        String refreshToken = generateRefreshToken(socialId, role, platform);
+        return new TokenInfo(accessToken, refreshToken);
     }
 
-    public String generateRefreshToken(User user) {
-        return doGenerateToken(user.getSocialId(), REFRESH_TOKEN_VALIDATION_SECOND, user.getRole());
+    public String generateAccessToken(String socialId, Role role, Platform platform) {
+        return doGenerateToken(socialId, platform, role, ACCESS_TOKEN_VALIDATION_SECOND);
     }
 
-    public String doGenerateToken(String socialId, long expireTime, UserRole role) {
+    public String generateRefreshToken(String socialId, Role role, Platform platform) {
+        return doGenerateToken(socialId, platform, role, REFRESH_TOKEN_VALIDATION_SECOND);
+    }
+
+    public String doGenerateToken(String socialId, Platform platform, Role role, long expireTime) {
         Claims claims = Jwts.claims();
+        claims.put("platform", platform);
         claims.put("role", role);
 
         return Jwts.builder()
@@ -81,7 +87,7 @@ public class JwtUtil {
                 .setClaims(claims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expireTime))
-                .signWith(getSigningKey(SECRET_KEY), SignatureAlgorithm.HS256)
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
