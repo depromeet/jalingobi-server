@@ -1,5 +1,6 @@
 package depromeet.api.util;
 
+
 import depromeet.domain.user.domain.Social;
 import depromeet.domain.user.domain.User;
 import org.springframework.security.core.context.SecurityContextHolder;
