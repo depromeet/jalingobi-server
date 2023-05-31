@@ -1,9 +1,10 @@
-package depromeet.api;
+package depromeet.api.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import depromeet.api.HelloController;
 import depromeet.api.util.JwtUtil;
 import depromeet.common.response.ResponseService;
 import org.junit.jupiter.api.DisplayName;

@@ -1,23 +1,23 @@
-package depromeet.api.domain.auth.service;
+package depromeet.api.domain.auth.usecase;
 
 
 import depromeet.api.util.JwtUtil;
+import depromeet.common.annotation.UseCase;
 import depromeet.common.exception.CustomException;
 import depromeet.common.exception.CustomExceptionStatus;
+import depromeet.domain.user.adaptor.UserAdaptor;
 import depromeet.domain.user.domain.User;
-import depromeet.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@UseCase
 @RequiredArgsConstructor
-public class AuthService {
+public class AuthUseCase {
 
     private final JwtUtil jwtUtil;
+    private final UserAdaptor userAdaptor;
     private final RedisTemplate<String, String> redisTemplate;
-    private final UserRepository accountRepository;
 
     @Transactional
     public String checkRefreshToken(String token, String refreshToken) {
@@ -30,11 +30,7 @@ public class AuthService {
         if (!refresh.equals(refreshToken)) {
             throw new CustomException(CustomExceptionStatus.INVALID_JWT);
         }
-        User account =
-                accountRepository
-                        .findBySocialId(socialId)
-                        .orElseThrow(
-                                () -> new CustomException(CustomExceptionStatus.ACCOUNT_NOT_FOUND));
+        User account = userAdaptor.findUser(socialId);
 
         return jwtUtil.generateAccessToken(
                 account.getSocial().getId(), account.getRole(), account.getSocial().getPlatform());
