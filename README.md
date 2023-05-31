@@ -1,6 +1,7 @@
 # 💸 자린고비
 
 [![Java CI with Gradle](https://github.com/depromeet/13th-1team-backend/actions/workflows/ci.yml/badge.svg)](https://github.com/depromeet/13th-1team-backend/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/depromeet/13th-1team-backend/branch/dev/graph/badge.svg?token=B69BV6TYNQ)](https://codecov.io/gh/depromeet/13th-1team-backend)
 
 ✨ [Server 팀 WiKi](https://github.com/depromeet/13th-1team-backend/wiki)
 
