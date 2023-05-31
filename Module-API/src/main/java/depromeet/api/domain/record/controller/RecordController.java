@@ -1,6 +1,6 @@
 package depromeet.api.domain.record.controller;
 
-import static depromeet.api.util.SecurityUtil.getCurrentUserSocialId;
+import static depromeet.api.util.AuthenticationUtil.getCurrentUserSocialId;
 
 import depromeet.api.domain.record.dto.request.CreateRecordRequest;
 import depromeet.api.domain.record.dto.response.CreateRecordResponse;

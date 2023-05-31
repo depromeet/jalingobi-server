@@ -1,4 +1,4 @@
-package depromeet.common.temp;
+package depromeet.api.domain.auth.dto;
 
 
 import lombok.AllArgsConstructor;

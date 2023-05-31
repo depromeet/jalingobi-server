@@ -1,12 +1,12 @@
 package depromeet.api.domain.auth.usecase;
 
 
-import depromeet.api.domain.auth.dto.request.AuthRequest;
+import depromeet.api.domain.auth.dto.TokenInfo;
+import depromeet.api.domain.auth.dto.request.KakaoAuthRequest;
 import depromeet.api.domain.auth.feign.UserInfo;
-import depromeet.api.domain.auth.usecase.validator.OAuthValidator;
+import depromeet.api.domain.auth.validator.OAuthValidator;
 import depromeet.api.util.JwtUtil;
 import depromeet.common.annotation.UseCase;
-import depromeet.common.temp.TokenInfo;
 import depromeet.domain.user.adaptor.UserAdaptor;
 import depromeet.domain.user.domain.Platform;
 import depromeet.domain.user.domain.User;
@@ -20,7 +20,7 @@ public class KakaoAuthUseCase {
     private final OAuthValidator oAuthValidator;
     private final JwtUtil jwtUtil;
 
-    public TokenInfo execute(AuthRequest reqAuth) {
+    public TokenInfo execute(KakaoAuthRequest reqAuth) {
 
         oAuthValidator.sigVerification(reqAuth.getIdToken());
 

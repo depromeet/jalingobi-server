@@ -1,13 +1,13 @@
 package depromeet.api.domain.auth.controller;
 
 
-import depromeet.api.domain.auth.dto.request.AuthRequest;
+import depromeet.api.domain.auth.dto.TokenInfo;
+import depromeet.api.domain.auth.dto.request.KakaoAuthRequest;
 import depromeet.api.domain.auth.service.AuthService;
 import depromeet.api.domain.auth.usecase.KakaoAuthUseCase;
 import depromeet.api.util.CookieUtil;
 import depromeet.common.response.CommonResponse;
 import depromeet.common.response.ResponseService;
-import depromeet.common.temp.TokenInfo;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class AuthController {
     private static final String REFRESH_TOKEN = "refreshToken";
 
     @PostMapping("/auth/kakao")
-    public CommonResponse auth(@RequestBody AuthRequest reqAuth) {
+    public CommonResponse auth(@RequestBody KakaoAuthRequest reqAuth) {
         TokenInfo tokenInfo = kakaoAuthUseCase.execute(reqAuth);
         return responseService.getDataResponse(tokenInfo);
     }

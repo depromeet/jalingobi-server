@@ -5,7 +5,7 @@ import depromeet.domain.user.domain.Social;
 import depromeet.domain.user.domain.User;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-public class SecurityUtil {
+public class AuthenticationUtil {
     public static String getCurrentUserSocialId() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User currentUser = (User) principal;

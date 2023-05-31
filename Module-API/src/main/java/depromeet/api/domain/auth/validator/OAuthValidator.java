@@ -1,11 +1,11 @@
-package depromeet.api.domain.auth.usecase.validator;
+package depromeet.api.domain.auth.validator;
 
 import static org.springframework.security.oauth2.jwt.JoseHeaderNames.KID;
 
+import depromeet.api.domain.auth.exception.InvalidJwtException;
 import depromeet.api.domain.auth.feign.Keys;
 import depromeet.api.domain.auth.feign.Keys.PubKey;
 import depromeet.api.domain.auth.feign.UserInfo;
-import depromeet.common.exception.custom.InvalidJwtException;
 import io.jsonwebtoken.*;
 import java.math.BigInteger;
 import java.security.Key;
