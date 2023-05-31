@@ -3,7 +3,7 @@ package depromeet.api.domain.auth.controller;
 
 import depromeet.api.domain.auth.dto.TokenInfo;
 import depromeet.api.domain.auth.dto.request.KakaoAuthRequest;
-import depromeet.api.domain.auth.service.AuthService;
+import depromeet.api.domain.auth.usecase.AuthUseCase;
 import depromeet.api.domain.auth.usecase.KakaoAuthUseCase;
 import depromeet.api.util.CookieUtil;
 import depromeet.common.response.CommonResponse;
@@ -22,7 +22,7 @@ public class AuthController {
 
     private final ResponseService responseService;
     private final KakaoAuthUseCase kakaoAuthUseCase;
-    private final AuthService authService;
+    private final AuthUseCase authUseCase;
     private final CookieUtil cookieUtil;
     private static final String REFRESH_TOKEN = "refreshToken";
 
@@ -38,7 +38,7 @@ public class AuthController {
             HttpServletRequest httpServletRequest,
             HttpServletResponse httpServletResponse) {
         String refreshToken = cookieUtil.getCookie(httpServletRequest, REFRESH_TOKEN).getValue();
-        String accessToken = authService.checkRefreshToken(token, refreshToken);
+        String accessToken = authUseCase.checkRefreshToken(token, refreshToken);
         httpServletResponse.setHeader("AUTHORIZATION", accessToken);
         return responseService.getSuccessResponse();
     }
