@@ -1,6 +1,7 @@
 package depromeet.domain.record.domain;
 
 
+import depromeet.domain.config.BaseTime;
 import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "challenge_record")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Record {
+public class Record extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "challenge_record_id")
@@ -26,15 +27,16 @@ public class Record {
     @Column(nullable = false)
     private int price;
 
-    @Column(length = 20)
+    @Column(length = 20, nullable = false)
     private String name;
 
-    @Column(length = 80)
+    @Column(length = 80, nullable = false)
     private String content;
 
     @Column private String imgUrl;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private RecordEvaluation evaluation;
 
     /** 생성 메서드 */

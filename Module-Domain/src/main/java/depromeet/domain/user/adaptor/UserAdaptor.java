@@ -5,6 +5,7 @@ import depromeet.common.annotation.Adaptor;
 import depromeet.domain.user.domain.Platform;
 import depromeet.domain.user.domain.User;
 import depromeet.domain.user.exception.DuplicatedEmailException;
+import depromeet.domain.user.exception.UserNotFoundException;
 import depromeet.domain.user.repository.UserRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,9 @@ public class UserAdaptor {
         }
     }
 
-    public Optional<User> findUser(String socialId) {
-        return userRepository.findBySocialId(socialId);
+    public User findUser(String socialId) {
+        return userRepository
+                .findBySocialId(socialId)
+                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
 }
