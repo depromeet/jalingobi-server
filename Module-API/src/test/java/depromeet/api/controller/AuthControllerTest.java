@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import depromeet.api.config.security.filter.JwtRequestFilter;
 import depromeet.api.domain.auth.controller.AuthController;
-import depromeet.api.domain.auth.service.AuthService;
+import depromeet.api.domain.auth.usecase.AuthUseCase;
 import depromeet.api.domain.auth.usecase.KakaoAuthUseCase;
 import depromeet.api.util.CookieUtil;
 import depromeet.common.response.ResponseService;
@@ -46,7 +46,7 @@ public class AuthControllerTest {
 
     @MockBean CookieUtil cookieUtil;
 
-    @MockBean AuthService authService;
+    @MockBean AuthUseCase authUseCase;
 
     @Test
     @DisplayName("Refresh Token을 이용한 Access Token 재발급")
@@ -63,7 +63,7 @@ public class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON);
 
         when(cookieUtil.getCookie(any(), anyString())).thenReturn(cookie);
-        when(authService.checkRefreshToken(anyString(), anyString())).thenReturn(newAccessToken);
+        when(authUseCase.checkRefreshToken(anyString(), anyString())).thenReturn(newAccessToken);
 
         mockMvc.perform(requestBuilder)
                 .andDo(print())
