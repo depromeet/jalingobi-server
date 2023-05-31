@@ -1,8 +1,8 @@
 package depromeet.api.util;
 
 
+import depromeet.api.domain.auth.dto.TokenInfo;
 import depromeet.common.exception.CustomExceptionStatus;
-import depromeet.common.temp.TokenInfo;
 import depromeet.domain.user.domain.Platform;
 import depromeet.domain.user.domain.Role;
 import io.jsonwebtoken.*;

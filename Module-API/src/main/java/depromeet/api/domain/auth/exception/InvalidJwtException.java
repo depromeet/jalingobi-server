@@ -1,4 +1,4 @@
-package depromeet.common.exception.custom;
+package depromeet.api.domain.auth.exception;
 
 
 import depromeet.common.exception.CustomException;
