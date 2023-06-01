@@ -2,6 +2,7 @@ package depromeet.domain.challenge.domain;
 
 
 import depromeet.domain.config.BaseTime;
+import depromeet.domain.user.domain.User;
 import java.util.Date;
 import javax.persistence.*;
 import lombok.*;
@@ -34,6 +35,10 @@ public class Challenge extends BaseTime {
 
     @Column(name = "available_count", nullable = false)
     private int availableCount;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(nullable = false)
     private int period;
