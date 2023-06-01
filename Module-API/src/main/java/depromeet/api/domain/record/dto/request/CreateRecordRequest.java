@@ -3,6 +3,7 @@ package depromeet.api.domain.record.dto.request;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import lombok.Builder;
 import lombok.Getter;
 
 /**
@@ -10,6 +11,7 @@ import lombok.Getter;
  * 문자도 허용하는지 묻고, 수정하기
  */
 @Getter
+@Builder
 public class CreateRecordRequest {
     @NotNull(message = "price can not be null")
     private int price;
