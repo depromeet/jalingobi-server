@@ -15,7 +15,7 @@ public class CreateChallengeResponse {
     private Long id;
     private Category category;
     private String title;
-    private String price;
+    private int price;
     private String imgUrl;
     private String hashtag;
     private int availableCount;
