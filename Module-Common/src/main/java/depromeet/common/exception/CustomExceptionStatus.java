@@ -27,7 +27,7 @@ public enum CustomExceptionStatus {
     // [POST] /user
     POST_USERS_EMPTY_NAME(false, 1300, "닉네임을 입력해주세요."),
     POST_USERS_INVALID_NAME(false, 1301, "닉네임 형식을 확인해주세요."),
-    DUPLICATED_EMAIL(false, 1302, "이미 가입된 이메일이 존재합니다."),
+    ACCOUNT_ALREADY_EXIST(false, 1302, "다른 플랫폼에 해당 이메일로 가입된 계정이 존재합니다."),
 
     // Role
     ACCOUNT_ACCESS_DENIED(false, 1400, "권한이 없습니다."),
