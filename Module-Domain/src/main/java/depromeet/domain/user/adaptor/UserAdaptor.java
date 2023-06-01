@@ -22,7 +22,7 @@ public class UserAdaptor {
         Optional<User> findUser = userRepository.findByProfileEmail(email);
 
         if (findUser.isPresent()) {
-            return userService.login(platform, findUser);
+            return userService.login(platform, findUser.get());
         } else {
             return userService.register(nickname, email, socialId, platform);
         }
