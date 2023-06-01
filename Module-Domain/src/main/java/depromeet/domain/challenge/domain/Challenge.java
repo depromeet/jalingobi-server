@@ -35,6 +35,9 @@ public class Challenge extends BaseTime {
     @Column(name = "available_count", nullable = false)
     private int availableCount;
 
+    @Column(nullable = false)
+    private int period;
+
     @Column(name = "start_at", nullable = false)
     private Date startAt;
 
