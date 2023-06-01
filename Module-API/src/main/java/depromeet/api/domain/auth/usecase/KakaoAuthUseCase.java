@@ -25,11 +25,10 @@ public class KakaoAuthUseCase {
 
     public KakaoAuthResponse execute(KakaoAuthRequest reqAuth) {
 
-        oAuthValidator.sigVerification(reqAuth.getIdToken());
+        UserInfo userInfo =
+                oAuthValidator.validateToken(reqAuth.getIdToken(), reqAuth.getAccessToken());
 
-        UserInfo userInfo = oAuthValidator.reqUserInfo(reqAuth.getAccessToken());
-
-        // 회원가입(가입 정보 없는 유저일 때만) 및 로그인
+        // 회원가입 및 로그인
         User user =
                 userAdaptor.authUser(
                         userInfo.getNickname(),
@@ -37,12 +36,10 @@ public class KakaoAuthUseCase {
                         userInfo.getSub(),
                         Platform.KAKAO);
 
-        // 토큰 생성
         TokenInfo tokenInfo =
                 jwtUtil.generateTokenInfo(
                         user.getSocial().getId(), user.getSocial().getPlatform(), user.getRole());
 
-        // refresh token 저장
         jwtUtil.storeRefreshToken(user.getSocial().getId(), tokenInfo.getRefreshToken());
 
         return authMapper.toKakaoAuthResponse(tokenInfo.getAccessToken());
