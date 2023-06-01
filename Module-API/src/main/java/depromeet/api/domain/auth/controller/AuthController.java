@@ -1,7 +1,6 @@
 package depromeet.api.domain.auth.controller;
 
 
-import depromeet.api.domain.auth.dto.TokenInfo;
 import depromeet.api.domain.auth.dto.request.KakaoAuthRequest;
 import depromeet.api.domain.auth.usecase.AuthUseCase;
 import depromeet.api.domain.auth.usecase.KakaoAuthUseCase;
@@ -28,8 +27,8 @@ public class AuthController {
 
     @PostMapping("/auth/kakao")
     public CommonResponse auth(@RequestBody KakaoAuthRequest reqAuth) {
-        TokenInfo tokenInfo = kakaoAuthUseCase.execute(reqAuth);
-        return responseService.getDataResponse(tokenInfo);
+
+        return responseService.getDataResponse(kakaoAuthUseCase.execute(reqAuth));
     }
 
     @PostMapping("/auth/refresh")

@@ -23,10 +23,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class JwtUtil {
 
+    private final RedisUtil redisUtil;
     private final UserDetailsService userDetailsService;
 
     static final long ACCESS_TOKEN_VALIDATION_SECOND = 60 * 60L;
-    static final long REFRESH_TOKEN_VALIDATION_SECOND = 60 * 60 * 24 * 7L;
+    public static final long REFRESH_TOKEN_VALIDATION_SECOND = 60 * 60 * 24 * 7L;
     public static final String ACCESS_TOKEN_NAME = "accessToken";
     public static final String REFRESH_TOKEN_NAME = "refreshToken";
 
@@ -113,5 +114,9 @@ public class JwtUtil {
             } else req.setAttribute("exception", CustomExceptionStatus.INVALID_JWT.getMessage());
             return false;
         }
+    }
+
+    public void storeRefreshToken(String key, String value) {
+        redisUtil.setDataExpire(key, value, REFRESH_TOKEN_VALIDATION_SECOND);
     }
 }
