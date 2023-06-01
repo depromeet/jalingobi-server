@@ -14,6 +14,9 @@ dependencies {
     api 'io.github.openfeign:feign-httpclient:12.1'
     api 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.4'
 
+    // S3
+    api 'com.amazonaws:aws-java-sdk-s3control:1.12.372'
+
     implementation project(':Module-Domain')
     implementation project(':Module-Common')
 }
