@@ -3,7 +3,7 @@ package depromeet.api.domain.challenge.dto.response;
 
 import depromeet.domain.challenge.domain.Category;
 import depromeet.domain.rule.domain.Rule;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,6 +21,6 @@ public class CreateChallengeResponse {
     private int availableCount;
     private List<Rule> challengeRules;
     private int period;
-    private Date startAt;
-    private Date endAt;
+    private LocalDate startAt;
+    private LocalDate endAt;
 }

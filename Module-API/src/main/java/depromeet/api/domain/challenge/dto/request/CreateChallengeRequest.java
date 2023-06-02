@@ -3,16 +3,17 @@ package depromeet.api.domain.challenge.dto.request;
 
 import depromeet.domain.challenge.domain.Category;
 import depromeet.domain.rule.domain.Rule;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 @Builder
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CreateChallengeRequest {
 
     private Category category;
@@ -35,7 +36,7 @@ public class CreateChallengeRequest {
 
     private int period;
 
-    private Date startAt;
+    private LocalDate startAt;
 
-    private Date endAt;
+    private LocalDate endAt;
 }
