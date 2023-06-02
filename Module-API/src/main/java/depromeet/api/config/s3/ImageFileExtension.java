@@ -1,17 +1,15 @@
 package depromeet.api.config.s3;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public enum ImageFileExtension {
     JPEG("jpeg"),
     JPG("jpeg"),
     PNG("png");
-
-    ImageFileExtension(String uploadExtension) {
-        this.uploadExtension = uploadExtension;
-    }
 
     private final String uploadExtension;
 }
