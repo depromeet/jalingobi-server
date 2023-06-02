@@ -3,7 +3,11 @@ package depromeet.domain.rule.domain;
 
 import depromeet.domain.challenge.domain.Challenge;
 import javax.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
 
+@Builder
+@Getter
 @Entity
 @Table(name = "challenge_rule")
 public class Rule {

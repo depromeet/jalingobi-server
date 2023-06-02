@@ -3,7 +3,6 @@ package depromeet.domain.challenge.domain;
 
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.user.domain.User;
-import java.util.Date;
 import javax.persistence.*;
 import lombok.*;
 
@@ -31,6 +30,7 @@ public class Challenge extends BaseTime {
 
     private String imgUrl;
 
+    @Column(nullable = false)
     private String hashtag;
 
     @Column(name = "available_count", nullable = false)
@@ -40,30 +40,5 @@ public class Challenge extends BaseTime {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(nullable = false)
-    private int period;
-
-    @Column(name = "start_at", nullable = false)
-    private Date startAt;
-
-    @Column(name = "end_at", nullable = false)
-    private Date endAt;
-
-    @Builder
-    public Challenge(
-            Category category,
-            String title,
-            String imgUrl,
-            String hashtag,
-            int availableCount,
-            Date startAt,
-            Date endAt) {
-        this.category = category;
-        this.title = title;
-        this.imgUrl = imgUrl;
-        this.hashtag = hashtag;
-        this.availableCount = availableCount;
-        this.startAt = startAt;
-        this.endAt = endAt;
-    }
+    @Embedded private Duration duration;
 }
