@@ -96,4 +96,10 @@ public class OAuthValidator {
         if (splitToken.length != 3) throw InvalidJwtException.EXCEPTION;
         return splitToken[0] + "." + splitToken[1] + ".";
     }
+
+    public UserInfo validateToken(String idToken, String accessToken) {
+        sigVerification(idToken);
+        UserInfo userInfo = reqUserInfo(accessToken);
+        return userInfo;
+    }
 }

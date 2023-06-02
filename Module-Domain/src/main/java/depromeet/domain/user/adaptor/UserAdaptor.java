@@ -4,9 +4,9 @@ package depromeet.domain.user.adaptor;
 import depromeet.common.annotation.Adaptor;
 import depromeet.domain.user.domain.Platform;
 import depromeet.domain.user.domain.User;
-import depromeet.domain.user.exception.DuplicatedEmailException;
 import depromeet.domain.user.exception.UserNotFoundException;
 import depromeet.domain.user.repository.UserRepository;
+import depromeet.domain.user.service.UserService;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,20 +16,15 @@ import lombok.extern.slf4j.Slf4j;
 @Adaptor
 public class UserAdaptor {
     private final UserRepository userRepository;
+    private final UserService userService;
 
     public User authUser(String nickname, String email, String socialId, Platform platform) {
         Optional<User> findUser = userRepository.findByProfileEmail(email);
 
         if (findUser.isPresent()) {
-            User user = findUser.get();
-
-            if (!platform.equals(user.getSocial().getPlatform()))
-                throw DuplicatedEmailException.EXCEPTION;
-
-            return user;
+            return userService.login(platform, findUser);
         } else {
-            User newUser = User.registerUser(nickname, email, socialId, platform);
-            return userRepository.save(newUser);
+            return userService.register(nickname, email, socialId, platform);
         }
     }
 
