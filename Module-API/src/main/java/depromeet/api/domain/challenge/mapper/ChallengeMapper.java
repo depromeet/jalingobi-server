@@ -5,6 +5,7 @@ import depromeet.api.domain.challenge.dto.request.CreateChallengeRequest;
 import depromeet.api.domain.challenge.dto.response.CreateChallengeResponse;
 import depromeet.common.annotation.Mapper;
 import depromeet.domain.challenge.domain.Challenge;
+import depromeet.domain.challenge.domain.Duration;
 import depromeet.domain.rule.domain.Rule;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +21,12 @@ public class ChallengeMapper {
                 .imgUrl(createChallengeRequest.getImageUrl())
                 .hashtag(createChallengeRequest.getHashtag())
                 .availableCount(createChallengeRequest.getAvailableCount())
-                .period(createChallengeRequest.getPeriod())
-                .startAt(createChallengeRequest.getStartAt())
-                .endAt(createChallengeRequest.getEndAt())
+                .duration(
+                        Duration.builder()
+                                .period(createChallengeRequest.getPeriod())
+                                .startAt(createChallengeRequest.getStartAt())
+                                .endAt(createChallengeRequest.getEndAt())
+                                .build())
                 .build();
     }
 
@@ -36,9 +40,9 @@ public class ChallengeMapper {
                 .hashtag(challenge.getHashtag())
                 .availableCount(challenge.getAvailableCount())
                 .challengeRules(rules)
-                .period(challenge.getPeriod())
-                .startAt(challenge.getStartAt())
-                .endAt(challenge.getEndAt())
+                .period(challenge.getDuration().getPeriod())
+                .startAt(challenge.getDuration().getStartAt())
+                .endAt(challenge.getDuration().getEndAt())
                 .build();
     }
 }

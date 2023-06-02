@@ -8,9 +8,11 @@ import java.util.List;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
 
-@Data
+@Builder
+@Getter
 public class CreateChallengeRequest {
 
     private Category category;
@@ -20,11 +22,11 @@ public class CreateChallengeRequest {
 
     @Min(10000)
     @Max(999999)
-    @NotBlank(message = "price can not be blank")
     private int price;
 
     private String imageUrl;
 
+    @NotBlank(message = "hashtag can not be blank")
     private String hashtag;
 
     private int availableCount;
