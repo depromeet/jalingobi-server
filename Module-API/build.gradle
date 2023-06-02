@@ -16,6 +16,8 @@ dependencies {
 
     implementation project(':Module-Domain')
     implementation project(':Module-Common')
+
+    testImplementation 'org.mockito:mockito-inline'
 }
 
 test {
