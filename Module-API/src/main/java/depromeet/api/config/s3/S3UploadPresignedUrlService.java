@@ -2,7 +2,7 @@ package depromeet.api.config.s3;
 
 
 import com.amazonaws.HttpMethod;
-import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.Headers;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class S3UploadPresignedUrlService {
 
-    private final AmazonS3 amazonS3;
+    private final AmazonS3Client amazonS3Client;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -32,12 +32,13 @@ public class S3UploadPresignedUrlService {
 
         GeneratePresignedUrlRequest generatePresignedUrlRequest =
                 getGeneratePreSignedUrlRequest(bucket, fileName, fixedFileExtension);
-        URL url = amazonS3.generatePresignedUrl(generatePresignedUrlRequest);
+        URL url = amazonS3Client.generatePresignedUrl(generatePresignedUrlRequest);
+        log.info(url.toString());
         return ImageUrlDto.of(url.toString(), fileName);
     }
 
     private String createFileName(String socialId, String fileExtension) {
-        return "/record/" + socialId + "/" + UUID.randomUUID() + "." + fileExtension;
+        return "record/" + socialId + "/" + UUID.randomUUID() + "." + fileExtension;
     }
 
     // 업로드용 Pre-Signed URL을 생성하기 때문에, PUT을 지정
