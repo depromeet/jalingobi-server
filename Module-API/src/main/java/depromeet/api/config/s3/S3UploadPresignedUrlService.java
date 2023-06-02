@@ -6,6 +6,8 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.Headers;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
+import depromeet.api.domain.image.dto.ImageFileExtension;
+import depromeet.api.domain.image.dto.ImageUploadType;
 import depromeet.api.domain.image.dto.ImageUrlDto;
 import java.net.URL;
 import java.util.Date;
@@ -25,7 +27,8 @@ public class S3UploadPresignedUrlService {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public ImageUrlDto execute(String socialId, ImageFileExtension fileExtension, ImageUploadType type) {
+    public ImageUrlDto execute(
+            String socialId, ImageFileExtension fileExtension, ImageUploadType type) {
         String valueFileExtension = fileExtension.getUploadExtension();
         String valueType = type.getType();
         String fileName = createFileName(socialId, valueFileExtension, valueType);

@@ -1,4 +1,4 @@
-package depromeet.api.config.s3;
+package depromeet.api.domain.image.dto;
 
 
 import lombok.AllArgsConstructor;

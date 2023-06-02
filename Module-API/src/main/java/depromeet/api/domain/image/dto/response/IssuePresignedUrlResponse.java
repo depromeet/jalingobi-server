@@ -7,12 +7,12 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class GetPresignedUrlResponse {
+public class IssuePresignedUrlResponse {
     private final String presignedUrl;
     private final String key;
 
-    public static GetPresignedUrlResponse from(ImageUrlDto urlDto) {
-        return GetPresignedUrlResponse.builder()
+    public static IssuePresignedUrlResponse from(ImageUrlDto urlDto) {
+        return IssuePresignedUrlResponse.builder()
                 .presignedUrl(urlDto.getPresignedUrl())
                 .key(urlDto.getKey())
                 .build();
