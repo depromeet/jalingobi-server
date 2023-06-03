@@ -2,6 +2,7 @@ package depromeet.api.domain.auth.controller;
 
 
 import depromeet.api.domain.auth.dto.request.KakaoAuthRequest;
+import depromeet.api.domain.auth.dto.response.KakaoAuthResponse;
 import depromeet.api.domain.auth.usecase.AuthUseCase;
 import depromeet.api.domain.auth.usecase.KakaoAuthUseCase;
 import depromeet.api.util.CookieUtil;
@@ -26,9 +27,12 @@ public class AuthController {
     private static final String REFRESH_TOKEN = "refreshToken";
 
     @PostMapping("/auth/kakao")
-    public CommonResponse auth(@RequestBody KakaoAuthRequest reqAuth) {
+    public CommonResponse auth(
+            @RequestBody KakaoAuthRequest reqAuth, HttpServletResponse response) {
 
-        return responseService.getDataResponse(kakaoAuthUseCase.execute(reqAuth));
+        KakaoAuthResponse kakaoAuthResponse = kakaoAuthUseCase.execute(reqAuth);
+        response.addCookie(cookieUtil.setRefreshToken(kakaoAuthResponse.getRefreshToken()));
+        return responseService.getDataResponse(kakaoAuthResponse);
     }
 
     @PostMapping("/auth/refresh")

@@ -42,6 +42,6 @@ public class KakaoAuthUseCase {
 
         jwtUtil.storeRefreshToken(user.getSocial().getId(), tokenInfo.getRefreshToken());
 
-        return authMapper.toKakaoAuthResponse(tokenInfo.getAccessToken());
+        return authMapper.toKakaoAuthResponse(tokenInfo);
     }
 }
