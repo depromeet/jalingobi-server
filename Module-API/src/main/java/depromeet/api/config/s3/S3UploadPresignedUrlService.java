@@ -62,8 +62,8 @@ public class S3UploadPresignedUrlService {
     private Date getPreSignedUrlExpiration() {
         Date expiration = new Date();
         long expTimeMillis = expiration.getTime();
-        // 유효 기간 설정
-        expTimeMillis += 60 * 60 * 3;
+        // 유효 기간 설정 (1분)
+        expTimeMillis += 60 * 1000;
         expiration.setTime(expTimeMillis);
         return expiration;
     }
