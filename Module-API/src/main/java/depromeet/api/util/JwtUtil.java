@@ -2,7 +2,6 @@ package depromeet.api.util;
 
 
 import depromeet.api.domain.auth.dto.TokenInfo;
-import depromeet.common.exception.CustomExceptionStatus;
 import depromeet.domain.user.domain.Platform;
 import depromeet.domain.user.domain.Role;
 import io.jsonwebtoken.*;
@@ -26,8 +25,8 @@ public class JwtUtil {
     private final RedisUtil redisUtil;
     private final UserDetailsService userDetailsService;
 
-    static final long ACCESS_TOKEN_VALIDATION_SECOND = 60 * 60L;
-    public static final long REFRESH_TOKEN_VALIDATION_SECOND = 60 * 60 * 24 * 7L;
+    static final long ACCESS_TOKEN_VALIDATION_SECOND = 60 * 60 * 1000L;
+    public static final long REFRESH_TOKEN_VALIDATION_SECOND = 60 * 60 * 24 * 7 * 1000L;
     public static final String ACCESS_TOKEN_NAME = "accessToken";
     public static final String REFRESH_TOKEN_NAME = "refreshToken";
 
@@ -80,6 +79,7 @@ public class JwtUtil {
 
     public String doGenerateToken(String socialId, Platform platform, Role role, long expireTime) {
         Claims claims = Jwts.claims();
+        claims.put("socialId", socialId);
         claims.put("platform", platform);
         claims.put("role", role);
 
@@ -88,7 +88,7 @@ public class JwtUtil {
                 .setClaims(claims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expireTime))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }
 
@@ -102,21 +102,22 @@ public class JwtUtil {
         return req.getHeader("AUTHORIZATION");
     }
 
-    public boolean validateToken(String jwtToken, HttpServletRequest req) {
+    public boolean verifyToken(String token) {
         try {
-            if (jwtToken.isEmpty()) throw new JwtException("empty jwtToken");
-            Jws<Claims> claimsJws =
-                    Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(jwtToken);
-            return !claimsJws.getBody().getExpiration().before(new Date());
-        } catch (JwtException e) {
-            if (jwtToken.isEmpty()) {
-                req.setAttribute("exception", CustomExceptionStatus.EMPTY_JWT.getMessage());
-            } else req.setAttribute("exception", CustomExceptionStatus.INVALID_JWT.getMessage());
+            Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+            return claims.getBody().getExpiration().after(new Date());
+        } catch (Exception e) {
             return false;
         }
     }
 
     public void storeRefreshToken(String key, String value) {
         redisUtil.setDataExpire(key, value, REFRESH_TOKEN_VALIDATION_SECOND);
+    }
+
+    public TokenInfo issueToken(String id, Platform platform, Role role) {
+        TokenInfo tokenInfo = generateTokenInfo(id, platform, role);
+        storeRefreshToken(id, tokenInfo.getRefreshToken());
+        return tokenInfo;
     }
 }
