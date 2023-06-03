@@ -16,4 +16,8 @@ public class RuleAdaptor {
     public List<Rule> findByChallengeId(Long challengeId) {
         return ruleRepository.findRulesByChallengeId(challengeId);
     }
+
+    public void saveChallengeRules(List<Rule> rules) {
+        ruleRepository.saveAll(rules);
+    }
 }

@@ -9,6 +9,7 @@ import depromeet.domain.challenge.adaptor.ChallengeAdaptor;
 import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.rule.adaptor.RuleAdaptor;
 import depromeet.domain.rule.domain.Rule;
+import depromeet.domain.rule.domain.Rules;
 import depromeet.domain.user.adaptor.UserAdaptor;
 import depromeet.domain.user.domain.User;
 import java.util.List;
@@ -29,7 +30,12 @@ public class CreateChallengeUseCase {
     public CreateChallengeResponse execute(CreateChallengeRequest request, String socialId) {
         User currentUser = userAdaptor.findUser(socialId);
         Challenge challenge = challengeAdaptor.save(challengeMapper.toEntity(request, currentUser));
-        List<Rule> rules = ruleAdaptor.findByChallengeId(challenge.getId());
-        return challengeMapper.toCreateChallengeResponse(challenge, rules);
+
+        Rules rules = new Rules(request.getChallengeRule());
+        List<Rule> ruleList = rules.getChallengeRules(challenge);
+        ruleAdaptor.saveChallengeRules(ruleList);
+        List<Rule> savedRules = ruleAdaptor.findByChallengeId(challenge.getId());
+
+        return challengeMapper.toCreateChallengeResponse(challenge, savedRules);
     }
 }
