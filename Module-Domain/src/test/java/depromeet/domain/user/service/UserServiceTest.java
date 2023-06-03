@@ -5,6 +5,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 import depromeet.domain.user.domain.Platform;
+import depromeet.domain.user.domain.Profile;
+import depromeet.domain.user.domain.Social;
 import depromeet.domain.user.domain.User;
 import depromeet.domain.user.exception.AccountAlreadyExist;
 import depromeet.domain.user.repository.UserRepository;
@@ -28,7 +30,10 @@ class UserServiceTest {
         String nickname = "tester";
         String email = "test@test";
         String socialId = "1234";
-        User user = User.createUser(nickname, email, socialId, platform);
+
+        Profile profile = Profile.createProfile(nickname, email, null);
+        Social social = Social.createSocial(socialId, platform);
+        User user = User.builder().profile(profile).social(social).build();
 
         given(userRepository.save(any())).willReturn(user);
 
@@ -46,7 +51,10 @@ class UserServiceTest {
         String nickname = "tester";
         String email = "test@test";
         String socialId = "1234";
-        User user = User.createUser(nickname, email, socialId, platform);
+
+        Profile profile = Profile.createProfile(nickname, email, null);
+        Social social = Social.createSocial(socialId, platform);
+        User user = User.builder().profile(profile).social(social).build();
 
         // when then
         User loginUser = userService.login(Platform.KAKAO, user);
@@ -62,7 +70,10 @@ class UserServiceTest {
         String nickname = "tester";
         String email = "test@test";
         String socialId = "1234";
-        User user = User.createUser(nickname, email, socialId, platform);
+
+        Profile profile = Profile.createProfile(nickname, email, null);
+        Social social = Social.createSocial(socialId, platform);
+        User user = User.builder().profile(profile).social(social).build();
 
         // when then
         Assertions.assertThrows(
