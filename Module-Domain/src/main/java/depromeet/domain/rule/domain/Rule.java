@@ -23,4 +23,8 @@ public class Rule {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "challenge_id", nullable = false)
     private Challenge challenge;
+
+    public static Rule createRule(String content, Challenge challenge) {
+        return Rule.builder().content(content).challenge(challenge).build();
+    }
 }

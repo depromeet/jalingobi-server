@@ -41,4 +41,25 @@ public class Challenge extends BaseTime {
     private User user;
 
     @Embedded private Duration duration;
+
+    public static Challenge createChallenge(
+            Category category,
+            String title,
+            int price,
+            String imgUrl,
+            String hashtag,
+            int availableCount,
+            User user,
+            Duration duration) {
+        return Challenge.builder()
+                .category(category)
+                .title(title)
+                .price(price)
+                .imgUrl(imgUrl)
+                .hashtag(hashtag)
+                .availableCount(availableCount)
+                .user(user)
+                .duration(duration)
+                .build();
+    }
 }

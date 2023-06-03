@@ -1,7 +1,7 @@
 package depromeet.domain.challenge.domain;
 
 
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import lombok.*;
@@ -17,8 +17,8 @@ public class Duration {
     private int period;
 
     @Column(name = "start_at", nullable = false)
-    private Date startAt;
+    private LocalDate startAt;
 
     @Column(name = "end_at", nullable = false)
-    private Date endAt;
+    private LocalDate endAt;
 }

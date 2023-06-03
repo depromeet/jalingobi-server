@@ -7,6 +7,7 @@ import depromeet.common.annotation.Mapper;
 import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.challenge.domain.Duration;
 import depromeet.domain.rule.domain.Rule;
+import depromeet.domain.user.domain.User;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 
@@ -14,35 +15,24 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ChallengeMapper {
 
-    public Challenge toEntity(CreateChallengeRequest createChallengeRequest) {
-        return Challenge.builder()
-                .category(createChallengeRequest.getCategory())
-                .title(createChallengeRequest.getTitle())
-                .imgUrl(createChallengeRequest.getImageUrl())
-                .hashtag(createChallengeRequest.getHashtag())
-                .availableCount(createChallengeRequest.getAvailableCount())
-                .duration(
-                        Duration.builder()
-                                .period(createChallengeRequest.getPeriod())
-                                .startAt(createChallengeRequest.getStartAt())
-                                .endAt(createChallengeRequest.getEndAt())
-                                .build())
-                .build();
+    public Challenge toEntity(CreateChallengeRequest createChallengeRequest, User user) {
+        return Challenge.createChallenge(
+                createChallengeRequest.getCategory(),
+                createChallengeRequest.getTitle(),
+                createChallengeRequest.getPrice(),
+                createChallengeRequest.getImageUrl(),
+                createChallengeRequest.getHashtag(),
+                createChallengeRequest.getAvailableCount(),
+                user,
+                Duration.builder()
+                        .period(createChallengeRequest.getPeriod())
+                        .startAt(createChallengeRequest.getStartAt())
+                        .endAt(createChallengeRequest.getEndAt())
+                        .build());
     }
 
     public CreateChallengeResponse toCreateChallengeResponse(
             Challenge challenge, List<Rule> rules) {
-        return CreateChallengeResponse.builder()
-                .id(challenge.getId())
-                .category(challenge.getCategory())
-                .title(challenge.getTitle())
-                .imgUrl(challenge.getImgUrl())
-                .hashtag(challenge.getHashtag())
-                .availableCount(challenge.getAvailableCount())
-                .challengeRules(rules)
-                .period(challenge.getDuration().getPeriod())
-                .startAt(challenge.getDuration().getStartAt())
-                .endAt(challenge.getDuration().getEndAt())
-                .build();
+        return CreateChallengeResponse.of(challenge, rules);
     }
 }
