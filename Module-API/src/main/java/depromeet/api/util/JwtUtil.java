@@ -48,12 +48,7 @@ public class JwtUtil {
     }
 
     public String getUsername(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey(SECRET_KEY))
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+        return extractAllClaims(token).get("socialId", String.class);
     }
 
     public Date getExpiredTime(String token) {
