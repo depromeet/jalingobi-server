@@ -7,6 +7,7 @@ import depromeet.domain.user.domain.Role;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
@@ -33,13 +34,14 @@ public class JwtUtil {
     @Value("${spring.jwt.secret}")
     private String SECRET_KEY;
 
-    private Key getSigningKey() {
-        return Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private Key getSigningKey(String secretKey) {
+        byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
     public Claims extractAllClaims(String token) throws ExpiredJwtException {
         return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
+                .setSigningKey(getSigningKey(SECRET_KEY))
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -47,7 +49,7 @@ public class JwtUtil {
 
     public String getUsername(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(SECRET_KEY)
+                .setSigningKey(getSigningKey(SECRET_KEY))
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
@@ -88,7 +90,7 @@ public class JwtUtil {
                 .setClaims(claims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expireTime))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .signWith(SignatureAlgorithm.HS256, getSigningKey(SECRET_KEY))
                 .compact();
     }
 
@@ -104,7 +106,8 @@ public class JwtUtil {
 
     public boolean verifyToken(String token) {
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+            Jws<Claims> claims =
+                    Jwts.parser().setSigningKey(getSigningKey(SECRET_KEY)).parseClaimsJws(token);
             return claims.getBody().getExpiration().after(new Date());
         } catch (Exception e) {
             return false;
