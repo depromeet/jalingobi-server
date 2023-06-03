@@ -119,4 +119,10 @@ public class JwtUtil {
     public void storeRefreshToken(String key, String value) {
         redisUtil.setDataExpire(key, value, REFRESH_TOKEN_VALIDATION_SECOND);
     }
+
+    public TokenInfo issueToken(String id, Platform platform, Role role) {
+        TokenInfo tokenInfo = generateTokenInfo(id, platform, role);
+        storeRefreshToken(id, tokenInfo.getRefreshToken());
+        return tokenInfo;
+    }
 }
