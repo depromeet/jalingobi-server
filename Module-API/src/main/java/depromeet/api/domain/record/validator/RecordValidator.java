@@ -18,8 +18,5 @@ public class RecordValidator {
 
     // 현재 챌린지에 유저가 가입했는지 확인하는 메서드
     // 지금 챌린지와 유저가 ManyToOne으로 설정되어 있어, ManyToMany로 수정된 뒤 코드 작성
-    public void validateUnparticipatedChallenge(String socialId, Long challengeId) {
-
-    }
-
+    public void validateUnparticipatedChallenge(String socialId, Long challengeId) {}
 }
