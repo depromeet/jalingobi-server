@@ -11,7 +11,6 @@ import depromeet.api.domain.auth.controller.AuthController;
 import depromeet.api.domain.auth.usecase.AuthUseCase;
 import depromeet.api.domain.auth.usecase.KakaoAuthUseCase;
 import depromeet.api.util.CookieUtil;
-import depromeet.common.response.ResponseService;
 import javax.servlet.http.Cookie;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,8 +38,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 public class AuthControllerTest {
 
     @Autowired MockMvc mockMvc;
-
-    @MockBean ResponseService responseService;
 
     @MockBean KakaoAuthUseCase kakaoAuthUseCase;
 
