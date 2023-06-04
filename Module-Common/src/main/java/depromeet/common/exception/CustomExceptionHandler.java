@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class CustomExceptionHandler {
 
-    private final ResponseService responseService;
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public CommonResponse handleValidationExceptions(MethodArgumentNotValidException exception) {
@@ -33,7 +31,7 @@ public class CustomExceptionHandler {
                             errorMessages.put(fieldName, errorMessage);
                         });
 
-        return responseService.getExceptionResponse(
+        return ResponseService.getExceptionResponse(
                 CustomExceptionStatus.REQUEST_ERROR, errorMessages);
     }
 
@@ -41,6 +39,6 @@ public class CustomExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     protected CommonResponse customException(CustomException customException) {
         CustomExceptionStatus status = customException.getCustomExceptionStatus();
-        return responseService.getExceptionResponse(status);
+        return ResponseService.getExceptionResponse(status);
     }
 }
