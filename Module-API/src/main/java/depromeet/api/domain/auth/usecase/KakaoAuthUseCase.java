@@ -37,11 +37,9 @@ public class KakaoAuthUseCase {
                         Platform.KAKAO);
 
         TokenInfo tokenInfo =
-                jwtUtil.generateTokenInfo(
+                jwtUtil.issueToken(
                         user.getSocial().getId(), user.getSocial().getPlatform(), user.getRole());
 
-        jwtUtil.storeRefreshToken(user.getSocial().getId(), tokenInfo.getRefreshToken());
-
-        return authMapper.toKakaoAuthResponse(tokenInfo.getAccessToken());
+        return authMapper.toKakaoAuthResponse(tokenInfo);
     }
 }

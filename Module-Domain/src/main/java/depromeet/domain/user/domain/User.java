@@ -25,14 +25,6 @@ public class User extends BaseTime {
     @Column(length = 10, nullable = false)
     private Role role;
 
-    public static User createUser(
-            String nickname, String email, String socialId, Platform platform) {
-
-        Profile profile = Profile.createProfile(nickname, email, null);
-        Social social = Social.createSocial(socialId, platform);
-        return User.builder().profile(profile).social(social).role(Role.USER).build();
-    }
-
     public static User registerUser(
             String nickname, String email, String socialId, Platform platform) {
 
