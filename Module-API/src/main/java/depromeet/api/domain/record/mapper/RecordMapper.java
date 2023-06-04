@@ -14,10 +14,10 @@ import lombok.RequiredArgsConstructor;
 public class RecordMapper {
 
     public Record toEntity(
-            Long challengeRoomId, Long userId, CreateRecordRequest createRecordRequest) {
+            Long challengeRoomId, User user, CreateRecordRequest createRecordRequest) {
         return Record.createRecord(
                 challengeRoomId,
-                userId,
+                user,
                 createRecordRequest.getPrice(),
                 createRecordRequest.getName(),
                 createRecordRequest.getContent(),
@@ -25,7 +25,7 @@ public class RecordMapper {
                 RecordEvaluation.getEnumTypeByValue(createRecordRequest.getEvaluation()));
     }
 
-    public CreateRecordResponse toCreateRecordResponse(Record record, User user) {
-        return CreateRecordResponse.of(record, user);
+    public CreateRecordResponse toCreateRecordResponse(Record record) {
+        return CreateRecordResponse.of(record);
     }
 }

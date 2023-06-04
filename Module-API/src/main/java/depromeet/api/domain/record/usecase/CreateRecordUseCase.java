@@ -27,9 +27,8 @@ public class CreateRecordUseCase {
         User currentUser = userAdaptor.findUser(socialId);
         Record record =
                 recordAdaptor.save(
-                        recordMapper.toEntity(
-                                challengeRoomId, currentUser.getId(), createRecordRequest));
+                        recordMapper.toEntity(challengeRoomId, currentUser, createRecordRequest));
 
-        return recordMapper.toCreateRecordResponse(record, currentUser);
+        return recordMapper.toCreateRecordResponse(record);
     }
 }

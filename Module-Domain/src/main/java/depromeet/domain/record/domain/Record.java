@@ -1,16 +1,17 @@
 package depromeet.domain.record.domain;
 
+import static javax.persistence.FetchType.LAZY;
 
 import depromeet.domain.config.BaseTime;
+import depromeet.domain.user.domain.User;
 import javax.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Builder
 @Entity
 @Table(name = "challenge_record")
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Record extends BaseTime {
     @Id
@@ -20,6 +21,10 @@ public class Record extends BaseTime {
 
     @Column(nullable = false)
     private Long challengeRoomId;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(nullable = false)
     private Long userId;
@@ -40,27 +45,9 @@ public class Record extends BaseTime {
     private RecordEvaluation evaluation;
 
     /** 생성 메서드 */
-    @Builder
-    public Record(
-            Long challengeRoomId,
-            Long userId,
-            int price,
-            String name,
-            String content,
-            String imgUrl,
-            RecordEvaluation evaluation) {
-        this.challengeRoomId = challengeRoomId;
-        this.userId = userId;
-        this.price = price;
-        this.name = name;
-        this.content = content;
-        this.imgUrl = imgUrl;
-        this.evaluation = evaluation;
-    }
-
     public static Record createRecord(
             Long challengeRoomId,
-            Long userId,
+            User user,
             int price,
             String name,
             String content,
@@ -68,7 +55,7 @@ public class Record extends BaseTime {
             RecordEvaluation evaluation) {
         return Record.builder()
                 .challengeRoomId(challengeRoomId)
-                .userId(userId)
+                .user(user)
                 .price(price)
                 .name(name)
                 .content(content)
