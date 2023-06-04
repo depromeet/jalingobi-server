@@ -1,7 +1,7 @@
 package depromeet.domain.record.domain;
 
-import static javax.persistence.FetchType.LAZY;
 
+import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.user.domain.User;
 import javax.persistence.*;
@@ -19,15 +19,13 @@ public class Record extends BaseTime {
     @Column(name = "challenge_record_id")
     private Long id;
 
-    @Column(nullable = false)
-    private Long challengeRoomId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "challenge_id")
+    private Challenge challenge;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
-    @Column(nullable = false)
-    private Long userId;
 
     @Column(nullable = false)
     private int price;
@@ -46,7 +44,7 @@ public class Record extends BaseTime {
 
     /** 생성 메서드 */
     public static Record createRecord(
-            Long challengeRoomId,
+            Challenge challenge,
             User user,
             int price,
             String name,
@@ -54,7 +52,7 @@ public class Record extends BaseTime {
             String imgUrl,
             RecordEvaluation evaluation) {
         return Record.builder()
-                .challengeRoomId(challengeRoomId)
+                .challenge(challenge)
                 .user(user)
                 .price(price)
                 .name(name)

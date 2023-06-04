@@ -5,6 +5,8 @@ import depromeet.api.domain.record.dto.request.CreateRecordRequest;
 import depromeet.api.domain.record.dto.response.CreateRecordResponse;
 import depromeet.api.domain.record.mapper.RecordMapper;
 import depromeet.common.annotation.UseCase;
+import depromeet.domain.challenge.adaptor.ChallengeAdaptor;
+import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.record.adaptor.RecordAdaptor;
 import depromeet.domain.record.domain.Record;
 import depromeet.domain.user.adaptor.UserAdaptor;
@@ -19,15 +21,18 @@ public class CreateRecordUseCase {
     private final RecordMapper recordMapper;
     private final RecordAdaptor recordAdaptor;
     private final UserAdaptor userAdaptor;
+    private final ChallengeAdaptor challengeAdaptor;
 
     @Transactional
     public CreateRecordResponse execute(
             Long challengeRoomId, String socialId, CreateRecordRequest createRecordRequest) {
 
         User currentUser = userAdaptor.findUser(socialId);
+        Challenge challenge = challengeAdaptor.findChallenge(challengeRoomId);
+
         Record record =
                 recordAdaptor.save(
-                        recordMapper.toEntity(challengeRoomId, currentUser, createRecordRequest));
+                        recordMapper.toEntity(challenge, currentUser, createRecordRequest));
 
         return recordMapper.toCreateRecordResponse(record);
     }
