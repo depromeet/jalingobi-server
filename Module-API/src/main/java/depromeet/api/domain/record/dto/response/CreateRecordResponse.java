@@ -2,7 +2,6 @@ package depromeet.api.domain.record.dto.response;
 
 
 import depromeet.domain.record.domain.Record;
-import depromeet.domain.record.domain.RecordEvaluation;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -13,7 +12,7 @@ public class CreateRecordResponse {
     private String name;
     private final String content;
     private final String imgUrl;
-    private final RecordEvaluation evaluation;
+    private final int evaluation;
 
     public static CreateRecordResponse of(Record record) {
         return CreateRecordResponse.builder()
@@ -21,7 +20,7 @@ public class CreateRecordResponse {
                 .name(record.getName())
                 .content(record.getContent())
                 .imgUrl(record.getImgUrl())
-                .evaluation(record.getEvaluation())
+                .evaluation(record.getEvaluation().getValue())
                 .build();
     }
 }

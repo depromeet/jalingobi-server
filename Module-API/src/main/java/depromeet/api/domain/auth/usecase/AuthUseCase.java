@@ -20,15 +20,15 @@ public class AuthUseCase {
     private final RedisTemplate<String, String> redisTemplate;
 
     @Transactional
-    public String checkRefreshToken(String token, String refreshToken) {
-        String socialId = jwtUtil.getUsername(token);
+    public String checkRefreshToken(String refreshToken) {
+        String socialId = jwtUtil.getUsername(refreshToken);
         String refresh = redisTemplate.opsForValue().get(socialId);
 
         if (refresh == null) {
-            throw new CustomException(CustomExceptionStatus.INVALID_JWT);
+            throw new CustomException(CustomExceptionStatus.INVALID_REFRESH_TOKEN);
         }
         if (!refresh.equals(refreshToken)) {
-            throw new CustomException(CustomExceptionStatus.INVALID_JWT);
+            throw new CustomException(CustomExceptionStatus.INVALID_REFRESH_TOKEN);
         }
         User account = userAdaptor.findUser(socialId);
 
