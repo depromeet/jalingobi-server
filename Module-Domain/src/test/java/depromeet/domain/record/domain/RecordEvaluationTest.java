@@ -14,10 +14,26 @@ class RecordEvaluationTest {
         RecordEvaluation enumOne = RecordEvaluation.getEnumTypeByValue(1);
         Assertions.assertEquals(RecordEvaluation.ONE, enumOne);
 
+        RecordEvaluation enumTwo = RecordEvaluation.getEnumTypeByValue(2);
+        Assertions.assertEquals(RecordEvaluation.TWO, enumTwo);
+
         RecordEvaluation enumThree = RecordEvaluation.getEnumTypeByValue(3);
         Assertions.assertEquals(RecordEvaluation.THREE, enumThree);
 
+        RecordEvaluation enumFour = RecordEvaluation.getEnumTypeByValue(4);
+        Assertions.assertEquals(RecordEvaluation.FOUR, enumFour);
+
+        RecordEvaluation enumFive = RecordEvaluation.getEnumTypeByValue(5);
+        Assertions.assertEquals(RecordEvaluation.FIVE, enumFive);
+    }
+
+    @Test
+    @DisplayName("[Record Evaluation] 존재하지 않는 enum 타입")
+    void RecordEvaluationTest2() throws Exception {
         assertThatThrownBy(() -> RecordEvaluation.getEnumTypeByValue(6))
+                .isInstanceOf(RecordEvaluationNotFoundException.class);
+
+        assertThatThrownBy(() -> RecordEvaluation.getEnumTypeByValue(15))
                 .isInstanceOf(RecordEvaluationNotFoundException.class);
     }
 }

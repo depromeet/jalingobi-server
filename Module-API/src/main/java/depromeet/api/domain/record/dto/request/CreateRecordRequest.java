@@ -1,6 +1,7 @@
 package depromeet.api.domain.record.dto.request;
 
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.Builder;
@@ -12,16 +13,15 @@ import lombok.Getter;
  */
 @Builder
 @Getter
-@Builder
 public class CreateRecordRequest {
     @NotNull(message = "price can not be null")
     private int price;
 
-    @NotNull(message = "name can not be null")
+    @NotBlank(message = "name can not be null")
     @Size(min = 1, max = 20)
     private String name;
 
-    @NotNull(message = "content can not be null")
+    @NotBlank(message = "content can not be null")
     @Size(min = 1, max = 80)
     private String content;
 
