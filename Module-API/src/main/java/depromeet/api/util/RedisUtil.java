@@ -1,14 +1,14 @@
 package depromeet.api.util;
 
 
+import depromeet.common.annotation.Util;
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.stereotype.Service;
 
-@Service
 @RequiredArgsConstructor
+@Util
 public class RedisUtil {
 
     private final RedisTemplate redisTemplate;
@@ -23,7 +23,7 @@ public class RedisUtil {
         valueOperations.set(key, value);
     }
 
-    public void setDataExpire(String key, String value, long duration) {
+    public void setDataExpire(String key, String value, int duration) {
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
         Duration expiredDuration = Duration.ofSeconds(duration);
         valueOperations.set(key, value, expiredDuration);
