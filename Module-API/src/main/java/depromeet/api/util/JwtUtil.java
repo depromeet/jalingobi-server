@@ -83,7 +83,7 @@ public class JwtUtil {
         Claims claims = Jwts.claims();
         claims.put("socialId", socialId);
         claims.put("platform", platform);
-        claims.put("role", role.getName());
+        claims.put("role", role.getAuthority());
 
         return Jwts.builder()
                 .setSubject(socialId)
