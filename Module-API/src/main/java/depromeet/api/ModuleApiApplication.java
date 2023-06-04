@@ -13,6 +13,13 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
             ModuleApiApplication.class,
             ModuleCommonApplication.class,
             ModuleDomainApplication.class
+        },
+        exclude = {
+            org.springframework.cloud.aws.autoconfigure.context.ContextInstanceDataAutoConfiguration
+                    .class,
+            org.springframework.cloud.aws.autoconfigure.context.ContextStackAutoConfiguration.class,
+            org.springframework.cloud.aws.autoconfigure.context
+                    .ContextRegionProviderAutoConfiguration.class
         })
 public class ModuleApiApplication {
 

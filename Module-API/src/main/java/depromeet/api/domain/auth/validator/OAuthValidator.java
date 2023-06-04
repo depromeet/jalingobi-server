@@ -32,7 +32,7 @@ public class OAuthValidator {
 
     public void sigVerification(String idToken) {
         // 토큰 서명 검증
-        Jws<Claims> oidcTokenJws = sigVerificationAndGetJws(idToken);
+        sigVerificationAndGetJws(idToken);
     }
 
     public UserInfo reqUserInfo(String accessToken) {
@@ -95,5 +95,11 @@ public class OAuthValidator {
         String[] splitToken = token.split("\\.");
         if (splitToken.length != 3) throw InvalidJwtException.EXCEPTION;
         return splitToken[0] + "." + splitToken[1] + ".";
+    }
+
+    public UserInfo validateToken(String idToken, String accessToken) {
+        sigVerification(idToken);
+        UserInfo userInfo = reqUserInfo(accessToken);
+        return userInfo;
     }
 }

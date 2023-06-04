@@ -1,10 +1,7 @@
 package depromeet.domain.user.domain;
 
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 import lombok.*;
 
 @Builder
@@ -12,6 +9,12 @@ import lombok.*;
 @Embeddable
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(
+        uniqueConstraints = {
+            @UniqueConstraint(
+                    name = "UniqueSocialId",
+                    columnNames = {"social_id"})
+        })
 public class Social {
 
     @Column(name = "social_id", unique = true, nullable = false)

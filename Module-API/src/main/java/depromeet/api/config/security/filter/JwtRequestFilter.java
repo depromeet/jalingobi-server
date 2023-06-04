@@ -29,7 +29,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         if (token == null) {
             request.setAttribute(
                     "exception", CustomExceptionStatus.NOT_AUTHENTICATED_ACCOUNT.getMessage());
-        } else if (jwtUtil.validateToken(token, request)) {
+        } else if (jwtUtil.verifyToken(token)) {
             Authentication authentication = jwtUtil.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
