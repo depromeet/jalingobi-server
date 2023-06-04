@@ -17,14 +17,13 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class RecordController {
     private final CreateRecordUseCase createRecordUseCase;
-    private final ResponseService responseService;
 
     @PostMapping("/{challengeRoomId}/create")
     public Response<CreateRecordResponse> createRecord(
             @PathVariable Long challengeRoomId,
             @RequestBody @Valid CreateRecordRequest createRecordRequest) {
 
-        return responseService.getDataResponse(
+        return ResponseService.getDataResponse(
                 createRecordUseCase.execute(
                         challengeRoomId, getCurrentUserSocialId(), createRecordRequest));
     }

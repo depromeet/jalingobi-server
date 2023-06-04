@@ -41,6 +41,6 @@ public class CustomExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     protected CommonResponse customException(CustomException customException) {
         CustomExceptionStatus status = customException.getCustomExceptionStatus();
-        return responseService.getExceptionResponse(status);
+        return ResponseService.getExceptionResponse(status);
     }
 }

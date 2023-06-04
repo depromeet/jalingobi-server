@@ -15,8 +15,6 @@ import depromeet.api.domain.challenge.dto.request.CreateChallengeRequest;
 import depromeet.api.domain.challenge.dto.response.CreateChallengeResponse;
 import depromeet.api.domain.challenge.usecase.CreateChallengeUseCase;
 import depromeet.api.util.AuthenticationUtil;
-import depromeet.common.response.Response;
-import depromeet.common.response.ResponseService;
 import depromeet.domain.challenge.domain.Category;
 import depromeet.domain.rule.domain.Rule;
 import java.time.LocalDate;
@@ -51,8 +49,6 @@ public class ChallengeControllerTest {
     @Autowired MockMvc mockMvc;
 
     @Autowired ObjectMapper objectMapper;
-
-    @MockBean ResponseService responseService;
 
     @MockBean CreateChallengeUseCase challengeUseCase;
 
@@ -97,12 +93,10 @@ public class ChallengeControllerTest {
                         .endAt(LocalDate.of(2023, 6, 15))
                         .build();
 
-        Response result = new Response();
-        result.setResult(response);
         String socialId = "socialId";
 
         when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
-        when(responseService.getDataResponse(any())).thenReturn(result);
+        when(challengeUseCase.execute(any(), anyString())).thenReturn(response);
 
         String challengeRequest = objectMapper.writeValueAsString(request);
 

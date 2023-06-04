@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-    private final ResponseService responseService;
     private final KakaoAuthUseCase kakaoAuthUseCase;
     private final AuthUseCase authUseCase;
     private final CookieUtil cookieUtil;
@@ -33,7 +32,7 @@ public class AuthController {
 
         KakaoAuthResponse kakaoAuthResponse = kakaoAuthUseCase.execute(reqAuth);
         response.addCookie(cookieUtil.setRefreshToken(kakaoAuthResponse.getRefreshToken()));
-        return responseService.getDataResponse(kakaoAuthResponse);
+        return ResponseService.getDataResponse(kakaoAuthResponse);
     }
 
     @PostMapping("/auth/refresh")
@@ -44,6 +43,6 @@ public class AuthController {
         String refreshToken = cookieUtil.getCookie(httpServletRequest, REFRESH_TOKEN).getValue();
         String accessToken = authUseCase.checkRefreshToken(token, refreshToken);
         httpServletResponse.setHeader("AUTHORIZATION", accessToken);
-        return responseService.getSuccessResponse();
+        return ResponseService.getSuccessResponse();
     }
 }

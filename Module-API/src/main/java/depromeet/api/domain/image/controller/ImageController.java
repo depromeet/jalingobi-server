@@ -19,13 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class ImageController {
 
     private final IssuePresignedUrlUseCase getPresignedUrlUseCase;
-    private final ResponseService responseService;
 
     // type은 [record, profile, challenge] 이게 폴더 명이 될거임.
     @PostMapping("/presigned")
     public Response<IssuePresignedUrlResponse> createPresigned(
             @RequestBody IssuePresignedUrlRequest getPresignedUrlRequest) {
-        return responseService.getDataResponse(
+        return ResponseService.getDataResponse(
                 getPresignedUrlUseCase.execute(
                         getCurrentUserSocialId(),
                         getPresignedUrlRequest.getImageFileExtension(),
