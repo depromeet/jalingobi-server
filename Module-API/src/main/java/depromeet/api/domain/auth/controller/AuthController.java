@@ -10,6 +10,7 @@ import depromeet.common.response.CommonResponse;
 import depromeet.common.response.ResponseService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +28,7 @@ public class AuthController {
 
     @PostMapping("/auth/kakao")
     public CommonResponse auth(
-            @RequestBody KakaoAuthRequest reqAuth, HttpServletResponse response) {
+            @RequestBody @Valid KakaoAuthRequest reqAuth, HttpServletResponse response) {
 
         KakaoAuthResponse kakaoAuthResponse = kakaoAuthUseCase.execute(reqAuth);
         response.addCookie(cookieUtil.setRefreshToken(kakaoAuthResponse.getRefreshToken()));
