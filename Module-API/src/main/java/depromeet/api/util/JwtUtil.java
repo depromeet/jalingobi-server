@@ -2,6 +2,7 @@ package depromeet.api.util;
 
 
 import depromeet.api.domain.auth.dto.TokenInfo;
+import depromeet.common.annotation.Util;
 import depromeet.domain.user.domain.Platform;
 import depromeet.domain.user.domain.Role;
 import io.jsonwebtoken.*;
@@ -17,29 +18,33 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Component;
 
-@Component
 @RequiredArgsConstructor
+@Util
 public class JwtUtil {
 
     private final RedisUtil redisUtil;
     private final UserDetailsService userDetailsService;
 
-    static final long ACCESS_TOKEN_VALIDATION_SECOND = 60 * 60 * 1000L;
-    public static final long REFRESH_TOKEN_VALIDATION_SECOND = 60 * 60 * 24 * 7 * 1000L;
-    public static final String ACCESS_TOKEN_NAME = "accessToken";
-    public static final String REFRESH_TOKEN_NAME = "refreshToken";
-
-    @Value("${spring.jwt.secret}")
+    @Value("${jwt.secret}")
     private String SECRET_KEY;
+
+    @Value("${jwt.expiry.refresh-token}")
+    private int refreshTokenExpiryDate;
+
+    @Value("${jwt.expiry.access-token}")
+    private int accessTokenExpiryDate;
+
+    public int getRefreshTokenExpiryDate() {
+        return refreshTokenExpiryDate;
+    }
 
     private Key getSigningKey(String secretKey) {
         byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public Claims extractAllClaims(String token) throws ExpiredJwtException {
+    private Claims extractAllClaims(String token) throws ExpiredJwtException {
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey(SECRET_KEY))
                 .build()
@@ -67,18 +72,18 @@ public class JwtUtil {
     }
 
     public String generateAccessToken(String socialId, Role role, Platform platform) {
-        return doGenerateToken(socialId, platform, role, ACCESS_TOKEN_VALIDATION_SECOND);
+        return doGenerateToken(socialId, platform, role, accessTokenExpiryDate);
     }
 
     public String generateRefreshToken(String socialId, Role role, Platform platform) {
-        return doGenerateToken(socialId, platform, role, REFRESH_TOKEN_VALIDATION_SECOND);
+        return doGenerateToken(socialId, platform, role, refreshTokenExpiryDate);
     }
 
-    public String doGenerateToken(String socialId, Platform platform, Role role, long expireTime) {
+    public String doGenerateToken(String socialId, Platform platform, Role role, int expireTime) {
         Claims claims = Jwts.claims();
         claims.put("socialId", socialId);
         claims.put("platform", platform);
-        claims.put("role", role.getName());
+        claims.put("role", role.getAuthority());
 
         return Jwts.builder()
                 .setSubject(socialId)
@@ -109,8 +114,8 @@ public class JwtUtil {
         }
     }
 
-    public void storeRefreshToken(String key, String value) {
-        redisUtil.setDataExpire(key, value, REFRESH_TOKEN_VALIDATION_SECOND);
+    private void storeRefreshToken(String key, String value) {
+        redisUtil.setDataExpire(key, value, refreshTokenExpiryDate);
     }
 
     public TokenInfo issueToken(String id, Platform platform, Role role) {
