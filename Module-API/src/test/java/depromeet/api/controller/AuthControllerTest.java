@@ -48,22 +48,21 @@ public class AuthControllerTest {
     @Test
     @DisplayName("Refresh Token을 이용한 Access Token 재발급")
     public void refreshTokenTest() throws Exception {
-        String token = "access-token";
         String refreshToken = "refresh-token";
         String newAccessToken = "new-access-token";
         Cookie cookie = new Cookie("REFRESH_TOKEN", refreshToken);
 
         MockHttpServletRequestBuilder requestBuilder =
                 MockMvcRequestBuilders.post("/auth/refresh")
-                        .header("AUTHORIZATION", token)
                         .header("REFRESH-TOKEN", refreshToken)
                         .contentType(MediaType.APPLICATION_JSON);
 
         when(cookieUtil.getCookie(any(), anyString())).thenReturn(cookie);
-        when(authUseCase.checkRefreshToken(anyString(), anyString())).thenReturn(newAccessToken);
+        when(authUseCase.checkRefreshToken(anyString())).thenReturn(newAccessToken);
 
         mockMvc.perform(requestBuilder)
                 .andDo(print())
-                .andExpectAll(status().isOk(), header().string("AUTHORIZATION", newAccessToken));
+                .andExpectAll(
+                        status().isOk(), jsonPath("$.result.accessToken").value(newAccessToken));
     }
 }
