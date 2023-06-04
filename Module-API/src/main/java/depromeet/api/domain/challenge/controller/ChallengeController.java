@@ -17,12 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChallengeController {
 
     private final CreateChallengeUseCase challengeUseCase;
-    private final ResponseService responseService;
 
     @PostMapping("/challenge")
     public CommonResponse createChallenge(
             @RequestBody @Valid CreateChallengeRequest ChallengeRequest) {
-        return responseService.getDataResponse(
+        return ResponseService.getDataResponse(
                 challengeUseCase.execute(ChallengeRequest, getCurrentUserSocialId()));
     }
 }
