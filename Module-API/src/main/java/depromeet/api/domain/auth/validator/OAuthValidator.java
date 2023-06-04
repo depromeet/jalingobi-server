@@ -32,7 +32,7 @@ public class OAuthValidator {
 
     public void sigVerification(String idToken) {
         // 토큰 서명 검증
-        Jws<Claims> oidcTokenJws = sigVerificationAndGetJws(idToken);
+        sigVerificationAndGetJws(idToken);
     }
 
     public UserInfo reqUserInfo(String accessToken) {

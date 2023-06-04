@@ -31,4 +31,13 @@ public class ResponseService {
         response.setMessage(status.getMessage());
         return response;
     }
+
+    public <T> Response<T> getExceptionResponse(CustomExceptionStatus status, T errorMessages) {
+        Response<T> response = new Response<>();
+        response.setIsSuccess(status.isSuccess());
+        response.setCode(status.getCode());
+        response.setMessage(status.getMessage());
+        response.setResult(errorMessages);
+        return response;
+    }
 }
