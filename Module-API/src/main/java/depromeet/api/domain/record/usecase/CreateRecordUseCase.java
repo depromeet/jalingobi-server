@@ -4,6 +4,7 @@ package depromeet.api.domain.record.usecase;
 import depromeet.api.domain.record.dto.request.CreateRecordRequest;
 import depromeet.api.domain.record.dto.response.CreateRecordResponse;
 import depromeet.api.domain.record.mapper.RecordMapper;
+import depromeet.api.domain.record.validator.RecordValidator;
 import depromeet.common.annotation.UseCase;
 import depromeet.domain.challenge.adaptor.ChallengeAdaptor;
 import depromeet.domain.challenge.domain.Challenge;
@@ -23,9 +24,13 @@ public class CreateRecordUseCase {
     private final UserAdaptor userAdaptor;
     private final ChallengeAdaptor challengeAdaptor;
 
+    private final RecordValidator recordValidator;
+
     @Transactional
     public CreateRecordResponse execute(
             Long challengeRoomId, String socialId, CreateRecordRequest createRecordRequest) {
+
+        recordValidator.validateEvaluationType(createRecordRequest.getEvaluation());
 
         User currentUser = userAdaptor.findUser(socialId);
         Challenge challenge = challengeAdaptor.findChallenge(challengeRoomId);

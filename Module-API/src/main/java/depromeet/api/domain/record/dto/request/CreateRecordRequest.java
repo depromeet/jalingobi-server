@@ -35,6 +35,5 @@ public class CreateRecordRequest {
 
     @Schema(nullable = false, description = "지출 평가, [1,2,3,4,5] 중에서 선택 가능합니다.")
     @NotNull(message = "evaluation can not be null")
-    //    @ValidEnum(enumClass = RecordEvaluation.class, message = "Invalid evaluation parameters")
     private int evaluation;
 }
