@@ -22,9 +22,6 @@ class RecordEvaluationTest {
 
         RecordEvaluation enumFour = RecordEvaluation.getEnumTypeByValue(4);
         Assertions.assertEquals(RecordEvaluation.FOUR, enumFour);
-
-        RecordEvaluation enumFive = RecordEvaluation.getEnumTypeByValue(5);
-        Assertions.assertEquals(RecordEvaluation.FIVE, enumFive);
     }
 
     @Test

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class RecordValidatorTest {
 
     @Test
-    @DisplayName("[예외] 평가 1,2,3,4,5가 아닌 점수가 들어왔을 때")
+    @DisplayName("[예외] 평가 1,2,3,4가 아닌 점수가 들어왔을 때")
     public void outOfRangeTest() throws Exception {
         // given
         RecordValidator recordValidator = new RecordValidator();

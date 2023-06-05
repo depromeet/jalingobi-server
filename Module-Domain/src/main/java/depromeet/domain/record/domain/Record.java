@@ -30,7 +30,7 @@ public class Record extends BaseTime {
     @Column(nullable = false)
     private int price;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 16, nullable = false)
     private String name;
 
     @Column(length = 80, nullable = false)
