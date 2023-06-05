@@ -1,6 +1,7 @@
 package depromeet.api.domain.auth.feign;
 
 
+import depromeet.api.domain.auth.feign.dto.UserInfo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;

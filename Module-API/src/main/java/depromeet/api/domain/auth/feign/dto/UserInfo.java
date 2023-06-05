@@ -1,4 +1,4 @@
-package depromeet.api.domain.auth.feign;
+package depromeet.api.domain.auth.feign.dto;
 
 
 import lombok.Data;

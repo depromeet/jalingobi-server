@@ -25,7 +25,7 @@ public class AuthController {
     private final CookieUtil cookieUtil;
 
     @PostMapping("/auth/kakao")
-    public CommonResponse auth(
+    public CommonResponse authKakao(
             @RequestBody @Valid KakaoAuthRequest reqAuth, HttpServletResponse response) {
 
         KakaoAuthResponse kakaoAuthResponse = kakaoAuthUseCase.execute(reqAuth);
