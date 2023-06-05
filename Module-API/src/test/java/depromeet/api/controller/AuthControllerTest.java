@@ -42,15 +42,15 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 @AutoConfigureMockMvc(addFilters = false)
 public class AuthControllerTest {
 
-    @Autowired MockMvc mockMvc;
+    @Autowired private MockMvc mockMvc;
 
-    @Autowired ObjectMapper objectMapper;
+    @Autowired private ObjectMapper objectMapper;
 
-    @MockBean KakaoAuthUseCase kakaoAuthUseCase;
+    @MockBean private KakaoAuthUseCase kakaoAuthUseCase;
 
-    @MockBean CookieUtil cookieUtil;
+    @MockBean private CookieUtil cookieUtil;
 
-    @MockBean AuthUseCase authUseCase;
+    @MockBean private AuthUseCase authUseCase;
 
     @Test
     public void authKakao_인증_성공() throws Exception {
