@@ -1,9 +1,9 @@
 package depromeet.domain.record.adaptor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import depromeet.domain.challenge.domain.Category;
 import depromeet.domain.challenge.domain.Challenge;
@@ -70,12 +70,12 @@ class RecordAdaptorTest {
                 Record.createRecord(
                         challenge, user, 4000, "커피", "커피는 무죄", "", RecordEvaluation.ONE);
 
+        given(recordRepository.save(record)).willReturn(record);
+
         // when
-        when(recordRepository.save(record)).thenReturn(record);
         Record savedRecord = recordAdaptor.save(record);
 
         // then
-        // 예상한 결과와 실제 결과가 일치하는지 확인
         verify(recordRepository, times(1)).save(record);
         Assertions.assertThat(savedRecord.getName()).isEqualTo(record.getName());
         assertEquals(record, savedRecord);
