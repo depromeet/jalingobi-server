@@ -2,12 +2,14 @@ package depromeet.domain.challenge.domain;
 
 
 import depromeet.domain.user.domain.User;
-import java.util.Objects;
 import javax.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
+@Builder
 @Getter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserChallenge {
 
     @Id
@@ -26,28 +28,4 @@ public class UserChallenge {
 
     @Column(name = "current_charge")
     private int currentCharge;
-
-    protected UserChallenge() {}
-
-    public UserChallenge(User user, Challenge challenge) {
-        this.user = user;
-        this.challenge = challenge;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        UserChallenge userChallenge = (UserChallenge) o;
-        return Objects.equals(id, userChallenge.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }
