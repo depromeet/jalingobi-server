@@ -4,7 +4,7 @@ package depromeet.api.domain.auth.usecase;
 import depromeet.api.domain.auth.dto.TokenInfo;
 import depromeet.api.domain.auth.dto.request.KakaoAuthRequest;
 import depromeet.api.domain.auth.dto.response.KakaoAuthResponse;
-import depromeet.api.domain.auth.feign.UserInfo;
+import depromeet.api.domain.auth.feign.dto.UserInfo;
 import depromeet.api.domain.auth.mapper.AuthMapper;
 import depromeet.api.domain.auth.validator.OAuthValidator;
 import depromeet.api.util.JwtUtil;
