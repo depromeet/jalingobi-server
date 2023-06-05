@@ -3,8 +3,8 @@ package depromeet.api.domain.auth.controller;
 
 import depromeet.api.domain.auth.dto.request.KakaoAuthRequest;
 import depromeet.api.domain.auth.dto.response.KakaoAuthResponse;
-import depromeet.api.domain.auth.usecase.AuthUseCase;
 import depromeet.api.domain.auth.usecase.KakaoAuthUseCase;
+import depromeet.api.domain.auth.usecase.RefreshTokenUseCase;
 import depromeet.api.util.CookieUtil;
 import depromeet.common.response.CommonResponse;
 import depromeet.common.response.Response;
@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final KakaoAuthUseCase kakaoAuthUseCase;
-    private final AuthUseCase authUseCase;
+    private final RefreshTokenUseCase refreshTokenUseCase;
     private final CookieUtil cookieUtil;
 
     @Operation(
@@ -62,7 +62,7 @@ public class AuthController {
     @PostMapping("/refresh")
     public CommonResponse refreshToken(HttpServletRequest request) {
         String refreshToken = cookieUtil.getCookie(request, "RefreshToken").getValue();
-        String accessToken = authUseCase.checkRefreshToken(refreshToken);
+        String accessToken = refreshTokenUseCase.checkRefreshToken(refreshToken);
         return ResponseService.getDataResponse(KakaoAuthResponse.of(refreshToken, accessToken));
     }
 }

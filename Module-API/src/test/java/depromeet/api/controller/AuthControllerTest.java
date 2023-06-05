@@ -13,8 +13,8 @@ import depromeet.api.config.security.filter.JwtRequestFilter;
 import depromeet.api.domain.auth.controller.AuthController;
 import depromeet.api.domain.auth.dto.request.KakaoAuthRequest;
 import depromeet.api.domain.auth.dto.response.KakaoAuthResponse;
-import depromeet.api.domain.auth.usecase.AuthUseCase;
 import depromeet.api.domain.auth.usecase.KakaoAuthUseCase;
+import depromeet.api.domain.auth.usecase.RefreshTokenUseCase;
 import depromeet.api.util.CookieUtil;
 import javax.servlet.http.Cookie;
 import org.junit.jupiter.api.DisplayName;
@@ -50,7 +50,7 @@ public class AuthControllerTest {
 
     @MockBean private CookieUtil cookieUtil;
 
-    @MockBean private AuthUseCase authUseCase;
+    @MockBean private RefreshTokenUseCase refreshTokenUseCase;
 
     @Test
     public void authKakao_인증_성공() throws Exception {
@@ -91,7 +91,7 @@ public class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON);
 
         when(cookieUtil.getCookie(any(), anyString())).thenReturn(cookie);
-        when(authUseCase.checkRefreshToken(anyString())).thenReturn(newAccessToken);
+        when(refreshTokenUseCase.checkRefreshToken(anyString())).thenReturn(newAccessToken);
 
         mockMvc.perform(requestBuilder)
                 .andDo(print())
