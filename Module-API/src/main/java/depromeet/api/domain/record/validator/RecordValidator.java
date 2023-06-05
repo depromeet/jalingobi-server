@@ -4,8 +4,10 @@ package depromeet.api.domain.record.validator;
 import depromeet.domain.record.domain.Evaluation;
 import depromeet.domain.record.exception.RecordEvaluationNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 @Slf4j
+@Component
 public class RecordValidator {
     public void validateEvaluationType(int evaluation) {
         try {

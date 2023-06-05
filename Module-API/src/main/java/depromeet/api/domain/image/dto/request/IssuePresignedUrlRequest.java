@@ -4,17 +4,26 @@ package depromeet.api.domain.image.dto.request;
 import depromeet.api.domain.image.dto.ImageFileExtension;
 import depromeet.api.domain.image.dto.ImageUploadType;
 import depromeet.common.annotation.ValidEnum;
+import io.swagger.v3.oas.annotations.media.Schema;
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
+@Builder
 @Getter
 @AllArgsConstructor
 public class IssuePresignedUrlRequest {
 
-    @ValidEnum(enumClass = ImageFileExtension.class, message = "Invalid evaluation parameters")
+    @Schema(nullable = false, description = "JPG, PNG, JPEG")
+    @NotBlank(message = "파일 확장자를 입력해주세요.")
+    @ValidEnum(
+            enumClass = ImageFileExtension.class,
+            message = "Invalid ImageFileExtension parameters")
     private ImageFileExtension imageFileExtension;
 
-    // type은 [record, userProfile, challenge] 이게 폴더 명이 될거임.
-    @ValidEnum(enumClass = ImageUploadType.class, message = "Invalid evaluation parameters")
+    @Schema(nullable = false, description = "RECODE, PROFILE, CHALLENGE")
+    @NotBlank(message = "이미지가 업로드 되는 타입(RECODE, PROFILE, CHALLENGE)을 입력해주세요.")
+    @ValidEnum(enumClass = ImageUploadType.class, message = "Invalid ImageUploadType parameters")
     private ImageUploadType type;
 }
