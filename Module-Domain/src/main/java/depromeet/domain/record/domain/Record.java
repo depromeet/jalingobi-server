@@ -1,16 +1,17 @@
 package depromeet.domain.record.domain;
 
 
+import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.config.BaseTime;
+import depromeet.domain.user.domain.User;
 import javax.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Builder
 @Entity
 @Table(name = "challenge_record")
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Record extends BaseTime {
     @Id
@@ -18,16 +19,18 @@ public class Record extends BaseTime {
     @Column(name = "challenge_record_id")
     private Long id;
 
-    @Column(nullable = false)
-    private Long challengeRoomId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "challenge_id")
+    private Challenge challenge;
 
-    @Column(nullable = false)
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(nullable = false)
     private int price;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 16, nullable = false)
     private String name;
 
     @Column(length = 80, nullable = false)
@@ -37,38 +40,20 @@ public class Record extends BaseTime {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private RecordEvaluation evaluation;
+    private Evaluation evaluation;
 
     /** 생성 메서드 */
-    @Builder
-    public Record(
-            Long challengeRoomId,
-            Long userId,
-            int price,
-            String name,
-            String content,
-            String imgUrl,
-            RecordEvaluation evaluation) {
-        this.challengeRoomId = challengeRoomId;
-        this.userId = userId;
-        this.price = price;
-        this.name = name;
-        this.content = content;
-        this.imgUrl = imgUrl;
-        this.evaluation = evaluation;
-    }
-
     public static Record createRecord(
-            Long challengeRoomId,
-            Long userId,
+            Challenge challenge,
+            User user,
             int price,
             String name,
             String content,
             String imgUrl,
-            RecordEvaluation evaluation) {
+            Evaluation evaluation) {
         return Record.builder()
-                .challengeRoomId(challengeRoomId)
-                .userId(userId)
+                .challenge(challenge)
+                .user(user)
                 .price(price)
                 .name(name)
                 .content(content)
