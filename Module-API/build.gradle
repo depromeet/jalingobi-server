@@ -4,8 +4,23 @@ jar {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
-    implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.12'
+
+    // Feign
+    api 'io.github.openfeign:feign-httpclient:12.1'
+    api 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.4'
+
+    // S3
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+    implementation project(':Module-Domain')
+    implementation project(':Module-Common')
+
+    testImplementation 'org.mockito:mockito-inline'
 }
 
 test {

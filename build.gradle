@@ -1,14 +1,14 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.11'
     id 'java'
-//    id("io.freefair.lombok") version "8.0.1"
+    id 'org.springframework.boot' version '2.7.11'
+    id 'com.diffplug.spotless' version '6.11.0'
 }
 
 repositories {
     mavenCentral()
 }
 
-//jar.enabled = false
+jar.enabled = false
 bootJar.enabled = false
 
 subprojects {
@@ -22,6 +22,7 @@ subprojects {
     apply plugin: 'org.springframework.boot'
     // spring boot dependency를 사용하여 사용중인 부트 버전에서 자동으로 의존성을 가져온다.
     apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'jacoco'
 
     configurations {
         compileOnly {
@@ -37,10 +38,72 @@ subprojects {
     dependencies {
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+        implementation 'org.springframework.boot:spring-boot-autoconfigure'
+        testImplementation 'org.springframework.security:spring-security-test'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        runtimeOnly 'com.h2database:h2'
+    }
+
+    jacoco {
+        toolVersion = "0.8.10"
+    }
+
+    jacocoTestReport {
+        reports {
+            html.enabled true
+            xml.enabled true
+            csv.enabled false
+
+            html.destination file("${buildDir}/jacoco/index.html")
+            xml.destination file("${buildDir}/jacoco/index.xml")
+//        csv.destination file("${buildDir}/jacoco/index.csv")
+        }
+        def Qdomains = []
+
+        for (qPattern in '**/QA'..'**/QZ') { // qPattern = '**/QA', '**/QB', ... '*.QZ'
+            Qdomains.add(qPattern + '*')
+        }
+
+        afterEvaluate {
+            classDirectories.setFrom(
+                    files(classDirectories.files.collect {
+                        fileTree(dir: it, excludes: [
+                                "**/*Application*",
+                                "**/*Config*",
+                                "**/*Dto*",
+                                "**/*Request*",
+                                "**/*Response*",
+                                "**/*Interceptor*",
+                                "**/*Exception*"
+                        ] + Qdomains)
+                    })
+            )
+        }
     }
 
     test {
         useJUnitPlatform()
+        finalizedBy jacocoTestReport
     }
 }
+
+spotless {
+    java {
+        target("**/*.java")
+        targetExclude("**/SecurityConfig.java")
+        googleJavaFormat().aosp()  // 구글 자바 포맷 적용
+        importOrder()  // import 순서 정의
+        removeUnusedImports()   // 사용하지 않는 import 제거
+        trimTrailingWhitespace()   // 공백 제거
+        endWithNewline()  // 끝부분 New Line 처리
+    }
+}
+
+tasks.register('updateGitHooks', Copy) {
+    from './scripts/pre-commit'
+    into './.git/hooks'
+    fileMode 0775
+}
+compileJava.dependsOn updateGitHooks
