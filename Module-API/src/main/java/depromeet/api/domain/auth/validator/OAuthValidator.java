@@ -3,9 +3,9 @@ package depromeet.api.domain.auth.validator;
 import static org.springframework.security.oauth2.jwt.JoseHeaderNames.KID;
 
 import depromeet.api.domain.auth.exception.InvalidJwtException;
-import depromeet.api.domain.auth.feign.Keys;
-import depromeet.api.domain.auth.feign.Keys.PubKey;
-import depromeet.api.domain.auth.feign.UserInfo;
+import depromeet.api.domain.auth.feign.dto.Keys;
+import depromeet.api.domain.auth.feign.dto.Keys.PubKey;
+import depromeet.api.domain.auth.feign.dto.UserInfo;
 import io.jsonwebtoken.*;
 import java.math.BigInteger;
 import java.security.Key;

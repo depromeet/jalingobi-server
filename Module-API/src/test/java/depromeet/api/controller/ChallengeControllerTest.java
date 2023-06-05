@@ -16,7 +16,7 @@ import depromeet.api.domain.challenge.dto.response.CreateChallengeResponse;
 import depromeet.api.domain.challenge.usecase.CreateChallengeUseCase;
 import depromeet.api.util.AuthenticationUtil;
 import depromeet.domain.challenge.domain.Category;
-import depromeet.domain.rule.domain.Rule;
+import depromeet.domain.rule.domain.ChallengeRule;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,9 +74,9 @@ public class ChallengeControllerTest {
                         .hashtag("#마라탕 #5만원챌린지")
                         .build();
 
-        List<Rule> rules = new ArrayList<>();
-        rules.add(Rule.builder().content("잡담 금지").build());
-        rules.add(Rule.builder().content("개인 정보 올리지 않기").build());
+        List<ChallengeRule> rules = new ArrayList<>();
+        rules.add(ChallengeRule.builder().content("잡담 금지").build());
+        rules.add(ChallengeRule.builder().content("개인 정보 올리지 않기").build());
 
         CreateChallengeResponse response =
                 CreateChallengeResponse.builder()

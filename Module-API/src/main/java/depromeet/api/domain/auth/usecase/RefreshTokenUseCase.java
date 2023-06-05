@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
-public class AuthUseCase {
+public class RefreshTokenUseCase {
 
     private final JwtUtil jwtUtil;
     private final UserAdaptor userAdaptor;
