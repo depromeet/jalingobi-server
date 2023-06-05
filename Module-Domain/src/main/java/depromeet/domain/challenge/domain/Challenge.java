@@ -2,7 +2,8 @@ package depromeet.domain.challenge.domain;
 
 
 import depromeet.domain.config.BaseTime;
-import depromeet.domain.user.domain.User;
+import depromeet.domain.rule.domain.ChallengeRule;
+import java.util.List;
 import javax.persistence.*;
 import lombok.*;
 
@@ -36,9 +37,16 @@ public class Challenge extends BaseTime {
     @Column(name = "available_count", nullable = false)
     private int availableCount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Column(name = "created_by", nullable = false)
+    private String createdBy;
+
+    @Column(name = "challenge_rule")
+    @OneToMany(
+            mappedBy = "challenge",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.PERSIST,
+            orphanRemoval = true)
+    private List<ChallengeRule> challengeRules;
 
     @Embedded private Duration duration;
 
@@ -49,7 +57,8 @@ public class Challenge extends BaseTime {
             String imgUrl,
             String hashtag,
             int availableCount,
-            User user,
+            String createdBy,
+            List<ChallengeRule> challengeRules,
             Duration duration) {
         return Challenge.builder()
                 .category(category)
@@ -58,8 +67,14 @@ public class Challenge extends BaseTime {
                 .imgUrl(imgUrl)
                 .hashtag(hashtag)
                 .availableCount(availableCount)
-                .user(user)
+                .createdBy(createdBy)
+                .challengeRules(challengeRules)
                 .duration(duration)
                 .build();
+    }
+
+    public void addRules(List<ChallengeRule> rules) {
+        challengeRules.addAll(rules);
+        rules.forEach(rule -> rule.setChallenge(this));
     }
 }

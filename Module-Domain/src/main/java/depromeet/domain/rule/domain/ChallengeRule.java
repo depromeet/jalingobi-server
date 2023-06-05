@@ -10,7 +10,7 @@ import lombok.Getter;
 @Getter
 @Entity
 @Table(name = "challenge_rule")
-public class Rule {
+public class ChallengeRule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,11 @@ public class Rule {
     @JoinColumn(name = "challenge_id", nullable = false)
     private Challenge challenge;
 
-    public static Rule createRule(String content, Challenge challenge) {
-        return Rule.builder().content(content).challenge(challenge).build();
+    public static ChallengeRule createRule(String content, Challenge challenge) {
+        return ChallengeRule.builder().content(content).challenge(challenge).build();
+    }
+
+    public void setChallenge(Challenge challenge) {
+        this.challenge = challenge;
     }
 }
