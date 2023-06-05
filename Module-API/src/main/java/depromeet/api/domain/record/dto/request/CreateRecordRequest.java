@@ -2,9 +2,7 @@ package depromeet.api.domain.record.dto.request;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import javax.validation.constraints.*;
-
 import lombok.Builder;
 import lombok.Getter;
 

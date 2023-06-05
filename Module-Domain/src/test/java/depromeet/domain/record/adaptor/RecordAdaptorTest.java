@@ -8,8 +8,8 @@ import static org.mockito.Mockito.verify;
 import depromeet.domain.challenge.domain.Category;
 import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.challenge.domain.Duration;
+import depromeet.domain.record.domain.Evaluation;
 import depromeet.domain.record.domain.Record;
-import depromeet.domain.record.domain.RecordEvaluation;
 import depromeet.domain.record.repository.RecordRepository;
 import depromeet.domain.user.domain.Platform;
 import depromeet.domain.user.domain.Profile;
@@ -67,8 +67,7 @@ class RecordAdaptorTest {
                         .build();
 
         Record record =
-                Record.createRecord(
-                        challenge, user, 4000, "커피", "커피는 무죄", "", RecordEvaluation.ONE);
+                Record.createRecord(challenge, user, 4000, "커피", "커피는 무죄", "", Evaluation.ONE);
 
         given(recordRepository.save(record)).willReturn(record);
 

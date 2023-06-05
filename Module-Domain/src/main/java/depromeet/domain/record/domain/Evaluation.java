@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum RecordEvaluation {
+public enum Evaluation {
     ONE(1),
     TWO(2),
     THREE(3),
@@ -16,8 +16,8 @@ public enum RecordEvaluation {
 
     private final int value;
 
-    public static RecordEvaluation getEnumTypeByValue(int value) {
-        return Arrays.stream(RecordEvaluation.values())
+    public static Evaluation getEnumTypeByValue(int value) {
+        return Arrays.stream(Evaluation.values())
                 .filter(type -> type.getValue() == value)
                 .findFirst()
                 .orElseThrow(() -> RecordEvaluationNotFoundException.EXCEPTION);

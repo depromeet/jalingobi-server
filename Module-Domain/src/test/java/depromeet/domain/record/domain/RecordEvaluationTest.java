@@ -11,26 +11,26 @@ class RecordEvaluationTest {
     @Test
     @DisplayName("[Record Evaluation] enum 타입으로 변환하는 테스트")
     void RecordEvaluationTest() throws Exception {
-        RecordEvaluation enumOne = RecordEvaluation.getEnumTypeByValue(1);
-        Assertions.assertEquals(RecordEvaluation.ONE, enumOne);
+        Evaluation enumOne = Evaluation.getEnumTypeByValue(1);
+        Assertions.assertEquals(Evaluation.ONE, enumOne);
 
-        RecordEvaluation enumTwo = RecordEvaluation.getEnumTypeByValue(2);
-        Assertions.assertEquals(RecordEvaluation.TWO, enumTwo);
+        Evaluation enumTwo = Evaluation.getEnumTypeByValue(2);
+        Assertions.assertEquals(Evaluation.TWO, enumTwo);
 
-        RecordEvaluation enumThree = RecordEvaluation.getEnumTypeByValue(3);
-        Assertions.assertEquals(RecordEvaluation.THREE, enumThree);
+        Evaluation enumThree = Evaluation.getEnumTypeByValue(3);
+        Assertions.assertEquals(Evaluation.THREE, enumThree);
 
-        RecordEvaluation enumFour = RecordEvaluation.getEnumTypeByValue(4);
-        Assertions.assertEquals(RecordEvaluation.FOUR, enumFour);
+        Evaluation enumFour = Evaluation.getEnumTypeByValue(4);
+        Assertions.assertEquals(Evaluation.FOUR, enumFour);
     }
 
     @Test
     @DisplayName("[Record Evaluation] 존재하지 않는 enum 타입")
     void RecordEvaluationTest2() throws Exception {
-        assertThatThrownBy(() -> RecordEvaluation.getEnumTypeByValue(6))
+        assertThatThrownBy(() -> Evaluation.getEnumTypeByValue(6))
                 .isInstanceOf(RecordEvaluationNotFoundException.class);
 
-        assertThatThrownBy(() -> RecordEvaluation.getEnumTypeByValue(15))
+        assertThatThrownBy(() -> Evaluation.getEnumTypeByValue(15))
                 .isInstanceOf(RecordEvaluationNotFoundException.class);
     }
 }

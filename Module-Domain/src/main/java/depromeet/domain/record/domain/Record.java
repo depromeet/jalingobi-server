@@ -40,7 +40,7 @@ public class Record extends BaseTime {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private RecordEvaluation evaluation;
+    private Evaluation evaluation;
 
     /** 생성 메서드 */
     public static Record createRecord(
@@ -50,7 +50,7 @@ public class Record extends BaseTime {
             String name,
             String content,
             String imgUrl,
-            RecordEvaluation evaluation) {
+            Evaluation evaluation) {
         return Record.builder()
                 .challenge(challenge)
                 .user(user)
