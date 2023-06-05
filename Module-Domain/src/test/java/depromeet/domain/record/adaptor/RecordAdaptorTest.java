@@ -57,7 +57,7 @@ class RecordAdaptorTest {
                         .imgUrl("")
                         .hashtag("#food")
                         .availableCount(5)
-                        .user(user)
+                        .createdBy("정유니")
                         .duration(
                                 Duration.builder()
                                         .period(10)
