@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class CreateRecordUseCase {
     private final RecordMapper recordMapper;
@@ -26,7 +26,6 @@ public class CreateRecordUseCase {
 
     private final RecordValidator recordValidator;
 
-    @Transactional
     public CreateRecordResponse execute(
             Long challengeRoomId, String socialId, CreateRecordRequest createRecordRequest) {
 
