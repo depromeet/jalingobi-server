@@ -29,7 +29,6 @@ public class CreateRecordUseCase {
     public CreateRecordResponse execute(
             Long challengeRoomId, String socialId, CreateRecordRequest createRecordRequest) {
 
-        recordValidator.validateEvaluationType(createRecordRequest.getEvaluation());
         recordValidator.validateUnparticipatedChallenge(socialId, challengeRoomId);
 
         User currentUser = userAdaptor.findUser(socialId);

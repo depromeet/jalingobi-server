@@ -39,5 +39,7 @@ public class CreateRecordRequest {
 
     @Schema(nullable = false, description = "지출 평가, [1,2,3,4] 중에서 선택 가능합니다.")
     @NotNull(message = "지출 평가를 입력해주세요.")
+    @Min(value = 1, message = "점수는 1부터 시작합니다.")
+    @Max(value = 4, message = "점수는 4이하 입니다.")
     private int evaluation;
 }
