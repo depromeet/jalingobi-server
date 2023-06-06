@@ -1,5 +1,6 @@
 package depromeet.domain.record.exception;
 
+
 import depromeet.common.exception.CustomException;
 import depromeet.common.exception.CustomExceptionStatus;
 
