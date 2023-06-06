@@ -1,7 +1,10 @@
 package depromeet.domain.user.domain;
 
 
+import depromeet.domain.challenge.domain.UserChallenge;
 import depromeet.domain.config.BaseTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 import lombok.*;
 
@@ -24,6 +27,9 @@ public class User extends BaseTime {
     @Enumerated(EnumType.STRING)
     @Column(length = 10, nullable = false)
     private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserChallenge> userChallenges = new ArrayList<>();
 
     public static User registerUser(
             String nickname, String email, String socialId, Platform platform) {

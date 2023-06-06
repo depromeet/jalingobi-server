@@ -3,6 +3,7 @@ package depromeet.domain.challenge.domain;
 
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.rule.domain.ChallengeRule;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import lombok.*;
@@ -39,6 +40,9 @@ public class Challenge extends BaseTime {
 
     @Column(name = "created_by", nullable = false)
     private String createdBy;
+
+    @OneToMany(mappedBy = "challenge")
+    private List<UserChallenge> userChallenges = new ArrayList<>();
 
     @Column(name = "challenge_rule")
     @OneToMany(
