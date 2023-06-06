@@ -19,11 +19,11 @@ public class IssuePresignedUrlRequest {
     @NotBlank(message = "파일 확장자를 입력해주세요.")
     @ValidEnum(
             enumClass = ImageFileExtension.class,
-            message = "Invalid ImageFileExtension parameters")
+            message = "유효하지 않은 ImageFileExtension 파라미터입니다.")
     private ImageFileExtension imageFileExtension;
 
     @Schema(nullable = false, description = "RECODE, PROFILE, CHALLENGE")
     @NotBlank(message = "이미지가 업로드 되는 타입(RECODE, PROFILE, CHALLENGE)을 입력해주세요.")
-    @ValidEnum(enumClass = ImageUploadType.class, message = "Invalid ImageUploadType parameters")
+    @ValidEnum(enumClass = ImageUploadType.class, message = "유효하지 않은 ImageUploadType 파라미터입니다.")
     private ImageUploadType type;
 }
