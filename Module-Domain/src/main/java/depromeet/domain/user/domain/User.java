@@ -37,4 +37,8 @@ public class User extends BaseTime {
         Social social = Social.createSocial(socialId, platform);
         return User.builder().profile(profile).social(social).role(Role.USER).build();
     }
+
+    public boolean isSameUser(String socialId) {
+        return this.social.getId().equals(socialId);
+    }
 }
