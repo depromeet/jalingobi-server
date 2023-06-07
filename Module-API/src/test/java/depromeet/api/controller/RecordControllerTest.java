@@ -15,6 +15,7 @@ import depromeet.api.domain.record.controller.RecordController;
 import depromeet.api.domain.record.dto.request.CreateRecordRequest;
 import depromeet.api.domain.record.dto.response.CreateRecordResponse;
 import depromeet.api.domain.record.usecase.CreateRecordUseCase;
+import depromeet.api.domain.record.usecase.UpdateRecordUseCase;
 import depromeet.api.util.AuthenticationUtil;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterAll;
@@ -51,9 +52,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 @AutoConfigureMockMvc(addFilters = false)
 class RecordControllerTest {
     @Autowired private MockMvc mockMvc;
-
     @MockBean private CreateRecordUseCase createRecordUseCase;
-
+    @MockBean private UpdateRecordUseCase updateRecordUseCase;
     @Autowired private ObjectMapper objectMapper;
 
     private static MockedStatic<AuthenticationUtil> authenticationUtil;
@@ -145,5 +145,42 @@ class RecordControllerTest {
                                             .isAssignableFrom(
                                                     MethodArgumentNotValidException.class));
                         });
+    }
+
+    @Test
+    @DisplayName("[PATCH] 챌린지 기록 수정")
+    public void UpdateRecordTest() throws Exception {
+        // given
+        CreateRecordRequest updateRecordRequest =
+                CreateRecordRequest.builder()
+                        .price(4000)
+                        .name("커피")
+                        .content("커피는 맛있어")
+                        .imgUrl("")
+                        .evaluation(1)
+                        .build();
+
+        CreateRecordResponse createRecordResponse =
+                CreateRecordResponse.builder()
+                        .id(1L)
+                        .name("커피")
+                        .content("커피는 무죄야")
+                        .imgUrl("")
+                        .evaluation(1)
+                        .build();
+
+        MockHttpServletRequestBuilder requestBuilder =
+                MockMvcRequestBuilders.patch("/challenge/{recordId}", 1)
+                        .with(csrf())
+                        .content(objectMapper.writeValueAsString(updateRecordRequest))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON);
+
+        String socialId = "socialId";
+
+        when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
+        when(createRecordUseCase.execute(anyLong(), anyString(), any(CreateRecordRequest.class)))
+                .thenReturn(createRecordResponse);
+        mockMvc.perform(requestBuilder).andDo(print()).andExpectAll(status().isOk());
     }
 }

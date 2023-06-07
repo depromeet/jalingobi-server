@@ -3,8 +3,10 @@ package depromeet.api.domain.record.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * @NotNull은 값이 null이 아니어야 하며, @NotBlank는 값이 null이 아니고 비어 있지 않아야 하며, 최소한 하나 이상의 비공백 문자를 포함 기획파트에서 공백
@@ -12,6 +14,8 @@ import lombok.Getter;
  */
 @Builder
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreateRecordRequest {
 
     @Schema(nullable = false)
@@ -35,5 +39,7 @@ public class CreateRecordRequest {
 
     @Schema(nullable = false, description = "지출 평가, [1,2,3,4] 중에서 선택 가능합니다.")
     @NotNull(message = "지출 평가를 입력해주세요.")
+    @Min(value = 1, message = "점수는 1부터 시작합니다.")
+    @Max(value = 4, message = "점수는 4이하 입니다.")
     private int evaluation;
 }
