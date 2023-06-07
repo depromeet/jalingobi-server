@@ -5,7 +5,6 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import depromeet.domain.challenge.domain.Category;
 import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.challenge.domain.Duration;
 import depromeet.domain.record.domain.Evaluation;
@@ -51,7 +50,7 @@ class RecordAdaptorTest {
 
         Challenge challenge =
                 Challenge.builder()
-                        .category(Category.FOOD)
+                        // category 추가 예정
                         .title("식비 줄이기 챌린지")
                         .price(5000)
                         .imgUrl("")

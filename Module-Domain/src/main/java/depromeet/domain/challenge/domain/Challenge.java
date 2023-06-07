@@ -1,9 +1,9 @@
 package depromeet.domain.challenge.domain;
 
 
+import depromeet.domain.category.domain.Category;
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.rule.domain.ChallengeRule;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import lombok.*;
@@ -20,9 +20,7 @@ public class Challenge extends BaseTime {
     @Column(name = "challenge_id")
     private Long id;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Category category;
+    @Embedded private ChallengeCategories challengeCategories;
 
     @Column(nullable = false)
     private String title;
@@ -42,7 +40,7 @@ public class Challenge extends BaseTime {
     private String createdBy;
 
     @OneToMany(mappedBy = "challenge")
-    private List<UserChallenge> userChallenges = new ArrayList<>();
+    private List<UserChallenge> userChallenges;
 
     @Column(name = "challenge_rule")
     @OneToMany(
@@ -55,7 +53,6 @@ public class Challenge extends BaseTime {
     @Embedded private Duration duration;
 
     public static Challenge createChallenge(
-            Category category,
             String title,
             int price,
             String imgUrl,
@@ -63,9 +60,9 @@ public class Challenge extends BaseTime {
             int availableCount,
             String createdBy,
             List<ChallengeRule> challengeRules,
+            ChallengeCategories challengeCategories,
             Duration duration) {
         return Challenge.builder()
-                .category(category)
                 .title(title)
                 .price(price)
                 .imgUrl(imgUrl)
@@ -73,6 +70,7 @@ public class Challenge extends BaseTime {
                 .availableCount(availableCount)
                 .createdBy(createdBy)
                 .challengeRules(challengeRules)
+                .challengeCategories(challengeCategories)
                 .duration(duration)
                 .build();
     }
@@ -80,5 +78,9 @@ public class Challenge extends BaseTime {
     public void addRules(List<ChallengeRule> rules) {
         challengeRules.addAll(rules);
         rules.forEach(rule -> rule.setChallenge(this));
+    }
+
+    public void addCategories(List<Category> categories) {
+        challengeCategories.addAll(this, categories);
     }
 }
