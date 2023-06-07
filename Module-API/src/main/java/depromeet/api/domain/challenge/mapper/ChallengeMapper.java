@@ -31,7 +31,7 @@ public class ChallengeMapper {
                         .build());
     }
 
-    public CreateChallengeResponse toCreateChallengeResponse(Challenge challenge) {
-        return CreateChallengeResponse.of(challenge);
+    public CreateChallengeResponse toCreateChallengeResponse(Long challengeId) {
+        return CreateChallengeResponse.of(challengeId);
     }
 }

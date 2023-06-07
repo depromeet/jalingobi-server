@@ -28,7 +28,7 @@ public class CreateChallengeUseCase {
     @Transactional
     public CreateChallengeResponse execute(CreateChallengeRequest request, String socialId) {
         return challengeMapper.toCreateChallengeResponse(
-                challengeAdaptor.save(createChallenge(request, socialId)));
+                challengeAdaptor.save(createChallenge(request, socialId)).getId());
     }
 
     public Challenge createChallenge(CreateChallengeRequest request, String socialId) {
