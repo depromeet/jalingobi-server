@@ -50,7 +50,7 @@ class RecordAdaptorTest {
 
         Challenge challenge =
                 Challenge.builder()
-                        .categoryId(1L)
+                        // category 추가 예정
                         .title("식비 줄이기 챌린지")
                         .price(5000)
                         .imgUrl("")
