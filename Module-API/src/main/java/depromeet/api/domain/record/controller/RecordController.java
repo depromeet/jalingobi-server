@@ -57,6 +57,7 @@ public class RecordController {
             @PathVariable("recordId") Long recordId) {
 
         return ResponseService.getDataResponse(getRecordUseCase.execute());
+    }
 
     @Operation(summary = "챌린지 지출을 수정하는 API")
     @PatchMapping("/{recordId}")
