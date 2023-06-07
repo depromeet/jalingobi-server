@@ -21,4 +21,8 @@ public class RecordAdaptor {
                 .findById(recordId)
                 .orElseThrow(() -> RecordNotFoundException.EXCEPTION);
     }
+
+    public void deleteRecord(Long recordId) {
+        recordRepository.deleteById(recordId);
+    }
 }

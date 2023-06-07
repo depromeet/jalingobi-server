@@ -1,7 +1,6 @@
 package depromeet.api.domain.record.usecase;
 
 
-import depromeet.api.domain.record.dto.request.CreateRecordRequest;
 import depromeet.api.domain.record.validator.RecordValidator;
 import depromeet.common.annotation.UseCase;
 import depromeet.domain.record.adaptor.RecordAdaptor;
@@ -12,20 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 @UseCase
 @Transactional
 @RequiredArgsConstructor
-public class UpdateRecordUseCase {
+public class DeleteRecordUseCase {
     private final RecordAdaptor recordAdaptor;
     private final RecordValidator recordValidator;
 
-    public void execute(Long recordId, String socialId, CreateRecordRequest updateRecordRequest) {
+    public void execute(Long recordId, String socialId) {
         Record record = recordAdaptor.findRecord(recordId);
 
         recordValidator.validateCorrectUserRecord(record, socialId);
 
-        record.updateRecord(
-                updateRecordRequest.getPrice(),
-                updateRecordRequest.getTitle(),
-                updateRecordRequest.getContent(),
-                updateRecordRequest.getImgUrl(),
-                updateRecordRequest.getEvaluation());
+        recordAdaptor.deleteRecord(recordId);
     }
 }

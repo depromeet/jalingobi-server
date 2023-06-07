@@ -10,7 +10,7 @@ import lombok.Getter;
 @Builder
 public class CreateRecordResponse {
     private final Long id;
-    private String name;
+    private String title;
     private final String content;
     private final String imgUrl;
     private final int evaluation;
@@ -19,7 +19,7 @@ public class CreateRecordResponse {
     public static CreateRecordResponse of(Record record, User user) {
         return CreateRecordResponse.builder()
                 .id(record.getId())
-                .name(record.getName())
+                .title(record.getTitle())
                 .content(record.getContent())
                 .imgUrl(record.getImgUrl())
                 .evaluation(record.getEvaluation().getValue())
