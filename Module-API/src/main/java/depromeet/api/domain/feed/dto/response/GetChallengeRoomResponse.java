@@ -9,7 +9,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class GetChallengeFeedResponse {
+public class GetChallengeRoomResponse {
 
     private ChallengeProgress challengeProgress;
 
