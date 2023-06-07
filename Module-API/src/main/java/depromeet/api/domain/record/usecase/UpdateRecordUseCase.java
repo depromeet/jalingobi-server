@@ -23,7 +23,7 @@ public class UpdateRecordUseCase {
 
         record.updateRecord(
                 updateRecordRequest.getPrice(),
-                updateRecordRequest.getName(),
+                updateRecordRequest.getTitle(),
                 updateRecordRequest.getContent(),
                 updateRecordRequest.getImgUrl(),
                 updateRecordRequest.getEvaluation());

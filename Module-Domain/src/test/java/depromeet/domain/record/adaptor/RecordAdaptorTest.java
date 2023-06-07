@@ -75,7 +75,7 @@ class RecordAdaptorTest {
 
         // then
         verify(recordRepository, times(1)).save(record);
-        Assertions.assertThat(savedRecord.getName()).isEqualTo(record.getName());
+        Assertions.assertThat(savedRecord.getTitle()).isEqualTo(record.getTitle());
         assertEquals(record, savedRecord);
     }
 }

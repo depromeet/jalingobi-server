@@ -77,7 +77,7 @@ class RecordControllerTest {
         CreateRecordRequest createRecordRequest =
                 CreateRecordRequest.builder()
                         .price(3000)
-                        .name("커피")
+                        .title("커피")
                         .content("커피는 무죄야")
                         .imgUrl("")
                         .evaluation(1)
@@ -86,7 +86,7 @@ class RecordControllerTest {
         CreateRecordResponse createRecordResponse =
                 CreateRecordResponse.builder()
                         .id(1L)
-                        .name("커피")
+                        .title("커피")
                         .content("커피는 무죄야")
                         .imgUrl("")
                         .evaluation(1)
@@ -110,6 +110,8 @@ class RecordControllerTest {
                 .andExpectAll(
                         status().isOk(),
                         jsonPath("$.result.id").value(createRecordResponse.getId()),
+                        jsonPath("$.result.title").value(createRecordResponse.getTitle()),
+                        jsonPath("$.result.content").value(createRecordResponse.getContent()),
                         jsonPath("$.result.imgUrl").value(createRecordResponse.getImgUrl()),
                         jsonPath("$.result.evaluation")
                                 .value(createRecordResponse.getEvaluation()));
@@ -122,7 +124,7 @@ class RecordControllerTest {
         CreateRecordRequest createRecordRequest =
                 CreateRecordRequest.builder()
                         .price(3000)
-                        .name(" ")
+                        .title(" ")
                         .content("커피는 무죄야")
                         .imgUrl("")
                         .evaluation(1)
@@ -156,7 +158,7 @@ class RecordControllerTest {
         CreateRecordRequest updateRecordRequest =
                 CreateRecordRequest.builder()
                         .price(4000)
-                        .name("커피")
+                        .title("커피")
                         .content("커피는 맛있어")
                         .imgUrl("")
                         .evaluation(1)
@@ -165,7 +167,7 @@ class RecordControllerTest {
         CreateRecordResponse createRecordResponse =
                 CreateRecordResponse.builder()
                         .id(1L)
-                        .name("커피")
+                        .title("커피")
                         .content("커피는 무죄야")
                         .imgUrl("")
                         .evaluation(1)
@@ -187,13 +189,13 @@ class RecordControllerTest {
     }
 
     @Test
-    @DisplayName("[Delete] 챌린지 기록 수정")
+    @DisplayName("[Delete] 챌린지 기록 삭제")
     public void DeleteRecordTest() throws Exception {
         // given
         CreateRecordResponse createRecordResponse =
                 CreateRecordResponse.builder()
                         .id(1L)
-                        .name("커피")
+                        .title("커피")
                         .content("커피는 무죄야")
                         .imgUrl("")
                         .evaluation(1)
