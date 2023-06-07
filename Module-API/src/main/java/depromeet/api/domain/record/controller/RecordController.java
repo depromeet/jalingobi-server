@@ -7,6 +7,8 @@ import depromeet.api.domain.record.dto.response.CreateRecordResponse;
 import depromeet.api.domain.record.dto.response.GetRecordResponse;
 import depromeet.api.domain.record.usecase.CreateRecordUseCase;
 import depromeet.api.domain.record.usecase.GetRecordUseCase;
+import depromeet.api.domain.record.usecase.UpdateRecordUseCase;
+import depromeet.common.exception.CustomExceptionStatus;
 import depromeet.common.response.Response;
 import depromeet.common.response.ResponseService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,7 +26,10 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class RecordController {
     private final CreateRecordUseCase createRecordUseCase;
+
     private final GetRecordUseCase getRecordUseCase;
+
+    private final UpdateRecordUseCase updateRecordUseCase;
 
     @Operation(summary = "챌린지 지출을 기록하는 API")
     @PostMapping("/{challengeRoomId}/create")
@@ -52,5 +57,14 @@ public class RecordController {
             @PathVariable("recordId") Long recordId) {
 
         return ResponseService.getDataResponse(getRecordUseCase.execute());
+
+    @Operation(summary = "챌린지 지출을 수정하는 API")
+    @PatchMapping("/{recordId}")
+    public Response updateRecord(
+            @PathVariable Long recordId,
+            @RequestBody @Valid CreateRecordRequest updateRecordRequest) {
+
+        updateRecordUseCase.execute(recordId, getCurrentUserSocialId(), updateRecordRequest);
+        return ResponseService.getDataResponse(CustomExceptionStatus.SUCCESS);
     }
 }

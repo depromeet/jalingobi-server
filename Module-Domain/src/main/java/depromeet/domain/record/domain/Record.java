@@ -61,4 +61,14 @@ public class Record extends BaseTime {
                 .evaluation(evaluation)
                 .build();
     }
+
+    /** 비즈니스 메서드 */
+    public void updateRecord(
+            int price, String name, String content, String imgUrl, int evaluation) {
+        this.price = price;
+        this.name = name;
+        this.content = content;
+        this.imgUrl = imgUrl;
+        this.evaluation = Evaluation.getEnumTypeByValue(evaluation);
+    }
 }
