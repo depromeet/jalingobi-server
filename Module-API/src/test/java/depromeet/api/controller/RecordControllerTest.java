@@ -15,6 +15,7 @@ import depromeet.api.domain.record.controller.RecordController;
 import depromeet.api.domain.record.dto.request.CreateRecordRequest;
 import depromeet.api.domain.record.dto.response.CreateRecordResponse;
 import depromeet.api.domain.record.usecase.CreateRecordUseCase;
+import depromeet.api.domain.record.usecase.DeleteRecordUseCase;
 import depromeet.api.domain.record.usecase.UpdateRecordUseCase;
 import depromeet.api.util.AuthenticationUtil;
 import java.util.Objects;
@@ -54,6 +55,7 @@ class RecordControllerTest {
     @Autowired private MockMvc mockMvc;
     @MockBean private CreateRecordUseCase createRecordUseCase;
     @MockBean private UpdateRecordUseCase updateRecordUseCase;
+    @MockBean private DeleteRecordUseCase deleteRecordUseCase;
     @Autowired private ObjectMapper objectMapper;
 
     private static MockedStatic<AuthenticationUtil> authenticationUtil;
@@ -75,7 +77,7 @@ class RecordControllerTest {
         CreateRecordRequest createRecordRequest =
                 CreateRecordRequest.builder()
                         .price(3000)
-                        .name("커피")
+                        .title("커피")
                         .content("커피는 무죄야")
                         .imgUrl("")
                         .evaluation(1)
@@ -84,7 +86,7 @@ class RecordControllerTest {
         CreateRecordResponse createRecordResponse =
                 CreateRecordResponse.builder()
                         .id(1L)
-                        .name("커피")
+                        .title("커피")
                         .content("커피는 무죄야")
                         .imgUrl("")
                         .evaluation(1)
@@ -108,6 +110,8 @@ class RecordControllerTest {
                 .andExpectAll(
                         status().isOk(),
                         jsonPath("$.result.id").value(createRecordResponse.getId()),
+                        jsonPath("$.result.title").value(createRecordResponse.getTitle()),
+                        jsonPath("$.result.content").value(createRecordResponse.getContent()),
                         jsonPath("$.result.imgUrl").value(createRecordResponse.getImgUrl()),
                         jsonPath("$.result.evaluation")
                                 .value(createRecordResponse.getEvaluation()));
@@ -120,7 +124,7 @@ class RecordControllerTest {
         CreateRecordRequest createRecordRequest =
                 CreateRecordRequest.builder()
                         .price(3000)
-                        .name(" ")
+                        .title(" ")
                         .content("커피는 무죄야")
                         .imgUrl("")
                         .evaluation(1)
@@ -154,7 +158,7 @@ class RecordControllerTest {
         CreateRecordRequest updateRecordRequest =
                 CreateRecordRequest.builder()
                         .price(4000)
-                        .name("커피")
+                        .title("커피")
                         .content("커피는 맛있어")
                         .imgUrl("")
                         .evaluation(1)
@@ -163,7 +167,7 @@ class RecordControllerTest {
         CreateRecordResponse createRecordResponse =
                 CreateRecordResponse.builder()
                         .id(1L)
-                        .name("커피")
+                        .title("커피")
                         .content("커피는 무죄야")
                         .imgUrl("")
                         .evaluation(1)
@@ -173,6 +177,33 @@ class RecordControllerTest {
                 MockMvcRequestBuilders.patch("/challenge/{recordId}", 1)
                         .with(csrf())
                         .content(objectMapper.writeValueAsString(updateRecordRequest))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON);
+
+        String socialId = "socialId";
+
+        when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
+        when(createRecordUseCase.execute(anyLong(), anyString(), any(CreateRecordRequest.class)))
+                .thenReturn(createRecordResponse);
+        mockMvc.perform(requestBuilder).andDo(print()).andExpectAll(status().isOk());
+    }
+
+    @Test
+    @DisplayName("[Delete] 챌린지 기록 삭제")
+    public void DeleteRecordTest() throws Exception {
+        // given
+        CreateRecordResponse createRecordResponse =
+                CreateRecordResponse.builder()
+                        .id(1L)
+                        .title("커피")
+                        .content("커피는 무죄야")
+                        .imgUrl("")
+                        .evaluation(1)
+                        .build();
+
+        MockHttpServletRequestBuilder requestBuilder =
+                MockMvcRequestBuilders.delete("/challenge/{recordId}", 1)
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON);
 
