@@ -4,10 +4,15 @@ import static depromeet.api.util.AuthenticationUtil.getCurrentUserSocialId;
 
 import depromeet.api.domain.record.dto.request.CreateRecordRequest;
 import depromeet.api.domain.record.dto.response.CreateRecordResponse;
+import depromeet.api.domain.record.dto.response.GetRecordResponse;
 import depromeet.api.domain.record.usecase.CreateRecordUseCase;
+import depromeet.api.domain.record.usecase.GetRecordUseCase;
 import depromeet.common.response.Response;
 import depromeet.common.response.ResponseService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class RecordController {
     private final CreateRecordUseCase createRecordUseCase;
+    private final GetRecordUseCase getRecordUseCase;
 
     @Operation(summary = "챌린지 지출을 기록하는 API")
     @PostMapping("/{challengeRoomId}/create")
@@ -29,5 +35,22 @@ public class RecordController {
         return ResponseService.getDataResponse(
                 createRecordUseCase.execute(
                         challengeRoomId, getCurrentUserSocialId(), createRecordRequest));
+    }
+
+    @Operation(summary = "지출 기록 상세보기 API", description = "기록에 대한 본문 및 댓글들을 보여줍니다.")
+    @ApiResponses(
+            value = {
+                @ApiResponse(responseCode = "200"),
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "잘못된 요청값을 전달한 경우",
+                        content = @Content())
+            })
+    @GetMapping("/{challengeRoomId}/{recordId}")
+    public Response<GetRecordResponse> getRecord(
+            @PathVariable("challengeRoomId") Long challengeRoomId,
+            @PathVariable("recordId") Long recordId) {
+
+        return ResponseService.getDataResponse(getRecordUseCase.execute());
     }
 }

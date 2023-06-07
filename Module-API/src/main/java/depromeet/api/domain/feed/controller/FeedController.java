@@ -50,7 +50,7 @@ public class FeedController {
             })
     @GetMapping("/challenge/{challengeRoomId}")
     public Response<GetChallengeRoomResponse> getChallengeRoom(
-            @PathVariable("challengeRoomId") Integer challengeRoomId) {
+            @PathVariable("challengeRoomId") Long challengeRoomId) {
 
         return ResponseService.getDataResponse(getChallengeRoomUseCase.execute());
     }

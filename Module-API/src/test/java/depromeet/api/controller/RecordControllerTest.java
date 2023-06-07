@@ -15,6 +15,7 @@ import depromeet.api.domain.record.controller.RecordController;
 import depromeet.api.domain.record.dto.request.CreateRecordRequest;
 import depromeet.api.domain.record.dto.response.CreateRecordResponse;
 import depromeet.api.domain.record.usecase.CreateRecordUseCase;
+import depromeet.api.domain.record.usecase.GetRecordUseCase;
 import depromeet.api.util.AuthenticationUtil;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterAll;
@@ -53,6 +54,8 @@ class RecordControllerTest {
     @Autowired private MockMvc mockMvc;
 
     @MockBean private CreateRecordUseCase createRecordUseCase;
+
+    @MockBean private GetRecordUseCase getRecordUseCase;
 
     @Autowired private ObjectMapper objectMapper;
 
