@@ -2,6 +2,7 @@ package depromeet.api.domain.challenge.dto.response;
 
 
 import depromeet.domain.challenge.domain.Challenge;
+import depromeet.domain.challenge.domain.ChallengeCategories;
 import depromeet.domain.rule.domain.ChallengeRule;
 import java.time.LocalDate;
 import java.util.List;
@@ -13,7 +14,7 @@ import lombok.Getter;
 public class CreateChallengeResponse {
 
     private Long id;
-    private String category;
+    private ChallengeCategories category;
     private String title;
     private int price;
     private String imgUrl;
@@ -24,10 +25,10 @@ public class CreateChallengeResponse {
     private LocalDate startAt;
     private LocalDate endAt;
 
-    public static CreateChallengeResponse of(Challenge challenge, String category) {
+    public static CreateChallengeResponse of(Challenge challenge) {
         return CreateChallengeResponse.builder()
                 .id(challenge.getId())
-                .category(category)
+                .category(challenge.getChallengeCategories())
                 .title(challenge.getTitle())
                 .price(challenge.getPrice())
                 .imgUrl(challenge.getImgUrl())

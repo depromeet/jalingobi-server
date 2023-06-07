@@ -1,7 +1,6 @@
 package depromeet.api.domain.challenge.dto.request;
 
 
-import depromeet.domain.challenge.domain.Category;
 import depromeet.domain.rule.domain.ChallengeRule;
 import java.time.LocalDate;
 import java.util.List;
@@ -16,7 +15,7 @@ import lombok.*;
 @AllArgsConstructor
 public class CreateChallengeRequest {
 
-    private Category category;
+    private List<String> category;
 
     @NotBlank(message = "title can not be blank")
     private String title;

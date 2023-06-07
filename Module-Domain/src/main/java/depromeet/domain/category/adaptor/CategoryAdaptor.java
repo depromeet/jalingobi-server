@@ -1,11 +1,12 @@
 package depromeet.domain.category.adaptor;
 
+import static java.util.stream.Collectors.toList;
 
 import depromeet.common.annotation.Adaptor;
-import depromeet.common.exception.CustomException;
-import depromeet.common.exception.CustomExceptionStatus;
 import depromeet.domain.category.domain.Category;
+import depromeet.domain.category.exception.CategoryNotFoundException;
 import depromeet.domain.category.repository.CategoryRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +26,11 @@ public class CategoryAdaptor {
         return categoryRepository
                 .findByName(name)
                 .map(Category::toDomain)
-                .orElseThrow(() -> new CustomException(CustomExceptionStatus.CATEGORY_NOT_FOUND));
+                .orElseThrow(() -> CategoryNotFoundException.EXCEPTION);
+    }
+
+    public List<Category> findOrExceptionCategories(List<String> categoryNames) {
+        return categoryNames.stream().map(this::findByName).collect(toList());
     }
 
     @Transactional
