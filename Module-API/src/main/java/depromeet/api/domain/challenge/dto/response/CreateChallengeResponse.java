@@ -24,10 +24,10 @@ public class CreateChallengeResponse {
     private LocalDate startAt;
     private LocalDate endAt;
 
-    public static CreateChallengeResponse of(Challenge challenge) {
+    public static CreateChallengeResponse of(Challenge challenge, String category) {
         return CreateChallengeResponse.builder()
                 .id(challenge.getId())
-                .category(challenge.getCategory().getName())
+                .category(category)
                 .title(challenge.getTitle())
                 .price(challenge.getPrice())
                 .imgUrl(challenge.getImgUrl())

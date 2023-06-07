@@ -13,9 +13,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ChallengeMapper {
 
-    public Challenge toEntity(CreateChallengeRequest createChallengeRequest, String createdBy) {
+    public Challenge toEntity(
+            CreateChallengeRequest createChallengeRequest, String createdBy, Long categoryId) {
         return Challenge.createChallenge(
-                createChallengeRequest.getCategory(),
+                categoryId,
                 createChallengeRequest.getTitle(),
                 createChallengeRequest.getPrice(),
                 createChallengeRequest.getImageUrl(),
@@ -30,7 +31,7 @@ public class ChallengeMapper {
                         .build());
     }
 
-    public CreateChallengeResponse toCreateChallengeResponse(Challenge challenge) {
-        return CreateChallengeResponse.of(challenge);
+    public CreateChallengeResponse toCreateChallengeResponse(Challenge challenge, String category) {
+        return CreateChallengeResponse.of(challenge, category);
     }
 }
