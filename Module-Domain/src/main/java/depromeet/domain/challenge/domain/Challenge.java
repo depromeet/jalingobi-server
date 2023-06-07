@@ -3,7 +3,6 @@ package depromeet.domain.challenge.domain;
 
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.rule.domain.ChallengeRule;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import lombok.*;
@@ -20,9 +19,7 @@ public class Challenge extends BaseTime {
     @Column(name = "challenge_id")
     private Long id;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Category category;
+    private Long categoryId;
 
     @Column(nullable = false)
     private String title;
@@ -42,7 +39,7 @@ public class Challenge extends BaseTime {
     private String createdBy;
 
     @OneToMany(mappedBy = "challenge")
-    private List<UserChallenge> userChallenges = new ArrayList<>();
+    private List<UserChallenge> userChallenges;
 
     @Column(name = "challenge_rule")
     @OneToMany(
@@ -55,7 +52,7 @@ public class Challenge extends BaseTime {
     @Embedded private Duration duration;
 
     public static Challenge createChallenge(
-            Category category,
+            Long categoryId,
             String title,
             int price,
             String imgUrl,
@@ -65,7 +62,7 @@ public class Challenge extends BaseTime {
             List<ChallengeRule> challengeRules,
             Duration duration) {
         return Challenge.builder()
-                .category(category)
+                .categoryId(categoryId)
                 .title(title)
                 .price(price)
                 .imgUrl(imgUrl)
