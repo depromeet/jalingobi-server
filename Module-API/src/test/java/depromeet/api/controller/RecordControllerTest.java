@@ -16,6 +16,7 @@ import depromeet.api.domain.record.dto.request.CreateRecordRequest;
 import depromeet.api.domain.record.dto.response.CreateRecordResponse;
 import depromeet.api.domain.record.usecase.CreateRecordUseCase;
 import depromeet.api.domain.record.usecase.DeleteRecordUseCase;
+import depromeet.api.domain.record.usecase.GetRecordUseCase;
 import depromeet.api.domain.record.usecase.UpdateRecordUseCase;
 import depromeet.api.util.AuthenticationUtil;
 import java.util.Objects;
@@ -54,8 +55,13 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 class RecordControllerTest {
     @Autowired private MockMvc mockMvc;
     @MockBean private CreateRecordUseCase createRecordUseCase;
+
+    @MockBean private GetRecordUseCase getRecordUseCase;
+
     @MockBean private UpdateRecordUseCase updateRecordUseCase;
+
     @MockBean private DeleteRecordUseCase deleteRecordUseCase;
+
     @Autowired private ObjectMapper objectMapper;
 
     private static MockedStatic<AuthenticationUtil> authenticationUtil;
