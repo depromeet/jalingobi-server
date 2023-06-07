@@ -52,7 +52,8 @@ public enum CustomExceptionStatus {
     RECORD_EVALUATION_NOT_VALID(false, 1902, "유효하지 않은 평가 점수입니다."),
 
     // category
-    CATEGORY_NOT_FOUND(false, 2000, "존재하지 않는 카테고리입니다.");
+    CATEGORY_NOT_FOUND(false, 2000, "존재하지 않는 카테고리입니다."),
+    CANNOT_ADD_CATEGORY(false, 2001, "카테고리를 추가할 수 없습니다.");
 
     private final boolean isSuccess;
     private final int code;
