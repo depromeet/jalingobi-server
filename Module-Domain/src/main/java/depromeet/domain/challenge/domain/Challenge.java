@@ -52,6 +52,7 @@ public class Challenge extends BaseTime {
 
     @Embedded private Duration duration;
 
+    /** 생성 메서드 */
     public static Challenge createChallenge(
             String title,
             int price,
@@ -75,6 +76,7 @@ public class Challenge extends BaseTime {
                 .build();
     }
 
+    /** 비즈니스 메서드 */
     public void addRules(List<ChallengeRule> rules) {
         challengeRules.addAll(rules);
         rules.forEach(rule -> rule.setChallenge(this));
@@ -82,5 +84,12 @@ public class Challenge extends BaseTime {
 
     public void addCategories(List<Category> categories) {
         challengeCategories.addAll(this, categories);
+    }
+
+    public boolean isParticipateChallengeUser(String socialId) {
+        return this.userChallenges.stream()
+                .anyMatch(
+                        userChallenge ->
+                                userChallenge.getUser().getSocial().getId().equals(socialId));
     }
 }
