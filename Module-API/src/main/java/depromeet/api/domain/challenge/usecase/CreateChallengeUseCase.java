@@ -11,6 +11,7 @@ import depromeet.domain.challenge.adaptor.ChallengeAdaptor;
 import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.user.adaptor.UserAdaptor;
 import depromeet.domain.user.domain.User;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,13 +27,20 @@ public class CreateChallengeUseCase {
 
     @Transactional
     public CreateChallengeResponse execute(CreateChallengeRequest request, String socialId) {
+        return challengeMapper.toCreateChallengeResponse(
+                challengeAdaptor.save(createChallenge(request, socialId)));
+    }
+
+    public Challenge createChallenge(CreateChallengeRequest request, String socialId) {
         User currentUser = userAdaptor.findUser(socialId);
 
-        Category savedCategory = categoryAdaptor.findByName(request.getCategory().getName());
-        Challenge challenge = challengeMapper.toEntity(request, socialId, savedCategory.getId());
+        List<Category> categories =
+                categoryAdaptor.findOrExceptionCategories(request.getCategory());
+        Challenge challenge = challengeMapper.toEntity(request, socialId);
+
+        challenge.addCategories(categories);
         challenge.addRules(request.getChallengeRule());
 
-        return challengeMapper.toCreateChallengeResponse(
-                challengeAdaptor.save(challenge), savedCategory.getName());
+        return challenge;
     }
 }
