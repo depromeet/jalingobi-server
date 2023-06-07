@@ -9,6 +9,6 @@ public class CategoryNotFoundException extends CustomException {
     public static final CustomException EXCEPTION = new CategoryNotFoundException();
 
     private CategoryNotFoundException() {
-        super(CustomExceptionStatus.RECORD_EVALUATION_NOT_VALID);
+        super(CustomExceptionStatus.CATEGORY_NOT_FOUND);
     }
 }
