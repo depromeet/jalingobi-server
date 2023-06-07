@@ -1,7 +1,9 @@
 package depromeet.domain.user.domain;
 
 
+import depromeet.domain.challenge.domain.UserChallenge;
 import depromeet.domain.config.BaseTime;
+import java.util.List;
 import javax.persistence.*;
 import lombok.*;
 
@@ -25,11 +27,18 @@ public class User extends BaseTime {
     @Column(length = 10, nullable = false)
     private Role role;
 
+    @OneToMany(mappedBy = "user")
+    private List<UserChallenge> userChallenges;
+
     public static User registerUser(
             String nickname, String email, String socialId, Platform platform) {
 
         Profile profile = Profile.createProfile(nickname, email, null);
         Social social = Social.createSocial(socialId, platform);
         return User.builder().profile(profile).social(social).role(Role.USER).build();
+    }
+
+    public boolean isSameUser(String socialId) {
+        return this.social.getId().equals(socialId);
     }
 }

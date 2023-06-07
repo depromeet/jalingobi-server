@@ -5,11 +5,10 @@ import depromeet.api.domain.challenge.dto.request.CreateChallengeRequest;
 import depromeet.api.domain.challenge.dto.response.CreateChallengeResponse;
 import depromeet.api.domain.challenge.mapper.ChallengeMapper;
 import depromeet.common.annotation.UseCase;
+import depromeet.domain.category.adaptor.CategoryAdaptor;
+import depromeet.domain.category.domain.Category;
 import depromeet.domain.challenge.adaptor.ChallengeAdaptor;
 import depromeet.domain.challenge.domain.Challenge;
-import depromeet.domain.rule.adaptor.RuleAdaptor;
-import depromeet.domain.rule.domain.Rule;
-import depromeet.domain.rule.domain.Rules;
 import depromeet.domain.user.adaptor.UserAdaptor;
 import depromeet.domain.user.domain.User;
 import java.util.List;
@@ -23,19 +22,25 @@ public class CreateChallengeUseCase {
 
     private final ChallengeMapper challengeMapper;
     private final ChallengeAdaptor challengeAdaptor;
-    private final RuleAdaptor ruleAdaptor;
+    private final CategoryAdaptor categoryAdaptor;
     private final UserAdaptor userAdaptor;
 
     @Transactional
     public CreateChallengeResponse execute(CreateChallengeRequest request, String socialId) {
+        return challengeMapper.toCreateChallengeResponse(
+                challengeAdaptor.save(createChallenge(request, socialId)).getId());
+    }
+
+    public Challenge createChallenge(CreateChallengeRequest request, String socialId) {
         User currentUser = userAdaptor.findUser(socialId);
-        Challenge challenge = challengeAdaptor.save(challengeMapper.toEntity(request, currentUser));
 
-        Rules rules = new Rules(request.getChallengeRule());
-        List<Rule> ruleList = rules.getChallengeRules(challenge);
-        ruleAdaptor.saveChallengeRules(ruleList);
-        List<Rule> savedRules = ruleAdaptor.findByChallengeId(challenge.getId());
+        List<Category> categories =
+                categoryAdaptor.findOrExceptionCategories(request.getCategory());
+        Challenge challenge = challengeMapper.toEntity(request, socialId);
 
-        return challengeMapper.toCreateChallengeResponse(challenge, savedRules);
+        challenge.addCategories(categories);
+        challenge.addRules(request.getChallengeRule());
+
+        return challenge;
     }
 }

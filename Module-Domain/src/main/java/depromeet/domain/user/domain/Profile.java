@@ -18,9 +18,9 @@ public class Profile {
     @Column(length = 320, unique = true, nullable = false)
     private String email;
 
-    private String imageUrl;
+    private String imgUrl;
 
-    public static Profile createProfile(String name, String email, String imageUrl) {
-        return Profile.builder().name(name).email(email).imageUrl(imageUrl).build();
+    public static Profile createProfile(String name, String email, String imgUrl) {
+        return Profile.builder().name(name).email(email).imgUrl(imgUrl).build();
     }
 }

@@ -5,25 +5,25 @@ import depromeet.api.domain.challenge.dto.request.CreateChallengeRequest;
 import depromeet.api.domain.challenge.dto.response.CreateChallengeResponse;
 import depromeet.common.annotation.Mapper;
 import depromeet.domain.challenge.domain.Challenge;
+import depromeet.domain.challenge.domain.ChallengeCategories;
 import depromeet.domain.challenge.domain.Duration;
-import depromeet.domain.rule.domain.Rule;
-import depromeet.domain.user.domain.User;
-import java.util.List;
+import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 
 @Mapper
 @RequiredArgsConstructor
 public class ChallengeMapper {
 
-    public Challenge toEntity(CreateChallengeRequest createChallengeRequest, User user) {
+    public Challenge toEntity(CreateChallengeRequest createChallengeRequest, String createdBy) {
         return Challenge.createChallenge(
-                createChallengeRequest.getCategory(),
                 createChallengeRequest.getTitle(),
                 createChallengeRequest.getPrice(),
                 createChallengeRequest.getImageUrl(),
                 createChallengeRequest.getHashtag(),
                 createChallengeRequest.getAvailableCount(),
-                user,
+                createdBy,
+                new ArrayList<>(),
+                new ChallengeCategories(),
                 Duration.builder()
                         .period(createChallengeRequest.getPeriod())
                         .startAt(createChallengeRequest.getStartAt())
@@ -31,8 +31,7 @@ public class ChallengeMapper {
                         .build());
     }
 
-    public CreateChallengeResponse toCreateChallengeResponse(
-            Challenge challenge, List<Rule> rules) {
-        return CreateChallengeResponse.of(challenge, rules);
+    public CreateChallengeResponse toCreateChallengeResponse(Long challengeId) {
+        return CreateChallengeResponse.of(challengeId);
     }
 }

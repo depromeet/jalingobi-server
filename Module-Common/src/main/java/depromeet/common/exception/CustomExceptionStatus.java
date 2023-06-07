@@ -45,11 +45,20 @@ public enum CustomExceptionStatus {
     // challenge
     CHALLENGE_NOT_FOUND(false, 1800, "존재하지 않는 챌린지입니다."),
     CHALLENGE_IS_FULL(false, 1801, "챌린지 참가 인원이 꽉 찼습니다."),
+    UNPARTICIPATED_CHALLENGE_USER(false, 1802, "챌린지에 참여하지 않는 사용자입니다."),
 
     // feed
     FEED_NOT_FOUND(false, 1900, "요청한 날짜에 피드가 없습니다."),
     COMMENT_NOT_FOUND(false, 1901, "댓글이 존재하지 않습니다."),
-    RECORD_EVALUATION_NOT_VALID(false, 1902, "유효하지 않은 평가 점수입니다.");
+
+    // record
+    RECORD_NOT_FOUND(false, 2000, "유효하지 않은 평가 점수입니다."),
+    RECORD_EVALUATION_NOT_VALID(false, 2001, "유효하지 않은 평가 점수입니다."),
+    INVALID_RECORD_USER(false, 2002, "해당 지출을 기록한 사용자가 아닙니다."),
+
+    // category
+    CATEGORY_NOT_FOUND(false, 2100, "존재하지 않는 카테고리입니다."),
+    CANNOT_ADD_CATEGORY(false, 2101, "카테고리를 추가할 수 없습니다.");
 
     private final boolean isSuccess;
     private final int code;

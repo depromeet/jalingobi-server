@@ -1,8 +1,7 @@
 package depromeet.api.domain.challenge.dto.request;
 
 
-import depromeet.domain.challenge.domain.Category;
-import depromeet.domain.rule.domain.Rule;
+import depromeet.domain.rule.domain.ChallengeRule;
 import java.time.LocalDate;
 import java.util.List;
 import javax.validation.constraints.Max;
@@ -16,7 +15,7 @@ import lombok.*;
 @AllArgsConstructor
 public class CreateChallengeRequest {
 
-    private Category category;
+    private List<String> category;
 
     @NotBlank(message = "title can not be blank")
     private String title;
@@ -32,7 +31,7 @@ public class CreateChallengeRequest {
 
     private int availableCount;
 
-    private List<Rule> challengeRule;
+    private List<ChallengeRule> challengeRule;
 
     private int period;
 
