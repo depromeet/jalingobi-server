@@ -6,7 +6,10 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
-public class RecordReply {
+public class RecordComment {
+
+    @Schema(example = "27")
+    private Long commentId;
 
     @Schema(description = "본인 댓글인지", example = "true")
     private Boolean isMine;
@@ -21,5 +24,5 @@ public class RecordReply {
     private String content;
 
     @Schema(description = "댓글 작성일")
-    private LocalDateTime replyDate;
+    private LocalDateTime commentDate;
 }

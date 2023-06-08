@@ -10,6 +10,9 @@ import lombok.Data;
 @Data
 public class Feed {
 
+    @Schema(example = "27")
+    private Long recordId;
+
     @Schema(description = "본인 기록인지", example = "true")
     private Boolean isMine;
 
