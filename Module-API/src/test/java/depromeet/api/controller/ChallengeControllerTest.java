@@ -71,13 +71,17 @@ public class ChallengeControllerTest {
         List<String> categories = new ArrayList<>();
         categories.add("식비");
 
+        List<String> keywords = new ArrayList<>();
+        keywords.add("#마라탕");
+        keywords.add("#5만원챌린지");
+
         CreateChallengeRequest request =
                 CreateChallengeRequest.builder()
                         .category(categories)
                         .title("마라탕 5만원 이하로 쓰기")
                         .price(50000)
                         .imageUrl("test.jpg")
-                        .hashtag("#마라탕 #5만원챌린지")
+                        .keywords(keywords)
                         .availableCount(30)
                         // .challengeRule(rules) List<String>을 받도록 수정할 예정
                         .period(15)
