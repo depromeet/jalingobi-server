@@ -2,7 +2,7 @@ package depromeet.api.domain.record.dto.response;
 
 
 import depromeet.api.domain.record.dto.ChallengeRecord;
-import depromeet.api.domain.record.dto.RecordReply;
+import depromeet.api.domain.record.dto.RecordComment;
 import java.util.List;
 import lombok.Data;
 
@@ -11,5 +11,5 @@ public class GetRecordResponse {
 
     private ChallengeRecord challengeRecord;
 
-    private List<RecordReply> recordReplyList;
+    private List<RecordComment> recordCommentList;
 }

@@ -47,6 +47,21 @@ public class FeedController {
         return ResponseService.getDataResponse(getMyRoomUseCase.execute());
     }
 
+    @Operation(summary = "내 방 피드 API", description = "내 방에 있는 기록들을 20개씩 가져옵니다.")
+    @ApiResponses(
+            value = {
+                @ApiResponse(responseCode = "200"),
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "잘못된 요청값을 전달한 경우",
+                        content = @Content())
+            })
+    @GetMapping("/challenge/my-room/feed")
+    public Response<GetMyFeedResponse> getMyFeed(@PathParam("page") Integer page) {
+
+        return ResponseService.getDataResponse(getMyFeedUseCase.execute());
+    }
+
     @Operation(summary = "챌린지 방 입장 API", description = "챌린지 방 입장시 목표 금액 현황 및 피드들을 가져옵니다.")
     @ApiResponses(
             value = {
@@ -64,21 +79,6 @@ public class FeedController {
     }
 
     @Operation(summary = "챌린지 방 피드 API", description = "챌린지 방에 있는 기록들을 20개씩 가져옵니다.")
-    @ApiResponses(
-            value = {
-                @ApiResponse(responseCode = "200"),
-                @ApiResponse(
-                        responseCode = "400",
-                        description = "잘못된 요청값을 전달한 경우",
-                        content = @Content())
-            })
-    @GetMapping("/challenge/my-room/feed")
-    public Response<GetMyFeedResponse> getMyFeed(@PathParam("page") Integer page) {
-
-        return ResponseService.getDataResponse(getMyFeedUseCase.execute());
-    }
-
-    @Operation(summary = "내 방 피드 API", description = "내 방에 있는 기록들을 20개씩 가져옵니다.")
     @ApiResponses(
             value = {
                 @ApiResponse(responseCode = "200"),
