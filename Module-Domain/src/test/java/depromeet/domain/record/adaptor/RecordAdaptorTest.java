@@ -2,11 +2,14 @@ package depromeet.domain.record.adaptor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
+import depromeet.domain.category.domain.Category;
 import depromeet.domain.challenge.domain.Challenge;
+import depromeet.domain.challenge.domain.ChallengeCategories;
 import depromeet.domain.challenge.domain.Duration;
+import depromeet.domain.challenge.domain.keyword.ChallengeKeywords;
+import depromeet.domain.keyword.domain.Keyword;
 import depromeet.domain.record.domain.Evaluation;
 import depromeet.domain.record.domain.Record;
 import depromeet.domain.record.repository.RecordRepository;
@@ -47,14 +50,18 @@ class RecordAdaptorTest {
         Profile profile = Profile.createProfile(nickname, email, null);
         Social social = Social.createSocial(socialId, platform);
         User user = User.builder().profile(profile).social(social).build();
+        ChallengeKeywords challengeKeywords = new ChallengeKeywords();
+        challengeKeywords.add(mock(Challenge.class), mock(Keyword.class));
+        ChallengeCategories challengeCategories = new ChallengeCategories();
+        challengeCategories.add(mock(Challenge.class), mock(Category.class));
 
         Challenge challenge =
                 Challenge.builder()
-                        // category 추가 예정
+                        .challengeCategories(challengeCategories)
                         .title("식비 줄이기 챌린지")
                         .price(5000)
                         .imgUrl("")
-                        .hashtag("#food")
+                        .challengeKeywords(challengeKeywords)
                         .availableCount(5)
                         .createdBy("정유니")
                         .duration(
