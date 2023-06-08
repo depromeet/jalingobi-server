@@ -31,7 +31,7 @@ public class Record extends BaseTime {
     private int price;
 
     @Column(length = 16, nullable = false)
-    private String name;
+    private String title;
 
     @Column(length = 80, nullable = false)
     private String content;
@@ -47,7 +47,7 @@ public class Record extends BaseTime {
             Challenge challenge,
             User user,
             int price,
-            String name,
+            String title,
             String content,
             String imgUrl,
             Evaluation evaluation) {
@@ -55,7 +55,7 @@ public class Record extends BaseTime {
                 .challenge(challenge)
                 .user(user)
                 .price(price)
-                .name(name)
+                .title(title)
                 .content(content)
                 .imgUrl(imgUrl)
                 .evaluation(evaluation)
@@ -64,9 +64,9 @@ public class Record extends BaseTime {
 
     /** 비즈니스 메서드 */
     public void updateRecord(
-            int price, String name, String content, String imgUrl, int evaluation) {
+            int price, String title, String content, String imgUrl, int evaluation) {
         this.price = price;
-        this.name = name;
+        this.title = title;
         this.content = content;
         this.imgUrl = imgUrl;
         this.evaluation = Evaluation.getEnumTypeByValue(evaluation);

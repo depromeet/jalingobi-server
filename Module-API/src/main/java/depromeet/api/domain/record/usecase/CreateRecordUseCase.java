@@ -29,10 +29,10 @@ public class CreateRecordUseCase {
     public CreateRecordResponse execute(
             Long challengeRoomId, String socialId, CreateRecordRequest createRecordRequest) {
 
-        recordValidator.validateUnparticipatedChallenge(socialId, challengeRoomId);
-
         User currentUser = userAdaptor.findUser(socialId);
         Challenge challenge = challengeAdaptor.findChallenge(challengeRoomId);
+
+        recordValidator.validateUnparticipatedChallenge(socialId, challenge);
 
         Record record =
                 recordAdaptor.save(

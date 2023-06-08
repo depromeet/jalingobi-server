@@ -20,7 +20,7 @@ public class RecordMapper {
                 challenge,
                 user,
                 createRecordRequest.getPrice(),
-                createRecordRequest.getName(),
+                createRecordRequest.getTitle(),
                 createRecordRequest.getContent(),
                 createRecordRequest.getImgUrl(),
                 Evaluation.getEnumTypeByValue(createRecordRequest.getEvaluation()));

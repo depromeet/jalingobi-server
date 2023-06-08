@@ -48,7 +48,7 @@ public class AuthController {
                 @ApiResponse(
                         responseCode = "400",
                         description = "유효하지 않은 토큰으로 요청하거나, 다른 플랫폼에 해당 이메일로 가입된 계정이 있을 경우",
-                        content = {@Content(mediaType = "application/json")})
+                        content = @Content())
             })
     @PostMapping("/kakao")
     public Response<KakaoAuthResponse> authKakao(
