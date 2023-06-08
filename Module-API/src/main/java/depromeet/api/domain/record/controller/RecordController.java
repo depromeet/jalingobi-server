@@ -44,7 +44,7 @@ public class RecordController {
                         challengeRoomId, getCurrentUserSocialId(), createRecordRequest));
     }
 
-    @Operation(summary = "지출 기록 상세보기 API", description = "기록에 대한 본문 및 댓글들을 보여줍니다.")
+    @Operation(summary = "챌린지 지출 상세보기 API", description = "기록에 대한 본문 및 댓글들을 보여줍니다.")
     @ApiResponses(
             value = {
                 @ApiResponse(responseCode = "200"),

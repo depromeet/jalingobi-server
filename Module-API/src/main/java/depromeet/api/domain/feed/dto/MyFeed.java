@@ -10,6 +10,9 @@ import lombok.Data;
 @Data
 public class MyFeed {
 
+    @Schema(example = "27")
+    private Long recordId;
+
     @Schema(example = "사용자 닉네임")
     private String nickname;
 
