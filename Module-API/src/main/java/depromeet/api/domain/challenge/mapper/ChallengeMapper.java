@@ -7,6 +7,7 @@ import depromeet.common.annotation.Mapper;
 import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.challenge.domain.ChallengeCategories;
 import depromeet.domain.challenge.domain.Duration;
+import depromeet.domain.challenge.domain.keyword.ChallengeKeywords;
 import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +20,7 @@ public class ChallengeMapper {
                 createChallengeRequest.getTitle(),
                 createChallengeRequest.getPrice(),
                 createChallengeRequest.getImageUrl(),
-                createChallengeRequest.getHashtag(),
+                new ChallengeKeywords(),
                 createChallengeRequest.getAvailableCount(),
                 createdBy,
                 new ArrayList<>(),

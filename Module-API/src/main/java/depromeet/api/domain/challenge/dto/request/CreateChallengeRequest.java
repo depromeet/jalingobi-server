@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.*;
 
 @Builder
@@ -15,27 +16,30 @@ import lombok.*;
 @AllArgsConstructor
 public class CreateChallengeRequest {
 
-    private List<String> category;
+    @NotNull private List<@NotBlank String> category;
 
     @NotBlank(message = "title can not be blank")
     private String title;
 
     @Min(10000)
     @Max(999999)
-    private int price;
+    @NotNull
+    private Integer price;
 
     private String imageUrl;
 
-    @NotBlank(message = "hashtag can not be blank")
-    private String hashtag;
+    @NotNull private List<@NotBlank String> keywords;
 
-    private int availableCount;
+    @Min(5)
+    @Max(50)
+    @NotNull
+    private Integer availableCount;
 
     private List<ChallengeRule> challengeRule;
 
-    private int period;
+    @NotNull private Integer period;
 
-    private LocalDate startAt;
+    @NotNull private LocalDate startAt;
 
-    private LocalDate endAt;
+    @NotNull private LocalDate endAt;
 }
