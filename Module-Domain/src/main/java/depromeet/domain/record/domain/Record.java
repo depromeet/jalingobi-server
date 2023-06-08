@@ -2,6 +2,7 @@ package depromeet.domain.record.domain;
 
 
 import depromeet.domain.challenge.domain.Challenge;
+import depromeet.domain.comment.domain.Comments;
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.user.domain.User;
 import javax.persistence.*;
@@ -26,6 +27,8 @@ public class Record extends BaseTime {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Embedded private Comments comments;
 
     @Column(nullable = false)
     private int price;
