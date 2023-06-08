@@ -2,7 +2,9 @@ package depromeet.domain.challenge.domain;
 
 
 import depromeet.domain.category.domain.Category;
+import depromeet.domain.challenge.domain.keyword.ChallengeKeywords;
 import depromeet.domain.config.BaseTime;
+import depromeet.domain.keyword.domain.Keyword;
 import depromeet.domain.rule.domain.ChallengeRule;
 import java.util.List;
 import javax.persistence.*;
@@ -30,8 +32,7 @@ public class Challenge extends BaseTime {
 
     private String imgUrl;
 
-    @Column(nullable = false)
-    private String hashtag;
+    @Embedded private ChallengeKeywords challengeKeywords;
 
     @Column(name = "available_count", nullable = false)
     private int availableCount;
@@ -56,7 +57,7 @@ public class Challenge extends BaseTime {
             String title,
             int price,
             String imgUrl,
-            String hashtag,
+            ChallengeKeywords challengeKeywords,
             int availableCount,
             String createdBy,
             List<ChallengeRule> challengeRules,
@@ -66,7 +67,7 @@ public class Challenge extends BaseTime {
                 .title(title)
                 .price(price)
                 .imgUrl(imgUrl)
-                .hashtag(hashtag)
+                .challengeKeywords(challengeKeywords)
                 .availableCount(availableCount)
                 .createdBy(createdBy)
                 .challengeRules(challengeRules)
@@ -82,5 +83,9 @@ public class Challenge extends BaseTime {
 
     public void addCategories(List<Category> categories) {
         challengeCategories.addAll(this, categories);
+    }
+
+    public void addKeywords(List<Keyword> keywords) {
+        challengeKeywords.addAll(this, keywords);
     }
 }
