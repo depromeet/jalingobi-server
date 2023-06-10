@@ -24,6 +24,8 @@ public class FeedController {
     private final GetChallengeFeedUseCase getChallengeFeedUseCase;
 
     private final GetMyChallengeListUseCase getMyChallengeListUseCase;
+
+    private final GetChallengeProceedingInfoUseCase getChallengeProceedingInfoUseCase;
     private final GetMyRoomUseCase getMyRoomUseCase;
 
     private final GetMyFeedUseCase getMyFeedUseCase;
@@ -51,8 +53,21 @@ public class FeedController {
         return ResponseService.getDataResponse(getMyChallengeListUseCase.execute());
     }
 
+    @Operation(summary = "챌린지 진행 정보 API", description = "챌린지의 진행 정보(목표 지출액, 현재 지출액 등)를 가져옵니다.")
+    @ApiResponses(
+            value = {
+                @ApiResponse(responseCode = "200"),
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "잘못된 요청값을 전달한 경우",
+                        content = @Content())
+            })
     @GetMapping("/challenge/{challengeRoomId}/proceeding/info")
-    public void getChallengeProceedingInfo() {}
+    public Response<GetChallengeProceedingInfoResponse> getChallengeProceedingInfo(
+            @PathVariable("challengeRoomId") Long challengeRoomId) {
+
+        return ResponseService.getDataResponse(getChallengeProceedingInfoUseCase.execute());
+    }
 
     @Operation(summary = "내 방 입장 API", description = "내 방 입장시 참여중인 챌린지 방 목록 및 내 피드들을 가져옵니다.")
     @ApiResponses(
