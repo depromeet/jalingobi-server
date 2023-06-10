@@ -9,12 +9,12 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class GetMyFeedResponse {
+public class GetMyRoomFeedResponse {
 
-    @Schema(example = "12")
+    @Schema(description = "총 페이지", example = "12")
     private Integer totalPage;
 
-    @Schema(example = "5")
+    @Schema(description = "현재 페이지", example = "5")
     private Integer currentPage;
 
     @Schema(description = "페이지 당 기록수", example = "20")
