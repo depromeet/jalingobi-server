@@ -6,6 +6,7 @@ import depromeet.domain.challenge.domain.keyword.ChallengeKeywords;
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.keyword.domain.Keyword;
 import depromeet.domain.rule.domain.ChallengeRule;
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.*;
 import lombok.*;
@@ -96,5 +97,44 @@ public class Challenge extends BaseTime {
                 .anyMatch(
                         userChallenge ->
                                 userChallenge.getUser().getSocial().getId().equals(socialId));
+    }
+
+    public boolean isNotWrittenBy(String createdBy) {
+        return !this.createdBy.equals(createdBy);
+    }
+
+    public void updateTitle(String title) {
+        this.title = title;
+    }
+
+    public void updateChallengeCategories(List<Category> categories) {
+        challengeCategories.clear();
+        addCategories(categories);
+    }
+
+    public void updatePrice(int price) {
+        this.price = price;
+    }
+
+    public void updateImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public void updateKeywords(List<Keyword> keywords) {
+        challengeKeywords.clear();
+        addKeywords(keywords);
+    }
+
+    public void updateAvailableCount(int availableCount) {
+        this.availableCount = availableCount;
+    }
+
+    public void updateChallengeRules(List<ChallengeRule> rules) {
+        challengeRules.clear();
+        addRules(rules);
+    }
+
+    public void updateDuration(int period, LocalDate startAt, LocalDate endAt) {
+        this.duration = new Duration(period, startAt, endAt);
     }
 }
