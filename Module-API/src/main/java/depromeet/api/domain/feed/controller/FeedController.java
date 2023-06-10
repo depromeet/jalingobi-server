@@ -1,14 +1,8 @@
 package depromeet.api.domain.feed.controller;
 
 
-import depromeet.api.domain.feed.dto.response.GetChallengeFeedResponse;
-import depromeet.api.domain.feed.dto.response.GetChallengeRoomResponse;
-import depromeet.api.domain.feed.dto.response.GetMyFeedResponse;
-import depromeet.api.domain.feed.dto.response.GetMyRoomResponse;
-import depromeet.api.domain.feed.usecase.GetChallengeFeedUseCase;
-import depromeet.api.domain.feed.usecase.GetChallengeRoomUseCase;
-import depromeet.api.domain.feed.usecase.GetMyFeedUseCase;
-import depromeet.api.domain.feed.usecase.GetMyRoomUseCase;
+import depromeet.api.domain.feed.dto.response.*;
+import depromeet.api.domain.feed.usecase.*;
 import depromeet.common.response.Response;
 import depromeet.common.response.ResponseService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,9 +22,37 @@ public class FeedController {
     private final GetChallengeRoomUseCase getChallengeRoomUseCase;
 
     private final GetChallengeFeedUseCase getChallengeFeedUseCase;
+
+    private final GetMyChallengeListUseCase getMyChallengeListUseCase;
     private final GetMyRoomUseCase getMyRoomUseCase;
 
     private final GetMyFeedUseCase getMyFeedUseCase;
+
+    // getMyChallengeList
+
+    // getChallengeProceedingInfo
+
+    // getMyRoomFeed
+
+    // getChallengeRoomFeed
+
+    @Operation(summary = "참여중인 챌린지 API", description = "참여중인 챌린지 방들의 정보를 가져옵니다.")
+    @ApiResponses(
+            value = {
+                @ApiResponse(responseCode = "200"),
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "잘못된 요청값을 전달한 경우",
+                        content = @Content())
+            })
+    @GetMapping("/challenge/my-list")
+    public Response<GetMyChallengeListResponse> getMyChallengeList() {
+
+        return ResponseService.getDataResponse(getMyChallengeListUseCase.execute());
+    }
+
+    @GetMapping("/challenge/{challengeRoomId}/proceeding/info")
+    public void getChallengeProceedingInfo() {}
 
     @Operation(summary = "내 방 입장 API", description = "내 방 입장시 참여중인 챌린지 방 목록 및 내 피드들을 가져옵니다.")
     @ApiResponses(

@@ -7,9 +7,12 @@ import lombok.Data;
 @Data
 public class ParticipatedChallenge {
 
-    @Schema(example = "13")
+    @Schema(description = "챌린지 방 입장을 위한 ID", example = "13")
     private Long challengeRoomId;
 
-    @Schema(example = "배달 10만원 이하로 쓰기")
+    @Schema(description = "참여중인 챌린지 타이틀", example = "배달 10만원 이하로 쓰기")
     private String title;
+
+    @Schema(description = "챌린지 대표 이미지", example = "이미지 URL")
+    private String imgUrl;
 }
