@@ -47,6 +47,7 @@ public enum CustomExceptionStatus {
     CHALLENGE_IS_FULL(false, 1801, "챌린지 참가 인원이 꽉 찼습니다."),
     UNPARTICIPATED_CHALLENGE_USER(false, 1802, "챌린지에 참여하지 않는 사용자입니다."),
     CHALLENGE_NOT_BELONG_TO_USER(false, 1803, "챌린지를 생성한 유저가 아닙니다."),
+    CHALLENGE_CANNOT_BE_DELETED_AFTER_START(false, 1804, "시작된 챌린지는 삭제할 수 없습니다."),
 
     // feed
     FEED_NOT_FOUND(false, 1900, "요청한 날짜에 피드가 없습니다."),
