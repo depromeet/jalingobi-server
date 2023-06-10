@@ -65,4 +65,8 @@ public class ChallengeCategories {
             throw new CustomException(CANNOT_ADD_CATEGORY);
         }
     }
+
+    public void clear() {
+        challengeCategories.clear();
+    }
 }

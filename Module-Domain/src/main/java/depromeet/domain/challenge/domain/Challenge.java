@@ -2,8 +2,11 @@ package depromeet.domain.challenge.domain;
 
 
 import depromeet.domain.category.domain.Category;
+import depromeet.domain.challenge.domain.keyword.ChallengeKeywords;
 import depromeet.domain.config.BaseTime;
+import depromeet.domain.keyword.domain.Keyword;
 import depromeet.domain.rule.domain.ChallengeRule;
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.*;
 import lombok.*;
@@ -30,8 +33,7 @@ public class Challenge extends BaseTime {
 
     private String imgUrl;
 
-    @Column(nullable = false)
-    private String hashtag;
+    @Embedded private ChallengeKeywords challengeKeywords;
 
     @Column(name = "available_count", nullable = false)
     private int availableCount;
@@ -57,7 +59,7 @@ public class Challenge extends BaseTime {
             String title,
             int price,
             String imgUrl,
-            String hashtag,
+            ChallengeKeywords challengeKeywords,
             int availableCount,
             String createdBy,
             List<ChallengeRule> challengeRules,
@@ -67,7 +69,7 @@ public class Challenge extends BaseTime {
                 .title(title)
                 .price(price)
                 .imgUrl(imgUrl)
-                .hashtag(hashtag)
+                .challengeKeywords(challengeKeywords)
                 .availableCount(availableCount)
                 .createdBy(createdBy)
                 .challengeRules(challengeRules)
@@ -86,10 +88,53 @@ public class Challenge extends BaseTime {
         challengeCategories.addAll(this, categories);
     }
 
+    public void addKeywords(List<Keyword> keywords) {
+        challengeKeywords.addAll(this, keywords);
+    }
+
     public boolean isParticipateChallengeUser(String socialId) {
         return this.userChallenges.stream()
                 .anyMatch(
                         userChallenge ->
                                 userChallenge.getUser().getSocial().getId().equals(socialId));
+    }
+
+    public boolean isNotWrittenBy(String createdBy) {
+        return !this.createdBy.equals(createdBy);
+    }
+
+    public void updateTitle(String title) {
+        this.title = title;
+    }
+
+    public void updateChallengeCategories(List<Category> categories) {
+        challengeCategories.clear();
+        addCategories(categories);
+    }
+
+    public void updatePrice(int price) {
+        this.price = price;
+    }
+
+    public void updateImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public void updateKeywords(List<Keyword> keywords) {
+        challengeKeywords.clear();
+        addKeywords(keywords);
+    }
+
+    public void updateAvailableCount(int availableCount) {
+        this.availableCount = availableCount;
+    }
+
+    public void updateChallengeRules(List<ChallengeRule> rules) {
+        challengeRules.clear();
+        addRules(rules);
+    }
+
+    public void updateDuration(int period, LocalDate startAt, LocalDate endAt) {
+        this.duration = new Duration(period, startAt, endAt);
     }
 }

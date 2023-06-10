@@ -10,17 +10,23 @@ import lombok.Data;
 @Data
 public class Feed {
 
-    @Schema(example = "27")
+    @Schema(description = "지출 기록 ID", example = "27")
     private Long recordId;
 
     @Schema(description = "본인 기록인지", example = "true")
     private Boolean isMine;
 
+    @Schema(description = "현재 지출액", example = "78000")
+    private Integer currentCharge;
+
+    @Schema(example = "유저 이미지 URL")
+    private String userImgUrl;
+
     @Schema(example = "사용자 닉네임")
     private String nickname;
 
-    @Schema(example = "이미지 URL")
-    private String imgUrl;
+    @Schema(example = "기록 이미지 URL")
+    private String recordImgUrl;
 
     @Schema(description = "가격", example = "5000")
     private Integer price;

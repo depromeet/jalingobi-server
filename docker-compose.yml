@@ -8,9 +8,11 @@ services:
       dockerfile: Dockerfile
       args:
         PROFILE: local
+        JMX_PORT: 9010
     container_name: 'module-api-server'
     ports:
       - '8080:8080'
+      - '9010:9010'
     depends_on:
       - redis
   redis:
@@ -19,4 +21,3 @@ services:
     container_name: redis
     ports:
       - "6379:6379"
-
