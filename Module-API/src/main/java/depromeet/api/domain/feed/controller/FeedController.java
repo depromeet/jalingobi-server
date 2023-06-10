@@ -19,24 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class FeedController {
 
-    private final GetChallengeRoomUseCase getChallengeRoomUseCase;
-
-    private final GetChallengeFeedUseCase getChallengeFeedUseCase;
-
     private final GetMyChallengeListUseCase getMyChallengeListUseCase;
-
     private final GetChallengeProceedingInfoUseCase getChallengeProceedingInfoUseCase;
-    private final GetMyRoomUseCase getMyRoomUseCase;
-
-    private final GetMyFeedUseCase getMyFeedUseCase;
-
-    // getMyChallengeList
-
-    // getChallengeProceedingInfo
-
-    // getMyRoomFeed
-
-    // getChallengeRoomFeed
+    private final GetMyRoomFeedUseCase getMyRoomFeedUseCase;
+    private final GetChallengeFeedUseCase getChallengeFeedUseCase;
 
     @Operation(summary = "참여중인 챌린지 API", description = "참여중인 챌린지 방들의 정보를 가져옵니다.")
     @ApiResponses(
@@ -69,21 +55,6 @@ public class FeedController {
         return ResponseService.getDataResponse(getChallengeProceedingInfoUseCase.execute());
     }
 
-    @Operation(summary = "내 방 입장 API", description = "내 방 입장시 참여중인 챌린지 방 목록 및 내 피드들을 가져옵니다.")
-    @ApiResponses(
-            value = {
-                @ApiResponse(responseCode = "200"),
-                @ApiResponse(
-                        responseCode = "400",
-                        description = "잘못된 요청값을 전달한 경우",
-                        content = @Content())
-            })
-    @GetMapping("/challenge/my-room")
-    public Response<GetMyRoomResponse> getMyRoom() {
-
-        return ResponseService.getDataResponse(getMyRoomUseCase.execute());
-    }
-
     @Operation(summary = "내 방 피드 API", description = "내 방에 있는 기록들을 20개씩 가져옵니다.")
     @ApiResponses(
             value = {
@@ -94,25 +65,9 @@ public class FeedController {
                         content = @Content())
             })
     @GetMapping("/challenge/my-room/feed")
-    public Response<GetMyFeedResponse> getMyFeed(@PathParam("page") Integer page) {
+    public Response<GetMyRoomFeedResponse> getMyRoomFeed(@PathParam("page") Integer page) {
 
-        return ResponseService.getDataResponse(getMyFeedUseCase.execute());
-    }
-
-    @Operation(summary = "챌린지 방 입장 API", description = "챌린지 방 입장시 목표 금액 현황 및 피드들을 가져옵니다.")
-    @ApiResponses(
-            value = {
-                @ApiResponse(responseCode = "200"),
-                @ApiResponse(
-                        responseCode = "400",
-                        description = "잘못된 요청값을 전달한 경우",
-                        content = @Content())
-            })
-    @GetMapping("/challenge/{challengeRoomId}")
-    public Response<GetChallengeRoomResponse> getChallengeRoom(
-            @PathVariable("challengeRoomId") Long challengeRoomId) {
-
-        return ResponseService.getDataResponse(getChallengeRoomUseCase.execute());
+        return ResponseService.getDataResponse(getMyRoomFeedUseCase.execute());
     }
 
     @Operation(summary = "챌린지 방 피드 API", description = "챌린지 방에 있는 기록들을 20개씩 가져옵니다.")
