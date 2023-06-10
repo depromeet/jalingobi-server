@@ -1,4 +1,4 @@
-package depromeet.api.controller;
+package depromeet.api.domain.record.controller;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.*;
@@ -11,7 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import depromeet.api.config.security.filter.JwtRequestFilter;
-import depromeet.api.domain.record.controller.RecordController;
 import depromeet.api.domain.record.dto.request.CreateRecordRequest;
 import depromeet.api.domain.record.dto.response.CreateRecordResponse;
 import depromeet.api.domain.record.usecase.CreateRecordUseCase;
