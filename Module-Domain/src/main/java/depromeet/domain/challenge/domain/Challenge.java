@@ -3,6 +3,7 @@ package depromeet.domain.challenge.domain;
 
 import depromeet.domain.category.domain.Category;
 import depromeet.domain.challenge.domain.keyword.ChallengeKeywords;
+import depromeet.domain.challenge.exception.ChallengeCannotBeDeletedAfterStartException;
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.keyword.domain.Keyword;
 import depromeet.domain.rule.domain.ChallengeRule;
@@ -101,6 +102,14 @@ public class Challenge extends BaseTime {
 
     public boolean isNotWrittenBy(String createdBy) {
         return !this.createdBy.equals(createdBy);
+    }
+
+    private boolean isStarted(final LocalDate localdate) {
+        return localdate.isBefore(LocalDate.now());
+    }
+
+    public void validateDeleteOrUpdate(final LocalDate localdate) {
+        if (isStarted(localdate)) throw ChallengeCannotBeDeletedAfterStartException.EXCEPTION;
     }
 
     public void updateTitle(String title) {
