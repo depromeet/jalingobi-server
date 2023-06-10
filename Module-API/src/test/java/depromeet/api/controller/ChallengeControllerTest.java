@@ -1,9 +1,9 @@
 package depromeet.api.controller;
 
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -16,6 +16,7 @@ import depromeet.api.domain.challenge.dto.response.CreateChallengeResponse;
 import depromeet.api.domain.challenge.dto.response.UpdateChallengeResponse;
 import depromeet.api.domain.challenge.mapper.ChallengeMapper;
 import depromeet.api.domain.challenge.usecase.CreateChallengeUseCase;
+import depromeet.api.domain.challenge.usecase.DeleteChallengeUseCase;
 import depromeet.api.domain.challenge.usecase.UpdateChallengeUseCase;
 import depromeet.api.util.AuthenticationUtil;
 import java.time.LocalDate;
@@ -54,6 +55,8 @@ public class ChallengeControllerTest {
     @MockBean CreateChallengeUseCase challengeUseCase;
 
     @MockBean UpdateChallengeUseCase updateChallengeUseCase;
+
+    @MockBean DeleteChallengeUseCase deleteChallengeUseCase;
 
     ChallengeMapper challengeMapper = new ChallengeMapper();
 
@@ -167,5 +170,20 @@ public class ChallengeControllerTest {
 
         verify(updateChallengeUseCase, times(1))
                 .execute(any(UpdateChallengeRequest.class), anyString());
+    }
+
+    @Test
+    @DisplayName("챌린지 삭제")
+    public void deleteChallengeTest() throws Exception {
+        String socialId = "socialId";
+
+        when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
+        willDoNothing().given(deleteChallengeUseCase).execute(anyLong(), anyString());
+
+        mockMvc.perform(delete("/challenge/{challengeId}", 1L))
+                .andDo(print())
+                .andExpectAll(status().isOk());
+
+        verify(deleteChallengeUseCase, times(1)).execute(anyLong(), anyString());
     }
 }
