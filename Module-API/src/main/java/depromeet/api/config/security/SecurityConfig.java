@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/image/**").hasRole("USER")
                 .antMatchers("/challenge/**").hasAnyRole("USER", "GUEST")
-                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/auth/**", "/guest").permitAll()
 
                 .and()
                 .exceptionHandling()
