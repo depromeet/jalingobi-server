@@ -1,20 +1,22 @@
 package depromeet.api.controller;
 
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import depromeet.api.config.security.filter.JwtRequestFilter;
 import depromeet.api.domain.challenge.controller.ChallengeController;
 import depromeet.api.domain.challenge.dto.request.CreateChallengeRequest;
+import depromeet.api.domain.challenge.dto.request.UpdateChallengeRequest;
 import depromeet.api.domain.challenge.dto.response.CreateChallengeResponse;
+import depromeet.api.domain.challenge.dto.response.UpdateChallengeResponse;
 import depromeet.api.domain.challenge.mapper.ChallengeMapper;
 import depromeet.api.domain.challenge.usecase.CreateChallengeUseCase;
+import depromeet.api.domain.challenge.usecase.UpdateChallengeUseCase;
 import depromeet.api.util.AuthenticationUtil;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -50,6 +52,8 @@ public class ChallengeControllerTest {
     @Autowired ObjectMapper objectMapper;
 
     @MockBean CreateChallengeUseCase challengeUseCase;
+
+    @MockBean UpdateChallengeUseCase updateChallengeUseCase;
 
     ChallengeMapper challengeMapper = new ChallengeMapper();
 
@@ -105,5 +109,63 @@ public class ChallengeControllerTest {
                                 .characterEncoding("UTF-8"))
                 .andDo(print())
                 .andExpectAll(status().isOk(), jsonPath("$.result.id").value(response.getId()));
+    }
+
+    @Test
+    @DisplayName("챌린지 수정")
+    public void updateChallengeTest() throws Exception {
+        String socialId = "socialId";
+
+        List<String> categories = new ArrayList<>();
+        categories.add("식비");
+
+        List<String> keywords = new ArrayList<>();
+        keywords.add("#마라탕");
+        keywords.add("#5만원챌린지");
+
+        List<String> challengeRules = new ArrayList<>();
+        challengeRules.add("욕설 금지");
+
+        UpdateChallengeRequest request =
+                UpdateChallengeRequest.builder()
+                        .ChallengeId(1L)
+                        .categories(categories)
+                        .title("마라탕 5만원 이하로 쓰기")
+                        .price(50000)
+                        .imgUrl("test.jpg")
+                        .keywords(keywords)
+                        .availableCount(30)
+                        .rules(challengeRules)
+                        .period(15)
+                        .startAt(LocalDate.of(2023, 6, 1))
+                        .endAt(LocalDate.of(2023, 6, 15))
+                        .build();
+
+        UpdateChallengeResponse response = challengeMapper.toUpdateChallengeResponse(request);
+
+        when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
+        when(updateChallengeUseCase.execute(any(), anyString())).thenReturn(response);
+
+        mockMvc.perform(
+                        put("/challenge/{challengeId}", 1L)
+                                .content(objectMapper.writeValueAsString(request))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .characterEncoding("UTF-8"))
+                .andDo(print())
+                .andExpectAll(
+                        status().isOk(),
+                        jsonPath("$.result.categories").value(response.getCategories()),
+                        jsonPath("$.result.title").value(response.getTitle()),
+                        jsonPath("$.result.price").value(response.getPrice()),
+                        jsonPath("$.result.imgUrl").value(response.getImgUrl()),
+                        jsonPath("$.result.keywords").value(response.getKeywords()),
+                        jsonPath("$.result.availableCount").value(response.getAvailableCount()),
+                        jsonPath("$.result.rules").value(response.getRules()),
+                        jsonPath("$.result.period").value(response.getPeriod()),
+                        jsonPath("$.result.startAt").value(String.valueOf(response.getStartAt())),
+                        jsonPath("$.result.endAt").value(String.valueOf(response.getEndAt())));
+
+        verify(updateChallengeUseCase, times(1))
+                .execute(any(UpdateChallengeRequest.class), anyString());
     }
 }
