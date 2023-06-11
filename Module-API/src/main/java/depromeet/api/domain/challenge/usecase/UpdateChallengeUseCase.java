@@ -42,8 +42,7 @@ public class UpdateChallengeUseCase {
         List<Keyword> keywords = keywordAdaptor.findOrCreateKeywords(request.getKeywords());
         List<Category> categories =
                 categoryAdaptor.findOrExceptionCategories(request.getCategories());
-        List<ChallengeRule> challengeRules =
-                ChallengeRule.toEntities(request.getRules(), challenge);
+        List<ChallengeRule> challengeRules = ChallengeRule.createRule(request.getRules());
 
         challenge.updateTitle(request.getTitle());
         challenge.updatePrice(request.getPrice());

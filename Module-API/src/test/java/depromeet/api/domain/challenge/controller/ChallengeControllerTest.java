@@ -81,6 +81,9 @@ public class ChallengeControllerTest {
         keywords.add("#마라탕");
         keywords.add("#5만원챌린지");
 
+        List<String> rules = new ArrayList<>();
+        rules.add("광고 금지");
+
         CreateChallengeRequest request =
                 CreateChallengeRequest.builder()
                         .category(categories)
@@ -89,7 +92,7 @@ public class ChallengeControllerTest {
                         .imageUrl("test.jpg")
                         .keywords(keywords)
                         .availableCount(30)
-                        // .challengeRule(rules) List<String>을 받도록 수정할 예정
+                        .challengeRule(rules)
                         .period(15)
                         .startAt(LocalDate.of(2023, 6, 1))
                         .endAt(LocalDate.of(2023, 6, 15))

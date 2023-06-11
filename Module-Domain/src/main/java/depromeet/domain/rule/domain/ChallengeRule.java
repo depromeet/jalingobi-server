@@ -31,12 +31,8 @@ public class ChallengeRule {
         this.content = content;
     }
 
-    public static ChallengeRule createRule(String content, Challenge challenge) {
-        return ChallengeRule.builder().content(content).challenge(challenge).build();
-    }
-
-    public static List<ChallengeRule> toEntities(List<String> rules, Challenge challenge) {
-        return rules.stream().map(rule -> createRule(rule, challenge)).collect(Collectors.toList());
+    public static List<ChallengeRule> createRule(List<String> content) {
+        return content.stream().map(ChallengeRule::new).collect(Collectors.toList());
     }
 
     public void setChallenge(Challenge challenge) {
