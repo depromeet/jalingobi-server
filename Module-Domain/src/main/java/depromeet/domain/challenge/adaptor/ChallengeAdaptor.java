@@ -22,4 +22,8 @@ public class ChallengeAdaptor {
                 .findById(challengeId)
                 .orElseThrow(() -> ChallengeNotFoundException.EXCEPTION);
     }
+
+    public void delete(Challenge challenge) {
+        challengeRepository.delete(challenge);
+    }
 }
