@@ -1,7 +1,6 @@
 package depromeet.api.domain.challenge.dto.request;
 
 
-import depromeet.domain.rule.domain.ChallengeRule;
 import java.time.LocalDate;
 import java.util.List;
 import javax.validation.constraints.Max;
@@ -35,7 +34,7 @@ public class CreateChallengeRequest {
     @NotNull
     private Integer availableCount;
 
-    private List<ChallengeRule> challengeRule;
+    private List<String> challengeRule;
 
     @NotNull private Integer period;
 
