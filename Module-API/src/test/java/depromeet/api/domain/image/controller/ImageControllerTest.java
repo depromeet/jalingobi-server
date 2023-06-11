@@ -1,4 +1,4 @@
-package depromeet.api.controller;
+package depromeet.api.domain.image.controller;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import depromeet.api.config.security.filter.JwtRequestFilter;
-import depromeet.api.domain.image.controller.ImageController;
 import depromeet.api.domain.image.dto.ImageFileExtension;
 import depromeet.api.domain.image.dto.ImageUploadType;
 import depromeet.api.domain.image.dto.request.IssuePresignedUrlRequest;
