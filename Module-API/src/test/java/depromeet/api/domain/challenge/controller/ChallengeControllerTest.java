@@ -1,4 +1,4 @@
-package depromeet.api.controller;
+package depromeet.api.domain.challenge.controller;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.willDoNothing;
@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import depromeet.api.config.security.filter.JwtRequestFilter;
-import depromeet.api.domain.challenge.controller.ChallengeController;
 import depromeet.api.domain.challenge.dto.request.CreateChallengeRequest;
 import depromeet.api.domain.challenge.dto.request.UpdateChallengeRequest;
 import depromeet.api.domain.challenge.dto.response.CreateChallengeResponse;
