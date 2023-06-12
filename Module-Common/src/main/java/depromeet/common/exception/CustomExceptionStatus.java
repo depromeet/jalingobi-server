@@ -66,7 +66,10 @@ public enum CustomExceptionStatus {
     // keyword
     INVALID_KEYWORD_FORMAT(false, 2200, "키워드 형식이 옳지 않습니다."),
     CANNOT_ADD_KEYWORD(false, 2201, "키워드를 추가할 수 없습니다."),
-    ALL_KEYWORD_LENGTH_IS_OVER(false, 2202, "등록할 수 있는 전체 키워드 길이를 초과했습니다.");
+    ALL_KEYWORD_LENGTH_IS_OVER(false, 2202, "등록할 수 있는 전체 키워드 길이를 초과했습니다."),
+
+    // emoji
+    EMOJI_NOT_FOUND(false, 2300, "이모지가 존재하지 않습니다.");
 
     private final boolean isSuccess;
     private final int code;
