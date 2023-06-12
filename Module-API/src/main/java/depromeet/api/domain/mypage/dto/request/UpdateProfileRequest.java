@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateProfileRequest {
-    @Schema(example = "사용자 닉네임")
+    @Schema(minimum = "1", maximum = "16", example = "사용자 닉네임")
     @NotNull(message = "닉네임을 입력해주세요.")
-    @Size(min = 1, max = 20, message = "닉네임은 20자 이내입니다.")
+    @Size(min = 1, max = 16, message = "닉네임은 16자 이내입니다.")
     private String nickName;
 
     @Schema(example = "사용자 프로필 URL")
