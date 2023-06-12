@@ -4,6 +4,7 @@ package depromeet.domain.challenge.domain;
 import depromeet.domain.category.domain.Category;
 import depromeet.domain.challenge.domain.keyword.ChallengeKeywords;
 import depromeet.domain.challenge.exception.ChallengeCannotBeDeletedAfterStartException;
+import depromeet.domain.challenge.exception.ChallengeCannotBeUpdatedAfterStartException;
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.keyword.domain.Keyword;
 import depromeet.domain.rule.domain.ChallengeRule;
@@ -108,8 +109,12 @@ public class Challenge extends BaseTime {
         return localdate.isBefore(LocalDate.now());
     }
 
-    public void validateDeleteOrUpdate(final LocalDate localdate) {
+    public void validateDelete(final LocalDate localdate) {
         if (isStarted(localdate)) throw ChallengeCannotBeDeletedAfterStartException.EXCEPTION;
+    }
+
+    public void validateUpdate(final LocalDate localdate) {
+        if (isStarted(localdate)) throw ChallengeCannotBeUpdatedAfterStartException.EXCEPTION;
     }
 
     public void updateTitle(String title) {
