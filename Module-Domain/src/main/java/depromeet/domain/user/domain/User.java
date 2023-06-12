@@ -30,6 +30,7 @@ public class User extends BaseTime {
     @OneToMany(mappedBy = "user")
     private List<UserChallenge> userChallenges;
 
+    /** 생성 메서드 */
     public static User registerUser(
             String nickname, String email, String socialId, Platform platform) {
 
@@ -38,7 +39,12 @@ public class User extends BaseTime {
         return User.builder().profile(profile).social(social).role(Role.USER).build();
     }
 
+    /** 비즈니스 메서드 */
     public boolean isSameUser(String socialId) {
         return this.social.getId().equals(socialId);
+    }
+
+    public void updateProfile(String nickname, String profileImgUrl) {
+        this.profile.updateProfile(nickname, profileImgUrl);
     }
 }
