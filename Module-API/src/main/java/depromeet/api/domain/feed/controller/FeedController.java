@@ -3,6 +3,7 @@ package depromeet.api.domain.feed.controller;
 
 import depromeet.api.domain.feed.dto.response.*;
 import depromeet.api.domain.feed.usecase.*;
+import depromeet.api.util.AuthenticationUtil;
 import depromeet.common.response.Response;
 import depromeet.common.response.ResponseService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,7 +37,8 @@ public class FeedController {
     @GetMapping("/challenge/my-list")
     public Response<GetMyChallengeListResponse> getMyChallengeList() {
 
-        return ResponseService.getDataResponse(getMyChallengeListUseCase.execute());
+        return ResponseService.getDataResponse(
+                getMyChallengeListUseCase.execute(AuthenticationUtil.getCurrentUserSocialId()));
     }
 
     @Operation(summary = "챌린지 진행 정보 API", description = "챌린지의 진행 정보(목표 지출액, 현재 지출액 등)를 가져옵니다.")

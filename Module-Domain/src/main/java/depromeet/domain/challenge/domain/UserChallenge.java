@@ -1,6 +1,7 @@
 package depromeet.domain.challenge.domain;
 
 
+import depromeet.domain.config.BaseTime;
 import depromeet.domain.user.domain.User;
 import javax.persistence.*;
 import lombok.*;
@@ -10,7 +11,7 @@ import lombok.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserChallenge {
+public class UserChallenge extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
