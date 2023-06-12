@@ -34,10 +34,10 @@ public class UpdateChallengeUseCase {
     public UpdateChallengeResponse execute(UpdateChallengeRequest request, String socialId) {
         User user = userAdaptor.findUser(socialId);
         Challenge challenge = challengeAdaptor.findChallenge(request.getChallengeId());
-
         if (challenge.isNotWrittenBy(socialId)) {
             throw ChallengeNotBelongToUserException.EXCEPTION;
         }
+        challenge.validateUpdate(challenge.getDuration().getStartAt());
 
         List<Keyword> keywords = keywordAdaptor.findOrCreateKeywords(request.getKeywords());
         List<Category> categories =

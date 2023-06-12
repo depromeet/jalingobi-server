@@ -25,7 +25,7 @@ public class DeleteChallengeUseCase {
         if (challenge.isNotWrittenBy(socialId)) {
             throw ChallengeNotBelongToUserException.EXCEPTION;
         }
-        challenge.validateDeleteOrUpdate(challenge.getDuration().getStartAt());
+        challenge.validateDelete(challenge.getDuration().getStartAt());
 
         challengeAdaptor.delete(challenge);
     }
