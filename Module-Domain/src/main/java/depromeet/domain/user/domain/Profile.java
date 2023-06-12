@@ -23,4 +23,9 @@ public class Profile {
     public static Profile createProfile(String name, String email, String imgUrl) {
         return Profile.builder().name(name).email(email).imgUrl(imgUrl).build();
     }
+
+    public void updateProfile(String nickname, String profileImgUrl) {
+        this.name = nickname;
+        this.imgUrl = profileImgUrl;
+    }
 }
