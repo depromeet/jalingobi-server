@@ -11,6 +11,12 @@ import lombok.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(
+        uniqueConstraints = {
+            @UniqueConstraint(
+                    name = "UniqueUserChallenge",
+                    columnNames = {"user_id", "challenge_id"})
+        })
 public class UserChallenge extends BaseTime {
 
     @Id
@@ -28,5 +34,5 @@ public class UserChallenge extends BaseTime {
     private String nickname;
 
     @Column(name = "current_charge")
-    private int currentCharge;
+    private Integer currentCharge;
 }

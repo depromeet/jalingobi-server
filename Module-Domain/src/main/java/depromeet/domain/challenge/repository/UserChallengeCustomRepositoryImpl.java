@@ -6,6 +6,7 @@ import depromeet.domain.challenge.domain.QChallenge;
 import depromeet.domain.challenge.domain.QUserChallenge;
 import depromeet.domain.challenge.domain.UserChallenge;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -24,5 +25,22 @@ public class UserChallengeCustomRepositoryImpl implements UserChallengeCustomRep
                 .fetchJoin()
                 .where(userChallenge.user.id.eq(userId))
                 .fetch();
+    }
+
+    @Override
+    public Optional<UserChallenge> findUserChallengeByUserIdAndChallengeRoomId(
+            Long userId, Long challengeRoomId) {
+        return queryFactory
+                .selectFrom(userChallenge)
+                .join(userChallenge.challenge, challenge)
+                .fetchJoin()
+                .where(
+                        userChallenge
+                                .user
+                                .id
+                                .eq(userId)
+                                .and(userChallenge.challenge.id.eq(challengeRoomId)))
+                .stream()
+                .findAny();
     }
 }
