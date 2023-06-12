@@ -3,9 +3,11 @@ package depromeet.api.domain.feed.UserChallengeMapper;
 
 import depromeet.api.domain.feed.dto.response.GetChallengeProceedingInfoResponse;
 import depromeet.api.domain.feed.dto.response.GetMyChallengeListResponse;
+import depromeet.common.annotation.Mapper;
 import depromeet.domain.challenge.domain.UserChallenge;
 import java.util.List;
 
+@Mapper
 public class UserChallengeMapper {
 
     public GetMyChallengeListResponse toGetMyChallengeListResponse(

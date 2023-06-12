@@ -16,7 +16,7 @@ public class Feed {
     @Schema(description = "본인 기록인지", example = "true")
     private Boolean isMine;
 
-    @Schema(description = "현재 지출액", example = "78000")
+    @Schema(description = "다른 유저의 현재 지출액", example = "78000")
     private Integer currentCharge;
 
     @Schema(example = "유저 이미지 URL")
