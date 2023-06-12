@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
-@Transactional
 @RequiredArgsConstructor
 public class LogoutUseCase {
 
