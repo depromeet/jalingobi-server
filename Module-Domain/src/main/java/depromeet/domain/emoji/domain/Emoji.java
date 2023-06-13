@@ -48,7 +48,6 @@ public class Emoji {
         }
         Emoji emoji = (Emoji) o;
         return Objects.equals(userChallenge, emoji.getUserChallenge())
-                && Objects.equals(record, emoji.getRecord())
-                && Objects.equals(type, emoji.getType());
+                && Objects.equals(record, emoji.getRecord());
     }
 }
