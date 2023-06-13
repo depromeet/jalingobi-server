@@ -13,9 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateUserChallengeRequest {
 
-    @NotNull(message = "참여할 챌린지 ID를 입력하세요.")
-    private Long challengeId;
-
     @NotNull(message = "챌린지 동안 사용할 닉네임 입력하세요.")
     private String nickname;
 
