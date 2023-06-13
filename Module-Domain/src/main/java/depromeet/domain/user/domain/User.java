@@ -7,9 +7,7 @@ import java.util.List;
 import javax.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicInsert;
 
-@DynamicInsert
 @Builder
 @Getter
 @AllArgsConstructor
