@@ -36,4 +36,14 @@ public class UserChallenge extends BaseTime {
 
     @Column(name = "current_charge")
     private Integer currentCharge;
+
+    public static UserChallenge createUserChallenge(
+            User user, Challenge challenge, String nickname, int currentCharge) {
+        return UserChallenge.builder()
+                .user(user)
+                .challenge(challenge)
+                .nickname(nickname)
+                .currentCharge(currentCharge)
+                .build();
+    }
 }

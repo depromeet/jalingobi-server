@@ -9,6 +9,9 @@ import depromeet.domain.config.BaseTime;
 import depromeet.domain.keyword.domain.Keyword;
 import depromeet.domain.rule.domain.ChallengeRule;
 import depromeet.domain.userchallenge.domain.UserChallenge;
+import depromeet.domain.userchallenge.exception.ChallengeIsFullException;
+import depromeet.domain.userchallenge.exception.ChallengeIsStartedException;
+import depromeet.domain.userchallenge.exception.DuplicateParticipationException;
 import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.*;
@@ -118,6 +121,19 @@ public class Challenge extends BaseTime {
 
     public void validateUpdate(final LocalDate localdate) {
         if (isStarted(localdate)) throw ChallengeCannotBeUpdatedAfterStartException.EXCEPTION;
+    }
+
+    public void validateDuplicatedParticipation(String socialId) {
+        if (isParticipateChallengeUser(socialId)) throw DuplicateParticipationException.EXCEPTION;
+    }
+
+    public void validateCurrentUserCount() {
+        if (this.userChallenges.size() + 1 > this.availableCount)
+            throw ChallengeIsFullException.EXCEPTION;
+    }
+
+    public void validateInToChallenge(final LocalDate localDate) {
+        if (isStarted(localDate)) throw ChallengeIsStartedException.EXCEPTION;
     }
 
     public void updateTitle(String title) {
