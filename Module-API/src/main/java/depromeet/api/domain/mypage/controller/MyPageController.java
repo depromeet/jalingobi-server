@@ -4,7 +4,9 @@ import static depromeet.api.util.AuthenticationUtil.getCurrentUserSocialId;
 
 import depromeet.api.domain.mypage.dto.request.UpdateProfileRequest;
 import depromeet.api.domain.mypage.dto.response.GetMyPageResponse;
+import depromeet.api.domain.mypage.dto.response.GetUserChallengesResponse;
 import depromeet.api.domain.mypage.usecase.GetMyPageUseCase;
+import depromeet.api.domain.mypage.usecase.GetUserChallengesUseCase;
 import depromeet.api.domain.mypage.usecase.LogoutUseCase;
 import depromeet.api.domain.mypage.usecase.UpdateProfileUseCase;
 import depromeet.common.exception.CustomExceptionStatus;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class MyPageController {
     private final GetMyPageUseCase getMyPageUseCase;
+    private final GetUserChallengesUseCase getUserChallengesUseCase;
     private final UpdateProfileUseCase updateProfileUseCase;
     private final LogoutUseCase logoutUseCase;
 
@@ -30,6 +33,14 @@ public class MyPageController {
     public Response<GetMyPageResponse> getUserProfile() {
 
         return ResponseService.getDataResponse(getMyPageUseCase.execute(getCurrentUserSocialId()));
+    }
+
+    @Operation(summary = "사용자의 전체 챌린지 목록 조회 API")
+    @GetMapping()
+    public Response<GetUserChallengesResponse> getUserChallenge() {
+
+        return ResponseService.getDataResponse(
+                getUserChallengesUseCase.execute(getCurrentUserSocialId()));
     }
 
     @Operation(summary = "사용자 프로필을 수정하는 API")
