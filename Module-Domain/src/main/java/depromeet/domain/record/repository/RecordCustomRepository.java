@@ -1,3 +1,15 @@
 package depromeet.domain.record.repository;
 
-public interface RecordCustomRepository {}
+
+import depromeet.domain.record.domain.Record;
+import java.util.List;
+
+public interface RecordCustomRepository {
+    List<Record> findMyRecordList(Long userId, Integer offset, Integer limit);
+
+    Integer countMyRecordList(Long userId);
+
+    List<Record> findChallengeRecordList(Long challengeRoomId, Long recordId, Integer limit);
+
+    Integer countChallengeRecordList(Long challengeRoomId);
+}

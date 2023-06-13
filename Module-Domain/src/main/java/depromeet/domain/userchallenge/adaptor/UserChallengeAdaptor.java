@@ -3,10 +3,12 @@ package depromeet.domain.userchallenge.adaptor;
 
 import depromeet.common.annotation.Adaptor;
 import depromeet.domain.challenge.domain.Challenge;
-import depromeet.domain.challenge.domain.UserChallenge;
 import depromeet.domain.user.domain.User;
-import depromeet.domain.userchallenge.exception.UnparticipatedChallengeUserException;
+import depromeet.domain.userchallenge.domain.UserChallenge;
+import depromeet.domain.userchallenge.exception.ProgressInfoNotFoundException;
+import depromeet.domain.userchallenge.exception.UserNotParticipatedInChallengeException;
 import depromeet.domain.userchallenge.repository.UserChallengeRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 
 @Adaptor
@@ -18,6 +20,22 @@ public class UserChallengeAdaptor {
     public UserChallenge findByUserChallenge(Challenge challenge, User user) {
         return userChallengeRepository
                 .findByChallengeAndUser(challenge, user)
-                .orElseThrow(() -> UnparticipatedChallengeUserException.EXCEPTION);
+                .orElseThrow(() -> UserNotParticipatedInChallengeException.EXCEPTION);
+    }
+
+    public List<UserChallenge> findUserChallengeList(Long id) {
+        return userChallengeRepository.findUserChallengeListById(id);
+    }
+
+    public UserChallenge findProceedingInfo(Long userId, Long challengeRoomId) {
+        return userChallengeRepository
+                .findUserChallengeByUserIdAndChallengeRoomId(userId, challengeRoomId)
+                .orElseThrow(() -> ProgressInfoNotFoundException.EXCEPTION);
+    }
+
+    public void validateParticipatedInChallenge(Long userId, Long challengeRoomId) {
+        userChallengeRepository
+                .findByUserIdAndChallengeRoomId(userId, challengeRoomId)
+                .orElseThrow(() -> UserNotParticipatedInChallengeException.EXCEPTION);
     }
 }

@@ -8,6 +8,7 @@ import depromeet.domain.challenge.exception.ChallengeCannotBeUpdatedAfterStartEx
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.keyword.domain.Keyword;
 import depromeet.domain.rule.domain.ChallengeRule;
+import depromeet.domain.userchallenge.domain.UserChallenge;
 import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.*;
@@ -34,6 +35,8 @@ public class Challenge extends BaseTime {
     private int price;
 
     private String imgUrl;
+
+    private Boolean active = false;
 
     @Embedded private ChallengeKeywords challengeKeywords;
 

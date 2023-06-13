@@ -2,11 +2,30 @@ package depromeet.api.domain.feed.usecase;
 
 
 import depromeet.api.domain.feed.dto.response.GetChallengeProceedingInfoResponse;
+import depromeet.api.domain.feed.mapper.UserChallengeMapper;
 import depromeet.common.annotation.UseCase;
+import depromeet.domain.user.adaptor.UserAdaptor;
+import depromeet.domain.user.domain.User;
+import depromeet.domain.userchallenge.adaptor.UserChallengeAdaptor;
+import depromeet.domain.userchallenge.domain.UserChallenge;
+import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @UseCase
+@Transactional(readOnly = true)
 public class GetChallengeProceedingInfoUseCase {
-    public GetChallengeProceedingInfoResponse execute() {
-        return null;
+
+    private final UserChallengeAdaptor userChallengeAdaptor;
+    private final UserAdaptor userAdaptor;
+    private final UserChallengeMapper userChallengeMapper;
+
+    @Transactional(readOnly = true)
+    public GetChallengeProceedingInfoResponse execute(String socialId, Long challengeRoomId) {
+        User user = userAdaptor.findUser(socialId);
+        UserChallenge userChallenge =
+                userChallengeAdaptor.findProceedingInfo(user.getId(), challengeRoomId);
+
+        return userChallengeMapper.toGetChallengeProceedingInfoResponse(userChallenge);
     }
 }

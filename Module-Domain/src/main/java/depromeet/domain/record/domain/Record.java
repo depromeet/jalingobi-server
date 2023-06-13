@@ -2,12 +2,12 @@ package depromeet.domain.record.domain;
 
 
 import depromeet.domain.challenge.domain.Challenge;
-import depromeet.domain.challenge.domain.UserChallenge;
 import depromeet.domain.comment.domain.Comments;
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.emoji.domain.Emoji;
 import depromeet.domain.user.domain.User;
 import depromeet.domain.userchallenge.domain.Emojis;
+import depromeet.domain.userchallenge.domain.UserChallenge;
 import javax.persistence.*;
 import lombok.*;
 

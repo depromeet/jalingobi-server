@@ -1,6 +1,8 @@
-package depromeet.domain.challenge.domain;
+package depromeet.domain.userchallenge.domain;
 
 
+import depromeet.domain.challenge.domain.Challenge;
+import depromeet.domain.config.BaseTime;
 import depromeet.domain.user.domain.User;
 import javax.persistence.*;
 import lombok.*;
@@ -10,7 +12,13 @@ import lombok.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserChallenge {
+@Table(
+        uniqueConstraints = {
+            @UniqueConstraint(
+                    name = "UniqueUserChallenge",
+                    columnNames = {"user_id", "challenge_id"})
+        })
+public class UserChallenge extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +35,5 @@ public class UserChallenge {
     private String nickname;
 
     @Column(name = "current_charge")
-    private int currentCharge;
+    private Integer currentCharge;
 }
