@@ -31,6 +31,10 @@ public class Record extends BaseTime {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_challenge_id")
+    private UserChallenge userChallenge;
+
     @Embedded private Comments comments;
 
     @Embedded private Emojis emojis;

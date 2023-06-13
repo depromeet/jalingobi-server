@@ -22,6 +22,7 @@ public class UserChallenge extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_challenge_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

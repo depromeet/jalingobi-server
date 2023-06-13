@@ -26,7 +26,6 @@ public class GetChallengeFeedUseCase {
     private final Integer LIMIT = 20;
 
     public GetChallengeFeedResponse execute(String socialId, Long challengeRoomId, Long recordId) {
-        // todo: 유저 챌린지에 참가중인지 체크
         User user = userAdaptor.findUser(socialId);
         userChallengeAdaptor.validateParticipatedInChallenge(user.getId(), challengeRoomId);
 
