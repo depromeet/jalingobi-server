@@ -21,9 +21,10 @@ public class CreateUserChallengeUseCase {
     private final ChallengeAdaptor challengeAdaptor;
     private final UserChallengeAdaptor userChallengeAdaptor;
 
-    public void execute(String socialId, CreateUserChallengeRequest userChallengeRequest) {
+    public void execute(
+            String socialId, CreateUserChallengeRequest userChallengeRequest, Long challengeId) {
         User user = userAdaptor.findUser(socialId);
-        Challenge challenge = challengeAdaptor.findChallenge(userChallengeRequest.getChallengeId());
+        Challenge challenge = challengeAdaptor.findChallenge(challengeId);
 
         challenge.validateInToChallenge(challenge.getDuration().getStartAt());
         challenge.validateCurrentUserCount();
