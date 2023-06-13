@@ -8,6 +8,7 @@ import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.record.domain.Evaluation;
 import depromeet.domain.record.domain.Record;
 import depromeet.domain.user.domain.User;
+import depromeet.domain.userchallenge.domain.UserChallenge;
 import lombok.RequiredArgsConstructor;
 
 @Mapper
@@ -15,10 +16,14 @@ import lombok.RequiredArgsConstructor;
 public class RecordMapper {
 
     public Record toEntity(
-            Challenge challenge, User user, CreateRecordRequest createRecordRequest) {
+            Challenge challenge,
+            User user,
+            UserChallenge userChallenge,
+            CreateRecordRequest createRecordRequest) {
         return Record.createRecord(
                 challenge,
                 user,
+                userChallenge,
                 createRecordRequest.getPrice(),
                 createRecordRequest.getTitle(),
                 createRecordRequest.getContent(),

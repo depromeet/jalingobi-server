@@ -17,6 +17,8 @@ import depromeet.domain.user.domain.Platform;
 import depromeet.domain.user.domain.Profile;
 import depromeet.domain.user.domain.Social;
 import depromeet.domain.user.domain.User;
+import depromeet.domain.userchallenge.domain.Status;
+import depromeet.domain.userchallenge.domain.UserChallenge;
 import java.time.LocalDate;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -72,8 +74,18 @@ class RecordAdaptorTest {
                                         .build())
                         .build();
 
+        UserChallenge userChallenge =
+                UserChallenge.builder()
+                        .user(user)
+                        .challenge(challenge)
+                        .nickname("ae정윤")
+                        .currentCharge(500)
+                        .status(Status.PROCEEDING)
+                        .build();
+
         Record record =
-                Record.createRecord(challenge, user, 4000, "커피", "커피는 무죄", "", Evaluation.ONE);
+                Record.createRecord(
+                        challenge, user, userChallenge, 4000, "커피", "커피는 무죄", "", Evaluation.ONE);
 
         given(recordRepository.save(record)).willReturn(record);
 
