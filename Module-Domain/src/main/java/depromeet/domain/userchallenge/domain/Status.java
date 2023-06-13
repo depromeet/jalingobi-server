@@ -11,7 +11,7 @@ import lombok.Getter;
 public enum Status {
     PROCEEDING("참가중"),
     SUCCESS("성공"),
-    FAILUR가E("실패"),
+    FAILURE("실패"),
     COMPLETED("완료");
 
     private final String value;
