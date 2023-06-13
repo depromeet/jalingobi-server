@@ -34,4 +34,12 @@ public class RecordAdaptor {
     public Integer countMyRecordList(Long userId) {
         return recordRepository.countMyRecordList(userId);
     }
+
+    public List<Record> findChallengeRoomList(Long challengeRoomId, Long recordId, Integer limit) {
+        return recordRepository.findChallengeRecordList(challengeRoomId, recordId, limit);
+    }
+
+    public Integer countChallengeRecordList(Long challengeRoomId) {
+        return recordRepository.countChallengeRecordList(challengeRoomId);
+    }
 }

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @UseCase
+@Transactional(readOnly = true)
 public class GetChallengeProceedingInfoUseCase {
 
     private final UserChallengeAdaptor userChallengeAdaptor;

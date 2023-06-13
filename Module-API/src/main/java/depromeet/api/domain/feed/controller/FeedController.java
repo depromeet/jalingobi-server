@@ -87,8 +87,10 @@ public class FeedController {
     @GetMapping("/challenge/{challengeRoomId}/feed")
     public Response<GetChallengeFeedResponse> getChallengeFeed(
             @PathVariable("challengeRoomId") Long challengeRoomId,
-            @PathParam("recordId") Integer recordId) {
+            @PathParam("offsetRecordId") Long offsetRecordId) {
 
-        return ResponseService.getDataResponse(getChallengeFeedUseCase.execute());
+        return ResponseService.getDataResponse(
+                getChallengeFeedUseCase.execute(
+                        getCurrentUserSocialId(), challengeRoomId, offsetRecordId));
     }
 }

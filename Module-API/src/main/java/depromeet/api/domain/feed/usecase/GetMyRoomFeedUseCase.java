@@ -10,9 +10,11 @@ import depromeet.domain.user.adaptor.UserAdaptor;
 import depromeet.domain.user.domain.User;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @UseCase
+@Transactional(readOnly = true)
 public class GetMyRoomFeedUseCase {
 
     private final RecordAdaptor recordAdaptor;

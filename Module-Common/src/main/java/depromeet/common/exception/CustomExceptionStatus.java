@@ -48,7 +48,6 @@ public enum CustomExceptionStatus {
     UNPARTICIPATED_CHALLENGE_USER(false, 1802, "챌린지에 참여하지 않는 사용자입니다."),
     CHALLENGE_NOT_BELONG_TO_USER(false, 1803, "챌린지를 생성한 유저가 아닙니다."),
     CHALLENGE_CANNOT_BE_DELETED_AFTER_START(false, 1804, "시작된 챌린지는 삭제할 수 없습니다."),
-    PROGRESS_INFO_NOT_FOUND(false, 1805, "챌린지가 존재하지 않거나, 해당 챌린지에 참여중이 아닙니다."),
 
     // feed
     FEED_NOT_FOUND(false, 1900, "요청한 날짜에 피드가 없습니다."),
@@ -66,7 +65,11 @@ public enum CustomExceptionStatus {
     // keyword
     INVALID_KEYWORD_FORMAT(false, 2200, "키워드 형식이 옳지 않습니다."),
     CANNOT_ADD_KEYWORD(false, 2201, "키워드를 추가할 수 없습니다."),
-    ALL_KEYWORD_LENGTH_IS_OVER(false, 2202, "등록할 수 있는 전체 키워드 길이를 초과했습니다.");
+    ALL_KEYWORD_LENGTH_IS_OVER(false, 2202, "등록할 수 있는 전체 키워드 길이를 초과했습니다."),
+
+    // user_challenge
+    PROGRESS_INFO_NOT_FOUND(false, 2300, "챌린지가 존재하지 않거나, 해당 챌린지에 참여중이 아닙니다."),
+    USER_NOT_PARTICIPATED_IN_CHALLENGE(false, 2301, "해당 챌린지에 참여중인 유저가 아닙니다.");
 
     private final boolean isSuccess;
     private final int code;

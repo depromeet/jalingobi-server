@@ -20,9 +20,9 @@ public class RecordCustomRepositoryImpl implements RecordCustomRepository {
     public List<Record> findMyRecordList(Long userId, Integer offset, Integer limit) {
         return queryFactory
                 .selectFrom(record)
-                .where(record.user.id.eq(userId))
                 .join(record.challenge, challenge)
                 .fetchJoin()
+                .where(record.user.id.eq(userId))
                 .orderBy(record.createdAt.desc())
                 .offset(offset)
                 .limit(limit)
@@ -32,5 +32,25 @@ public class RecordCustomRepositoryImpl implements RecordCustomRepository {
     @Override
     public Integer countMyRecordList(Long userId) {
         return queryFactory.selectFrom(record).where(record.user.id.eq(userId)).fetch().size();
+    }
+
+    @Override
+    public List<Record> findChallengeRecordList(
+            Long challengeRoomId, Long recordId, Integer limit) {
+        return queryFactory
+                .selectFrom(record)
+                .join(record.challenge, challenge)
+                .where(record.challenge.id.eq(challengeRoomId).and(record.id.gt(recordId)))
+                .limit(limit)
+                .fetch();
+    }
+
+    @Override
+    public Integer countChallengeRecordList(Long challengeRoomId) {
+        return queryFactory
+                .selectFrom(record)
+                .where(record.challenge.id.eq(challengeRoomId))
+                .fetch()
+                .size();
     }
 }
