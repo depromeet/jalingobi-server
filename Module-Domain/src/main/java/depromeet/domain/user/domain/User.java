@@ -6,7 +6,10 @@ import depromeet.domain.userchallenge.domain.UserChallenge;
 import java.util.List;
 import javax.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
+@DynamicInsert
 @Builder
 @Getter
 @AllArgsConstructor
@@ -18,6 +21,10 @@ public class User extends BaseTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
+
+    @Builder.Default
+    @ColumnDefault("false")
+    private Boolean notification = false;
 
     @Embedded private Profile profile;
 
