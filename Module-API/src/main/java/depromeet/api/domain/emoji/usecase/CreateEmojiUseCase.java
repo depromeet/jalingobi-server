@@ -26,11 +26,11 @@ public class CreateEmojiUseCase {
             String socialId, Long recordId, CreateEmojiRequest createEmojiRequest) {
         User user = userAdaptor.findUser(socialId);
         Record record = recordAdaptor.findRecord(recordId);
-        UserChallenge target =
+        UserChallenge userChallenge =
                 userChallengeAdaptor.findByUserChallenge(record.getChallenge(), user);
 
-        target.reactEmoji(record, createEmojiRequest.getType());
+        record.reactEmoji(userChallenge, createEmojiRequest.getType());
 
-        return new CreateEmojiResponse(target.getEmojiCounts(), createEmojiRequest.getType(), true);
+        return new CreateEmojiResponse(record.getEmojiCounts(), createEmojiRequest.getType(), true);
     }
 }
