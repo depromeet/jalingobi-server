@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import depromeet.api.config.security.filter.JwtRequestFilter;
 import depromeet.api.domain.mypage.dto.request.UpdateProfileRequest;
 import depromeet.api.domain.mypage.usecase.GetMyPageUseCase;
+import depromeet.api.domain.mypage.usecase.GetUserChallengesUseCase;
 import depromeet.api.domain.mypage.usecase.LogoutUseCase;
 import depromeet.api.domain.mypage.usecase.UpdateProfileUseCase;
 import depromeet.api.util.AuthenticationUtil;
@@ -43,6 +44,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 class MyPageControllerTest {
     @Autowired private MockMvc mockMvc;
     @MockBean private GetMyPageUseCase getMyPageUseCase;
+    @MockBean private GetUserChallengesUseCase getUserChallengesUseCase;
     @MockBean private UpdateProfileUseCase updateProfileUseCase;
     @MockBean private LogoutUseCase logoutUseCase;
 

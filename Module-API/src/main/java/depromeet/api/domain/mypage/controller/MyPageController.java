@@ -36,8 +36,8 @@ public class MyPageController {
     }
 
     @Operation(summary = "사용자의 전체 챌린지 목록 조회 API")
-    @GetMapping()
-    public Response<GetUserChallengesResponse> getUserChallenge() {
+    @GetMapping("/challenges")
+    public Response<GetUserChallengesResponse> getUserChallenges() {
 
         return ResponseService.getDataResponse(
                 getUserChallengesUseCase.execute(getCurrentUserSocialId()));
