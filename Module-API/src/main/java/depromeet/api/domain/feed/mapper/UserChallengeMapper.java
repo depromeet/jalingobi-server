@@ -1,4 +1,4 @@
-package depromeet.api.domain.feed.UserChallengeMapper;
+package depromeet.api.domain.feed.mapper;
 
 
 import depromeet.api.domain.feed.dto.response.GetChallengeProceedingInfoResponse;

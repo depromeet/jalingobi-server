@@ -69,9 +69,10 @@ public class FeedController {
                         content = @Content())
             })
     @GetMapping("/challenge/my-room/feed")
-    public Response<GetMyRoomFeedResponse> getMyRoomFeed(@PathParam("page") Integer page) {
+    public Response<GetMyRoomFeedResponse> getMyRoomFeed(@PathParam("offset") Integer offset) {
 
-        return ResponseService.getDataResponse(getMyRoomFeedUseCase.execute());
+        return ResponseService.getDataResponse(
+                getMyRoomFeedUseCase.execute(getCurrentUserSocialId(), offset));
     }
 
     @Operation(summary = "챌린지 방 피드 API", description = "챌린지 방에 있는 기록들을 20개씩 가져옵니다.")
@@ -86,7 +87,7 @@ public class FeedController {
     @GetMapping("/challenge/{challengeRoomId}/feed")
     public Response<GetChallengeFeedResponse> getChallengeFeed(
             @PathVariable("challengeRoomId") Long challengeRoomId,
-            @PathParam("page") Integer page) {
+            @PathParam("recordId") Integer recordId) {
 
         return ResponseService.getDataResponse(getChallengeFeedUseCase.execute());
     }

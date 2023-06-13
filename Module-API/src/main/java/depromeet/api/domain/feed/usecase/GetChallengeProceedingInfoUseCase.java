@@ -1,8 +1,8 @@
 package depromeet.api.domain.feed.usecase;
 
 
-import depromeet.api.domain.feed.UserChallengeMapper.UserChallengeMapper;
 import depromeet.api.domain.feed.dto.response.GetChallengeProceedingInfoResponse;
+import depromeet.api.domain.feed.mapper.UserChallengeMapper;
 import depromeet.common.annotation.UseCase;
 import depromeet.domain.challenge.adaptor.UserChallengeAdaptor;
 import depromeet.domain.challenge.domain.UserChallenge;
