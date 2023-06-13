@@ -4,7 +4,7 @@ package depromeet.api.domain.feed.mapper;
 import depromeet.api.domain.feed.dto.response.GetChallengeProceedingInfoResponse;
 import depromeet.api.domain.feed.dto.response.GetMyChallengeListResponse;
 import depromeet.common.annotation.Mapper;
-import depromeet.domain.challenge.domain.UserChallenge;
+import depromeet.domain.userchallenge.domain.UserChallenge;
 import java.util.List;
 
 @Mapper

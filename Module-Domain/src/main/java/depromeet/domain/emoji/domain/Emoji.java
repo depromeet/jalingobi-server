@@ -1,8 +1,8 @@
 package depromeet.domain.emoji.domain;
 
 
-import depromeet.domain.challenge.domain.UserChallenge;
 import depromeet.domain.record.domain.Record;
+import depromeet.domain.userchallenge.domain.UserChallenge;
 import java.util.Objects;
 import javax.persistence.*;
 import lombok.*;

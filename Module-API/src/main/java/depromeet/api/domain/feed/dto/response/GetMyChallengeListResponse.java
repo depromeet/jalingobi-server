@@ -2,8 +2,8 @@ package depromeet.api.domain.feed.dto.response;
 
 
 import depromeet.api.domain.feed.dto.ParticipatedChallenge;
-import depromeet.domain.challenge.domain.UserChallenge;
 import depromeet.domain.config.BaseTime;
+import depromeet.domain.userchallenge.domain.UserChallenge;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;

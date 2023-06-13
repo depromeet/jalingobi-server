@@ -1,10 +1,10 @@
-package depromeet.domain.challenge.repository;
+package depromeet.domain.userchallenge.repository;
 
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import depromeet.domain.challenge.domain.QChallenge;
-import depromeet.domain.challenge.domain.QUserChallenge;
-import depromeet.domain.challenge.domain.UserChallenge;
+import depromeet.domain.userchallenge.domain.QUserChallenge;
+import depromeet.domain.userchallenge.domain.UserChallenge;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

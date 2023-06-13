@@ -1,7 +1,7 @@
-package depromeet.domain.challenge.repository;
+package depromeet.domain.userchallenge.repository;
 
 
-import depromeet.domain.challenge.domain.UserChallenge;
+import depromeet.domain.userchallenge.domain.UserChallenge;
 import java.util.List;
 import java.util.Optional;
 

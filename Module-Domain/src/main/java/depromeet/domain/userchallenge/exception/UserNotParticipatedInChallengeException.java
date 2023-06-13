@@ -1,4 +1,4 @@
-package depromeet.domain.challenge.exception;
+package depromeet.domain.userchallenge.exception;
 
 
 import depromeet.common.exception.CustomException;

@@ -1,7 +1,7 @@
 package depromeet.api.domain.feed.dto.response;
 
 
-import depromeet.domain.challenge.domain.UserChallenge;
+import depromeet.domain.userchallenge.domain.UserChallenge;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

@@ -1,6 +1,7 @@
-package depromeet.domain.challenge.domain;
+package depromeet.domain.userchallenge.domain;
 
 
+import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.user.domain.User;
 import javax.persistence.*;

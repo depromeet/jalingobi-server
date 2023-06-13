@@ -4,12 +4,12 @@ package depromeet.api.domain.emoji.usecase;
 import depromeet.api.domain.emoji.dto.request.CreateEmojiRequest;
 import depromeet.api.domain.emoji.dto.response.CreateEmojiResponse;
 import depromeet.common.annotation.UseCase;
-import depromeet.domain.challenge.domain.UserChallenge;
 import depromeet.domain.record.adaptor.RecordAdaptor;
 import depromeet.domain.record.domain.Record;
 import depromeet.domain.user.adaptor.UserAdaptor;
 import depromeet.domain.user.domain.User;
 import depromeet.domain.userchallenge.adaptor.UserChallengeAdaptor;
+import depromeet.domain.userchallenge.domain.UserChallenge;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 

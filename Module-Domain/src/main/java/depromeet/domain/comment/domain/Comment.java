@@ -1,9 +1,9 @@
 package depromeet.domain.comment.domain;
 
 
-import depromeet.domain.challenge.domain.UserChallenge;
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.record.domain.Record;
+import depromeet.domain.userchallenge.domain.UserChallenge;
 import javax.persistence.*;
 import lombok.*;
 
