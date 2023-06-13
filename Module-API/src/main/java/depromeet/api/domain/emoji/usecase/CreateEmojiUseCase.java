@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class CreateEmojiUseCase {
 
     private final UserAdaptor userAdaptor;
