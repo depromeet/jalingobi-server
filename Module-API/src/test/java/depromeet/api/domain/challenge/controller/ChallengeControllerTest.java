@@ -17,6 +17,8 @@ import depromeet.api.domain.challenge.mapper.ChallengeMapper;
 import depromeet.api.domain.challenge.usecase.CreateChallengeUseCase;
 import depromeet.api.domain.challenge.usecase.DeleteChallengeUseCase;
 import depromeet.api.domain.challenge.usecase.UpdateChallengeUseCase;
+import depromeet.api.domain.userchallenge.dto.request.CreateUserChallengeRequest;
+import depromeet.api.domain.userchallenge.usecase.CreateUserChallengeUseCase;
 import depromeet.api.util.AuthenticationUtil;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -56,6 +58,8 @@ public class ChallengeControllerTest {
     @MockBean UpdateChallengeUseCase updateChallengeUseCase;
 
     @MockBean DeleteChallengeUseCase deleteChallengeUseCase;
+
+    @MockBean CreateUserChallengeUseCase createUserChallengeUseCase;
 
     ChallengeMapper challengeMapper = new ChallengeMapper();
 
@@ -187,5 +191,27 @@ public class ChallengeControllerTest {
                 .andExpectAll(status().isOk());
 
         verify(deleteChallengeUseCase, times(1)).execute(anyLong(), anyString());
+    }
+
+    @Test
+    @DisplayName("챌린지 참가")
+    public void joinChallengeTest() throws Exception {
+        String socialId = "socialId";
+        CreateUserChallengeRequest createUserChallengeRequest =
+                CreateUserChallengeRequest.builder().nickname("닉네임").currentCharge(10000).build();
+
+        when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
+        willDoNothing().given(createUserChallengeUseCase).execute(anyString(), any(), anyLong());
+
+        mockMvc.perform(
+                        post("/challenge/join/{challengeId}", 1L)
+                                .content(
+                                        objectMapper.writeValueAsString(createUserChallengeRequest))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .characterEncoding("UTF-8"))
+                .andDo(print())
+                .andExpectAll(status().isOk());
+
+        verify(createUserChallengeUseCase, times(1)).execute(anyString(), any(), anyLong());
     }
 }
