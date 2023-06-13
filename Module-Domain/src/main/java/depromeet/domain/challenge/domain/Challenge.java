@@ -34,6 +34,8 @@ public class Challenge extends BaseTime {
 
     private String imgUrl;
 
+    private Boolean active = false;
+
     @Embedded private ChallengeKeywords challengeKeywords;
 
     @Column(name = "available_count", nullable = false)

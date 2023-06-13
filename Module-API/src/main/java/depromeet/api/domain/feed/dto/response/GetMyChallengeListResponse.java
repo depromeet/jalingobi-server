@@ -20,12 +20,8 @@ public class GetMyChallengeListResponse {
                 userChallengeList.stream()
                         // 날짜 오름차순 정렬
                         .sorted(Comparator.comparing(BaseTime::getCreatedAt))
-                        .map(
-                                (t) ->
-                                        new ParticipatedChallenge(
-                                                t.getChallenge().getId(),
-                                                t.getChallenge().getTitle(),
-                                                t.getChallenge().getTitle()))
+                        .map(UserChallenge::getChallenge)
+                        .map(ParticipatedChallenge::createParticipatedChallenge)
                         .collect(Collectors.toList());
 
         return new GetMyChallengeListResponse(participatedChallengeList);
