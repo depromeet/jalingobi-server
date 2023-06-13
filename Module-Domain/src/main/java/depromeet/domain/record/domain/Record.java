@@ -2,9 +2,12 @@ package depromeet.domain.record.domain;
 
 
 import depromeet.domain.challenge.domain.Challenge;
+import depromeet.domain.challenge.domain.UserChallenge;
 import depromeet.domain.comment.domain.Comments;
 import depromeet.domain.config.BaseTime;
+import depromeet.domain.emoji.domain.Emoji;
 import depromeet.domain.user.domain.User;
+import depromeet.domain.userchallenge.domain.Emojis;
 import javax.persistence.*;
 import lombok.*;
 
@@ -29,6 +32,8 @@ public class Record extends BaseTime {
     private User user;
 
     @Embedded private Comments comments;
+
+    @Embedded private Emojis emojis;
 
     @Column(nullable = false)
     private int price;
@@ -73,5 +78,14 @@ public class Record extends BaseTime {
         this.content = content;
         this.imgUrl = imgUrl;
         this.evaluation = Evaluation.getEnumTypeByValue(evaluation);
+    }
+
+    public void reactEmoji(UserChallenge userChallenge, String type) {
+        depromeet.domain.emoji.domain.Emoji emoji = Emoji.createEmoji(userChallenge, this, type);
+        emojis.add(emoji);
+    }
+
+    public int getEmojiCounts() {
+        return emojis.getCounts();
     }
 }

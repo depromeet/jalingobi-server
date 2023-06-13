@@ -2,6 +2,9 @@ package depromeet.api.domain.record.controller;
 
 import static depromeet.api.util.AuthenticationUtil.getCurrentUserSocialId;
 
+import depromeet.api.domain.emoji.dto.request.CreateEmojiRequest;
+import depromeet.api.domain.emoji.dto.response.CreateEmojiResponse;
+import depromeet.api.domain.emoji.usecase.CreateEmojiUseCase;
 import depromeet.api.domain.record.dto.request.CreateRecordRequest;
 import depromeet.api.domain.record.dto.response.CreateRecordResponse;
 import depromeet.api.domain.record.dto.response.GetRecordResponse;
@@ -32,6 +35,8 @@ public class RecordController {
 
     private final UpdateRecordUseCase updateRecordUseCase;
     private final DeleteRecordUseCase deleteRecordUseCase;
+
+    private final CreateEmojiUseCase createEmojiUseCase;
 
     @Operation(summary = "챌린지 지출을 기록하는 API")
     @PostMapping("/{challengeRoomId}/create")
@@ -77,5 +82,13 @@ public class RecordController {
 
         deleteRecordUseCase.execute(recordId, getCurrentUserSocialId());
         return ResponseService.getDataResponse(CustomExceptionStatus.SUCCESS);
+    }
+
+    @PutMapping("/{recordId}/emojis")
+    public Response<CreateEmojiResponse> createRecordEmoji(
+            @PathVariable Long recordId,
+            @RequestBody @Valid CreateEmojiRequest createEmojiRequest) {
+        return ResponseService.getDataResponse(
+                createEmojiUseCase.execute(getCurrentUserSocialId(), recordId, createEmojiRequest));
     }
 }

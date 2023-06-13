@@ -45,10 +45,9 @@ public enum CustomExceptionStatus {
     // challenge
     CHALLENGE_NOT_FOUND(false, 1800, "존재하지 않는 챌린지입니다."),
     CHALLENGE_IS_FULL(false, 1801, "챌린지 참가 인원이 꽉 찼습니다."),
-    UNPARTICIPATED_CHALLENGE_USER(false, 1802, "챌린지에 참여하지 않는 사용자입니다."),
-    CHALLENGE_NOT_BELONG_TO_USER(false, 1803, "챌린지를 생성한 유저가 아닙니다."),
-    CHALLENGE_CANNOT_BE_DELETED_AFTER_START(false, 1804, "시작된 챌린지는 삭제할 수 없습니다."),
-    CHALLENGE_CANNOT_BE_UPDATED_AFTER_START(false, 1805, "시작된 챌린지는 수정할 수 없습니다."),
+    CHALLENGE_NOT_BELONG_TO_USER(false, 1802, "챌린지를 생성한 유저가 아닙니다."),
+    CHALLENGE_CANNOT_BE_DELETED_AFTER_START(false, 1803, "시작된 챌린지는 삭제할 수 없습니다."),
+    CHALLENGE_CANNOT_BE_UPDATED_AFTER_START(false, 1804, "시작된 챌린지는 수정할 수 없습니다."),
 
     // feed
     FEED_NOT_FOUND(false, 1900, "요청한 날짜에 피드가 없습니다."),
@@ -66,7 +65,14 @@ public enum CustomExceptionStatus {
     // keyword
     INVALID_KEYWORD_FORMAT(false, 2200, "키워드 형식이 옳지 않습니다."),
     CANNOT_ADD_KEYWORD(false, 2201, "키워드를 추가할 수 없습니다."),
-    ALL_KEYWORD_LENGTH_IS_OVER(false, 2202, "등록할 수 있는 전체 키워드 길이를 초과했습니다.");
+    ALL_KEYWORD_LENGTH_IS_OVER(false, 2202, "등록할 수 있는 전체 키워드 길이를 초과했습니다."),
+
+    // emoji
+    EMOJI_NOT_FOUND(false, 2300, "이모지가 존재하지 않습니다."),
+    DUPLICATED_EMOJI(false, 2301, "이미 반응했던 이모지가 중복됩니다."),
+
+    // userChallenge
+    UNPARTICIPATED_CHALLENGE_USER(false, 2400, "챌린지에 참여하지 않는 사용자입니다.");
 
     private final boolean isSuccess;
     private final int code;
