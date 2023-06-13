@@ -38,4 +38,8 @@ public class UserChallengeAdaptor {
                 .findByUserIdAndChallengeRoomId(userId, challengeRoomId)
                 .orElseThrow(() -> UserNotParticipatedInChallengeException.EXCEPTION);
     }
+
+    public void joinChallenge(UserChallenge userChallenge) {
+        userChallengeRepository.save(userChallenge);
+    }
 }

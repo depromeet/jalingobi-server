@@ -9,6 +9,8 @@ import depromeet.api.domain.challenge.dto.response.UpdateChallengeResponse;
 import depromeet.api.domain.challenge.usecase.CreateChallengeUseCase;
 import depromeet.api.domain.challenge.usecase.DeleteChallengeUseCase;
 import depromeet.api.domain.challenge.usecase.UpdateChallengeUseCase;
+import depromeet.api.domain.userchallenge.dto.request.CreateUserChallengeRequest;
+import depromeet.api.domain.userchallenge.usecase.CreateUserChallengeUseCase;
 import depromeet.common.response.CommonResponse;
 import depromeet.common.response.Response;
 import depromeet.common.response.ResponseService;
@@ -27,6 +29,7 @@ public class ChallengeController {
     private final CreateChallengeUseCase challengeUseCase;
     private final UpdateChallengeUseCase updateChallengeUseCase;
     private final DeleteChallengeUseCase deleteChallengeUseCase;
+    private final CreateUserChallengeUseCase createUserChallengeUseCase;
 
     @Operation(summary = "챌린지 생성 API", description = "챌린지를 생성합니다.")
     @ApiResponses(
@@ -72,6 +75,15 @@ public class ChallengeController {
     @DeleteMapping("/challenge/{challengeId}")
     public CommonResponse deleteChallenge(@PathVariable Long challengeId) {
         deleteChallengeUseCase.execute(challengeId, getCurrentUserSocialId());
+        return ResponseService.getSuccessResponse();
+    }
+
+    @PostMapping("/challenge/join/{challengeId}")
+    public CommonResponse joinChallenge(
+            @PathVariable Long challengeId,
+            @RequestBody @Valid CreateUserChallengeRequest createUserChallengeRequest) {
+        createUserChallengeUseCase.execute(
+                getCurrentUserSocialId(), createUserChallengeRequest, challengeId);
         return ResponseService.getSuccessResponse();
     }
 }
