@@ -2,12 +2,14 @@ package depromeet.domain.record.domain;
 
 
 import depromeet.domain.challenge.domain.Challenge;
-import depromeet.domain.comment.domain.Comments;
+import depromeet.domain.comment.domain.Comment;
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.emoji.domain.Emoji;
+import depromeet.domain.emoji.exception.DuplicatedEmojiException;
 import depromeet.domain.user.domain.User;
-import depromeet.domain.userchallenge.domain.Emojis;
 import depromeet.domain.userchallenge.domain.UserChallenge;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 import lombok.*;
 
@@ -35,9 +37,15 @@ public class Record extends BaseTime {
     @JoinColumn(name = "user_challenge_id")
     private UserChallenge userChallenge;
 
-    @Embedded private Comments comments;
+    @OneToMany(mappedBy = "record", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Comment> comments = new ArrayList<>();
 
-    @Embedded private Emojis emojis;
+    @OneToMany(
+            mappedBy = "record",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.PERSIST,
+            orphanRemoval = true)
+    private List<Emoji> emojis = new ArrayList<>();
 
     @Column(nullable = false)
     private int price;
@@ -90,6 +98,13 @@ public class Record extends BaseTime {
     }
 
     public int getEmojiCounts() {
-        return emojis.getCounts();
+        return emojis.size();
+    }
+
+    public void addEmoji(Emoji emoji) {
+        if (emojis.contains(emoji)) {
+            throw DuplicatedEmojiException.EXCEPTION;
+        }
+        emojis.add(emoji);
     }
 }

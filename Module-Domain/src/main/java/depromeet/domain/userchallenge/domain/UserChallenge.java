@@ -35,8 +35,11 @@ public class UserChallenge extends BaseTime {
 
     private String nickname;
 
-    @Column(name = "current_charge")
+    @Column(name = "current_charge", nullable = false)
     private Integer currentCharge;
+
+    @Column(name = "img_url", nullable = false)
+    private String imgUrl;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
