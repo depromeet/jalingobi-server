@@ -4,7 +4,7 @@ package depromeet.api.domain.challenge.usecase;
 import depromeet.api.domain.challenge.dto.request.CreateChallengeRequest;
 import depromeet.api.domain.challenge.dto.response.CreateChallengeResponse;
 import depromeet.api.domain.challenge.mapper.ChallengeMapper;
-import depromeet.api.domain.rule.mapper.ChallengeRuleMapper;
+import depromeet.api.domain.challenge.mapper.ChallengeRuleMapper;
 import depromeet.common.annotation.UseCase;
 import depromeet.domain.category.adaptor.CategoryAdaptor;
 import depromeet.domain.category.domain.Category;

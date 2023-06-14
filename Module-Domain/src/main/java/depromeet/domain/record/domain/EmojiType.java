@@ -8,15 +8,15 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Emoji {
+public enum EmojiType {
     WELL_DONE_BEGGAR("상"),
     REGRETFUL_BEGGAR("중"),
     CRAZY_BEGGAR("하");
 
     private final String value;
 
-    public static Emoji of(String source) {
-        return Arrays.stream(Emoji.values())
+    public static EmojiType of(String source) {
+        return Arrays.stream(EmojiType.values())
                 .filter(value -> value.getValue().equals(source))
                 .findAny()
                 .orElseThrow(() -> EmojiNotFoundException.EXCEPTION);

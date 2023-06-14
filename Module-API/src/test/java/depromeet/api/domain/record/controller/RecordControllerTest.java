@@ -21,7 +21,7 @@ import depromeet.api.domain.record.usecase.DeleteRecordUseCase;
 import depromeet.api.domain.record.usecase.GetRecordUseCase;
 import depromeet.api.domain.record.usecase.UpdateRecordUseCase;
 import depromeet.api.util.AuthenticationUtil;
-import depromeet.domain.record.domain.Emoji;
+import depromeet.domain.record.domain.EmojiType;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -231,7 +231,7 @@ class RecordControllerTest {
     public void CreateRecordEmojiTest() throws Exception {
         // given
         CreateEmojiRequest createEmojiRequest =
-                CreateEmojiRequest.builder().type(Emoji.CRAZY_BEGGAR.getValue()).build();
+                CreateEmojiRequest.builder().type(EmojiType.CRAZY_BEGGAR.getValue()).build();
 
         CreateEmojiResponse createEmojiResponse =
                 CreateEmojiResponse.builder()
