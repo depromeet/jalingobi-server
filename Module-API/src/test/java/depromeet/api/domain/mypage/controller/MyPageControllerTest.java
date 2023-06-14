@@ -101,17 +101,29 @@ class MyPageControllerTest {
                 .andDo(print())
                 .andExpectAll(
                         status().isOk(),
-                        jsonPath("$.result.profile.name").value(getMyPageResponse.getProfile().getName()),
-                        jsonPath("$.result.profile.email").value(getMyPageResponse.getProfile().getEmail()),
-                        jsonPath("$.result.profile.imgUrl").value(getMyPageResponse.getProfile().getImgUrl()),
+                        jsonPath("$.result.profile.name")
+                                .value(getMyPageResponse.getProfile().getName()),
+                        jsonPath("$.result.profile.email")
+                                .value(getMyPageResponse.getProfile().getEmail()),
+                        jsonPath("$.result.profile.imgUrl")
+                                .value(getMyPageResponse.getProfile().getImgUrl()),
                         jsonPath("$.result.notification")
                                 .value(getMyPageResponse.getNotification()),
                         jsonPath("$.result.userChallengeResult.SUCCESS")
-                                .value(getMyPageResponse.getUserChallengeResult().get(Status.SUCCESS)),
+                                .value(
+                                        getMyPageResponse
+                                                .getUserChallengeResult()
+                                                .get(Status.SUCCESS)),
                         jsonPath("$.result.userChallengeResult.PROCEEDING")
-                                .value(getMyPageResponse.getUserChallengeResult().get(Status.PROCEEDING)),
+                                .value(
+                                        getMyPageResponse
+                                                .getUserChallengeResult()
+                                                .get(Status.PROCEEDING)),
                         jsonPath("$.result.userChallengeResult.COMPLETED")
-                                .value(getMyPageResponse.getUserChallengeResult().get(Status.COMPLETED)));
+                                .value(
+                                        getMyPageResponse
+                                                .getUserChallengeResult()
+                                                .get(Status.COMPLETED)));
     }
 
     @Test
