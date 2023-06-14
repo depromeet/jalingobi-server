@@ -1,7 +1,7 @@
 package depromeet.api.domain.challenge.dto.request;
 
 
-import depromeet.domain.rule.domain.ChallengeRule;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.List;
 import javax.validation.constraints.Max;
@@ -16,30 +16,46 @@ import lombok.*;
 @AllArgsConstructor
 public class CreateChallengeRequest {
 
-    @NotNull private List<@NotBlank String> category;
+    @Schema(description = "챌린지가 속한 카테고리", example = "[\"식비\"]")
+    @NotNull(message = "카테고리를 선택하세요.")
+    private List<@NotBlank String> category;
 
-    @NotBlank(message = "title can not be blank")
+    @Schema(description = "챌린지 제목", example = "배달 10만원 이하로 쓰기")
+    @NotBlank(message = "제목을 입력하세요.")
     private String title;
 
-    @Min(10000)
-    @Max(999999)
-    @NotNull
+    @Schema(description = "챌린지 목표 금액", example = "100000")
+    @Min(value = 10000, message = "최소 목표 금액은 10,000입니다.")
+    @Max(value = 999999, message = "최대 목표 금액은 999,999입니다.")
+    @NotNull(message = "목표 금액을 입력하세요.")
     private Integer price;
 
+    @Schema(description = "챌린지 대표 이미지", example = "/test.jpg")
     private String imageUrl;
 
-    @NotNull private List<@NotBlank String> keywords;
+    @Schema(description = "키워드", example = "[\"#배달비\", \"#10만원챌린지\"]")
+    @NotNull(message = "키워드를 입력하세요.")
+    private List<@NotBlank String> keywords;
 
-    @Min(5)
-    @Max(50)
-    @NotNull
+    @Schema(description = "챌린지 수용 인원", example = "30")
+    @Min(value = 5, message = "챌린지 수용 인원은 최소 5명입니다.")
+    @Max(value = 50, message = "챌린지 수용 인원은 최대 50명입니다.")
+    @NotNull(message = "챌린지 수용 인원을 입력하세요.")
     private Integer availableCount;
 
-    private List<ChallengeRule> challengeRule;
+    @Schema(description = "챌린지 규칙", example = "[\"광고 금지\", \"악플 금지\"]")
+    @NotNull(message = "챌린지 규칙을 입력하세요.")
+    private List<@NotBlank String> challengeRule;
 
-    @NotNull private Integer period;
+    @Schema(description = "챌린지 기간", example = "7")
+    @NotNull(message = "챌린지 기간을 입력하세요.")
+    private Integer period;
 
-    @NotNull private LocalDate startAt;
+    @Schema(description = "챌린지 시작 일자", example = "2023-06-01")
+    @NotNull(message = "챌린지 시작 일자를 입력하세요.")
+    private LocalDate startAt;
 
-    @NotNull private LocalDate endAt;
+    @Schema(description = "챌린지 종료 일자", example = "2023-06-07")
+    @NotNull(message = "챌린지 종료 일자를 입력하세요.")
+    private LocalDate endAt;
 }

@@ -34,16 +34,15 @@ public class UpdateChallengeUseCase {
     public UpdateChallengeResponse execute(UpdateChallengeRequest request, String socialId) {
         User user = userAdaptor.findUser(socialId);
         Challenge challenge = challengeAdaptor.findChallenge(request.getChallengeId());
-
         if (challenge.isNotWrittenBy(socialId)) {
             throw ChallengeNotBelongToUserException.EXCEPTION;
         }
+        challenge.validateUpdate(challenge.getDuration().getStartAt());
 
         List<Keyword> keywords = keywordAdaptor.findOrCreateKeywords(request.getKeywords());
         List<Category> categories =
                 categoryAdaptor.findOrExceptionCategories(request.getCategories());
-        List<ChallengeRule> challengeRules =
-                ChallengeRule.toEntities(request.getRules(), challenge);
+        List<ChallengeRule> challengeRules = ChallengeRule.createRule(request.getRules());
 
         challenge.updateTitle(request.getTitle());
         challenge.updatePrice(request.getPrice());

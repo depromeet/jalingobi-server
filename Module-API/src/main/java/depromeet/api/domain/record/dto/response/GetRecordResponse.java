@@ -1,15 +1,62 @@
 package depromeet.api.domain.record.dto.response;
 
 
-import depromeet.api.domain.record.dto.ChallengeRecord;
-import depromeet.api.domain.record.dto.RecordComment;
+import depromeet.api.domain.record.dto.CommentInfo;
+import depromeet.api.domain.record.dto.RecordInfo;
+import depromeet.domain.record.domain.Record;
+import depromeet.domain.userchallenge.domain.UserChallenge;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
+import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
+@AllArgsConstructor
 @Data
 public class GetRecordResponse {
 
-    private ChallengeRecord challengeRecord;
+    @Schema(description = "본인 기록인지", example = "true")
+    private Boolean isMine;
 
-    private List<RecordComment> recordCommentList;
+    private UserInfo userInfo;
+
+    private RecordInfo recordInfo;
+
+    private List<CommentInfo> commentInfoList;
+
+    public static GetRecordResponse of(Record record, Long myUserChallengeId) {
+
+        Boolean isMine = record.getUserChallenge().getId() == myUserChallengeId;
+
+        UserInfo userInfo = new UserInfo(record.getUserChallenge());
+        RecordInfo recordInfo = new RecordInfo(record);
+
+        List<CommentInfo> commentInfoList =
+                record.getComments().stream()
+                        .map((comment -> CommentInfo.createCommentInfo(comment, myUserChallengeId)))
+                        .collect(Collectors.toList());
+
+        return GetRecordResponse.builder()
+                .isMine(isMine)
+                .userInfo(userInfo)
+                .recordInfo(recordInfo)
+                .commentInfoList(commentInfoList)
+                .build();
+    }
+
+    @Data
+    private static class UserInfo {
+        @Schema(example = "사용자 닉네임")
+        private String nickname;
+
+        @Schema(example = "사용자 이미지 URL")
+        private String userImgUrl;
+
+        public UserInfo(UserChallenge userChallenge) {
+            this.nickname = userChallenge.getNickname();
+            this.userImgUrl = userChallenge.getImgUrl();
+        }
+    }
 }

@@ -2,9 +2,14 @@ package depromeet.domain.record.domain;
 
 
 import depromeet.domain.challenge.domain.Challenge;
-import depromeet.domain.comment.domain.Comments;
+import depromeet.domain.comment.domain.Comment;
 import depromeet.domain.config.BaseTime;
+import depromeet.domain.emoji.domain.Emoji;
+import depromeet.domain.emoji.exception.DuplicatedEmojiException;
 import depromeet.domain.user.domain.User;
+import depromeet.domain.userchallenge.domain.UserChallenge;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 import lombok.*;
 
@@ -28,7 +33,19 @@ public class Record extends BaseTime {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Embedded private Comments comments;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_challenge_id")
+    private UserChallenge userChallenge;
+
+    @OneToMany(mappedBy = "record", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "record",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.PERSIST,
+            orphanRemoval = true)
+    private List<Emoji> emojis = new ArrayList<>();
 
     @Column(nullable = false)
     private int price;
@@ -49,6 +66,7 @@ public class Record extends BaseTime {
     public static Record createRecord(
             Challenge challenge,
             User user,
+            UserChallenge userChallenge,
             int price,
             String title,
             String content,
@@ -57,6 +75,7 @@ public class Record extends BaseTime {
         return Record.builder()
                 .challenge(challenge)
                 .user(user)
+                .userChallenge(userChallenge)
                 .price(price)
                 .title(title)
                 .content(content)
@@ -73,5 +92,21 @@ public class Record extends BaseTime {
         this.content = content;
         this.imgUrl = imgUrl;
         this.evaluation = Evaluation.getEnumTypeByValue(evaluation);
+    }
+
+    public void reactEmoji(UserChallenge userChallenge, String type) {
+        depromeet.domain.emoji.domain.Emoji emoji = Emoji.createEmoji(userChallenge, this, type);
+        emojis.add(emoji);
+    }
+
+    public int getEmojiCounts() {
+        return emojis.size();
+    }
+
+    public void addEmoji(Emoji emoji) {
+        if (emojis.contains(emoji)) {
+            throw DuplicatedEmojiException.EXCEPTION;
+        }
+        emojis.add(emoji);
     }
 }

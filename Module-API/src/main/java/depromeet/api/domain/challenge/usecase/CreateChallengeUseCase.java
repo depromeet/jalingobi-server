@@ -4,6 +4,7 @@ package depromeet.api.domain.challenge.usecase;
 import depromeet.api.domain.challenge.dto.request.CreateChallengeRequest;
 import depromeet.api.domain.challenge.dto.response.CreateChallengeResponse;
 import depromeet.api.domain.challenge.mapper.ChallengeMapper;
+import depromeet.api.domain.challenge.mapper.ChallengeRuleMapper;
 import depromeet.common.annotation.UseCase;
 import depromeet.domain.category.adaptor.CategoryAdaptor;
 import depromeet.domain.category.domain.Category;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CreateChallengeUseCase {
 
     private final ChallengeMapper challengeMapper;
+    private final ChallengeRuleMapper challengeRuleMapper;
     private final ChallengeAdaptor challengeAdaptor;
     private final CategoryAdaptor categoryAdaptor;
     private final UserAdaptor userAdaptor;
@@ -43,7 +45,7 @@ public class CreateChallengeUseCase {
         Challenge challenge = challengeMapper.toEntity(request, socialId);
 
         challenge.addCategories(categories);
-        challenge.addRules(request.getChallengeRule());
+        challenge.addRules(challengeRuleMapper.toEntities(request.getChallengeRule()));
         challenge.addKeywords(keywords);
 
         return challenge;

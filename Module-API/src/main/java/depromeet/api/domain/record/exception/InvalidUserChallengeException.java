@@ -9,6 +9,6 @@ public class InvalidUserChallengeException extends CustomException {
     public static final CustomException EXCEPTION = new InvalidUserChallengeException();
 
     private InvalidUserChallengeException() {
-        super(CustomExceptionStatus.UNPARTICIPATED_CHALLENGE_USER);
+        super(CustomExceptionStatus.USER_NOT_PARTICIPATED_IN_CHALLENGE);
     }
 }

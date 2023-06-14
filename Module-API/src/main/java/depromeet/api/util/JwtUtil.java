@@ -114,6 +114,10 @@ public class JwtUtil {
         }
     }
 
+    public String issueGuestToken() {
+        return doGenerateToken("GUEST", Platform.GUEST, Role.GUEST, refreshTokenExpiryDate);
+    }
+
     private void storeRefreshToken(String key, String value) {
         redisUtil.setDataExpire(key, value, refreshTokenExpiryDate);
     }

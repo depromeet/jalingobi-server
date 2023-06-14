@@ -1,11 +1,12 @@
 package depromeet.domain.user.domain;
 
 
-import depromeet.domain.challenge.domain.UserChallenge;
 import depromeet.domain.config.BaseTime;
+import depromeet.domain.userchallenge.domain.UserChallenge;
 import java.util.List;
 import javax.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Builder
 @Getter
@@ -19,6 +20,10 @@ public class User extends BaseTime {
     @Column(name = "user_id")
     private Long id;
 
+    @Builder.Default
+    @ColumnDefault("false")
+    private Boolean notification = false;
+
     @Embedded private Profile profile;
 
     @Embedded private Social social;
@@ -30,6 +35,7 @@ public class User extends BaseTime {
     @OneToMany(mappedBy = "user")
     private List<UserChallenge> userChallenges;
 
+    /** 생성 메서드 */
     public static User registerUser(
             String nickname, String email, String socialId, Platform platform) {
 
@@ -38,7 +44,12 @@ public class User extends BaseTime {
         return User.builder().profile(profile).social(social).role(Role.USER).build();
     }
 
+    /** 비즈니스 메서드 */
     public boolean isSameUser(String socialId) {
         return this.social.getId().equals(socialId);
+    }
+
+    public void updateProfile(String nickname, String profileImgUrl) {
+        this.profile.updateProfile(nickname, profileImgUrl);
     }
 }

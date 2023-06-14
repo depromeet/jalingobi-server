@@ -3,13 +3,20 @@ package depromeet.domain.challenge.domain;
 
 import depromeet.domain.category.domain.Category;
 import depromeet.domain.challenge.domain.keyword.ChallengeKeywords;
+import depromeet.domain.challenge.exception.ChallengeCannotBeDeletedAfterStartException;
+import depromeet.domain.challenge.exception.ChallengeCannotBeUpdatedAfterStartException;
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.keyword.domain.Keyword;
 import depromeet.domain.rule.domain.ChallengeRule;
+import depromeet.domain.userchallenge.domain.UserChallenge;
+import depromeet.domain.userchallenge.exception.ChallengeIsFullException;
+import depromeet.domain.userchallenge.exception.ChallengeIsStartedException;
+import depromeet.domain.userchallenge.exception.DuplicateParticipationException;
 import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Builder
 @Getter
@@ -32,6 +39,10 @@ public class Challenge extends BaseTime {
     private int price;
 
     private String imgUrl;
+
+    @Builder.Default
+    @ColumnDefault("false")
+    private Boolean active = false;
 
     @Embedded private ChallengeKeywords challengeKeywords;
 
@@ -101,6 +112,31 @@ public class Challenge extends BaseTime {
 
     public boolean isNotWrittenBy(String createdBy) {
         return !this.createdBy.equals(createdBy);
+    }
+
+    private boolean isStarted(final LocalDate localdate) {
+        return localdate.isBefore(LocalDate.now());
+    }
+
+    public void validateDelete(final LocalDate localdate) {
+        if (isStarted(localdate)) throw ChallengeCannotBeDeletedAfterStartException.EXCEPTION;
+    }
+
+    public void validateUpdate(final LocalDate localdate) {
+        if (isStarted(localdate)) throw ChallengeCannotBeUpdatedAfterStartException.EXCEPTION;
+    }
+
+    public void validateDuplicatedParticipation(String socialId) {
+        if (isParticipateChallengeUser(socialId)) throw DuplicateParticipationException.EXCEPTION;
+    }
+
+    public void validateCurrentUserCount() {
+        if (this.userChallenges.size() + 1 > this.availableCount)
+            throw ChallengeIsFullException.EXCEPTION;
+    }
+
+    public void validateInToChallenge(final LocalDate localDate) {
+        if (isStarted(localDate)) throw ChallengeIsStartedException.EXCEPTION;
     }
 
     public void updateTitle(String title) {
