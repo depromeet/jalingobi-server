@@ -26,14 +26,13 @@ public class GetChallengeFeedUseCase {
 
     private final Integer LIMIT = 20;
 
-    public GetChallengeFeedResponse execute(String socialId, Long challengeRoomId, Long recordId) {
+    public GetChallengeFeedResponse execute(String socialId, Long challengeId, Long recordId) {
         User user = userAdaptor.findUser(socialId);
         UserChallenge userChallenge =
-                userChallengeAdaptor.validateParticipatedInChallenge(user.getId(), challengeRoomId);
+                userChallengeAdaptor.validateParticipatedInChallenge(user.getId(), challengeId);
 
-        List<Record> recordList =
-                recordAdaptor.findChallengeRoomList(challengeRoomId, recordId, LIMIT);
-        Integer total = recordAdaptor.countChallengeRecordList(challengeRoomId);
+        List<Record> recordList = recordAdaptor.findChallengeList(challengeId, recordId, LIMIT);
+        Integer total = recordAdaptor.countChallengeRecordList(challengeId);
 
         return recordListMapper.toGetChallengeFeedResponse(
                 recordList, userChallenge.getId(), total, LIMIT);

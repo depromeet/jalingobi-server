@@ -34,14 +34,14 @@ public class RecordController {
     private final DeleteRecordUseCase deleteRecordUseCase;
 
     @Operation(summary = "챌린지 지출을 기록하는 API")
-    @PostMapping("/{challengeRoomId}/create")
+    @PostMapping("/{challengeId}/create")
     public Response<CreateRecordResponse> createRecord(
-            @PathVariable Long challengeRoomId,
+            @PathVariable Long challengeId,
             @RequestBody @Valid CreateRecordRequest createRecordRequest) {
 
         return ResponseService.getDataResponse(
                 createRecordUseCase.execute(
-                        challengeRoomId, getCurrentUserSocialId(), createRecordRequest));
+                        challengeId, getCurrentUserSocialId(), createRecordRequest));
     }
 
     @Operation(summary = "챌린지 지출 상세보기 API", description = "기록에 대한 본문 및 댓글들을 보여줍니다.")
@@ -53,9 +53,9 @@ public class RecordController {
                         description = "잘못된 요청값을 전달한 경우",
                         content = @Content())
             })
-    @GetMapping("/{challengeRoomId}/{recordId}")
+    @GetMapping("/{challengeId}/{recordId}")
     public Response<GetRecordResponse> getRecord(
-            @PathVariable("challengeRoomId") Long challengeRoomId,
+            @PathVariable("challengeId") Long challengeId,
             @PathVariable("recordId") Long recordId) {
 
         return ResponseService.getDataResponse(getRecordUseCase.execute());

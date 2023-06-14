@@ -28,8 +28,8 @@ public class UserChallengeCustomRepositoryImpl implements UserChallengeCustomRep
     }
 
     @Override
-    public Optional<UserChallenge> findUserChallengeByUserIdAndChallengeRoomId(
-            Long userId, Long challengeRoomId) {
+    public Optional<UserChallenge> findUserChallengeByUserIdAndChallengeId(
+            Long userId, Long challengeId) {
         return queryFactory
                 .selectFrom(userChallenge)
                 .join(userChallenge.challenge, challenge)
@@ -39,7 +39,7 @@ public class UserChallengeCustomRepositoryImpl implements UserChallengeCustomRep
                                 .user
                                 .id
                                 .eq(userId)
-                                .and(userChallenge.challenge.id.eq(challengeRoomId)))
+                                .and(userChallenge.challenge.id.eq(challengeId)))
                 .stream()
                 .findAny();
     }
