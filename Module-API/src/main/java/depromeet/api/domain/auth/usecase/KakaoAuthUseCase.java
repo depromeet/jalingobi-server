@@ -4,7 +4,7 @@ package depromeet.api.domain.auth.usecase;
 import depromeet.api.domain.auth.dto.TokenInfo;
 import depromeet.api.domain.auth.dto.request.KakaoAuthRequest;
 import depromeet.api.domain.auth.dto.response.KakaoAuthResponse;
-import depromeet.api.domain.auth.feign.dto.UserInfo;
+import depromeet.api.domain.auth.feign.dto.KakaoUserInfo;
 import depromeet.api.domain.auth.mapper.AuthMapper;
 import depromeet.api.domain.auth.validator.OAuthValidator;
 import depromeet.api.util.JwtUtil;
@@ -25,15 +25,15 @@ public class KakaoAuthUseCase {
 
     public KakaoAuthResponse execute(KakaoAuthRequest reqAuth) {
 
-        UserInfo userInfo =
+        KakaoUserInfo kakaoUserInfo =
                 oAuthValidator.validateToken(reqAuth.getIdToken(), reqAuth.getAccessToken());
 
         // 회원가입 및 로그인
         User user =
                 userAdaptor.authUser(
-                        userInfo.getNickname(),
-                        userInfo.getEmail(),
-                        userInfo.getSub(),
+                        kakaoUserInfo.getNickname(),
+                        kakaoUserInfo.getEmail(),
+                        kakaoUserInfo.getSub(),
                         Platform.KAKAO);
 
         TokenInfo tokenInfo =

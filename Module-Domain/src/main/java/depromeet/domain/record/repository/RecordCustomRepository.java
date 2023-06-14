@@ -9,7 +9,7 @@ public interface RecordCustomRepository {
 
     Integer countMyRecordList(Long userId);
 
-    List<Record> findChallengeRecordList(Long challengeRoomId, Long recordId, Integer limit);
+    List<Record> findChallengeRecordList(Long challengeId, Long recordId, Integer limit);
 
-    Integer countChallengeRecordList(Long challengeRoomId);
+    Integer countChallengeRecordList(Long challengeId);
 }

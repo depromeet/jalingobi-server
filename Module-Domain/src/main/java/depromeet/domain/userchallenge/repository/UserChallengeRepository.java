@@ -15,8 +15,8 @@ public interface UserChallengeRepository
     @Query(
             value =
                     "SELECT uc FROM UserChallenge uc WHERE uc.user.id = :uid AND uc.challenge.id = :cid")
-    Optional<UserChallenge> findByUserIdAndChallengeRoomId(
-            @Param("uid") Long userId, @Param("cid") Long challengeRoomId);
+    Optional<UserChallenge> findByUserIdAndchallengeId(
+            @Param("uid") Long userId, @Param("cid") Long challengeId);
 
     Optional<UserChallenge> findByChallengeAndUser(Challenge challenge, User user);
 }

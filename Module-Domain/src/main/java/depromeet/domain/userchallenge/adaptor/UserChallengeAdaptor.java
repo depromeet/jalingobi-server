@@ -27,15 +27,15 @@ public class UserChallengeAdaptor {
         return userChallengeRepository.findUserChallengeListById(id);
     }
 
-    public UserChallenge findProceedingInfo(Long userId, Long challengeRoomId) {
+    public UserChallenge findProceedingInfo(Long userId, Long challengeId) {
         return userChallengeRepository
-                .findUserChallengeByUserIdAndChallengeRoomId(userId, challengeRoomId)
+                .findUserChallengeByUserIdAndChallengeId(userId, challengeId)
                 .orElseThrow(() -> ProgressInfoNotFoundException.EXCEPTION);
     }
 
-    public UserChallenge validateParticipatedInChallenge(Long userId, Long challengeRoomId) {
+    public UserChallenge validateParticipatedInChallenge(Long userId, Long challengeId) {
         return userChallengeRepository
-                .findByUserIdAndChallengeRoomId(userId, challengeRoomId)
+                .findByUserIdAndchallengeId(userId, challengeId)
                 .orElseThrow(() -> UserNotParticipatedInChallengeException.EXCEPTION);
     }
 

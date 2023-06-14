@@ -38,7 +38,7 @@ public class ChallengeFeed {
     }
 
     @Data
-    public static class UserInfo {
+    private static class UserInfo {
         @Schema(example = "유저 이미지 URL")
         private String userImgUrl;
 

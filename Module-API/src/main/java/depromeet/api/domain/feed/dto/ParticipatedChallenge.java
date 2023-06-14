@@ -12,8 +12,8 @@ import lombok.Data;
 @Data
 public class ParticipatedChallenge {
 
-    @Schema(description = "챌린지 방 ID", example = "13")
-    private Long challengeRoomId;
+    @Schema(description = "챌린지 ID", example = "13")
+    private Long challengeId;
 
     @Schema(description = "참여중인 챌린지 타이틀", example = "배달 10만원 이하로 쓰기")
     private String title;
@@ -26,7 +26,7 @@ public class ParticipatedChallenge {
 
     public static ParticipatedChallenge createParticipatedChallenge(Challenge challenge) {
         return ParticipatedChallenge.builder()
-                .challengeRoomId(challenge.getId())
+                .challengeId(challenge.getId())
                 .title(challenge.getTitle())
                 .imgUrl(challenge.getImgUrl())
                 .active(challenge.getActive())
