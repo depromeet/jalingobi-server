@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import depromeet.api.config.security.filter.JwtRequestFilter;
 import depromeet.api.domain.mypage.dto.request.UpdateProfileRequest;
+import depromeet.api.domain.mypage.usecase.GetMyPageUseCase;
 import depromeet.api.domain.mypage.usecase.LogoutUseCase;
 import depromeet.api.domain.mypage.usecase.UpdateProfileUseCase;
 import depromeet.api.util.AuthenticationUtil;
@@ -41,6 +42,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @AutoConfigureMockMvc(addFilters = false)
 class MyPageControllerTest {
     @Autowired private MockMvc mockMvc;
+    @MockBean private GetMyPageUseCase getMyPageUseCase;
     @MockBean private UpdateProfileUseCase updateProfileUseCase;
     @MockBean private LogoutUseCase logoutUseCase;
 
@@ -68,6 +70,7 @@ class MyPageControllerTest {
         MockHttpServletRequestBuilder requestBuilder =
                 MockMvcRequestBuilders.patch("/mypage/profile", 1)
                         .with(csrf())
+                        .characterEncoding("UTF-8")
                         .content(objectMapper.writeValueAsString(updateProfileRequest))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON);

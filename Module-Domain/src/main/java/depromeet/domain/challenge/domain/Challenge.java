@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Builder
 @Getter
@@ -39,6 +40,8 @@ public class Challenge extends BaseTime {
 
     private String imgUrl;
 
+    @Builder.Default
+    @ColumnDefault("false")
     private Boolean active = false;
 
     @Embedded private ChallengeKeywords challengeKeywords;

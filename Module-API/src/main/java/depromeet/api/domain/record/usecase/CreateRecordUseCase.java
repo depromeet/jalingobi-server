@@ -12,6 +12,8 @@ import depromeet.domain.record.adaptor.RecordAdaptor;
 import depromeet.domain.record.domain.Record;
 import depromeet.domain.user.adaptor.UserAdaptor;
 import depromeet.domain.user.domain.User;
+import depromeet.domain.userchallenge.adaptor.UserChallengeAdaptor;
+import depromeet.domain.userchallenge.domain.UserChallenge;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,7 @@ public class CreateRecordUseCase {
     private final RecordAdaptor recordAdaptor;
     private final UserAdaptor userAdaptor;
     private final ChallengeAdaptor challengeAdaptor;
+    private final UserChallengeAdaptor userChallengeAdaptor;
 
     private final RecordValidator recordValidator;
 
@@ -31,12 +34,15 @@ public class CreateRecordUseCase {
 
         User currentUser = userAdaptor.findUser(socialId);
         Challenge challenge = challengeAdaptor.findChallenge(challengeRoomId);
+        UserChallenge userChallenge =
+                userChallengeAdaptor.findByUserChallenge(challenge, currentUser);
 
         recordValidator.validateUnparticipatedChallenge(socialId, challenge);
 
         Record record =
                 recordAdaptor.save(
-                        recordMapper.toEntity(challenge, currentUser, createRecordRequest));
+                        recordMapper.toEntity(
+                                challenge, currentUser, userChallenge, createRecordRequest));
 
         return recordMapper.toCreateRecordResponse(record, currentUser);
     }

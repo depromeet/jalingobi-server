@@ -144,6 +144,7 @@ class RecordControllerTest {
         MockHttpServletRequestBuilder requestBuilder =
                 MockMvcRequestBuilders.post("/challenge/{challengeRoomId}/create", 1)
                         .with(csrf())
+                        .characterEncoding("UTF-8")
                         .content(objectMapper.writeValueAsString(createRecordRequest))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON);
@@ -187,6 +188,7 @@ class RecordControllerTest {
         MockHttpServletRequestBuilder requestBuilder =
                 MockMvcRequestBuilders.patch("/challenge/{recordId}", 1)
                         .with(csrf())
+                        .characterEncoding("UTF-8")
                         .content(objectMapper.writeValueAsString(updateRecordRequest))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON);
@@ -215,6 +217,7 @@ class RecordControllerTest {
         MockHttpServletRequestBuilder requestBuilder =
                 MockMvcRequestBuilders.delete("/challenge/{recordId}", 1)
                         .with(csrf())
+                        .characterEncoding("UTF-8")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON);
 
