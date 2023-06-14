@@ -1,4 +1,4 @@
-package depromeet.api.domain.rule.mapper;
+package depromeet.api.domain.challenge.mapper;
 
 
 import depromeet.common.annotation.Mapper;

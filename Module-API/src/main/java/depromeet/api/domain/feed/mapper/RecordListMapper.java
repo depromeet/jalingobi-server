@@ -15,7 +15,7 @@ public class RecordListMapper {
     }
 
     public GetChallengeFeedResponse toGetChallengeFeedResponse(
-            List<Record> recordList, Integer total, Integer limit) {
-        return GetChallengeFeedResponse.of(recordList, total, limit);
+            List<Record> recordList, Long myUserChallengeId, Integer total, Integer limit) {
+        return GetChallengeFeedResponse.of(recordList, myUserChallengeId, total, limit);
     }
 }

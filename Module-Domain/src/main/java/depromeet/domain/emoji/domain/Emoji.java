@@ -1,6 +1,7 @@
 package depromeet.domain.emoji.domain;
 
 
+import depromeet.domain.record.domain.EmojiType;
 import depromeet.domain.record.domain.Record;
 import depromeet.domain.userchallenge.domain.UserChallenge;
 import java.util.Objects;
@@ -28,13 +29,13 @@ public class Emoji {
     private Record record;
 
     @Enumerated(EnumType.STRING)
-    private depromeet.domain.record.domain.Emoji type;
+    private EmojiType type;
 
     public static Emoji createEmoji(UserChallenge userchallenge, Record record, String type) {
         return Emoji.builder()
                 .userChallenge(userchallenge)
                 .record(record)
-                .type(depromeet.domain.record.domain.Emoji.of(type))
+                .type(EmojiType.of(type))
                 .build();
     }
 

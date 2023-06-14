@@ -22,6 +22,7 @@ public class UserChallenge extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_challenge_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -34,8 +35,11 @@ public class UserChallenge extends BaseTime {
 
     private String nickname;
 
-    @Column(name = "current_charge")
+    @Column(name = "current_charge", nullable = false)
     private Integer currentCharge;
+
+    @Column(name = "img_url", nullable = false)
+    private String imgUrl;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
