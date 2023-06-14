@@ -16,7 +16,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MyPageMapper {
     public GetMyPageResponse toGetMyPageResponse(
-            Social social, Profile profile, Boolean notification, Map<Status, Integer> userChallengeResult) {
+            Social social,
+            Profile profile,
+            Boolean notification,
+            Map<Status, Integer> userChallengeResult) {
         return GetMyPageResponse.of(social, profile, notification, userChallengeResult);
     }
 

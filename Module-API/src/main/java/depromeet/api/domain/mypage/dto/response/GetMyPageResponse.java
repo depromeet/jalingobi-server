@@ -17,7 +17,10 @@ public class GetMyPageResponse {
     private Map<Status, Integer> userChallengeResult;
 
     public static GetMyPageResponse of(
-            Social social, Profile profile, Boolean notification, Map<Status, Integer> userChallengeResult) {
+            Social social,
+            Profile profile,
+            Boolean notification,
+            Map<Status, Integer> userChallengeResult) {
         return GetMyPageResponse.builder()
                 .social(social)
                 .profile(profile)
