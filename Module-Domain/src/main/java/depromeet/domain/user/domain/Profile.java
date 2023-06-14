@@ -18,9 +18,12 @@ public class Profile {
     @Column(length = 320, unique = true, nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String imgUrl;
 
-    public static Profile createProfile(String name, String email, String imgUrl) {
+    public static Profile createProfile(String name, String email) {
+        String imgUrl =
+                "https://jalingobi-bucket-local.s3.ap-northeast-2.amazonaws.com/profile/default/default_profile.png";
         return Profile.builder().name(name).email(email).imgUrl(imgUrl).build();
     }
 

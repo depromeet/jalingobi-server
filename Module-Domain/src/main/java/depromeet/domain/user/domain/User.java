@@ -39,7 +39,7 @@ public class User extends BaseTime {
     public static User registerUser(
             String nickname, String email, String socialId, Platform platform) {
 
-        Profile profile = Profile.createProfile(nickname, email, null);
+        Profile profile = Profile.createProfile(nickname, email);
         Social social = Social.createSocial(socialId, platform);
         return User.builder().profile(profile).social(social).role(Role.USER).build();
     }
