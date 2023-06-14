@@ -18,7 +18,7 @@ public class ChallengeFeed {
 
     private UserInfo userInfo;
 
-    private RecordInfo recordInfo;
+    private FeedRecordInfo recordInfo;
 
     private EmojiInfo emojiInfo;
 
@@ -26,7 +26,7 @@ public class ChallengeFeed {
         Boolean isMine = record.getUserChallenge().getId() == myUserChallengeId;
 
         UserInfo userInfo = new UserInfo(record.getUserChallenge());
-        RecordInfo recordInfo = new RecordInfo(record);
+        FeedRecordInfo recordInfo = new FeedRecordInfo(record);
         EmojiInfo emojiInfo = new EmojiInfo(record, myUserChallengeId);
 
         return ChallengeFeed.builder()

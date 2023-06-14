@@ -4,15 +4,19 @@ package depromeet.api.domain.feed.dto;
 import depromeet.domain.record.domain.Record;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
+@AllArgsConstructor
 @Data
-public class RecordInfo {
+public class FeedRecordInfo {
     @Schema(description = "기록 ID", example = "27")
-    private Long recordId;
+    private Long id;
 
     @Schema(example = "기록 이미지 URL")
-    private String recordImgUrl;
+    private String imgUrl;
 
     @Schema(example = "기록 타이틀")
     private String title;
@@ -24,14 +28,14 @@ public class RecordInfo {
     private Integer price;
 
     @Schema(description = "기록 작성일")
-    private LocalDateTime recordDate;
+    private LocalDateTime date;
 
-    public RecordInfo(Record record) {
-        this.recordId = record.getId();
-        this.recordImgUrl = record.getImgUrl();
+    public FeedRecordInfo(Record record) {
+        this.id = record.getId();
+        this.imgUrl = record.getImgUrl();
         this.title = record.getTitle();
         this.content = record.getContent();
         this.price = record.getPrice();
-        this.recordDate = record.getCreatedAt();
+        this.date = record.getCreatedAt();
     }
 }

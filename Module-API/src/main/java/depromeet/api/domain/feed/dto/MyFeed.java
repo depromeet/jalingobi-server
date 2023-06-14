@@ -13,14 +13,14 @@ import lombok.Data;
 @Data
 public class MyFeed {
 
-    private RecordInfo recordInfo;
+    private FeedRecordInfo recordInfo;
 
     private ChallengeInfo challengeInfo;
 
     private EmojiInfo emojiInfo;
 
     public static MyFeed createMyFeed(Record record) {
-        RecordInfo recordInfo = new RecordInfo(record);
+        FeedRecordInfo recordInfo = new FeedRecordInfo(record);
         ChallengeInfo challengeInfo = new ChallengeInfo(record.getChallenge());
         EmojiInfo emojiInfo = new EmojiInfo(record);
 
