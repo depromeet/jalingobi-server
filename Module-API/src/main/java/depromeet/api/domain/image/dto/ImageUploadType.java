@@ -9,6 +9,7 @@ import lombok.Getter;
 public enum ImageUploadType {
     RECORD("record"),
     PROFILE("profile"),
+    CUSTOM_PROFILE("custom-profile"),
     CHALLENGE("challenge");
 
     private final String type;
