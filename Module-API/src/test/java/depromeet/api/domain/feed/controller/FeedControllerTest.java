@@ -1,6 +1,5 @@
 package depromeet.api.domain.feed.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mockStatic;
@@ -10,10 +9,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import depromeet.api.config.security.filter.JwtRequestFilter;
-import depromeet.api.domain.feed.dto.EmojiInfo;
-import depromeet.api.domain.feed.dto.FeedRecordInfo;
-import depromeet.api.domain.feed.dto.MyFeed;
-import depromeet.api.domain.feed.dto.ParticipatedChallenge;
+import depromeet.api.domain.feed.dto.*;
+import depromeet.api.domain.feed.dto.ChallengeFeed.FeedUserInfo;
+import depromeet.api.domain.feed.dto.response.GetChallengeFeedResponse;
 import depromeet.api.domain.feed.dto.response.GetChallengeProceedingInfoResponse;
 import depromeet.api.domain.feed.dto.response.GetMyChallengeListResponse;
 import depromeet.api.domain.feed.dto.response.GetMyRoomFeedResponse;
@@ -168,13 +166,14 @@ class FeedControllerTest {
                         .comment(5)
                         .build();
 
-        List<MyFeed> myFeedList = new ArrayList<>();
         MyFeed myFeed =
                 MyFeed.builder()
                         .recordInfo(feedRecordInfo)
                         .challengeInfo(challengeInfo)
                         .emojiInfo(emojiInfo)
                         .build();
+
+        List<MyFeed> myFeedList = new ArrayList<>();
         myFeedList.add(myFeed);
 
         GetMyRoomFeedResponse response =
@@ -229,9 +228,95 @@ class FeedControllerTest {
     @DisplayName("챌린지 피드_성공")
     public void getChallengeFeedTest() throws Exception {
         // given
+        Long challengeId = 23L;
+        Long offsetRecordId = 3L;
+
+        FeedUserInfo userInfo =
+                FeedUserInfo.builder()
+                        .nickname("tester")
+                        .imgUrl("사용자 이미지 url")
+                        .currentCharge(34000)
+                        .build();
+
+        FeedRecordInfo feedRecordInfo =
+                FeedRecordInfo.builder()
+                        .id(27L)
+                        .date(LocalDateTime.now())
+                        .imgUrl("기록 이미지 url")
+                        .content("기록 내용")
+                        .price(5000)
+                        .build();
+
+        EmojiInfo emojiInfo =
+                EmojiInfo.builder()
+                        .selectedEmoji("미친거지")
+                        .crazy(2L)
+                        .regretful(0L)
+                        .wellDone(3L)
+                        .comment(5)
+                        .build();
+
+        ChallengeFeed challengeFeed =
+                ChallengeFeed.builder()
+                        .isMine(true)
+                        .userInfo(userInfo)
+                        .recordInfo(feedRecordInfo)
+                        .emojiInfo(emojiInfo)
+                        .build();
+
+        List<ChallengeFeed> challengeFeedList = new ArrayList<>();
+        challengeFeedList.add(challengeFeed);
+
+        GetChallengeFeedResponse response =
+                GetChallengeFeedResponse.builder()
+                        .total(120)
+                        .limit(20)
+                        .current(15)
+                        .lastRecordId(38L)
+                        .challengeFeedList(challengeFeedList)
+                        .build();
+
+        given(getChallengeFeedUseCase.execute(any(), any(), any())).willReturn(response);
 
         // when
+        ResultActions actions =
+                mockMvc.perform(
+                        get("/challenge/{challengeId}/feed", challengeId)
+                                .param("offsetRecordId", String.valueOf(offsetRecordId)));
 
         // then
+        actions.andDo(print())
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.result.total").value(response.getTotal()),
+                        jsonPath("$.result.limit").value(response.getLimit()),
+                        jsonPath("$.result.current").value(response.getCurrent()),
+                        jsonPath("$.result.lastRecordId").value(response.getLastRecordId()),
+                        jsonPath("$.result.challengeFeedList[0].userInfo.nickname")
+                                .value(userInfo.getNickname()),
+                        jsonPath("$.result.challengeFeedList[0].userInfo.imgUrl")
+                                .value(userInfo.getImgUrl()),
+                        jsonPath("$.result.challengeFeedList[0].userInfo.currentCharge")
+                                .value(userInfo.getCurrentCharge()),
+                        jsonPath("$.result.challengeFeedList[0].recordInfo.id")
+                                .value(feedRecordInfo.getId()),
+                        jsonPath("$.result.challengeFeedList[0].recordInfo.imgUrl")
+                                .value(feedRecordInfo.getImgUrl()),
+                        jsonPath("$.result.challengeFeedList[0].recordInfo.title")
+                                .value(feedRecordInfo.getTitle()),
+                        jsonPath("$.result.challengeFeedList[0].recordInfo.content")
+                                .value(feedRecordInfo.getContent()),
+                        jsonPath("$.result.challengeFeedList[0].recordInfo.price")
+                                .value(feedRecordInfo.getPrice()),
+                        jsonPath("$.result.challengeFeedList[0].emojiInfo.selectedEmoji")
+                                .value(emojiInfo.getSelectedEmoji()),
+                        jsonPath("$.result.challengeFeedList[0].emojiInfo.crazy")
+                                .value(emojiInfo.getCrazy()),
+                        jsonPath("$.result.challengeFeedList[0].emojiInfo.regretful")
+                                .value(emojiInfo.getRegretful()),
+                        jsonPath("$.result.challengeFeedList[0].emojiInfo.wellDone")
+                                .value(emojiInfo.getWellDone()),
+                        jsonPath("$.result.challengeFeedList[0].emojiInfo.comment")
+                                .value(emojiInfo.getComment()));
     }
 }

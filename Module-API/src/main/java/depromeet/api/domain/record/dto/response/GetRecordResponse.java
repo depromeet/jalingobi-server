@@ -20,7 +20,7 @@ public class GetRecordResponse {
     @Schema(description = "본인 기록인지", example = "true")
     private Boolean isMine;
 
-    private UserInfo userInfo;
+    private RecordUserInfo userInfo;
 
     private RecordInfo recordInfo;
 
@@ -30,7 +30,7 @@ public class GetRecordResponse {
 
         Boolean isMine = record.getUserChallenge().getId() == myUserChallengeId;
 
-        UserInfo userInfo = new UserInfo(record.getUserChallenge());
+        RecordUserInfo userInfo = new RecordUserInfo(record.getUserChallenge());
         RecordInfo recordInfo = new RecordInfo(record);
 
         List<CommentInfo> commentInfoList =
@@ -47,14 +47,14 @@ public class GetRecordResponse {
     }
 
     @Data
-    private static class UserInfo {
+    private static class RecordUserInfo {
         @Schema(example = "사용자 닉네임")
         private String nickname;
 
         @Schema(example = "사용자 이미지 URL")
         private String userImgUrl;
 
-        public UserInfo(UserChallenge userChallenge) {
+        public RecordUserInfo(UserChallenge userChallenge) {
             this.nickname = userChallenge.getNickname();
             this.userImgUrl = userChallenge.getImgUrl();
         }
