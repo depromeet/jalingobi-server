@@ -3,6 +3,7 @@ package depromeet.api.config.s3;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.HttpMethod;
+import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.Headers;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
@@ -72,10 +73,11 @@ public class S3UploadPresignedUrlService {
 
     public void deleteImage(String key) {
         DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(bucket, key);
-
         try {
             amazonS3Client.deleteObject(deleteObjectRequest);
         } catch (AmazonServiceException e) {
+            throw e;
+        } catch (SdkClientException e) {
             throw e;
         }
     }

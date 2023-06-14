@@ -17,7 +17,7 @@ public class UpdateProfileUseCase {
     @Value("${image.default.profile}")
     private String imgUrl;
 
-    @Value("${image.default.prefix}")
+    @Value("${image.prefix}")
     private String prefix;
 
     private final UserAdaptor userAdaptor;
