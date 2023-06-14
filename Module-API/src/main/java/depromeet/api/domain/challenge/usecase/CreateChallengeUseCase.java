@@ -9,6 +9,7 @@ import depromeet.common.annotation.UseCase;
 import depromeet.domain.category.adaptor.CategoryAdaptor;
 import depromeet.domain.category.domain.Category;
 import depromeet.domain.challenge.adaptor.ChallengeAdaptor;
+import depromeet.domain.challenge.domain.CategoryType;
 import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.keyword.adaptor.KeywordAdaptor;
 import depromeet.domain.keyword.domain.Keyword;
@@ -43,10 +44,7 @@ public class CreateChallengeUseCase {
         List<Category> categories =
                 categoryAdaptor.findOrExceptionCategories(
                         request.getCategory().stream()
-                                .map(
-                                        name ->
-                                                depromeet.domain.challenge.domain.Category.of(name)
-                                                        .toString())
+                                .map(name -> CategoryType.of(name).toString())
                                 .collect(Collectors.toList()));
 
         Challenge challenge = challengeMapper.toEntity(request, socialId);

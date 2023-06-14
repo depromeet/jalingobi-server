@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public enum Category {
+public enum CategoryType {
     FOOD("식비"),
     HOBBY_LEISURE("취미/여가"),
     FASHION_BEAUTY("패션/뷰티"),
@@ -18,8 +18,8 @@ public enum Category {
 
     private String name;
 
-    public static Category of(String source) {
-        return Arrays.stream(Category.values())
+    public static CategoryType of(String source) {
+        return Arrays.stream(CategoryType.values())
                 .filter(value -> value.getName().equals(source))
                 .findAny()
                 .orElseThrow(() -> CategoryNotFoundException.EXCEPTION);
