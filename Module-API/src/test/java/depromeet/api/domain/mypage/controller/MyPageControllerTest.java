@@ -16,7 +16,9 @@ import depromeet.api.domain.mypage.usecase.GetUserChallengesUseCase;
 import depromeet.api.domain.mypage.usecase.LogoutUseCase;
 import depromeet.api.domain.mypage.usecase.UpdateProfileUseCase;
 import depromeet.api.util.AuthenticationUtil;
+import depromeet.domain.user.domain.Platform;
 import depromeet.domain.user.domain.Profile;
+import depromeet.domain.user.domain.Social;
 import depromeet.domain.userchallenge.domain.Status;
 import java.util.HashMap;
 import java.util.Map;
@@ -71,9 +73,11 @@ class MyPageControllerTest {
     @DisplayName("[GET] 마이페이지 조회")
     public void getUserProfileTest() throws Exception {
         // given
+        Platform platform = Platform.KAKAO;
         String nickname = "tester";
         String email = "test@test";
         String socialId = "1234";
+        Social social = Social.createSocial(socialId, platform);
         Profile profile = Profile.createProfile(nickname, email, "");
 
         Map<Status, Integer> userChallengeResult = new HashMap<>();
@@ -83,6 +87,7 @@ class MyPageControllerTest {
 
         GetMyPageResponse getMyPageResponse =
                 GetMyPageResponse.builder()
+                        .social(social)
                         .profile(profile)
                         .notification(false)
                         .userChallengeResult(userChallengeResult)
@@ -101,6 +106,8 @@ class MyPageControllerTest {
                 .andDo(print())
                 .andExpectAll(
                         status().isOk(),
+                        jsonPath("$.result.social.id")
+                                .value(getMyPageResponse.getSocial().getId()),
                         jsonPath("$.result.profile.name")
                                 .value(getMyPageResponse.getProfile().getName()),
                         jsonPath("$.result.profile.email")
