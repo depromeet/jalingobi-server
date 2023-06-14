@@ -10,15 +10,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import depromeet.api.config.security.filter.JwtRequestFilter;
 import depromeet.api.domain.challenge.dto.request.CreateChallengeRequest;
+import depromeet.api.domain.challenge.dto.request.JoinChallengeRequest;
 import depromeet.api.domain.challenge.dto.request.UpdateChallengeRequest;
 import depromeet.api.domain.challenge.dto.response.CreateChallengeResponse;
 import depromeet.api.domain.challenge.dto.response.UpdateChallengeResponse;
 import depromeet.api.domain.challenge.mapper.ChallengeMapper;
 import depromeet.api.domain.challenge.usecase.CreateChallengeUseCase;
 import depromeet.api.domain.challenge.usecase.DeleteChallengeUseCase;
+import depromeet.api.domain.challenge.usecase.JoinChallengeUseCase;
 import depromeet.api.domain.challenge.usecase.UpdateChallengeUseCase;
-import depromeet.api.domain.userchallenge.dto.request.CreateUserChallengeRequest;
-import depromeet.api.domain.userchallenge.usecase.CreateUserChallengeUseCase;
 import depromeet.api.util.AuthenticationUtil;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ public class ChallengeControllerTest {
 
     @MockBean DeleteChallengeUseCase deleteChallengeUseCase;
 
-    @MockBean CreateUserChallengeUseCase createUserChallengeUseCase;
+    @MockBean JoinChallengeUseCase createUserChallengeUseCase;
 
     ChallengeMapper challengeMapper = new ChallengeMapper();
 
@@ -197,8 +197,8 @@ public class ChallengeControllerTest {
     @DisplayName("챌린지 참가")
     public void joinChallengeTest() throws Exception {
         String socialId = "socialId";
-        CreateUserChallengeRequest createUserChallengeRequest =
-                CreateUserChallengeRequest.builder().nickname("닉네임").currentCharge(10000).build();
+        JoinChallengeRequest createUserChallengeRequest =
+                JoinChallengeRequest.builder().nickname("닉네임").currentCharge(10000).build();
 
         when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
         willDoNothing().given(createUserChallengeUseCase).execute(anyString(), any(), anyLong());

@@ -1,4 +1,4 @@
-package depromeet.api.domain.userchallenge.dto.request;
+package depromeet.api.domain.challenge.dto.request;
 
 
 import javax.validation.constraints.NotNull;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateUserChallengeRequest {
+public class JoinChallengeRequest {
 
     @NotNull(message = "챌린지 동안 사용할 닉네임 입력하세요.")
     private String nickname;
