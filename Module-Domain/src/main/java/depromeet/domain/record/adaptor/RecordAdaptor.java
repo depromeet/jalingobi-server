@@ -36,7 +36,8 @@ public class RecordAdaptor {
     }
 
     public List<Record> findChallengeList(Long challengeId, Long recordId, Integer limit) {
-        return recordRepository.findChallengeRecordList(challengeId, recordId, limit);
+        if (recordId == 0) return recordRepository.findFirstChallengeRecordList(challengeId, limit);
+        else return recordRepository.findChallengeRecordList(challengeId, recordId, limit);
     }
 
     public Integer countChallengeRecordList(Long challengeId) {
