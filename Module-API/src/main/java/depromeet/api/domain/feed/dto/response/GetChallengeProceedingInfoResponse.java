@@ -6,8 +6,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
 @AllArgsConstructor
 @Data
 public class GetChallengeProceedingInfoResponse {

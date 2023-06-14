@@ -10,8 +10,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
+@AllArgsConstructor
 @Data
 public class EmojiInfo {
     @Schema(description = "내가 선택한 이모지", example = "이모지 종류 - 없을경우 null 값으로할지 아예 데이터 보내주지 않을지 결정")

@@ -14,8 +14,10 @@ import javax.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequestMapping("/challenge")
 @RequiredArgsConstructor
 @RestController
 public class FeedController {
@@ -34,7 +36,7 @@ public class FeedController {
                         description = "잘못된 요청값을 전달한 경우",
                         content = @Content())
             })
-    @GetMapping("/challenge/my-list")
+    @GetMapping("/my-list")
     public Response<GetMyChallengeListResponse> getMyChallengeList() {
 
         return ResponseService.getDataResponse(
@@ -50,7 +52,7 @@ public class FeedController {
                         description = "잘못된 요청값을 전달한 경우",
                         content = @Content())
             })
-    @GetMapping("/challenge/{challengeId}/proceeding/info")
+    @GetMapping("/{challengeId}/proceeding/info")
     public Response<GetChallengeProceedingInfoResponse> getChallengeProceedingInfo(
             @PathVariable("challengeId") Long challengeId) {
 
@@ -67,7 +69,7 @@ public class FeedController {
                         description = "잘못된 요청값을 전달한 경우",
                         content = @Content())
             })
-    @GetMapping("/challenge/my-room/feed")
+    @GetMapping("/my-room/feed")
     public Response<GetMyRoomFeedResponse> getMyRoomFeed(@PathParam("offset") Integer offset) {
 
         return ResponseService.getDataResponse(
@@ -83,7 +85,7 @@ public class FeedController {
                         description = "잘못된 요청값을 전달한 경우",
                         content = @Content())
             })
-    @GetMapping("/challenge/{challengeId}/feed")
+    @GetMapping("/{challengeId}/feed")
     public Response<GetChallengeFeedResponse> getChallengeFeed(
             @PathVariable("challengeId") Long challengeId,
             @PathParam("offsetRecordId") Long offsetRecordId) {

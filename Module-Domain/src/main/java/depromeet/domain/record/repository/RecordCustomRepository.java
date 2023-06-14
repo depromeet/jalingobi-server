@@ -11,5 +11,7 @@ public interface RecordCustomRepository {
 
     List<Record> findChallengeRecordList(Long challengeId, Long recordId, Integer limit);
 
+    List<Record> findFirstChallengeRecordList(Long challengeId, Integer limit);
+
     Integer countChallengeRecordList(Long challengeId);
 }

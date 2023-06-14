@@ -16,17 +16,17 @@ public class ChallengeFeed {
     @Schema(description = "본인 기록인지", example = "true")
     private Boolean isMine;
 
-    private UserInfo userInfo;
+    private FeedUserInfo userInfo;
 
-    private RecordInfo recordInfo;
+    private FeedRecordInfo recordInfo;
 
     private EmojiInfo emojiInfo;
 
     public static ChallengeFeed createChallengeFeed(Record record, Long myUserChallengeId) {
         Boolean isMine = record.getUserChallenge().getId() == myUserChallengeId;
 
-        UserInfo userInfo = new UserInfo(record.getUserChallenge());
-        RecordInfo recordInfo = new RecordInfo(record);
+        FeedUserInfo userInfo = new FeedUserInfo(record.getUserChallenge());
+        FeedRecordInfo recordInfo = new FeedRecordInfo(record);
         EmojiInfo emojiInfo = new EmojiInfo(record, myUserChallengeId);
 
         return ChallengeFeed.builder()
@@ -37,10 +37,12 @@ public class ChallengeFeed {
                 .build();
     }
 
+    @Builder
+    @AllArgsConstructor
     @Data
-    private static class UserInfo {
+    public static class FeedUserInfo {
         @Schema(example = "유저 이미지 URL")
-        private String userImgUrl;
+        private String imgUrl;
 
         @Schema(example = "사용자 닉네임")
         private String nickname;
@@ -48,8 +50,8 @@ public class ChallengeFeed {
         @Schema(description = "다른 유저의 현재 지출액", example = "78000")
         private Integer currentCharge;
 
-        public UserInfo(UserChallenge userChallenge) {
-            this.userImgUrl = userChallenge.getImgUrl();
+        public FeedUserInfo(UserChallenge userChallenge) {
+            this.imgUrl = userChallenge.getImgUrl();
             this.nickname = userChallenge.getNickname();
             this.currentCharge = userChallenge.getCurrentCharge();
         }
