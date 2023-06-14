@@ -16,6 +16,7 @@ import depromeet.domain.rule.domain.ChallengeRule;
 import depromeet.domain.user.adaptor.UserAdaptor;
 import depromeet.domain.user.domain.User;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +42,13 @@ public class UpdateChallengeUseCase {
 
         List<Keyword> keywords = keywordAdaptor.findOrCreateKeywords(request.getKeywords());
         List<Category> categories =
-                categoryAdaptor.findOrExceptionCategories(request.getCategories());
+                categoryAdaptor.findOrExceptionCategories(
+                        request.getCategories().stream()
+                                .map(
+                                        name ->
+                                                depromeet.domain.challenge.domain.Category.of(name)
+                                                        .toString())
+                                .collect(Collectors.toList()));
         List<ChallengeRule> challengeRules = ChallengeRule.createRule(request.getRules());
 
         challenge.updateTitle(request.getTitle());

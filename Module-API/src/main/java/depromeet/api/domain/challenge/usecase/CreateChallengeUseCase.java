@@ -15,6 +15,7 @@ import depromeet.domain.keyword.domain.Keyword;
 import depromeet.domain.user.adaptor.UserAdaptor;
 import depromeet.domain.user.domain.User;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +41,13 @@ public class CreateChallengeUseCase {
         User currentUser = userAdaptor.findUser(socialId);
         List<Keyword> keywords = keywordAdaptor.findOrCreateKeywords(request.getKeywords());
         List<Category> categories =
-                categoryAdaptor.findOrExceptionCategories(request.getCategory());
+                categoryAdaptor.findOrExceptionCategories(
+                        request.getCategory().stream()
+                                .map(
+                                        name ->
+                                                depromeet.domain.challenge.domain.Category.of(name)
+                                                        .toString())
+                                .collect(Collectors.toList()));
 
         Challenge challenge = challengeMapper.toEntity(request, socialId);
 
