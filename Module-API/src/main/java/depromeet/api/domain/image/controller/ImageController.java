@@ -23,7 +23,7 @@ public class ImageController {
 
     private final IssuePresignedUrlUseCase getPresignedUrlUseCase;
 
-    // type은 [record, profile, challenge] 이게 폴더 명이 될거임.
+    // type은 [record, profile, custom-profile, challenge] 이게 폴더 명이 될거임.
     @Operation(summary = "presigned url을 발급받는 API")
     @PostMapping("/presigned")
     public Response<IssuePresignedUrlResponse> createPresigned(

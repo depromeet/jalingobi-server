@@ -39,7 +39,7 @@ public class S3UploadPresignedUrlService {
         GeneratePresignedUrlRequest generatePresignedUrlRequest =
                 getGeneratePreSignedUrlRequest(bucket, fileName, valueFileExtension);
         URL url = amazonS3Client.generatePresignedUrl(generatePresignedUrlRequest);
-        log.info(url.toString());
+
         return ImageUrlDto.of(url.toString(), fileName);
     }
 
