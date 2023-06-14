@@ -11,9 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import depromeet.api.config.security.filter.JwtRequestFilter;
-import depromeet.api.domain.emoji.dto.request.CreateEmojiRequest;
-import depromeet.api.domain.emoji.dto.response.CreateEmojiResponse;
-import depromeet.api.domain.emoji.usecase.CreateEmojiUseCase;
 import depromeet.api.domain.record.dto.request.CreateRecordRequest;
 import depromeet.api.domain.record.dto.response.CreateRecordResponse;
 import depromeet.api.domain.record.usecase.CreateRecordUseCase;
@@ -21,7 +18,6 @@ import depromeet.api.domain.record.usecase.DeleteRecordUseCase;
 import depromeet.api.domain.record.usecase.GetRecordUseCase;
 import depromeet.api.domain.record.usecase.UpdateRecordUseCase;
 import depromeet.api.util.AuthenticationUtil;
-import depromeet.domain.record.domain.EmojiType;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -64,8 +60,6 @@ class RecordControllerTest {
     @MockBean private UpdateRecordUseCase updateRecordUseCase;
 
     @MockBean private DeleteRecordUseCase deleteRecordUseCase;
-
-    @MockBean private CreateEmojiUseCase createEmojiUseCase;
 
     @Autowired private ObjectMapper objectMapper;
 
@@ -227,42 +221,5 @@ class RecordControllerTest {
         when(createRecordUseCase.execute(anyLong(), anyString(), any(CreateRecordRequest.class)))
                 .thenReturn(createRecordResponse);
         mockMvc.perform(requestBuilder).andDo(print()).andExpectAll(status().isOk());
-    }
-
-    @Test
-    @DisplayName("[Put] 이모지 등록")
-    public void CreateRecordEmojiTest() throws Exception {
-        // given
-        CreateEmojiRequest createEmojiRequest =
-                CreateEmojiRequest.builder().type(EmojiType.CRAZY_BEGGAR.getValue()).build();
-
-        CreateEmojiResponse createEmojiResponse =
-                CreateEmojiResponse.builder()
-                        .emojisCount(1)
-                        .type(createEmojiRequest.getType())
-                        .selected(true)
-                        .build();
-
-        MockHttpServletRequestBuilder requestBuilder =
-                MockMvcRequestBuilders.put("/challenge/{recordId}/emojis", 1)
-                        .with(csrf())
-                        .content(objectMapper.writeValueAsString(createEmojiRequest))
-                        .characterEncoding("UTF-8")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON);
-
-        String socialId = "socialId";
-
-        when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
-        when(createEmojiUseCase.execute(anyString(), anyLong(), any()))
-                .thenReturn(createEmojiResponse);
-        mockMvc.perform(requestBuilder)
-                .andDo(print())
-                .andExpectAll(
-                        status().isOk(),
-                        jsonPath("$.result.emojisCount")
-                                .value(createEmojiResponse.getEmojisCount()),
-                        jsonPath("$.result.type").value(createEmojiResponse.getType()),
-                        jsonPath("$.result.selected").value(createEmojiResponse.getSelected()));
     }
 }
