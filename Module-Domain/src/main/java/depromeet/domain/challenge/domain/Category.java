@@ -1,6 +1,8 @@
 package depromeet.domain.challenge.domain;
 
 
+import depromeet.domain.category.exception.CategoryNotFoundException;
+import java.util.Arrays;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,4 +17,11 @@ public enum Category {
     TRANSPORTATION_AUTOMOBILE("교통/택시");
 
     private String name;
+
+    public static Category of(String source) {
+        return Arrays.stream(Category.values())
+                .filter(value -> value.getName().equals(source))
+                .findAny()
+                .orElseThrow(() -> CategoryNotFoundException.EXCEPTION);
+    }
 }
