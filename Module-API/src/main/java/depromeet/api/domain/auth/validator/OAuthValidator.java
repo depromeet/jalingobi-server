@@ -3,9 +3,9 @@ package depromeet.api.domain.auth.validator;
 import static org.springframework.security.oauth2.jwt.JoseHeaderNames.KID;
 
 import depromeet.api.domain.auth.exception.InvalidJwtException;
+import depromeet.api.domain.auth.feign.dto.KakaoUserInfo;
 import depromeet.api.domain.auth.feign.dto.Keys;
 import depromeet.api.domain.auth.feign.dto.Keys.PubKey;
-import depromeet.api.domain.auth.feign.dto.UserInfo;
 import io.jsonwebtoken.*;
 import java.math.BigInteger;
 import java.security.Key;
@@ -35,9 +35,9 @@ public class OAuthValidator {
         sigVerificationAndGetJws(idToken);
     }
 
-    public UserInfo reqUserInfo(String accessToken) {
+    public KakaoUserInfo reqUserInfo(String accessToken) {
         String authorization = "Bearer " + accessToken;
-        return kakaoApiFeignClient.getUserInfo(authorization);
+        return kakaoApiFeignClient.getKakaoUserInfo(authorization);
     }
 
     private Jws<Claims> sigVerificationAndGetJws(String idToken) {
@@ -97,9 +97,9 @@ public class OAuthValidator {
         return splitToken[0] + "." + splitToken[1] + ".";
     }
 
-    public UserInfo validateToken(String idToken, String accessToken) {
+    public KakaoUserInfo validateToken(String idToken, String accessToken) {
         sigVerification(idToken);
-        UserInfo userInfo = reqUserInfo(accessToken);
+        KakaoUserInfo userInfo = reqUserInfo(accessToken);
         return userInfo;
     }
 }

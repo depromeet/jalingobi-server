@@ -1,30 +1,22 @@
 package depromeet.api.domain.record.dto;
 
 
+import depromeet.domain.record.domain.Record;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
-public class ChallengeRecord {
+public class RecordInfo {
 
-    @Schema(example = "27")
+    @Schema(description = "기록 Id", example = "27")
     private Long recordId;
-
-    @Schema(description = "본인 기록인지", example = "true")
-    private Boolean isMine;
-
-    @Schema(example = "사용자 닉네임")
-    private String nickname;
-
-    @Schema(example = "사용자 이미지 URL")
-    private String userImgUrl;
 
     @Schema(description = "기록 작성일")
     private LocalDateTime recordDate;
 
     @Schema(example = "기록 이미지 URL")
-    private String recordImgUrl;
+    private String imgUrl;
 
     @Schema(example = "지출 내역명")
     private String title;
@@ -34,4 +26,13 @@ public class ChallengeRecord {
 
     @Schema(description = "가격", example = "5000")
     private Integer price;
+
+    public RecordInfo(Record record) {
+        this.recordId = record.getId();
+        this.recordDate = record.getCreatedAt();
+        this.imgUrl = record.getImgUrl();
+        this.title = record.getTitle();
+        this.content = record.getContent();
+        this.price = record.getPrice();
+    }
 }

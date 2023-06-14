@@ -58,7 +58,8 @@ public class RecordController {
             @PathVariable("challengeId") Long challengeId,
             @PathVariable("recordId") Long recordId) {
 
-        return ResponseService.getDataResponse(getRecordUseCase.execute());
+        return ResponseService.getDataResponse(
+                getRecordUseCase.execute(getCurrentUserSocialId(), challengeId, recordId));
     }
 
     @Operation(summary = "챌린지 지출을 수정하는 API")

@@ -4,7 +4,7 @@ package depromeet.api.domain.auth.feign.dto;
 import lombok.Data;
 
 @Data
-public class UserInfo {
+public class KakaoUserInfo {
 
     private String sub;
 

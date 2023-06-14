@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 public class RecordInfo {
-    @Schema(description = "지출 기록 ID", example = "27")
+    @Schema(description = "기록 ID", example = "27")
     private Long recordId;
 
     @Schema(example = "기록 이미지 URL")
