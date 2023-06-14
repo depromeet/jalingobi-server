@@ -9,6 +9,7 @@ import depromeet.domain.record.domain.Record;
 import depromeet.domain.user.adaptor.UserAdaptor;
 import depromeet.domain.user.domain.User;
 import depromeet.domain.userchallenge.adaptor.UserChallengeAdaptor;
+import depromeet.domain.userchallenge.domain.UserChallenge;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,13 +27,15 @@ public class GetChallengeFeedUseCase {
     private final Integer LIMIT = 20;
 
     public GetChallengeFeedResponse execute(String socialId, Long challengeRoomId, Long recordId) {
-        // todo: 유저 챌린지에 참가중인지 체크
         User user = userAdaptor.findUser(socialId);
-        userChallengeAdaptor.validateParticipatedInChallenge(user.getId(), challengeRoomId);
+        UserChallenge userChallenge =
+                userChallengeAdaptor.validateParticipatedInChallenge(user.getId(), challengeRoomId);
 
         List<Record> recordList =
                 recordAdaptor.findChallengeRoomList(challengeRoomId, recordId, LIMIT);
         Integer total = recordAdaptor.countChallengeRecordList(challengeRoomId);
-        return recordListMapper.toGetChallengeFeedResponse(recordList, total, LIMIT);
+
+        return recordListMapper.toGetChallengeFeedResponse(
+                recordList, userChallenge.getId(), total, LIMIT);
     }
 }

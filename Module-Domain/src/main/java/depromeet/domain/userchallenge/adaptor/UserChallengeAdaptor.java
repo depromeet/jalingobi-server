@@ -33,8 +33,8 @@ public class UserChallengeAdaptor {
                 .orElseThrow(() -> ProgressInfoNotFoundException.EXCEPTION);
     }
 
-    public void validateParticipatedInChallenge(Long userId, Long challengeRoomId) {
-        userChallengeRepository
+    public UserChallenge validateParticipatedInChallenge(Long userId, Long challengeRoomId) {
+        return userChallengeRepository
                 .findByUserIdAndChallengeRoomId(userId, challengeRoomId)
                 .orElseThrow(() -> UserNotParticipatedInChallengeException.EXCEPTION);
     }

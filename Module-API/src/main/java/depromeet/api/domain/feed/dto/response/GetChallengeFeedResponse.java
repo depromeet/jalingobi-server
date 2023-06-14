@@ -31,13 +31,17 @@ public class GetChallengeFeedResponse {
     private List<ChallengeFeed> challengeFeedList;
 
     public static GetChallengeFeedResponse of(
-            List<Record> recordList, Integer total, Integer limit) {
+            List<Record> recordList, Long myUserChallengeId, Integer total, Integer limit) {
+
         Integer recordCount = recordList.size();
         Long lastRecordId = getLastRecordId(recordList, recordCount);
 
         List<ChallengeFeed> challengeFeeds =
                 recordList.stream()
-                        .map(ChallengeFeed::createChallengeFeed)
+                        .map(
+                                (record) ->
+                                        ChallengeFeed.createChallengeFeed(
+                                                record, myUserChallengeId))
                         .collect(Collectors.toList());
 
         return GetChallengeFeedResponse.builder()
