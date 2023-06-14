@@ -1,7 +1,7 @@
-package depromeet.api.domain.userchallenge.usecase;
+package depromeet.api.domain.challenge.usecase;
 
 
-import depromeet.api.domain.userchallenge.dto.request.CreateUserChallengeRequest;
+import depromeet.api.domain.challenge.dto.request.JoinChallengeRequest;
 import depromeet.common.annotation.UseCase;
 import depromeet.domain.challenge.adaptor.ChallengeAdaptor;
 import depromeet.domain.challenge.domain.Challenge;
@@ -15,14 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 @UseCase
 @Transactional
 @RequiredArgsConstructor
-public class CreateUserChallengeUseCase {
+public class JoinChallengeUseCase {
 
     private final UserAdaptor userAdaptor;
     private final ChallengeAdaptor challengeAdaptor;
     private final UserChallengeAdaptor userChallengeAdaptor;
 
     public void execute(
-            String socialId, CreateUserChallengeRequest userChallengeRequest, Long challengeId) {
+            String socialId, JoinChallengeRequest joinChallengeRequest, Long challengeId) {
         User user = userAdaptor.findUser(socialId);
         Challenge challenge = challengeAdaptor.findChallenge(challengeId);
 
@@ -34,7 +34,7 @@ public class CreateUserChallengeUseCase {
                 UserChallenge.createUserChallenge(
                         user,
                         challenge,
-                        userChallengeRequest.getNickname(),
-                        userChallengeRequest.getCurrentCharge()));
+                        joinChallengeRequest.getNickname(),
+                        joinChallengeRequest.getCurrentCharge()));
     }
 }
