@@ -1,10 +1,12 @@
 package depromeet.api.config.s3;
 
 
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.Headers;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import depromeet.api.domain.image.dto.ImageFileExtension;
 import depromeet.api.domain.image.dto.ImageUploadType;
@@ -66,5 +68,15 @@ public class S3UploadPresignedUrlService {
         expTimeMillis += 60 * 1000;
         expiration.setTime(expTimeMillis);
         return expiration;
+    }
+
+    public void deleteImage(String key) {
+        DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(bucket, key);
+
+        try {
+            amazonS3Client.deleteObject(deleteObjectRequest);
+        } catch (AmazonServiceException e) {
+            throw e;
+        }
     }
 }
