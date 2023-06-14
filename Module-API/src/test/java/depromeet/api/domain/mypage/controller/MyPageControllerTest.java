@@ -1,20 +1,25 @@
 package depromeet.api.domain.mypage.controller;
 
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import depromeet.api.config.security.filter.JwtRequestFilter;
 import depromeet.api.domain.mypage.dto.request.UpdateProfileRequest;
+import depromeet.api.domain.mypage.dto.response.GetMyPageResponse;
 import depromeet.api.domain.mypage.usecase.GetMyPageUseCase;
 import depromeet.api.domain.mypage.usecase.GetUserChallengesUseCase;
 import depromeet.api.domain.mypage.usecase.LogoutUseCase;
 import depromeet.api.domain.mypage.usecase.UpdateProfileUseCase;
 import depromeet.api.util.AuthenticationUtil;
+import depromeet.domain.user.domain.Profile;
+import depromeet.domain.userchallenge.domain.Status;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -63,6 +68,53 @@ class MyPageControllerTest {
     }
 
     @Test
+    @DisplayName("[GET] 마이페이지 조회")
+    public void getUserProfileTest() throws Exception {
+        // given
+        String nickname = "tester";
+        String email = "test@test";
+        String socialId = "1234";
+        Profile profile = Profile.createProfile(nickname, email, "");
+
+        Map<Status, Integer> userChallengeResult = new HashMap<>();
+        userChallengeResult.put(Status.SUCCESS, 1);
+        userChallengeResult.put(Status.PROCEEDING, 2);
+        userChallengeResult.put(Status.COMPLETED, 3);
+
+        GetMyPageResponse getMyPageResponse =
+                GetMyPageResponse.builder()
+                        .profile(profile)
+                        .notification(false)
+                        .userChallengeResult(userChallengeResult)
+                        .build();
+
+        MockHttpServletRequestBuilder requestBuilder =
+                MockMvcRequestBuilders.get("/mypage")
+                        .with(csrf())
+                        .characterEncoding("UTF-8")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON);
+
+        when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
+        when(getMyPageUseCase.execute(any())).thenReturn(getMyPageResponse);
+        mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpectAll(
+                        status().isOk(),
+                        jsonPath("$.result.profile.name").value(getMyPageResponse.getProfile().getName()),
+                        jsonPath("$.result.profile.email").value(getMyPageResponse.getProfile().getEmail()),
+                        jsonPath("$.result.profile.imgUrl").value(getMyPageResponse.getProfile().getImgUrl()),
+                        jsonPath("$.result.notification")
+                                .value(getMyPageResponse.getNotification()),
+                        jsonPath("$.result.userChallengeResult.SUCCESS")
+                                .value(getMyPageResponse.getUserChallengeResult().get(Status.SUCCESS)),
+                        jsonPath("$.result.userChallengeResult.PROCEEDING")
+                                .value(getMyPageResponse.getUserChallengeResult().get(Status.PROCEEDING)),
+                        jsonPath("$.result.userChallengeResult.COMPLETED")
+                                .value(getMyPageResponse.getUserChallengeResult().get(Status.COMPLETED)));
+    }
+
+    @Test
     @DisplayName("[PATCH] 프로필 수정")
     public void UpdateRecordTest() throws Exception {
         // given
@@ -70,7 +122,7 @@ class MyPageControllerTest {
                 UpdateProfileRequest.builder().nickName("냠냠").profileImgUrl("index.png").build();
 
         MockHttpServletRequestBuilder requestBuilder =
-                MockMvcRequestBuilders.patch("/mypage/profile", 1)
+                MockMvcRequestBuilders.patch("/mypage/profile")
                         .with(csrf())
                         .characterEncoding("UTF-8")
                         .content(objectMapper.writeValueAsString(updateProfileRequest))
