@@ -34,7 +34,6 @@ public class Record extends BaseTime {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-
     @JoinColumn(name = "user_challenge_id")
     private UserChallenge userChallenge;
 
