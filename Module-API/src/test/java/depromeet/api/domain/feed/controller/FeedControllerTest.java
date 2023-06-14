@@ -10,14 +10,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import depromeet.api.config.security.filter.JwtRequestFilter;
+import depromeet.api.domain.feed.dto.EmojiInfo;
+import depromeet.api.domain.feed.dto.FeedRecordInfo;
+import depromeet.api.domain.feed.dto.MyFeed;
 import depromeet.api.domain.feed.dto.ParticipatedChallenge;
 import depromeet.api.domain.feed.dto.response.GetChallengeProceedingInfoResponse;
 import depromeet.api.domain.feed.dto.response.GetMyChallengeListResponse;
+import depromeet.api.domain.feed.dto.response.GetMyRoomFeedResponse;
 import depromeet.api.domain.feed.usecase.GetChallengeFeedUseCase;
 import depromeet.api.domain.feed.usecase.GetChallengeProceedingInfoUseCase;
 import depromeet.api.domain.feed.usecase.GetMyChallengeListUseCase;
 import depromeet.api.domain.feed.usecase.GetMyRoomFeedUseCase;
 import depromeet.api.util.AuthenticationUtil;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterAll;
@@ -140,18 +145,84 @@ class FeedControllerTest {
     @DisplayName("내 방 피드_성공")
     public void getMyRoomFeedTest() throws Exception {
         // given
+        Integer offset = 3;
+
+        FeedRecordInfo feedRecordInfo =
+                FeedRecordInfo.builder()
+                        .id(27L)
+                        .date(LocalDateTime.now())
+                        .imgUrl("기록 이미지 url")
+                        .content("기록 내용")
+                        .price(5000)
+                        .build();
+
+        MyFeed.ChallengeInfo challengeInfo =
+                MyFeed.ChallengeInfo.builder().imgUrl("챌린지 이미지 url").title("챌린지 타이틀").build();
+
+        EmojiInfo emojiInfo =
+                EmojiInfo.builder()
+                        .selectedEmoji("미친거지")
+                        .crazy(2L)
+                        .regretful(0L)
+                        .wellDone(3L)
+                        .comment(5)
+                        .build();
+
+        List<MyFeed> myFeedList = new ArrayList<>();
+        MyFeed myFeed =
+                MyFeed.builder()
+                        .recordInfo(feedRecordInfo)
+                        .challengeInfo(challengeInfo)
+                        .emojiInfo(emojiInfo)
+                        .build();
+        myFeedList.add(myFeed);
+
+        GetMyRoomFeedResponse response =
+                GetMyRoomFeedResponse.builder()
+                        .total(120)
+                        .limit(20)
+                        .current(15)
+                        .myFeedList(myFeedList)
+                        .build();
+
+        given(getMyRoomFeedUseCase.execute(any(), any())).willReturn(response);
 
         // when
-        ResultActions actions = mockMvc.perform(get("/my-room/feed"));
+        ResultActions actions =
+                mockMvc.perform(
+                        get("/challenge/my-room/feed").param("offset", String.valueOf(offset)));
 
         // then
         actions.andDo(print())
                 .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.result.goalCharge").value(response.getGoalCharge()),
-                        jsonPath("$.result.currentCharge").value(response.getCurrentCharge()),
-                        jsonPath("$.result.percent").value(response.getPercent()),
-                        jsonPath("$.result.dueDay").value(response.getDueDay()));
+                        jsonPath("$.result.total").value(response.getTotal()),
+                        jsonPath("$.result.limit").value(response.getLimit()),
+                        jsonPath("$.result.current").value(response.getCurrent()),
+                        jsonPath("$.result.myFeedList[0].recordInfo.id")
+                                .value(feedRecordInfo.getId()),
+                        jsonPath("$.result.myFeedList[0].recordInfo.imgUrl")
+                                .value(feedRecordInfo.getImgUrl()),
+                        jsonPath("$.result.myFeedList[0].recordInfo.title")
+                                .value(feedRecordInfo.getTitle()),
+                        jsonPath("$.result.myFeedList[0].recordInfo.content")
+                                .value(feedRecordInfo.getContent()),
+                        jsonPath("$.result.myFeedList[0].recordInfo.price")
+                                .value(feedRecordInfo.getPrice()),
+                        jsonPath("$.result.myFeedList[0].challengeInfo.imgUrl")
+                                .value(challengeInfo.getImgUrl()),
+                        jsonPath("$.result.myFeedList[0].challengeInfo.title")
+                                .value(challengeInfo.getTitle()),
+                        jsonPath("$.result.myFeedList[0].emojiInfo.selectedEmoji")
+                                .value(emojiInfo.getSelectedEmoji()),
+                        jsonPath("$.result.myFeedList[0].emojiInfo.crazy")
+                                .value(emojiInfo.getCrazy()),
+                        jsonPath("$.result.myFeedList[0].emojiInfo.regretful")
+                                .value(emojiInfo.getRegretful()),
+                        jsonPath("$.result.myFeedList[0].emojiInfo.wellDone")
+                                .value(emojiInfo.getWellDone()),
+                        jsonPath("$.result.myFeedList[0].emojiInfo.comment")
+                                .value(emojiInfo.getComment()));
     }
 
     @Test

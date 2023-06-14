@@ -31,6 +31,8 @@ public class MyFeed {
                 .build();
     }
 
+    @Builder
+    @AllArgsConstructor
     @Data
     public static class ChallengeInfo {
         @Schema(example = "챌린지 이미지 URL")
