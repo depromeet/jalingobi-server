@@ -1,6 +1,7 @@
 package depromeet.domain.user.domain;
 
 
+import depromeet.domain.user.util.ImageUrlUtil;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import lombok.*;
@@ -11,7 +12,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Profile {
-
     @Column(length = 20, nullable = false)
     private String name;
 
@@ -22,8 +22,7 @@ public class Profile {
     private String imgUrl;
 
     public static Profile createProfile(String name, String email) {
-        String imgUrl =
-                "https://jalingobi-bucket-local.s3.ap-northeast-2.amazonaws.com/profile/default/default_profile.png";
+        String imgUrl = ImageUrlUtil.defaultImgUrl;
         return Profile.builder().name(name).email(email).imgUrl(imgUrl).build();
     }
 
