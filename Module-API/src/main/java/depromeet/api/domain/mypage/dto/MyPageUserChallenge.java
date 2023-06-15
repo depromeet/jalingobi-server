@@ -5,7 +5,6 @@ import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.challenge.domain.ChallengeCategories;
 import depromeet.domain.challenge.domain.Duration;
 import depromeet.domain.userchallenge.domain.Status;
-import depromeet.domain.userchallenge.domain.UserChallenge;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -15,9 +14,9 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 @Data
-public class ParticipatedChallenge {
+public class MyPageUserChallenge {
 
-    @Schema(description = "챌린지 ID", example = "13")
+    @Schema(description = "챌린지 ID", example = "1")
     private Long challengeId;
 
     @Schema(description = "참여중인 챌린지 타이틀", example = "배달 10만원 이하로 쓰기")
@@ -42,17 +41,18 @@ public class ParticipatedChallenge {
     //    private List<String> challengeDurationStatus;
 
     @Schema(description = "챌린지 카테고리  [\"식비\"] ")
-    private ChallengeCategories challengeCategories;
+    private ChallengeCategories categories;
 
     @Schema(description = "챌린지 키워드 [\"#마라탕\", \"#배달\"]")
     private List<String> keywords;
 
-    @Schema(description = "해당 챌린지에 참여 중인 사용자 리스트")
-    private List<UserChallenge> userChallenges;
+    @Schema(description = "해당 챌린지에 참여 중인 사용자 수")
+    private Integer participantCount;
 
-    public static ParticipatedChallenge createParticipatedChallenge(
+    public static MyPageUserChallenge createParticipatedChallenge(
             Challenge challenge, Status status) {
-        return ParticipatedChallenge.builder()
+
+        return MyPageUserChallenge.builder()
                 .challengeId(challenge.getId())
                 .title(challenge.getTitle())
                 .imgUrl(challenge.getImgUrl())
@@ -60,24 +60,9 @@ public class ParticipatedChallenge {
                 .duration(challenge.getDuration())
                 .availableCount(challenge.getAvailableCount())
                 .status(status)
-                .challengeCategories(challenge.getChallengeCategories())
+                .categories(challenge.getChallengeCategories())
                 .keywords(challenge.getChallengeKeywords().getKeywordNames())
-                .userChallenges(challenge.getUserChallenges())
+                .participantCount(challenge.getUserChallenges().size())
                 .build();
     }
-
-    /** 모집 중인 챌린지 태그 계산 active가 false면 계산 active가 true면 [""] */
-    //    private static List<String> calculateDurationStatus(Boolean active, Duration duration) {
-    //        if (!active) {
-    //            return List.of("");
-    //        }
-    //        List<String> challengeDurationStatus  = new ArrayList<>();
-    //
-    //
-    //    }
-    //
-    //    public static long calculateDaysSinceStart(LocalDate startAt) {
-    //        LocalDate currentDate = LocalDate.now();
-    //        return ChronoUnit.DAYS.between(startAt, currentDate);
-    //    }
 }
