@@ -30,10 +30,10 @@ public class CreateRecordUseCase {
     private final RecordValidator recordValidator;
 
     public CreateRecordResponse execute(
-            Long challengeRoomId, String socialId, CreateRecordRequest createRecordRequest) {
+            Long challengeId, String socialId, CreateRecordRequest createRecordRequest) {
 
         User currentUser = userAdaptor.findUser(socialId);
-        Challenge challenge = challengeAdaptor.findChallenge(challengeRoomId);
+        Challenge challenge = challengeAdaptor.findChallenge(challengeId);
         UserChallenge userChallenge =
                 userChallengeAdaptor.findByUserChallenge(challenge, currentUser);
 

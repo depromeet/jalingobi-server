@@ -38,4 +38,12 @@ public class Comment extends BaseTime {
     public static Comment create(UserChallenge userChallenge, Record record, String content) {
         return new Comment(userChallenge, record, content);
     }
+
+    public String getUserChallengeImageUrl() {
+        return userChallenge.getImgUrl();
+    }
+
+    public String getUserChallengeNickName() {
+        return userChallenge.getNickname();
+    }
 }

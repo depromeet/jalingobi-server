@@ -9,9 +9,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum EmojiType {
-    WELL_DONE_BEGGAR("상"),
-    REGRETFUL_BEGGAR("중"),
-    CRAZY_BEGGAR("하");
+    WELL_DONE_BEGGAR("잘한거지"),
+    REGRETFUL_BEGGAR("후회할거지"),
+    CRAZY_BEGGAR("미친거지");
 
     private final String value;
 

@@ -26,6 +26,7 @@ public class GetChallengeFeedResponse {
     private Integer current;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Schema(description = "마지막 기록의 id", example = "38")
     private Long lastRecordId;
 
     private List<ChallengeFeed> challengeFeedList;

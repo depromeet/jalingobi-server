@@ -21,10 +21,10 @@ public class GetChallengeProceedingInfoUseCase {
     private final UserChallengeMapper userChallengeMapper;
 
     @Transactional(readOnly = true)
-    public GetChallengeProceedingInfoResponse execute(String socialId, Long challengeRoomId) {
+    public GetChallengeProceedingInfoResponse execute(String socialId, Long challengeId) {
         User user = userAdaptor.findUser(socialId);
         UserChallenge userChallenge =
-                userChallengeAdaptor.findProceedingInfo(user.getId(), challengeRoomId);
+                userChallengeAdaptor.findProceedingInfo(user.getId(), challengeId);
 
         return userChallengeMapper.toGetChallengeProceedingInfoResponse(userChallenge);
     }

@@ -14,8 +14,10 @@ import javax.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequestMapping("/challenge")
 @RequiredArgsConstructor
 @RestController
 public class FeedController {
@@ -25,7 +27,7 @@ public class FeedController {
     private final GetMyRoomFeedUseCase getMyRoomFeedUseCase;
     private final GetChallengeFeedUseCase getChallengeFeedUseCase;
 
-    @Operation(summary = "참여중인 챌린지 API", description = "참여중인 챌린지 방들의 정보를 가져옵니다.")
+    @Operation(summary = "참여중인 챌린지 API", description = "참여중인 챌린지들의 정보를 가져옵니다.")
     @ApiResponses(
             value = {
                 @ApiResponse(responseCode = "200"),
@@ -34,7 +36,7 @@ public class FeedController {
                         description = "잘못된 요청값을 전달한 경우",
                         content = @Content())
             })
-    @GetMapping("/challenge/my-list")
+    @GetMapping("/my-list")
     public Response<GetMyChallengeListResponse> getMyChallengeList() {
 
         return ResponseService.getDataResponse(
@@ -50,13 +52,12 @@ public class FeedController {
                         description = "잘못된 요청값을 전달한 경우",
                         content = @Content())
             })
-    @GetMapping("/challenge/{challengeRoomId}/proceeding/info")
+    @GetMapping("/{challengeId}/proceeding/info")
     public Response<GetChallengeProceedingInfoResponse> getChallengeProceedingInfo(
-            @PathVariable("challengeRoomId") Long challengeRoomId) {
+            @PathVariable("challengeId") Long challengeId) {
 
         return ResponseService.getDataResponse(
-                getChallengeProceedingInfoUseCase.execute(
-                        getCurrentUserSocialId(), challengeRoomId));
+                getChallengeProceedingInfoUseCase.execute(getCurrentUserSocialId(), challengeId));
     }
 
     @Operation(summary = "내 방 피드 API", description = "내 방에 있는 기록들을 20개씩 가져옵니다.")
@@ -68,7 +69,7 @@ public class FeedController {
                         description = "잘못된 요청값을 전달한 경우",
                         content = @Content())
             })
-    @GetMapping("/challenge/my-room/feed")
+    @GetMapping("/my-room/feed")
     public Response<GetMyRoomFeedResponse> getMyRoomFeed(@PathParam("offset") Integer offset) {
 
         return ResponseService.getDataResponse(
@@ -84,13 +85,13 @@ public class FeedController {
                         description = "잘못된 요청값을 전달한 경우",
                         content = @Content())
             })
-    @GetMapping("/challenge/{challengeRoomId}/feed")
+    @GetMapping("/{challengeId}/feed")
     public Response<GetChallengeFeedResponse> getChallengeFeed(
-            @PathVariable("challengeRoomId") Long challengeRoomId,
+            @PathVariable("challengeId") Long challengeId,
             @PathParam("offsetRecordId") Long offsetRecordId) {
 
         return ResponseService.getDataResponse(
                 getChallengeFeedUseCase.execute(
-                        getCurrentUserSocialId(), challengeRoomId, offsetRecordId));
+                        getCurrentUserSocialId(), challengeId, offsetRecordId));
     }
 }

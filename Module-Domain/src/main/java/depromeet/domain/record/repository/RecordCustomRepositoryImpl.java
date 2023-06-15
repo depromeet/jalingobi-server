@@ -37,24 +37,36 @@ public class RecordCustomRepositoryImpl implements RecordCustomRepository {
     }
 
     @Override
-    public List<Record> findChallengeRecordList(
-            Long challengeRoomId, Long recordId, Integer limit) {
+    public List<Record> findChallengeRecordList(Long challengeId, Long recordId, Integer limit) {
         return queryFactory
                 .selectFrom(record)
                 .join(record.challenge, challenge)
                 .fetchJoin()
                 .join(record.userChallenge, userChallenge)
                 .fetchJoin()
-                .where(record.challenge.id.eq(challengeRoomId).and(record.id.gt(recordId)))
+                .where(record.challenge.id.eq(challengeId).and(record.id.gt(recordId)))
                 .limit(limit)
                 .fetch();
     }
 
     @Override
-    public Integer countChallengeRecordList(Long challengeRoomId) {
+    public List<Record> findFirstChallengeRecordList(Long challengeId, Integer limit) {
         return queryFactory
                 .selectFrom(record)
-                .where(record.challenge.id.eq(challengeRoomId))
+                .join(record.challenge, challenge)
+                .fetchJoin()
+                .join(record.userChallenge, userChallenge)
+                .fetchJoin()
+                .where(record.challenge.id.eq(challengeId))
+                .limit(limit)
+                .fetch();
+    }
+
+    @Override
+    public Integer countChallengeRecordList(Long challengeId) {
+        return queryFactory
+                .selectFrom(record)
+                .where(record.challenge.id.eq(challengeId))
                 .fetch()
                 .size();
     }

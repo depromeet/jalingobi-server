@@ -9,6 +9,5 @@ public interface UserChallengeCustomRepository {
 
     List<UserChallenge> findUserChallengeListById(Long id);
 
-    Optional<UserChallenge> findUserChallengeByUserIdAndChallengeRoomId(
-            Long userId, Long challengeRoomId);
+    Optional<UserChallenge> findUserChallengeByUserIdAndChallengeId(Long userId, Long challengeId);
 }
