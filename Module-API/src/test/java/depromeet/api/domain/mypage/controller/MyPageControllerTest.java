@@ -107,8 +107,8 @@ class MyPageControllerTest {
                 .andExpectAll(
                         status().isOk(),
                         jsonPath("$.result.social.id").value(getMyPageResponse.getSocial().getId()),
-                        jsonPath("$.result.profile.name")
-                                .value(getMyPageResponse.getProfile().getName()),
+                        jsonPath("$.result.profile.nickname")
+                                .value(getMyPageResponse.getProfile().getNickname()),
                         jsonPath("$.result.profile.email")
                                 .value(getMyPageResponse.getProfile().getEmail()),
                         jsonPath("$.result.profile.imgUrl")
