@@ -4,8 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -16,6 +15,7 @@ import depromeet.api.domain.comment.dto.request.CreateCommentRequest;
 import depromeet.api.domain.comment.dto.request.UpdateCommentRequest;
 import depromeet.api.domain.comment.dto.response.CreateCommentResponse;
 import depromeet.api.domain.comment.usecase.CreateCommentUseCase;
+import depromeet.api.domain.comment.usecase.DeleteCommentUseCase;
 import depromeet.api.domain.comment.usecase.UpdateCommentUseCase;
 import depromeet.api.util.AuthenticationUtil;
 import java.time.LocalDateTime;
@@ -52,6 +52,8 @@ public class CommentControllerTest {
     @MockBean CreateCommentUseCase createCommentUseCase;
 
     @MockBean UpdateCommentUseCase updateCommentUseCase;
+
+    @MockBean DeleteCommentUseCase deleteCommentUseCase;
 
     private static MockedStatic<AuthenticationUtil> authenticationUtil;
 
@@ -116,5 +118,19 @@ public class CommentControllerTest {
                 .andExpectAll(status().isOk());
 
         verify(updateCommentUseCase, times(1)).execute(any(), anyString(), anyLong());
+    }
+
+    @Test
+    @DisplayName("댓글 삭제")
+    public void deleteCommentTest() throws Exception {
+
+        when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
+        willDoNothing().given(deleteCommentUseCase).execute(anyString(), anyLong());
+
+        mockMvc.perform(delete("/record/{recordId}/comment/{commentId}", 1L, 1L))
+                .andDo(print())
+                .andExpectAll(status().isOk());
+
+        verify(deleteCommentUseCase, times(1)).execute(anyString(), anyLong());
     }
 }
