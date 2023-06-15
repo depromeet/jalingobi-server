@@ -6,6 +6,7 @@ import depromeet.api.domain.mypage.mapper.MyPageMapper;
 import depromeet.common.annotation.UseCase;
 import depromeet.domain.user.adaptor.UserAdaptor;
 import depromeet.domain.user.domain.Profile;
+import depromeet.domain.user.domain.Social;
 import depromeet.domain.user.domain.User;
 import depromeet.domain.userchallenge.adaptor.UserChallengeAdaptor;
 import depromeet.domain.userchallenge.domain.Status;
@@ -26,6 +27,7 @@ public class GetMyPageUseCase {
 
     public GetMyPageResponse execute(String socialId) {
         User user = userAdaptor.findUser(socialId);
+        Social social = user.getSocial();
         Profile profile = user.getProfile();
 
         Boolean notification = user.getNotification();
@@ -34,7 +36,7 @@ public class GetMyPageUseCase {
                 userChallengeAdaptor.findUserChallengeList(user.getId());
         Map<Status, Integer> userChallengeResult = checkUserChallengeStatusCount(challengeList);
 
-        return myPageMapper.toGetMyPageResponse(profile, notification, userChallengeResult);
+        return myPageMapper.toGetMyPageResponse(social, profile, notification, userChallengeResult);
     }
 
     private Map<Status, Integer> checkUserChallengeStatusCount(List<UserChallenge> challengeList) {
