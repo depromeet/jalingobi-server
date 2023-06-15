@@ -4,7 +4,6 @@ package depromeet.domain.emoji.domain;
 import depromeet.domain.record.domain.EmojiType;
 import depromeet.domain.record.domain.Record;
 import depromeet.domain.userchallenge.domain.UserChallenge;
-import java.util.Objects;
 import javax.persistence.*;
 import lombok.*;
 
@@ -37,18 +36,5 @@ public class Emoji {
                 .record(record)
                 .type(EmojiType.of(type))
                 .build();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Emoji emoji = (Emoji) o;
-        return Objects.equals(userChallenge, emoji.getUserChallenge())
-                && Objects.equals(record, emoji.getRecord());
     }
 }

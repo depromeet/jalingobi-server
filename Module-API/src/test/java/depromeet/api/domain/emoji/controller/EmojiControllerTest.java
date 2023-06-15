@@ -77,7 +77,7 @@ class EmojiControllerTest {
                         .build();
 
         MockHttpServletRequestBuilder requestBuilder =
-                MockMvcRequestBuilders.put("/challenge/{recordId}/emojis", 1)
+                MockMvcRequestBuilders.put("/record/{recordId}/emoji", 1)
                         .with(csrf())
                         .content(objectMapper.writeValueAsString(createEmojiRequest))
                         .characterEncoding("UTF-8")
