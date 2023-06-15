@@ -17,7 +17,7 @@ public class CommentAdaptor {
     private final RecordRepository recordRepository;
     private final CommentRepository commentRepository;
 
-    public Comment addComment(Long recordId, String content) {
+    public Comment addComment(long recordId, String content) {
         Record record =
                 recordRepository
                         .findById(recordId)
@@ -28,12 +28,21 @@ public class CommentAdaptor {
         return commentRepository.save(comment);
     }
 
-    public void updateComment(String socialId, String content, Long commentId) {
+    public void updateComment(String socialId, String content, long commentId) {
         Comment savedComment =
                 commentRepository
                         .findById(commentId)
                         .orElseThrow(() -> CommentNotFoundException.EXCEPTION);
         savedComment.isCommenter(socialId);
         savedComment.update(content);
+    }
+
+    public void deleteComment(String socialId, long commentId) {
+        Comment savedComment =
+                commentRepository
+                        .findById(commentId)
+                        .orElseThrow(() -> CommentNotFoundException.EXCEPTION);
+        savedComment.isCommenter(socialId);
+        commentRepository.deleteById(commentId);
     }
 }
