@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "이모지", description = "이모지 API")
 @RestController
-@RequestMapping("/challenge")
+@RequestMapping("/record")
 @RequiredArgsConstructor
 public class EmojiController {
 
     private final CreateEmojiUseCase createEmojiUseCase;
 
-    @PutMapping("/{recordId}/emojis")
+    @PutMapping("/{recordId}/emoji")
     public Response<CreateEmojiResponse> createRecordEmoji(
             @PathVariable Long recordId,
             @RequestBody @Valid CreateEmojiRequest createEmojiRequest) {
