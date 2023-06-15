@@ -1,7 +1,7 @@
 package depromeet.api.domain.mypage.dto.response;
 
 
-import depromeet.api.domain.mypage.dto.ParticipatedChallenge;
+import depromeet.api.domain.mypage.dto.MyPageUserChallenge;
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.userchallenge.domain.UserChallenge;
 import java.util.Comparator;
@@ -15,15 +15,15 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class GetUserChallengesResponse {
-    private List<ParticipatedChallenge> participatedChallenges;
+    private List<MyPageUserChallenge> participatedChallenges;
 
     public static GetUserChallengesResponse of(List<UserChallenge> userChallenges) {
-        List<ParticipatedChallenge> participatedChallenges =
+        List<MyPageUserChallenge> participatedChallenges =
                 userChallenges.stream()
                         .sorted(Comparator.comparing(BaseTime::getCreatedAt))
                         .map(
                                 userChallenge ->
-                                        ParticipatedChallenge.createParticipatedChallenge(
+                                        MyPageUserChallenge.createParticipatedChallenge(
                                                 userChallenge.getChallenge(),
                                                 userChallenge.getStatus()))
                         .collect(Collectors.toList());
