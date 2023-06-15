@@ -21,13 +21,13 @@ public class CommentController {
     private final CreateCommentUseCase createCommentUseCase;
     private final UpdateCommentUseCase updateCommentUseCase;
 
-    @PostMapping("/records/{recordId}/comments")
+    @PostMapping("/record/{recordId}/comment")
     public Response<CreateCommentResponse> createComment(
             @PathVariable Long recordId, @Valid @RequestBody CreateCommentRequest request) {
         return ResponseService.getDataResponse(createCommentUseCase.execute(recordId, request));
     }
 
-    @PutMapping("/records/{recordId}/comments/{commentId}")
+    @PutMapping("/record/{recordId}/comment/{commentId}")
     public CommonResponse updateComment(
             @PathVariable Long recordId,
             @PathVariable Long commentId,
