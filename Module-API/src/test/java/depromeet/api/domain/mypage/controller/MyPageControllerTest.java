@@ -77,8 +77,8 @@ class MyPageControllerTest {
         String nickname = "tester";
         String email = "test@test";
         String socialId = "1234";
+        Profile profile = Profile.createProfile(nickname, email);
         Social social = Social.createSocial(socialId, platform);
-        Profile profile = Profile.createProfile(nickname, email, "");
 
         Map<Status, Integer> userChallengeResult = new HashMap<>();
         userChallengeResult.put(Status.SUCCESS, 1);

@@ -33,7 +33,7 @@ class UserAdaptorTest {
         String email = "test@test";
         String socialId = "1234";
 
-        Profile profile = Profile.createProfile(nickname, email, null);
+        Profile profile = Profile.createProfile(nickname, email);
         Social social = Social.createSocial(socialId, platform);
         User user = User.builder().profile(profile).social(social).build();
 
@@ -57,7 +57,7 @@ class UserAdaptorTest {
         String email = "test@test";
         String socialId = "1234";
 
-        Profile profile = Profile.createProfile(nickname, email, null);
+        Profile profile = Profile.createProfile(nickname, email);
         Social social = Social.createSocial(socialId, platform);
         User user = User.builder().profile(profile).social(social).build();
 
