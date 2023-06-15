@@ -84,7 +84,7 @@ public class CommentControllerTest {
         when(createCommentUseCase.execute(anyLong(), any())).thenReturn(response);
 
         mockMvc.perform(
-                        post("/records/{recordId}/comments", 1L)
+                        post("/record/{recordId}/comment", 1L)
                                 .content(objectMapper.writeValueAsString(request))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .characterEncoding("UTF-8"))
@@ -108,7 +108,7 @@ public class CommentControllerTest {
         willDoNothing().given(updateCommentUseCase).execute(any(), anyString(), anyLong());
 
         mockMvc.perform(
-                        put("/records/{recordId}/comments/{commentId}", 1L, 1L)
+                        put("/record/{recordId}/comment/{commentId}", 1L, 1L)
                                 .content(objectMapper.writeValueAsString(request))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .characterEncoding("UTF-8"))
