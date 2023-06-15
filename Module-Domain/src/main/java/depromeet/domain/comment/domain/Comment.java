@@ -1,6 +1,7 @@
 package depromeet.domain.comment.domain;
 
 
+import depromeet.domain.comment.exception.CommentNotBelongToUserException;
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.record.domain.Record;
 import depromeet.domain.userchallenge.domain.UserChallenge;
@@ -45,5 +46,14 @@ public class Comment extends BaseTime {
 
     public String getUserChallengeNickName() {
         return userChallenge.getNickname();
+    }
+
+    public void isCommenter(String socialId) {
+        if (!this.getRecord().getUser().getSocial().getId().equals(socialId))
+            throw CommentNotBelongToUserException.EXCEPTION;
+    }
+
+    public void update(String content) {
+        this.content = content;
     }
 }
