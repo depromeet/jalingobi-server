@@ -9,7 +9,6 @@ import depromeet.domain.record.domain.Record;
 import depromeet.domain.record.exception.RecordNotFoundException;
 import depromeet.domain.record.repository.RecordRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 @Adaptor
 @RequiredArgsConstructor
@@ -18,7 +17,6 @@ public class CommentAdaptor {
     private final RecordRepository recordRepository;
     private final CommentRepository commentRepository;
 
-    @Transactional
     public Comment addComment(Long recordId, String content) {
         Record record =
                 recordRepository
@@ -30,7 +28,6 @@ public class CommentAdaptor {
         return commentRepository.save(comment);
     }
 
-    @Transactional
     public void updateComment(String socialId, String content, Long commentId) {
         Comment savedComment =
                 commentRepository
