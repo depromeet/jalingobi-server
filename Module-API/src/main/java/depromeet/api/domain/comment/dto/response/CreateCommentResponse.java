@@ -18,6 +18,7 @@ public class CreateCommentResponse {
 
     public static CreateCommentResponse of(Comment comment, String imgUrl, String nickname) {
         return CreateCommentResponse.builder()
+                .id(comment.getId())
                 .content(comment.getContent())
                 .imgUrl(imgUrl)
                 .nickname(nickname)
