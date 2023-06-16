@@ -1,6 +1,5 @@
 package depromeet.api.domain.emoji.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
@@ -12,8 +11,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import depromeet.api.config.security.filter.JwtRequestFilter;
 import depromeet.api.domain.emoji.dto.request.CreateEmojiRequest;
+import depromeet.api.domain.emoji.dto.request.DeleteEmojiRequest;
 import depromeet.api.domain.emoji.dto.response.CreateEmojiResponse;
+import depromeet.api.domain.emoji.dto.response.DeleteEmojiResponse;
 import depromeet.api.domain.emoji.usecase.CreateEmojiUseCase;
+import depromeet.api.domain.emoji.usecase.DeleteEmojiUseCase;
 import depromeet.api.util.AuthenticationUtil;
 import depromeet.domain.record.domain.EmojiType;
 import org.junit.jupiter.api.AfterAll;
@@ -49,6 +51,8 @@ class EmojiControllerTest {
     @Autowired private ObjectMapper objectMapper;
 
     @MockBean private CreateEmojiUseCase createEmojiUseCase;
+
+    @MockBean private DeleteEmojiUseCase deleteEmojiUseCase;
 
     private static MockedStatic<AuthenticationUtil> authenticationUtil;
 
@@ -97,5 +101,37 @@ class EmojiControllerTest {
                                 .value(createEmojiResponse.getEmojisCount()),
                         jsonPath("$.result.type").value(createEmojiResponse.getType()),
                         jsonPath("$.result.selected").value(createEmojiResponse.getSelected()));
+    }
+
+    @Test
+    @DisplayName("[Delete] 이모지 취소")
+    public void DeleteRecordEmojiTest() throws Exception {
+        // given
+        DeleteEmojiRequest deleteEmojiRequest =
+                DeleteEmojiRequest.builder().type(EmojiType.CRAZY_BEGGAR.getValue()).build();
+
+        DeleteEmojiResponse deleteEmojiResponse =
+                DeleteEmojiResponse.builder().emojisCount(0).selected(false).build();
+
+        MockHttpServletRequestBuilder requestBuilder =
+                MockMvcRequestBuilders.delete("/record/{recordId}/emoji", 1)
+                        .with(csrf())
+                        .content(objectMapper.writeValueAsString(deleteEmojiRequest))
+                        .characterEncoding("UTF-8")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON);
+
+        String socialId = "socialId";
+
+        when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
+        when(deleteEmojiUseCase.execute(anyString(), anyLong(), anyString()))
+                .thenReturn(deleteEmojiResponse);
+        mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpectAll(
+                        status().isOk(),
+                        jsonPath("$.result.emojisCount")
+                                .value(deleteEmojiResponse.getEmojisCount()),
+                        jsonPath("$.result.selected").value(deleteEmojiResponse.getSelected()));
     }
 }
