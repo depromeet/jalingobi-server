@@ -11,6 +11,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    show-sql: true
+    defer-datasource-initialization: true
 
   jwt:
     secret: test
@@ -18,6 +20,10 @@ spring:
   redis:
     host: redis
     port: 6379
+
+  sql:
+    init:
+      mode: always
 
 oauth:
   aud:
