@@ -99,6 +99,11 @@ public class Record extends BaseTime {
         emojis.add(emoji);
     }
 
+    public void unReactEmoji(UserChallenge userChallenge, String type) {
+        Emoji emoji = Emoji.createEmoji(userChallenge, this, type);
+        emojis.remove(emoji);
+    }
+
     public int getEmojiCounts() {
         return emojis.size();
     }
