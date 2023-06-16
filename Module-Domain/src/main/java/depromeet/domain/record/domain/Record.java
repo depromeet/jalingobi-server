@@ -5,7 +5,6 @@ import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.comment.domain.Comment;
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.emoji.domain.Emoji;
-import depromeet.domain.emoji.exception.DuplicatedEmojiException;
 import depromeet.domain.user.domain.User;
 import depromeet.domain.userchallenge.domain.UserChallenge;
 import java.util.ArrayList;
@@ -95,18 +94,17 @@ public class Record extends BaseTime {
     }
 
     public void reactEmoji(UserChallenge userChallenge, String type) {
-        depromeet.domain.emoji.domain.Emoji emoji = Emoji.createEmoji(userChallenge, this, type);
+        emojis.clear();
+        Emoji emoji = Emoji.createEmoji(userChallenge, this, type);
         emojis.add(emoji);
+    }
+
+    public void unReactEmoji(UserChallenge userChallenge, String type) {
+        Emoji emoji = Emoji.createEmoji(userChallenge, this, type);
+        emojis.remove(emoji);
     }
 
     public int getEmojiCounts() {
         return emojis.size();
-    }
-
-    public void addEmoji(Emoji emoji) {
-        if (emojis.contains(emoji)) {
-            throw DuplicatedEmojiException.EXCEPTION;
-        }
-        emojis.add(emoji);
     }
 }

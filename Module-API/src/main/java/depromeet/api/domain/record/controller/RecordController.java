@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "챌린지 기록", description = "챌린지 기록 API")
 @RestController
-@RequestMapping("/challenge")
+@RequestMapping("/record")
 @RequiredArgsConstructor
 public class RecordController {
     private final CreateRecordUseCase createRecordUseCase;

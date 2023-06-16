@@ -22,9 +22,10 @@ class UserTest {
         User registerUser = User.registerUser(nickname, email, socialId, platform);
 
         // then
-        assertThat(registerUser.getProfile().getName()).isEqualTo(nickname);
+        assertThat(registerUser.getProfile().getNickname()).isEqualTo(nickname);
         assertThat(registerUser.getProfile().getEmail()).isEqualTo(email);
         assertThat(registerUser.getSocial().getId()).isEqualTo(socialId);
         assertThat(registerUser.getSocial().getPlatform()).isEqualTo(platform);
+        assertThat(registerUser.getScore()).isEqualTo(1); // 가입 시 score는 1
     }
 }

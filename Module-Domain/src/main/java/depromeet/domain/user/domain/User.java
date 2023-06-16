@@ -20,10 +20,6 @@ public class User extends BaseTime {
     @Column(name = "user_id")
     private Long id;
 
-    @Builder.Default
-    @ColumnDefault("false")
-    private Boolean notification = false;
-
     @Embedded private Profile profile;
 
     @Embedded private Social social;
@@ -32,6 +28,13 @@ public class User extends BaseTime {
     @Column(length = 10, nullable = false)
     private Role role;
 
+    @Builder.Default
+    @ColumnDefault("false")
+    private Boolean notification = false;
+
+    @Column(nullable = false)
+    private Integer score;
+
     @OneToMany(mappedBy = "user")
     private List<UserChallenge> userChallenges;
 
@@ -39,9 +42,9 @@ public class User extends BaseTime {
     public static User registerUser(
             String nickname, String email, String socialId, Platform platform) {
 
-        Profile profile = Profile.createProfile(nickname, email, null);
+        Profile profile = Profile.createProfile(nickname, email);
         Social social = Social.createSocial(socialId, platform);
-        return User.builder().profile(profile).social(social).role(Role.USER).build();
+        return User.builder().profile(profile).social(social).role(Role.USER).score(1).build();
     }
 
     /** 비즈니스 메서드 */

@@ -22,8 +22,8 @@ public class IssuePresignedUrlRequest {
             message = "유효하지 않은 ImageFileExtension 파라미터입니다.")
     private ImageFileExtension imageFileExtension;
 
-    @Schema(nullable = false, description = "RECODE, PROFILE, CHALLENGE")
-    @NotBlank(message = "이미지가 업로드 되는 타입(RECODE, PROFILE, CHALLENGE)을 입력해주세요.")
+    @Schema(nullable = false, description = "RECODE, PROFILE, CUSTOM_PROFILE, CHALLENGE")
+    @NotBlank(message = "이미지가 업로드 되는 타입(RECODE, PROFILE, CUSTOM_PROFILE, CHALLENGE)을 입력해주세요.")
     @ValidEnum(enumClass = ImageUploadType.class, message = "유효하지 않은 ImageUploadType 파라미터입니다.")
     private ImageUploadType type;
 }

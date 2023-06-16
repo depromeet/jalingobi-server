@@ -6,6 +6,7 @@ import depromeet.common.annotation.Adaptor;
 import depromeet.domain.category.domain.Category;
 import depromeet.domain.category.exception.CategoryNotFoundException;
 import depromeet.domain.category.repository.CategoryRepository;
+import depromeet.domain.challenge.domain.CategoryType;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +35,7 @@ public class CategoryAdaptor {
     }
 
     @Transactional
-    public Category createCategory(depromeet.domain.challenge.domain.Category category) {
+    public Category createCategory(CategoryType category) {
         Category categoryEntity = Category.builder().name(category.getName()).build();
         return categoryRepository.save(categoryEntity);
     }

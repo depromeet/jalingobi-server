@@ -11,12 +11,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import depromeet.api.config.security.filter.JwtRequestFilter;
 import depromeet.api.domain.mypage.dto.request.UpdateProfileRequest;
 import depromeet.api.domain.mypage.dto.response.GetMyPageResponse;
-import depromeet.api.domain.mypage.usecase.GetMyPageUseCase;
-import depromeet.api.domain.mypage.usecase.GetUserChallengesUseCase;
-import depromeet.api.domain.mypage.usecase.LogoutUseCase;
-import depromeet.api.domain.mypage.usecase.UpdateProfileUseCase;
+import depromeet.api.domain.mypage.usecase.*;
 import depromeet.api.util.AuthenticationUtil;
+import depromeet.domain.user.domain.Platform;
 import depromeet.domain.user.domain.Profile;
+import depromeet.domain.user.domain.Social;
 import depromeet.domain.userchallenge.domain.Status;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +49,7 @@ class MyPageControllerTest {
     @Autowired private MockMvc mockMvc;
     @MockBean private GetMyPageUseCase getMyPageUseCase;
     @MockBean private GetUserChallengesUseCase getUserChallengesUseCase;
+    @MockBean private GetJalingobiImgUseCase getJalingobiImgUseCase;
     @MockBean private UpdateProfileUseCase updateProfileUseCase;
     @MockBean private LogoutUseCase logoutUseCase;
 
@@ -71,10 +71,12 @@ class MyPageControllerTest {
     @DisplayName("[GET] 마이페이지 조회")
     public void getUserProfileTest() throws Exception {
         // given
+        Platform platform = Platform.KAKAO;
         String nickname = "tester";
         String email = "test@test";
         String socialId = "1234";
-        Profile profile = Profile.createProfile(nickname, email, "");
+        Profile profile = Profile.createProfile(nickname, email);
+        Social social = Social.createSocial(socialId, platform);
 
         Map<Status, Integer> userChallengeResult = new HashMap<>();
         userChallengeResult.put(Status.SUCCESS, 1);
@@ -83,6 +85,7 @@ class MyPageControllerTest {
 
         GetMyPageResponse getMyPageResponse =
                 GetMyPageResponse.builder()
+                        .social(social)
                         .profile(profile)
                         .notification(false)
                         .userChallengeResult(userChallengeResult)
@@ -101,8 +104,9 @@ class MyPageControllerTest {
                 .andDo(print())
                 .andExpectAll(
                         status().isOk(),
-                        jsonPath("$.result.profile.name")
-                                .value(getMyPageResponse.getProfile().getName()),
+                        jsonPath("$.result.social.id").value(getMyPageResponse.getSocial().getId()),
+                        jsonPath("$.result.profile.nickname")
+                                .value(getMyPageResponse.getProfile().getNickname()),
                         jsonPath("$.result.profile.email")
                                 .value(getMyPageResponse.getProfile().getEmail()),
                         jsonPath("$.result.profile.imgUrl")
