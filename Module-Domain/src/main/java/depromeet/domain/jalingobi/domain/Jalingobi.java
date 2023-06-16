@@ -32,10 +32,6 @@ public class Jalingobi {
     @Column(nullable = false)
     private String acquisitionCondition;
 
-    @OneToMany(
-            mappedBy = "jalingobi",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.PERSIST,
-            orphanRemoval = true)
+    @OneToMany(mappedBy = "jalingobi", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<SmallTalk> smallTalks = new ArrayList<>();
 }
