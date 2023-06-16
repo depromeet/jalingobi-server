@@ -3,12 +3,10 @@ package depromeet.api.domain.mypage.controller;
 import static depromeet.api.util.AuthenticationUtil.getCurrentUserSocialId;
 
 import depromeet.api.domain.mypage.dto.request.UpdateProfileRequest;
+import depromeet.api.domain.mypage.dto.response.GetJalingobiImgResponse;
 import depromeet.api.domain.mypage.dto.response.GetMyPageResponse;
 import depromeet.api.domain.mypage.dto.response.GetUserChallengesResponse;
-import depromeet.api.domain.mypage.usecase.GetMyPageUseCase;
-import depromeet.api.domain.mypage.usecase.GetUserChallengesUseCase;
-import depromeet.api.domain.mypage.usecase.LogoutUseCase;
-import depromeet.api.domain.mypage.usecase.UpdateProfileUseCase;
+import depromeet.api.domain.mypage.usecase.*;
 import depromeet.common.exception.CustomExceptionStatus;
 import depromeet.common.response.Response;
 import depromeet.common.response.ResponseService;
@@ -24,7 +22,9 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class MyPageController {
     private final GetMyPageUseCase getMyPageUseCase;
+
     private final GetUserChallengesUseCase getUserChallengesUseCase;
+    private final GetJalingobiImgUseCase getJalingobiImgUseCase;
     private final UpdateProfileUseCase updateProfileUseCase;
     private final LogoutUseCase logoutUseCase;
 
@@ -41,6 +41,14 @@ public class MyPageController {
 
         return ResponseService.getDataResponse(
                 getUserChallengesUseCase.execute(getCurrentUserSocialId()));
+    }
+
+    @Operation(summary = "사용자 자린고비 이미지 URL 조회 API")
+    @GetMapping("/jalingobi")
+    public Response<GetJalingobiImgResponse> getJalingobiImgUrl() {
+
+        return ResponseService.getDataResponse(
+                getJalingobiImgUseCase.execute(getCurrentUserSocialId()));
     }
 
     @Operation(summary = "사용자 프로필을 수정하는 API")

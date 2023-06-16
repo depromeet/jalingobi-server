@@ -11,10 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import depromeet.api.config.security.filter.JwtRequestFilter;
 import depromeet.api.domain.mypage.dto.request.UpdateProfileRequest;
 import depromeet.api.domain.mypage.dto.response.GetMyPageResponse;
-import depromeet.api.domain.mypage.usecase.GetMyPageUseCase;
-import depromeet.api.domain.mypage.usecase.GetUserChallengesUseCase;
-import depromeet.api.domain.mypage.usecase.LogoutUseCase;
-import depromeet.api.domain.mypage.usecase.UpdateProfileUseCase;
+import depromeet.api.domain.mypage.usecase.*;
 import depromeet.api.util.AuthenticationUtil;
 import depromeet.domain.user.domain.Platform;
 import depromeet.domain.user.domain.Profile;
@@ -52,6 +49,7 @@ class MyPageControllerTest {
     @Autowired private MockMvc mockMvc;
     @MockBean private GetMyPageUseCase getMyPageUseCase;
     @MockBean private GetUserChallengesUseCase getUserChallengesUseCase;
+    @MockBean private GetJalingobiImgUseCase getJalingobiImgUseCase;
     @MockBean private UpdateProfileUseCase updateProfileUseCase;
     @MockBean private LogoutUseCase logoutUseCase;
 

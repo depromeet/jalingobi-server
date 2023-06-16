@@ -1,6 +1,7 @@
 package depromeet.api.domain.mypage.mapper;
 
 
+import depromeet.api.domain.mypage.dto.response.GetJalingobiImgResponse;
 import depromeet.api.domain.mypage.dto.response.GetMyPageResponse;
 import depromeet.api.domain.mypage.dto.response.GetUserChallengesResponse;
 import depromeet.common.annotation.Mapper;
@@ -21,6 +22,10 @@ public class MyPageMapper {
             Boolean notification,
             Map<Status, Integer> userChallengeResult) {
         return GetMyPageResponse.of(social, profile, notification, userChallengeResult);
+    }
+
+    public GetJalingobiImgResponse toGetJalingobiImgResponse(String imgUrl) {
+        return GetJalingobiImgResponse.of(imgUrl);
     }
 
     public GetUserChallengesResponse toGetUserChallengesResponse(
