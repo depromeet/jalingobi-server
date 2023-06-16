@@ -84,6 +84,7 @@ public enum CustomExceptionStatus {
     // jalingobi
     JALINGOBI_LEVEL_NOT_FOUND(false, 2600, "현재 점수에 해당하는 자린고비 레벨이 없습니다."),
     JALINGOBI_NOT_FOUND(false, 2601, "존재하지 않는 자린고비 입니다.");
+  
 
     private final boolean isSuccess;
     private final int code;
