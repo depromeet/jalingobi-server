@@ -26,5 +26,6 @@ class UserTest {
         assertThat(registerUser.getProfile().getEmail()).isEqualTo(email);
         assertThat(registerUser.getSocial().getId()).isEqualTo(socialId);
         assertThat(registerUser.getSocial().getPlatform()).isEqualTo(platform);
+        assertThat(registerUser.getScore()).isEqualTo(1); // 가입 시 score는 1
     }
 }
