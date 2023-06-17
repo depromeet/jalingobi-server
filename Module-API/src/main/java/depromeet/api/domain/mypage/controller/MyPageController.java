@@ -2,6 +2,7 @@ package depromeet.api.domain.mypage.controller;
 
 import static depromeet.api.util.AuthenticationUtil.getCurrentUserSocialId;
 
+import depromeet.api.domain.feed.usecase.QuitChallengeUseCase;
 import depromeet.api.domain.mypage.dto.request.UpdateProfileRequest;
 import depromeet.api.domain.mypage.dto.response.GetJalingobiImgResponse;
 import depromeet.api.domain.mypage.dto.response.GetMyPageResponse;
@@ -27,6 +28,7 @@ public class MyPageController {
     private final GetJalingobiImgUseCase getJalingobiImgUseCase;
     private final UpdateProfileUseCase updateProfileUseCase;
     private final LogoutUseCase logoutUseCase;
+    private final QuitChallengeUseCase quitChallengeUseCase;
 
     @Operation(summary = "마이페이지 조회 API")
     @GetMapping()
@@ -65,6 +67,14 @@ public class MyPageController {
     public Response<CustomExceptionStatus> logout() {
 
         logoutUseCase.execute(getCurrentUserSocialId());
+        return ResponseService.getDataResponse(CustomExceptionStatus.SUCCESS);
+    }
+
+    @PostMapping("/challenge/{challengeId}")
+    public Response<CustomExceptionStatus> quitChallenge(
+            @PathVariable("challengeId") Long challengeId) {
+
+        quitChallengeUseCase.execute(getCurrentUserSocialId(), challengeId);
         return ResponseService.getDataResponse(CustomExceptionStatus.SUCCESS);
     }
 }
