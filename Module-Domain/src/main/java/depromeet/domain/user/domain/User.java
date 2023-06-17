@@ -33,7 +33,7 @@ public class User extends BaseTime {
     private Boolean notification = false;
 
     @Column(nullable = false)
-    private int score;
+    private Integer score;
 
     @OneToMany(mappedBy = "user")
     private List<UserChallenge> userChallenges;
