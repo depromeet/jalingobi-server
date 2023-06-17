@@ -4,7 +4,10 @@ package depromeet.domain.userchallenge.domain;
 import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.jalingobi.domain.Level;
+import depromeet.domain.record.domain.Record;
 import depromeet.domain.user.domain.User;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 import lombok.*;
 
@@ -26,14 +29,6 @@ public class UserChallenge extends BaseTime {
     @Column(name = "user_challenge_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "challenge_id", nullable = false)
-    private Challenge challenge;
-
     private String nickname;
 
     @Column(name = "current_charge", nullable = false)
@@ -45,6 +40,17 @@ public class UserChallenge extends BaseTime {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "challenge_id", nullable = false)
+    private Challenge challenge;
+
+    @OneToMany(mappedBy = "userChallenge", cascade = CascadeType.REMOVE)
+    private List<Record> records = new ArrayList<>();
 
     public static UserChallenge createUserChallenge(
             User user, Challenge challenge, String nickname, int currentCharge) {

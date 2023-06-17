@@ -258,4 +258,11 @@ public class ChallengeControllerTest {
 
         verify(getChallengeUseCase, times(1)).execute(anyLong());
     }
+
+    @DisplayName("챌린지에서 사용할 랜덤 닉네임 생성")
+    public void createRandomNicknameTest() throws Exception {
+        mockMvc.perform(get("/challenge/nickname").param("category", "식비"))
+                .andDo(print())
+                .andExpectAll(status().isOk(), jsonPath("$.result.nickname").isNotEmpty());
+    }
 }

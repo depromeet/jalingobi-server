@@ -9,9 +9,9 @@ public class ResponseService {
 
     public static CommonResponse getSuccessResponse() {
         CommonResponse response = new CommonResponse();
-        response.setIsSuccess(true);
-        response.setCode(1000);
-        response.setMessage("요청에 성공하였습니다.");
+        response.setIsSuccess(CustomExceptionStatus.SUCCESS.isSuccess());
+        response.setCode(CustomExceptionStatus.SUCCESS.getCode());
+        response.setMessage(CustomExceptionStatus.SUCCESS.getMessage());
         return response;
     }
 

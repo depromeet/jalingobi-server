@@ -6,12 +6,19 @@ import depromeet.api.domain.challenge.dto.request.CreateChallengeRequest;
 import depromeet.api.domain.challenge.dto.request.JoinChallengeRequest;
 import depromeet.api.domain.challenge.dto.request.UpdateChallengeRequest;
 import depromeet.api.domain.challenge.dto.response.CreateChallengeResponse;
+import depromeet.api.domain.challenge.dto.response.CreateRandomNicknameResponse;
 import depromeet.api.domain.challenge.dto.response.GetChallengeResponse;
 import depromeet.api.domain.challenge.dto.response.UpdateChallengeResponse;
 import depromeet.api.domain.challenge.usecase.*;
+import depromeet.api.domain.challenge.usecase.CreateChallengeUseCase;
+import depromeet.api.domain.challenge.usecase.DeleteChallengeUseCase;
+import depromeet.api.domain.challenge.usecase.JoinChallengeUseCase;
+import depromeet.api.domain.challenge.usecase.UpdateChallengeUseCase;
+import depromeet.api.util.RandomNicknameGenerator;
 import depromeet.common.response.CommonResponse;
 import depromeet.common.response.Response;
 import depromeet.common.response.ResponseService;
+import depromeet.domain.challenge.domain.CategoryType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -21,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/challenge")
 @RequiredArgsConstructor
 public class ChallengeController {
 
@@ -39,7 +47,7 @@ public class ChallengeController {
                         description = "잘못된 요청값을 전달한 경우",
                         content = @Content())
             })
-    @PostMapping("/challenge")
+    @PostMapping
     public Response<CreateChallengeResponse> createChallenge(
             @RequestBody @Valid CreateChallengeRequest challengeRequest) {
         return ResponseService.getDataResponse(
@@ -55,7 +63,7 @@ public class ChallengeController {
                         description = "잘못된 요청값을 전달한 경우",
                         content = @Content())
             })
-    @PutMapping("/challenge/{challengeId}")
+    @PutMapping("/{challengeId}")
     public Response<UpdateChallengeResponse> updateChallenge(
             @PathVariable Long challengeId, @RequestBody UpdateChallengeRequest challengeRequest) {
         return ResponseService.getDataResponse(
@@ -71,13 +79,13 @@ public class ChallengeController {
                         description = "잘못된 요청값을 전달한 경우",
                         content = @Content())
             })
-    @DeleteMapping("/challenge/{challengeId}")
+    @DeleteMapping("/{challengeId}")
     public CommonResponse deleteChallenge(@PathVariable Long challengeId) {
         deleteChallengeUseCase.execute(challengeId, getCurrentUserSocialId());
         return ResponseService.getSuccessResponse();
     }
 
-    @PostMapping("/challenge/join/{challengeId}")
+    @PostMapping("/join/{challengeId}")
     public CommonResponse joinChallenge(
             @PathVariable Long challengeId,
             @RequestBody @Valid JoinChallengeRequest createUserChallengeRequest) {
@@ -89,5 +97,12 @@ public class ChallengeController {
     @GetMapping("/challenge/{challengeId}")
     public Response<GetChallengeResponse> getChallenge(@PathVariable long challengeId) {
         return ResponseService.getDataResponse(getChallengeUseCase.execute(challengeId));
+    }
+
+    @GetMapping("/nickname")
+    public Response<CreateRandomNicknameResponse> createRandomNickname(
+            @RequestParam String category) {
+        CategoryType.of(category);
+        return ResponseService.getDataResponse(RandomNicknameGenerator.generate());
     }
 }

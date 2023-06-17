@@ -19,4 +19,6 @@ public interface UserChallengeRepository
             @Param("uid") Long userId, @Param("cid") Long challengeId);
 
     Optional<UserChallenge> findByChallengeAndUser(Challenge challenge, User user);
+
+    Optional<UserChallenge> findByChallengeIdAndUserId(Long challengeId, Long userId);
 }

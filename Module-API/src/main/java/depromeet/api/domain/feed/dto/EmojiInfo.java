@@ -18,7 +18,7 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class EmojiInfo {
-    @Schema(description = "내가 선택한 이모지", example = "이모지 종류 - 없을경우 null 값으로할지 아예 데이터 보내주지 않을지 결정")
+    @Schema(description = "내가 선택한 이모지", example = "미친거지")
     private String selectedEmoji = null;
 
     @Schema(description = "미친거지", example = "2")
@@ -43,7 +43,6 @@ public class EmojiInfo {
 
         if (selectedEmoji.isPresent())
             this.selectedEmoji = selectedEmoji.get().getType().getValue();
-        else this.selectedEmoji = null;
     }
 
     public EmojiInfo(Record record) {
