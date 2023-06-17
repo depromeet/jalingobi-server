@@ -12,6 +12,9 @@ import depromeet.common.exception.CustomExceptionStatus;
 import depromeet.common.response.Response;
 import depromeet.common.response.ResponseService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -70,7 +73,16 @@ public class MyPageController {
         return ResponseService.getDataResponse(CustomExceptionStatus.SUCCESS);
     }
 
-    @PostMapping("/challenge/{challengeId}")
+    @Operation(summary = "챌린지 나가기 API", description = "참여중인 챌린지를 나갑니다.")
+    @ApiResponses(
+            value = {
+                @ApiResponse(responseCode = "200"),
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "잘못된 요청값을 전달한 경우",
+                        content = @Content())
+            })
+    @DeleteMapping("/challenge/{challengeId}")
     public Response<CustomExceptionStatus> quitChallenge(
             @PathVariable("challengeId") Long challengeId) {
 
