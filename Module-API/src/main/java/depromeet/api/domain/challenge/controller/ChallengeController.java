@@ -94,7 +94,7 @@ public class ChallengeController {
         return ResponseService.getSuccessResponse();
     }
 
-    @GetMapping("/challenge/{challengeId}")
+    @GetMapping("/{challengeId}")
     public Response<GetChallengeResponse> getChallenge(@PathVariable long challengeId) {
         return ResponseService.getDataResponse(getChallengeUseCase.execute(challengeId));
     }
