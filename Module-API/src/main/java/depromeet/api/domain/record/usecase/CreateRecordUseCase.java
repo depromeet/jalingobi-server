@@ -35,7 +35,7 @@ public class CreateRecordUseCase {
         User currentUser = userAdaptor.findUser(socialId);
         Challenge challenge = challengeAdaptor.findChallenge(challengeId);
         UserChallenge userChallenge =
-                userChallengeAdaptor.findByUserChallenge(challenge, currentUser);
+                userChallengeAdaptor.findUserChallenge(challenge, currentUser);
 
         recordValidator.validateUnparticipatedChallenge(socialId, challenge);
 

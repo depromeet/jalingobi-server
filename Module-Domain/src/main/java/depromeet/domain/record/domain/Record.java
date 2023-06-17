@@ -24,6 +24,21 @@ public class Record extends BaseTime {
     @Column(name = "challenge_record_id")
     private Long id;
 
+    @Column(nullable = false)
+    private int price;
+
+    @Column(length = 16, nullable = false)
+    private String title;
+
+    @Column(length = 80, nullable = false)
+    private String content;
+
+    @Column private String imgUrl;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Evaluation evaluation;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "challenge_id")
     private Challenge challenge;
@@ -42,24 +57,9 @@ public class Record extends BaseTime {
     @OneToMany(
             mappedBy = "record",
             fetch = FetchType.LAZY,
-            cascade = CascadeType.PERSIST,
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             orphanRemoval = true)
     private List<Emoji> emojis = new ArrayList<>();
-
-    @Column(nullable = false)
-    private int price;
-
-    @Column(length = 16, nullable = false)
-    private String title;
-
-    @Column(length = 80, nullable = false)
-    private String content;
-
-    @Column private String imgUrl;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Evaluation evaluation;
 
     /** 생성 메서드 */
     public static Record createRecord(

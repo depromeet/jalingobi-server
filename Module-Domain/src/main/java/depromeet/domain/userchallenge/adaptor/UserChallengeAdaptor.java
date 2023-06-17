@@ -17,9 +17,15 @@ public class UserChallengeAdaptor {
 
     private final UserChallengeRepository userChallengeRepository;
 
-    public UserChallenge findByUserChallenge(Challenge challenge, User user) {
+    public UserChallenge findUserChallenge(Challenge challenge, User user) {
         return userChallengeRepository
                 .findByChallengeAndUser(challenge, user)
+                .orElseThrow(() -> UserNotParticipatedInChallengeException.EXCEPTION);
+    }
+
+    public UserChallenge findUserChallenge(Long challengeId, Long userId) {
+        return userChallengeRepository
+                .findByChallengeIdAndUserId(challengeId, userId)
                 .orElseThrow(() -> UserNotParticipatedInChallengeException.EXCEPTION);
     }
 
@@ -41,5 +47,9 @@ public class UserChallengeAdaptor {
 
     public void joinChallenge(UserChallenge userChallenge) {
         userChallengeRepository.save(userChallenge);
+    }
+
+    public void quitChallenge(UserChallenge userChallenge) {
+        userChallengeRepository.delete(userChallenge);
     }
 }

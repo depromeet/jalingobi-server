@@ -27,7 +27,7 @@ public class CreateEmojiUseCase {
         User user = userAdaptor.findUser(socialId);
         Record record = recordAdaptor.findRecord(recordId);
         UserChallenge userChallenge =
-                userChallengeAdaptor.findByUserChallenge(record.getChallenge(), user);
+                userChallengeAdaptor.findUserChallenge(record.getChallenge(), user);
 
         record.reactEmoji(userChallenge, createEmojiRequest.getType());
 
