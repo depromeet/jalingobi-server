@@ -4,6 +4,7 @@ package depromeet.api.domain.challenge.mapper;
 import depromeet.api.domain.challenge.dto.request.CreateChallengeRequest;
 import depromeet.api.domain.challenge.dto.request.UpdateChallengeRequest;
 import depromeet.api.domain.challenge.dto.response.CreateChallengeResponse;
+import depromeet.api.domain.challenge.dto.response.GetChallengeResponse;
 import depromeet.api.domain.challenge.dto.response.UpdateChallengeResponse;
 import depromeet.common.annotation.Mapper;
 import depromeet.domain.challenge.domain.Challenge;
@@ -41,5 +42,9 @@ public class ChallengeMapper {
     public UpdateChallengeResponse toUpdateChallengeResponse(
             UpdateChallengeRequest updateChallengeRequest) {
         return UpdateChallengeResponse.of(updateChallengeRequest);
+    }
+
+    public GetChallengeResponse toGetChallengeResponse(Challenge challenge) {
+        return GetChallengeResponse.of(challenge);
     }
 }
