@@ -14,8 +14,8 @@ public class GetUserInfoResponse {
     private String nickname;
     private String email;
     private String imgUrl;
-    private Platform platform;
-    private Role role;
+    private String platform;
+    private String role;
     private Integer score;
 
     public static GetUserInfoResponse createGetUserInfoResponse(User user) {
@@ -26,8 +26,8 @@ public class GetUserInfoResponse {
                 .nickname(profile.getNickname())
                 .email(profile.getEmail())
                 .imgUrl(profile.getImgUrl())
-                .platform(social.getPlatform())
-                .role(user.getRole())
+                .platform(social.getPlatform().toString())
+                .role(user.getRole().getAuthority())
                 .score(user.getScore())
                 .build();
     }
