@@ -57,7 +57,7 @@ public class Record extends BaseTime {
     @OneToMany(
             mappedBy = "record",
             fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             orphanRemoval = true)
     private List<Emoji> emojis = new ArrayList<>();
 
