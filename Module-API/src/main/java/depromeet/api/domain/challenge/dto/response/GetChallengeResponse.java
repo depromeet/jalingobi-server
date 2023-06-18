@@ -2,7 +2,6 @@ package depromeet.api.domain.challenge.dto.response;
 
 
 import depromeet.domain.challenge.domain.Challenge;
-import java.time.LocalDate;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,9 +22,7 @@ public class GetChallengeResponse {
 
     private List<String> keywords;
 
-    private int availableCount;
-
-    private int participants;
+    private HeadCount headCount;
 
     private List<ProfileResponse> participantsInfo;
 
@@ -33,14 +30,11 @@ public class GetChallengeResponse {
 
     private boolean isRecruiting;
 
-    private int period;
-
-    private LocalDate startAt;
-
-    private LocalDate endAt;
+    private DateInfoResponse dateInfo;
 
     public static GetChallengeResponse of(Challenge challenge) {
         ProfileResponse profileResponse = new ProfileResponse();
+        DateInfoResponse dateInfoResponse = new DateInfoResponse();
         return GetChallengeResponse.builder()
                 .challengeId(challenge.getId())
                 .categories(challenge.getChallengeCategories().getCategoryNames())
@@ -48,13 +42,13 @@ public class GetChallengeResponse {
                 .price(challenge.getPrice())
                 .challengeImgUrl(challenge.getImgUrl())
                 .keywords(challenge.getChallengeKeywords().getKeywordNames())
-                .availableCount(challenge.getAvailableCount())
-                .participants(challenge.getUserChallenges().size())
+                .headCount(
+                        new HeadCount(
+                                challenge.getAvailableCount(),
+                                challenge.getUserChallenges().size()))
                 .rules(challenge.getChallengeRuleContents())
                 .isRecruiting(challenge.isRecruiting(challenge.getDuration().getStartAt()))
-                .startAt(challenge.getDuration().getStartAt())
-                .endAt(challenge.getDuration().getEndAt())
-                .period(challenge.getPrice())
+                .dateInfo(dateInfoResponse.toDateInfoResponse(challenge.getDuration()))
                 .participantsInfo(profileResponse.toProfileResponses(challenge.getUserChallenges()))
                 .build();
     }

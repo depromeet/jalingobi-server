@@ -12,10 +12,7 @@ import depromeet.api.config.security.filter.JwtRequestFilter;
 import depromeet.api.domain.challenge.dto.request.CreateChallengeRequest;
 import depromeet.api.domain.challenge.dto.request.JoinChallengeRequest;
 import depromeet.api.domain.challenge.dto.request.UpdateChallengeRequest;
-import depromeet.api.domain.challenge.dto.response.CreateChallengeResponse;
-import depromeet.api.domain.challenge.dto.response.GetChallengeResponse;
-import depromeet.api.domain.challenge.dto.response.ProfileResponse;
-import depromeet.api.domain.challenge.dto.response.UpdateChallengeResponse;
+import depromeet.api.domain.challenge.dto.response.*;
 import depromeet.api.domain.challenge.mapper.ChallengeMapper;
 import depromeet.api.domain.challenge.usecase.*;
 import depromeet.api.util.AuthenticationUtil;
@@ -232,6 +229,9 @@ public class ChallengeControllerTest {
         List<ProfileResponse> profileResponses = new ArrayList<>();
         profileResponses.add(mock(ProfileResponse.class));
 
+        LocalDate startAt = LocalDate.of(2023, 6, 1);
+        LocalDate endAt = LocalDate.of(2023, 6, 7);
+
         GetChallengeResponse response =
                 GetChallengeResponse.builder()
                         .challengeId(1L)
@@ -240,14 +240,11 @@ public class ChallengeControllerTest {
                         .price(50000)
                         .challengeImgUrl("/test.jpg")
                         .keywords(keywords)
-                        .availableCount(30)
-                        .participants(25)
+                        .headCount(new HeadCount(30, 25))
                         .participantsInfo(profileResponses)
                         .rules(rules)
-                        .isRecruiting(true)
-                        .period(7)
-                        .startAt(LocalDate.of(2023, 6, 1))
-                        .endAt(LocalDate.of(2023, 6, 7))
+                        .isRecruiting(false)
+                        .dateInfo(new DateInfoResponse(7, startAt, endAt))
                         .build();
 
         when(getChallengeUseCase.execute(anyLong())).thenReturn(response);
