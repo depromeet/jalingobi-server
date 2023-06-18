@@ -11,6 +11,7 @@ public enum CustomExceptionStatus {
     BAD_REQUEST(false, 1001, "잘못된 요청입니다."),
     TOO_MANY_REQUEST(false, 1002, "잠시 후에 다시 시도해주세요."),
     INTERNAL_SERVER_ERROR(false, 1003, "서버 내부에서 문제가 발생하였습니다."),
+    LIST_NOT_NULL_ERROR(false, 1004, "비어있는 리스트 입니다."),
 
     // auth
     REQUEST_ERROR(false, 1100, "입력 값을 확인해 주세요."),
@@ -83,7 +84,8 @@ public enum CustomExceptionStatus {
 
     // jalingobi
     JALINGOBI_LEVEL_NOT_FOUND(false, 2600, "현재 점수에 해당하는 자린고비 레벨이 없습니다."),
-    JALINGOBI_NOT_FOUND(false, 2601, "존재하지 않는 자린고비 입니다.");
+    JALINGOBI_NOT_FOUND(false, 2601, "존재하지 않는 자린고비 입니다."),
+    SMALL_TALK_NOT_FOUND(false, 2602, "해당 레벨에는 자린고비 한마디가 존재하지 않습니다.");
 
     private final boolean isSuccess;
     private final int code;
