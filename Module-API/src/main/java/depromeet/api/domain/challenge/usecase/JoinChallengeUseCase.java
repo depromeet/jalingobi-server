@@ -34,6 +34,7 @@ public class JoinChallengeUseCase {
                 UserChallenge.createUserChallenge(
                         user,
                         challenge,
+                        joinChallengeRequest.getImgUrl(),
                         joinChallengeRequest.getNickname(),
                         joinChallengeRequest.getCurrentCharge()));
     }
