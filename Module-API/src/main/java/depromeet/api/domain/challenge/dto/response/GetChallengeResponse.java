@@ -22,7 +22,7 @@ public class GetChallengeResponse {
 
     private List<String> keywords;
 
-    private HeadCount headCount;
+    private HeadCountResponse headCount;
 
     private List<ProfileResponse> participantsInfo;
 
@@ -43,7 +43,7 @@ public class GetChallengeResponse {
                 .challengeImgUrl(challenge.getImgUrl())
                 .keywords(challenge.getChallengeKeywords().getKeywordNames())
                 .headCount(
-                        new HeadCount(
+                        new HeadCountResponse(
                                 challenge.getAvailableCount(),
                                 challenge.getUserChallenges().size()))
                 .rules(challenge.getChallengeRuleContents())

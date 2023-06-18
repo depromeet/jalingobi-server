@@ -240,7 +240,7 @@ public class ChallengeControllerTest {
                         .price(50000)
                         .challengeImgUrl("/test.jpg")
                         .keywords(keywords)
-                        .headCount(new HeadCount(30, 25))
+                        .headCount(new HeadCountResponse(30, 25))
                         .participantsInfo(profileResponses)
                         .rules(rules)
                         .isRecruiting(false)
@@ -256,6 +256,7 @@ public class ChallengeControllerTest {
         verify(getChallengeUseCase, times(1)).execute(anyLong());
     }
 
+    @Test
     @DisplayName("챌린지에서 사용할 랜덤 닉네임 생성")
     public void createRandomNicknameTest() throws Exception {
         mockMvc.perform(get("/challenge/nickname").param("category", "식비"))
