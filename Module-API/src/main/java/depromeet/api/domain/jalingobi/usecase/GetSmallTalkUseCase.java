@@ -1,7 +1,6 @@
 package depromeet.api.domain.jalingobi.usecase;
 
 
-import depromeet.api.domain.jalingobi.dto.request.GetSmallTalkRequest;
 import depromeet.api.domain.jalingobi.dto.response.GetSmallTalkResponse;
 import depromeet.api.domain.jalingobi.mapper.JalingobiMapper;
 import depromeet.api.util.RandomUtil;
@@ -23,14 +22,13 @@ public class GetSmallTalkUseCase {
     private final UserAdaptor userAdaptor;
     private final SmallTalkAdaptor smallTalkAdaptor;
 
-    public GetSmallTalkResponse execute(String socialId, GetSmallTalkRequest getSmallTalkRequest) {
+    public GetSmallTalkResponse execute(String socialId, Long jalingobiId) {
         User user = userAdaptor.findUser(socialId);
         Level userLevel = Level.getEnumTypeByScore(user.getScore());
 
-        Level level = getSmallTalkRequest.getLevel();
-        List<SmallTalk> smallTalks = smallTalkAdaptor.findSmallTalkByLevel(level);
+        List<SmallTalk> smallTalks = smallTalkAdaptor.findSmallTalkByJalingobiId(jalingobiId);
         SmallTalk randomSmallTalk = RandomUtil.getRandomItem(smallTalks);
 
-        return jalingobiMapper.toGetSmallTalkResponse(level, randomSmallTalk.getContent());
+        return jalingobiMapper.toGetSmallTalkResponse(randomSmallTalk.getContent());
     }
 }

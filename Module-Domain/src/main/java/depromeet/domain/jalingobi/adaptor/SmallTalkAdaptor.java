@@ -2,7 +2,6 @@ package depromeet.domain.jalingobi.adaptor;
 
 
 import depromeet.common.annotation.Adaptor;
-import depromeet.domain.jalingobi.domain.Level;
 import depromeet.domain.jalingobi.domain.SmallTalk;
 import depromeet.domain.jalingobi.exception.SmallTalkNotFoundException;
 import depromeet.domain.jalingobi.repository.SmallTalkRepository;
@@ -15,8 +14,8 @@ public class SmallTalkAdaptor {
 
     private final SmallTalkRepository smallTalkRepository;
 
-    public List<SmallTalk> findSmallTalkByLevel(Level level) {
-        List<SmallTalk> smallTalks = smallTalkRepository.findByLevel(level);
+    public List<SmallTalk> findSmallTalkByJalingobiId(Long jalingobiId) {
+        List<SmallTalk> smallTalks = smallTalkRepository.findByJalingobiId(jalingobiId);
         if (smallTalks.isEmpty()) {
             throw SmallTalkNotFoundException.EXCEPTION;
         }

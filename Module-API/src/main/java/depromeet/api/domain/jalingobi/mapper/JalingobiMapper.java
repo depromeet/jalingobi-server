@@ -17,7 +17,7 @@ public class JalingobiMapper {
         return GetJalingobiResponse.of(jalingobiList, userLevel);
     }
 
-    public GetSmallTalkResponse toGetSmallTalkResponse(Level level, String smallTalk) {
-        return GetSmallTalkResponse.of(level, smallTalk);
+    public GetSmallTalkResponse toGetSmallTalkResponse(String smallTalk) {
+        return GetSmallTalkResponse.of(smallTalk);
     }
 }
