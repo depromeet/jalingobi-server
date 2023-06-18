@@ -26,6 +26,10 @@ public class GetMyChallengeListResponse {
                         .map(ParticipatedChallenge::createParticipatedChallenge)
                         .collect(Collectors.toList());
 
+        // 맨 앞에 내 방 정보 추가
+        ParticipatedChallenge myRoom = new ParticipatedChallenge(0L, "내 방", "baseImg", true);
+        participatedChallengeList.add(0, myRoom);
+
         return new GetMyChallengeListResponse(participatedChallengeList);
     }
 }
