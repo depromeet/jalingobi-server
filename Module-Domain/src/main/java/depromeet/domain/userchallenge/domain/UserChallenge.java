@@ -53,10 +53,11 @@ public class UserChallenge extends BaseTime {
     private List<Record> records = new ArrayList<>();
 
     public static UserChallenge createUserChallenge(
-            User user, Challenge challenge, String nickname, int currentCharge) {
+            User user, Challenge challenge, String imgUrl, String nickname, int currentCharge) {
         return UserChallenge.builder()
                 .user(user)
                 .challenge(challenge)
+                .imgUrl(imgUrl)
                 .nickname(nickname)
                 .currentCharge(currentCharge)
                 .status(Status.PROCEEDING)
