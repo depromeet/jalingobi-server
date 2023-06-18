@@ -25,7 +25,7 @@ public class DeleteEmojiUseCase {
         User source = userAdaptor.findUser(socialId);
         Record target = recordAdaptor.findRecord(recordId);
         UserChallenge userChallenge =
-                userChallengeAdaptor.findByUserChallenge(target.getChallenge(), source);
+                userChallengeAdaptor.findUserChallenge(target.getChallenge(), source);
 
         target.unReactEmoji(userChallenge, type);
 
