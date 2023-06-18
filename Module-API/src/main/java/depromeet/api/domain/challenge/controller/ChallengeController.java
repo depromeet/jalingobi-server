@@ -35,7 +35,7 @@ public class ChallengeController {
     private final CreateChallengeUseCase challengeUseCase;
     private final UpdateChallengeUseCase updateChallengeUseCase;
     private final DeleteChallengeUseCase deleteChallengeUseCase;
-    private final JoinChallengeUseCase createUserChallengeUseCase;
+    private final JoinChallengeUseCase joinUserChallengeUseCase;
     private final GetChallengeUseCase getChallengeUseCase;
 
     @Operation(summary = "챌린지 생성 API", description = "챌린지를 생성합니다.")
@@ -89,7 +89,7 @@ public class ChallengeController {
     public CommonResponse joinChallenge(
             @PathVariable Long challengeId,
             @RequestBody @Valid JoinChallengeRequest createUserChallengeRequest) {
-        createUserChallengeUseCase.execute(
+        joinUserChallengeUseCase.execute(
                 getCurrentUserSocialId(), createUserChallengeRequest, challengeId);
         return ResponseService.getSuccessResponse();
     }
