@@ -194,7 +194,10 @@ public class Challenge extends BaseTime {
 
     private boolean isApproachingDeadline(final LocalDate startDate) {
         final LocalDate currentDate = LocalDate.now();
-        return currentDate.isAfter(startDate.minusDays(3)) && currentDate.isBefore(startDate);
+        final LocalDate DeadlineStart = startDate.minusDays(4);
+        final LocalDate afterStartDate = startDate.plusDays(1);
+
+        return currentDate.isAfter(DeadlineStart) && currentDate.isBefore(afterStartDate);
 
         // if (condition && isStartAt) return StatusType.COMING_SOON.getName();
         // else if (condition) return StatusType.APPROACHING_DEADLINE.getName();
