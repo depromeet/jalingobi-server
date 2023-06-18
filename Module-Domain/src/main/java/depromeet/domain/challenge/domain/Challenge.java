@@ -1,5 +1,6 @@
 package depromeet.domain.challenge.domain;
 
+import static java.util.stream.Collectors.toList;
 
 import depromeet.domain.category.domain.Category;
 import depromeet.domain.challenge.domain.keyword.ChallengeKeywords;
@@ -139,6 +140,11 @@ public class Challenge extends BaseTime {
         if (isStarted(localDate)) throw ChallengeIsStartedException.EXCEPTION;
     }
 
+    public boolean isRecruiting(final LocalDate localDate) {
+        if (isStarted(localDate)) return false;
+        return true;
+    }
+
     public void updateTitle(String title) {
         this.title = title;
     }
@@ -172,5 +178,9 @@ public class Challenge extends BaseTime {
 
     public void updateDuration(int period, LocalDate startAt, LocalDate endAt) {
         this.duration = new Duration(period, startAt, endAt);
+    }
+
+    public List<String> getChallengeRuleContents() {
+        return challengeRules.stream().map(ChallengeRule::getContent).collect(toList());
     }
 }

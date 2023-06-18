@@ -1,6 +1,7 @@
 package depromeet.domain.challenge.domain;
 
 import static depromeet.common.exception.CustomExceptionStatus.CANNOT_ADD_CATEGORY;
+import static java.util.stream.Collectors.toList;
 
 import depromeet.common.exception.CustomException;
 import depromeet.domain.category.domain.Category;
@@ -68,5 +69,13 @@ public class ChallengeCategories {
 
     public void clear() {
         challengeCategories.clear();
+    }
+
+    public List<Category> getCategories() {
+        return challengeCategories.stream().map(ChallengeCategory::getCategory).collect(toList());
+    }
+
+    public List<String> getCategoryNames() {
+        return getCategories().stream().map(Category::getName).collect(toList());
     }
 }

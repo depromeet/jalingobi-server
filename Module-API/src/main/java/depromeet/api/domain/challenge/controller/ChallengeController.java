@@ -7,7 +7,9 @@ import depromeet.api.domain.challenge.dto.request.JoinChallengeRequest;
 import depromeet.api.domain.challenge.dto.request.UpdateChallengeRequest;
 import depromeet.api.domain.challenge.dto.response.CreateChallengeResponse;
 import depromeet.api.domain.challenge.dto.response.CreateRandomNicknameResponse;
+import depromeet.api.domain.challenge.dto.response.GetChallengeResponse;
 import depromeet.api.domain.challenge.dto.response.UpdateChallengeResponse;
+import depromeet.api.domain.challenge.usecase.*;
 import depromeet.api.domain.challenge.usecase.CreateChallengeUseCase;
 import depromeet.api.domain.challenge.usecase.DeleteChallengeUseCase;
 import depromeet.api.domain.challenge.usecase.JoinChallengeUseCase;
@@ -34,6 +36,7 @@ public class ChallengeController {
     private final UpdateChallengeUseCase updateChallengeUseCase;
     private final DeleteChallengeUseCase deleteChallengeUseCase;
     private final JoinChallengeUseCase createUserChallengeUseCase;
+    private final GetChallengeUseCase getChallengeUseCase;
 
     @Operation(summary = "챌린지 생성 API", description = "챌린지를 생성합니다.")
     @ApiResponses(
@@ -89,6 +92,11 @@ public class ChallengeController {
         createUserChallengeUseCase.execute(
                 getCurrentUserSocialId(), createUserChallengeRequest, challengeId);
         return ResponseService.getSuccessResponse();
+    }
+
+    @GetMapping("/{challengeId}")
+    public Response<GetChallengeResponse> getChallenge(@PathVariable long challengeId) {
+        return ResponseService.getDataResponse(getChallengeUseCase.execute(challengeId));
     }
 
     @GetMapping("/nickname")

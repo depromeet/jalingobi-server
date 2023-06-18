@@ -3,6 +3,7 @@ package depromeet.domain.userchallenge.domain;
 
 import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.config.BaseTime;
+import depromeet.domain.jalingobi.domain.Level;
 import depromeet.domain.record.domain.Record;
 import depromeet.domain.user.domain.User;
 import java.util.ArrayList;
@@ -60,5 +61,9 @@ public class UserChallenge extends BaseTime {
                 .currentCharge(currentCharge)
                 .status(Status.PROCEEDING)
                 .build();
+    }
+
+    public int getUserLevel() {
+        return Level.getEnumTypeByScore(this.getUser().getScore()).getScore();
     }
 }

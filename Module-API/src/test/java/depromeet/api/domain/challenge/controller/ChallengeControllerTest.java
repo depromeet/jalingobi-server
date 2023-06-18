@@ -12,13 +12,9 @@ import depromeet.api.config.security.filter.JwtRequestFilter;
 import depromeet.api.domain.challenge.dto.request.CreateChallengeRequest;
 import depromeet.api.domain.challenge.dto.request.JoinChallengeRequest;
 import depromeet.api.domain.challenge.dto.request.UpdateChallengeRequest;
-import depromeet.api.domain.challenge.dto.response.CreateChallengeResponse;
-import depromeet.api.domain.challenge.dto.response.UpdateChallengeResponse;
+import depromeet.api.domain.challenge.dto.response.*;
 import depromeet.api.domain.challenge.mapper.ChallengeMapper;
-import depromeet.api.domain.challenge.usecase.CreateChallengeUseCase;
-import depromeet.api.domain.challenge.usecase.DeleteChallengeUseCase;
-import depromeet.api.domain.challenge.usecase.JoinChallengeUseCase;
-import depromeet.api.domain.challenge.usecase.UpdateChallengeUseCase;
+import depromeet.api.domain.challenge.usecase.*;
 import depromeet.api.util.AuthenticationUtil;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -60,6 +56,8 @@ public class ChallengeControllerTest {
     @MockBean DeleteChallengeUseCase deleteChallengeUseCase;
 
     @MockBean JoinChallengeUseCase createUserChallengeUseCase;
+
+    @MockBean GetChallengeUseCase getChallengeUseCase;
 
     ChallengeMapper challengeMapper = new ChallengeMapper();
 
@@ -213,6 +211,49 @@ public class ChallengeControllerTest {
                 .andExpectAll(status().isOk());
 
         verify(createUserChallengeUseCase, times(1)).execute(anyString(), any(), anyLong());
+    }
+
+    @Test
+    @DisplayName("챌린지 상세 조회")
+    public void getChallengeTest() throws Exception {
+        List<String> categories = new ArrayList<>();
+        categories.add("식비");
+
+        List<String> keywords = new ArrayList<>();
+        keywords.add("#마라탕");
+        keywords.add("#5만원챌린지");
+
+        List<String> rules = new ArrayList<>();
+        rules.add("광고 금지");
+
+        List<ProfileResponse> profileResponses = new ArrayList<>();
+        profileResponses.add(mock(ProfileResponse.class));
+
+        LocalDate startAt = LocalDate.of(2023, 6, 1);
+        LocalDate endAt = LocalDate.of(2023, 6, 7);
+
+        GetChallengeResponse response =
+                GetChallengeResponse.builder()
+                        .challengeId(1L)
+                        .categories(categories)
+                        .title("마라탕 5만원 이하로 쓰기")
+                        .price(50000)
+                        .challengeImgUrl("/test.jpg")
+                        .keywords(keywords)
+                        .headCount(new HeadCountResponse(30, 25))
+                        .participantsInfo(profileResponses)
+                        .rules(rules)
+                        .isRecruiting(false)
+                        .dateInfo(new DateInfoResponse(7, startAt, endAt))
+                        .build();
+
+        when(getChallengeUseCase.execute(anyLong())).thenReturn(response);
+
+        mockMvc.perform(get("/challenge/{challengeId}", 1L))
+                .andDo(print())
+                .andExpectAll(status().isOk());
+
+        verify(getChallengeUseCase, times(1)).execute(anyLong());
     }
 
     @Test
