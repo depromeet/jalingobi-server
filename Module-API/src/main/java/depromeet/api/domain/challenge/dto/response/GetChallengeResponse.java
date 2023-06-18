@@ -51,7 +51,9 @@ public class GetChallengeResponse {
                                 challenge.getUserChallenges().size()))
                 .rules(challenge.getChallengeRuleContents())
                 .isRecruiting(challenge.isRecruiting(challenge.getDuration().getStartAt()))
-                .status(challenge.checkStatus(LocalDate.from(challenge.getCreatedAt())))
+                .status(
+                        challenge.checkStatusInChallengeDetail(
+                                LocalDate.from(challenge.getCreatedAt())))
                 .dateInfo(dateInfoResponse.toDateInfoResponse(challenge.getDuration()))
                 .participantsInfo(profileResponse.toProfileResponses(challenge.getUserChallenges()))
                 .build();

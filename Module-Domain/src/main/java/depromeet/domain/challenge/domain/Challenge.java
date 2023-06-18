@@ -198,18 +198,29 @@ public class Challenge extends BaseTime {
         final LocalDate afterStartDate = startDate.plusDays(1);
 
         return currentDate.isAfter(DeadlineStart) && currentDate.isBefore(afterStartDate);
-
-        // if (condition && isStartAt) return StatusType.COMING_SOON.getName();
-        // else if (condition) return StatusType.APPROACHING_DEADLINE.getName();
-
-        // return StatusType.NOTHING.getName();
     }
 
-    public String checkStatus(final LocalDate createdAt) {
-        // isRecruiting(this.getDuration().getStartAt());
+    private boolean isComingSoon(final LocalDate startDate) {
+        final LocalDate currentDate = LocalDate.now();
+        final LocalDate comingSoonStart = startDate.minusDays(8);
+        final LocalDate comingSoonEnd = startDate.minusDays(3);
+
+        return currentDate.isAfter(comingSoonStart) && currentDate.isBefore(comingSoonEnd);
+    }
+
+    public String checkStatusInChallengeDetail(final LocalDate createdAt) {
+        if (isComingSoon(createdAt)) return StatusType.COMING_SOON.getName();
+        if (isApproachingDeadline(this.getDuration().getStartAt()))
+            return StatusType.APPROACHING_DEADLINE.getName();
+
+        return StatusType.NOTHING.getName();
+    }
+
+    public String checkStatusInChallengeFeed(final LocalDate createdAt) {
         if (isNewChallenge(createdAt)) return StatusType.NEW.getName();
         if (isApproachingDeadline(this.getDuration().getStartAt()))
             return StatusType.APPROACHING_DEADLINE.getName();
+
         return StatusType.NOTHING.getName();
     }
 }
