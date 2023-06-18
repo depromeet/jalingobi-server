@@ -17,13 +17,13 @@ public class ChallengeTest {
 
     /*
     챌린지 생성일 createdAt 이후 이틀 간 New 챌린지로 표시
-    기간 period가 5일이면, 챌린지 시작일 startAt = createdAt + period
+    챌린지 시작일 startAt = createdAt + 7
     */
     @Test
     @DisplayName("New 챌린지 - 오늘 생성된 챌린지")
     public void isNewChallenge() {
         int period = 5;
-        LocalDate startAt = LocalDate.now().plusDays(period);
+        LocalDate startAt = LocalDate.now().plusDays(7);
 
         Challenge challenge =
                 Challenge.createChallenge(
@@ -49,8 +49,8 @@ public class ChallengeTest {
     @DisplayName("마감임박 챌린지")
     public void isApproachingDeadline() {
         int period = 5;
-        LocalDate createdAt = LocalDate.now().minusDays(3);
-        LocalDate startAt = createdAt.plusDays(period);
+        LocalDate createdAt = LocalDate.now().minusDays(5);
+        LocalDate startAt = createdAt.plusDays(7);
 
         Challenge challenge =
                 Challenge.createChallenge(
@@ -73,7 +73,7 @@ public class ChallengeTest {
     public void isNotThing() {
         int period = 5;
         LocalDate createdAt = LocalDate.now().minusDays(10);
-        LocalDate startAt = createdAt.plusDays(period);
+        LocalDate startAt = createdAt.plusDays(7);
 
         Challenge challenge =
                 Challenge.createChallenge(
