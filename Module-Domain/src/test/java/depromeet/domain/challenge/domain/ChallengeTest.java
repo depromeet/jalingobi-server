@@ -37,8 +37,34 @@ public class ChallengeTest {
                         mock(ChallengeCategories.class),
                         new Duration(period, startAt, startAt.plusDays(period)));
 
-        assertThat(challenge.checkStatus(LocalDate.from(LocalDateTime.now())))
+        assertThat(challenge.checkStatusInChallengeFeed(LocalDate.from(LocalDateTime.now())))
                 .isEqualTo(StatusType.NEW.getName());
+    }
+
+    /*
+    챌린지 모집 기간 일주일 중에서 초기 4일 동안을 오픈 예정으로 표시
+     */
+    @Test
+    @DisplayName("오픈예정 챌린지")
+    public void isComingSoon() {
+        int period = 5;
+        LocalDate createdAt = LocalDate.now().plusDays(4);
+        LocalDate startAt = createdAt.plusDays(7);
+
+        Challenge challenge =
+                Challenge.createChallenge(
+                        "마라탕 5만원 이하로 쓰기",
+                        50000,
+                        "/test.jpg",
+                        mock(ChallengeKeywords.class),
+                        30,
+                        "socialId",
+                        new ArrayList<>(),
+                        mock(ChallengeCategories.class),
+                        new Duration(period, startAt, startAt.plusDays(period)));
+
+        assertThat(challenge.checkStatusInChallengeDetail(LocalDate.from(createdAt)))
+                .isEqualTo(StatusType.COMING_SOON.getName());
     }
 
     /*
@@ -64,7 +90,7 @@ public class ChallengeTest {
                         mock(ChallengeCategories.class),
                         new Duration(period, startAt, startAt.plusDays(period)));
 
-        assertThat(challenge.checkStatus(LocalDate.from(createdAt)))
+        assertThat(challenge.checkStatusInChallengeDetail(LocalDate.from(createdAt)))
                 .isEqualTo(StatusType.APPROACHING_DEADLINE.getName());
     }
 
@@ -87,7 +113,7 @@ public class ChallengeTest {
                         mock(ChallengeCategories.class),
                         new Duration(period, startAt, startAt.plusDays(period)));
 
-        assertThat(challenge.checkStatus(LocalDate.from(createdAt)))
+        assertThat(challenge.checkStatusInChallengeDetail(LocalDate.from(createdAt)))
                 .isEqualTo(StatusType.NOTHING.getName());
     }
 }
