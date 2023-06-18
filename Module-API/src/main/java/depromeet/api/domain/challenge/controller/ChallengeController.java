@@ -99,7 +99,7 @@ public class ChallengeController {
         return ResponseService.getDataResponse(getChallengeUseCase.execute(challengeId));
     }
 
-    @GetMapping("/nickname")
+    @GetMapping("/random-nickname")
     public Response<CreateRandomNicknameResponse> createRandomNickname(
             @RequestParam String category) {
         CategoryType.of(category);
