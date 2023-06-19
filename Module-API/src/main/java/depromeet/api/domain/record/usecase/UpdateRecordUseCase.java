@@ -8,6 +8,8 @@ import depromeet.common.annotation.UseCase;
 import depromeet.domain.record.adaptor.RecordAdaptor;
 import depromeet.domain.record.domain.Record;
 import java.util.Optional;
+
+import depromeet.domain.userchallenge.domain.UserChallenge;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +36,9 @@ public class UpdateRecordUseCase {
             String key = getKey(imgUrl);
             uploadPresignedUrlService.deleteImage(key);
         }
+        UserChallenge userChallenge = record.getUserChallenge();
+        userChallenge.removeCharge(record.getPrice());
+        userChallenge.addCharge(updateRecordRequest.getPrice());
 
         record.updateRecord(
                 updateRecordRequest.getPrice(),
