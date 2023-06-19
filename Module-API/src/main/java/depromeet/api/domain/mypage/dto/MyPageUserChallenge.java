@@ -2,10 +2,9 @@ package depromeet.api.domain.mypage.dto;
 
 
 import depromeet.domain.challenge.domain.Challenge;
-import depromeet.domain.challenge.domain.ChallengeCategories;
-import depromeet.domain.challenge.domain.Duration;
 import depromeet.domain.userchallenge.domain.Status;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,38 +28,43 @@ public class MyPageUserChallenge {
     private Boolean active;
 
     @Schema(description = "챌린지 기간")
-    private Duration duration;
+    private DateInfo duration;
 
     @Schema(description = "수용 가능 인원")
-    private int availableCount;
-
-    @Schema(description = "챌린지 결과 [PROCEEDING, SUCCESS, FAILURE]")
-    private Status status;
-
-    //    @Schema(description = "챌린지 기간에 따른 상태 태그 [new, 마감임박]", example = "[\"마감임박\"]")
-    //    private List<String> challengeDurationStatus;
-
-    @Schema(description = "챌린지 카테고리  [\"식비\"] ")
-    private ChallengeCategories categories;
-
-    @Schema(description = "챌린지 키워드 [\"#마라탕\", \"#배달\"]")
-    private List<String> keywords;
+    private Integer availableCount;
 
     @Schema(description = "해당 챌린지에 참여 중인 사용자 수")
     private Integer participantCount;
 
+    @Schema(description = "챌린지 결과")
+    private String status;
+
+    @Schema(description = "챌린지 기간에 따른 상태 태그 [new, 마감임박, 오픈 예정, 해당없음]", example = "[\"마감임박\"]")
+    private String statusTag;
+
+    @Schema(description = "챌린지 카테고리  [\"식비\"] ")
+    private List<String> categories;
+
+    @Schema(description = "챌린지 키워드 [\"#마라탕\", \"#배달\"]")
+    private List<String> keywords;
+
     public static MyPageUserChallenge createParticipatedChallenge(
             Challenge challenge, Status status) {
+
+        DateInfo dateInfo = new DateInfo(challenge.getDuration());
 
         return MyPageUserChallenge.builder()
                 .challengeId(challenge.getId())
                 .title(challenge.getTitle())
                 .imgUrl(challenge.getImgUrl())
                 .active(challenge.getActive())
-                .duration(challenge.getDuration())
+                .duration(dateInfo)
                 .availableCount(challenge.getAvailableCount())
-                .status(status)
-                .categories(challenge.getChallengeCategories())
+                .status(status.getValue())
+                .statusTag(
+                        challenge.checkStatusInChallengeDetail(
+                                LocalDate.from(challenge.getCreatedAt())))
+                .categories(challenge.getChallengeCategories().getCategoryNames())
                 .keywords(challenge.getChallengeKeywords().getKeywordNames())
                 .participantCount(challenge.getUserChallenges().size())
                 .build();
