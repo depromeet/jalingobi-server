@@ -3,6 +3,7 @@ package depromeet.api.domain.record.controller;
 import static depromeet.api.util.AuthenticationUtil.getCurrentUserSocialId;
 
 import depromeet.api.domain.record.dto.request.CreateRecordRequest;
+import depromeet.api.domain.record.dto.request.UpdateRecordRequest;
 import depromeet.api.domain.record.dto.response.CreateRecordResponse;
 import depromeet.api.domain.record.dto.response.GetRecordResponse;
 import depromeet.api.domain.record.usecase.CreateRecordUseCase;
@@ -66,7 +67,7 @@ public class RecordController {
     @PatchMapping("/{recordId}")
     public Response<CustomExceptionStatus> updateRecord(
             @PathVariable Long recordId,
-            @RequestBody @Valid CreateRecordRequest updateRecordRequest) {
+            @RequestBody @Valid UpdateRecordRequest updateRecordRequest) {
 
         updateRecordUseCase.execute(recordId, getCurrentUserSocialId(), updateRecordRequest);
         return ResponseService.getDataResponse(CustomExceptionStatus.SUCCESS);

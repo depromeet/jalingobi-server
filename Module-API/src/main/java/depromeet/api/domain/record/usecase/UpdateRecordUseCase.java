@@ -2,7 +2,7 @@ package depromeet.api.domain.record.usecase;
 
 
 import depromeet.api.config.s3.S3UploadPresignedUrlService;
-import depromeet.api.domain.record.dto.request.CreateRecordRequest;
+import depromeet.api.domain.record.dto.request.UpdateRecordRequest;
 import depromeet.api.domain.record.validator.RecordValidator;
 import depromeet.common.annotation.UseCase;
 import depromeet.domain.record.adaptor.RecordAdaptor;
@@ -23,7 +23,7 @@ public class UpdateRecordUseCase {
     private final RecordValidator recordValidator;
     private final S3UploadPresignedUrlService uploadPresignedUrlService;
 
-    public void execute(Long recordId, String socialId, CreateRecordRequest updateRecordRequest) {
+    public void execute(Long recordId, String socialId, UpdateRecordRequest updateRecordRequest) {
         Record record = recordAdaptor.findRecord(recordId);
 
         recordValidator.validateCorrectUserRecord(record, socialId);
