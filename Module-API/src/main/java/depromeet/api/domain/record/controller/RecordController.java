@@ -34,7 +34,7 @@ public class RecordController {
     private final DeleteRecordUseCase deleteRecordUseCase;
 
     @Operation(summary = "챌린지 지출을 기록하는 API")
-    @PostMapping("/{challengeId}/create")
+    @PostMapping("/{challengeId}")
     public Response<CreateRecordResponse> createRecord(
             @PathVariable Long challengeId,
             @RequestBody @Valid CreateRecordRequest createRecordRequest) {
