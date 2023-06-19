@@ -6,6 +6,7 @@ import depromeet.domain.config.BaseTime;
 import depromeet.domain.jalingobi.domain.Level;
 import depromeet.domain.record.domain.Record;
 import depromeet.domain.user.domain.User;
+import depromeet.domain.userchallenge.exception.NegativeChargeException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
@@ -66,5 +67,17 @@ public class UserChallenge extends BaseTime {
 
     public int getUserLevel() {
         return Level.getEnumTypeByScore(this.getUser().getScore()).getScore();
+    }
+
+    public void addCharge(int price) {
+        this.currentCharge += price;
+    }
+
+    public void removeCharge(int price) {
+        int rest = this.currentCharge - price;
+        if (rest < 0) {
+            throw NegativeChargeException.EXCEPTION;
+        }
+        this.currentCharge = rest;
     }
 }

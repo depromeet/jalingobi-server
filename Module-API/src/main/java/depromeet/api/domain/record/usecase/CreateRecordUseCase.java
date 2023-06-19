@@ -34,10 +34,11 @@ public class CreateRecordUseCase {
 
         User currentUser = userAdaptor.findUser(socialId);
         Challenge challenge = challengeAdaptor.findChallenge(challengeId);
+        recordValidator.validateUnparticipatedChallenge(socialId, challenge);
+
         UserChallenge userChallenge =
                 userChallengeAdaptor.findUserChallenge(challenge, currentUser);
-
-        recordValidator.validateUnparticipatedChallenge(socialId, challenge);
+        userChallenge.addCharge(createRecordRequest.getPrice());
 
         Record record =
                 recordAdaptor.save(

@@ -58,6 +58,7 @@ public enum CustomExceptionStatus {
     RECORD_NOT_FOUND(false, 2000, "유효하지 않은 평가 점수입니다."),
     RECORD_EVALUATION_NOT_VALID(false, 2001, "유효하지 않은 평가 점수입니다."),
     INVALID_RECORD_USER(false, 2002, "해당 지출을 기록한 사용자가 아닙니다."),
+    CHARGE_CANNOT_BE_NEGATIVE(false, 2003, "현재 지출 비용은 마이너스 값이 될 수 없습니다."),
 
     // category
     CATEGORY_NOT_FOUND(false, 2100, "존재하지 않는 카테고리입니다."),
