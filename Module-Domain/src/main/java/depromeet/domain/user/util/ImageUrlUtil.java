@@ -1,10 +1,10 @@
 package depromeet.domain.user.util;
 
 
+import depromeet.common.annotation.Util;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
-@Component
+@Util
 public class ImageUrlUtil {
     public static String defaultImgUrl;
 
