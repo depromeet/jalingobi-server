@@ -35,7 +35,6 @@ public class JoinChallengeUseCase {
                         user,
                         challenge,
                         joinChallengeRequest.getImgUrl(),
-                        joinChallengeRequest.getNickname(),
-                        joinChallengeRequest.getCurrentCharge()));
+                        joinChallengeRequest.getNickname()));
     }
 }
