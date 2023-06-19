@@ -1,7 +1,6 @@
 package depromeet.domain.jalingobi.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
@@ -34,6 +33,5 @@ public class Jalingobi {
     private String acquisitionCondition;
 
     @OneToMany(mappedBy = "jalingobi", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JsonIgnore
     private List<SmallTalk> smallTalks = new ArrayList<>();
 }
