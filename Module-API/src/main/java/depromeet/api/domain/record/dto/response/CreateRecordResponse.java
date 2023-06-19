@@ -2,28 +2,49 @@ package depromeet.api.domain.record.dto.response;
 
 
 import depromeet.domain.record.domain.Record;
-import depromeet.domain.user.domain.User;
+import depromeet.domain.userchallenge.domain.UserChallenge;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 
-@Getter
 @Builder
+@AllArgsConstructor
+@Getter
 public class CreateRecordResponse {
-    private final Long id;
+    private Long id;
     private String title;
-    private final String content;
-    private final String imgUrl;
-    private final int evaluation;
-    private final User user;
+    private String content;
+    private String imgUrl;
+    private Integer evaluation;
+    private RecordUserInfo userInfo;
 
-    public static CreateRecordResponse of(Record record, User user) {
+    public static CreateRecordResponse of(Record record) {
+
+        RecordUserInfo userInfo = new RecordUserInfo(record.getUserChallenge());
+
         return CreateRecordResponse.builder()
                 .id(record.getId())
                 .title(record.getTitle())
                 .content(record.getContent())
                 .imgUrl(record.getImgUrl())
                 .evaluation(record.getEvaluation().getValue())
-                .user(user)
+                .userInfo(userInfo)
                 .build();
+    }
+
+    @Data
+    private static class RecordUserInfo {
+        @Schema(example = "사용자 닉네임")
+        private String nickname;
+
+        @Schema(example = "사용자 이미지 URL")
+        private String userImgUrl;
+
+        public RecordUserInfo(UserChallenge userChallenge) {
+            this.nickname = userChallenge.getNickname();
+            this.userImgUrl = userChallenge.getImgUrl();
+        }
     }
 }

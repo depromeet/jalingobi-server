@@ -44,6 +44,6 @@ public class CreateRecordUseCase {
                         recordMapper.toEntity(
                                 challenge, currentUser, userChallenge, createRecordRequest));
 
-        return recordMapper.toCreateRecordResponse(record, currentUser);
+        return recordMapper.toCreateRecordResponse(record);
     }
 }
