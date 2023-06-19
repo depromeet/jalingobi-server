@@ -55,4 +55,12 @@ public class User extends BaseTime {
     public void updateProfile(String nickname, String profileImgUrl) {
         this.profile.updateProfile(nickname, profileImgUrl);
     }
+
+    public String getProfileImgUrl() {
+        return this.getProfile().getImgUrl();
+    }
+
+    public String getProfileNickname() {
+        return this.getProfile().getNickname();
+    }
 }
