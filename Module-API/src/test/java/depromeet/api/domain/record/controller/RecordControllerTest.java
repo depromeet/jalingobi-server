@@ -137,7 +137,7 @@ class RecordControllerTest {
                         .build();
 
         MockHttpServletRequestBuilder requestBuilder =
-                MockMvcRequestBuilders.post("/record/{challengeId}/create", 1)
+                MockMvcRequestBuilders.post("/record/{challengeId}", 1)
                         .with(csrf())
                         .characterEncoding("UTF-8")
                         .content(objectMapper.writeValueAsString(createRecordRequest))
