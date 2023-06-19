@@ -197,11 +197,7 @@ public class ChallengeControllerTest {
     public void joinChallengeTest() throws Exception {
         String socialId = "socialId";
         JoinChallengeRequest createUserChallengeRequest =
-                JoinChallengeRequest.builder()
-                        .nickname("닉네임")
-                        .currentCharge(10000)
-                        .imgUrl("/test.jpg")
-                        .build();
+                JoinChallengeRequest.builder().nickname("닉네임").imgUrl("/test.jpg").build();
 
         when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
         willDoNothing().given(createUserChallengeUseCase).execute(anyString(), any(), anyLong());
