@@ -16,6 +16,7 @@ import depromeet.api.domain.challenge.dto.response.*;
 import depromeet.api.domain.challenge.mapper.ChallengeMapper;
 import depromeet.api.domain.challenge.usecase.*;
 import depromeet.api.util.AuthenticationUtil;
+import depromeet.domain.challenge.domain.StatusType;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -248,6 +249,7 @@ public class ChallengeControllerTest {
                         .participantsInfo(profileResponses)
                         .rules(rules)
                         .isRecruiting(false)
+                        .status(StatusType.NOTHING.getName())
                         .dateInfo(new DateInfoResponse(7, startAt, endAt))
                         .build();
 

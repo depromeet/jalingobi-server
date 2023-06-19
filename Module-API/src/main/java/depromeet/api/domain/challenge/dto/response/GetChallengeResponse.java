@@ -2,6 +2,7 @@ package depromeet.api.domain.challenge.dto.response;
 
 
 import depromeet.domain.challenge.domain.Challenge;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,6 +29,8 @@ public class GetChallengeResponse {
 
     private List<String> rules;
 
+    private String status;
+
     private boolean isRecruiting;
 
     private DateInfoResponse dateInfo;
@@ -48,6 +51,9 @@ public class GetChallengeResponse {
                                 challenge.getUserChallenges().size()))
                 .rules(challenge.getChallengeRuleContents())
                 .isRecruiting(challenge.isRecruiting(challenge.getDuration().getStartAt()))
+                .status(
+                        challenge.checkStatusInChallengeDetail(
+                                LocalDate.from(challenge.getCreatedAt())))
                 .dateInfo(dateInfoResponse.toDateInfoResponse(challenge.getDuration()))
                 .participantsInfo(profileResponse.toProfileResponses(challenge.getUserChallenges()))
                 .build();
