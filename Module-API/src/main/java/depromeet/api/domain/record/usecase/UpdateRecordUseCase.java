@@ -7,9 +7,8 @@ import depromeet.api.domain.record.validator.RecordValidator;
 import depromeet.common.annotation.UseCase;
 import depromeet.domain.record.adaptor.RecordAdaptor;
 import depromeet.domain.record.domain.Record;
-import java.util.Optional;
-
 import depromeet.domain.userchallenge.domain.UserChallenge;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
