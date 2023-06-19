@@ -80,10 +80,10 @@ class MyPageControllerTest {
         Profile profile = Profile.createProfile(nickname, email);
         Social social = Social.createSocial(socialId, platform);
 
-        Map<Status, Integer> userChallengeResult = new HashMap<>();
-        userChallengeResult.put(Status.SUCCESS, 1);
-        userChallengeResult.put(Status.PROCEEDING, 2);
-        userChallengeResult.put(Status.COMPLETED, 3);
+        Map<String, Integer> userChallengeResult = new HashMap<>();
+        userChallengeResult.put(Status.SUCCESS.getValue(), 1);
+        userChallengeResult.put(Status.PROCEEDING.getValue(), 2);
+        userChallengeResult.put(Status.COMPLETED.getValue(), 3);
 
         GetMyPageResponse getMyPageResponse =
                 GetMyPageResponse.builder()
@@ -115,21 +115,21 @@ class MyPageControllerTest {
                                 .value(getMyPageResponse.getProfile().getImgUrl()),
                         jsonPath("$.result.notification")
                                 .value(getMyPageResponse.getNotification()),
-                        jsonPath("$.result.userChallengeResult.SUCCESS")
+                        jsonPath("$.result.userChallengeResult.성공")
                                 .value(
                                         getMyPageResponse
                                                 .getUserChallengeResult()
-                                                .get(Status.SUCCESS)),
-                        jsonPath("$.result.userChallengeResult.PROCEEDING")
+                                                .get(Status.SUCCESS.getValue())),
+                        jsonPath("$.result.userChallengeResult.참가중")
                                 .value(
                                         getMyPageResponse
                                                 .getUserChallengeResult()
-                                                .get(Status.PROCEEDING)),
-                        jsonPath("$.result.userChallengeResult.COMPLETED")
+                                                .get(Status.PROCEEDING.getValue())),
+                        jsonPath("$.result.userChallengeResult.완료")
                                 .value(
                                         getMyPageResponse
                                                 .getUserChallengeResult()
-                                                .get(Status.COMPLETED)));
+                                                .get(Status.COMPLETED.getValue())));
     }
 
     @Test
