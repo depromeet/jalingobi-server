@@ -25,12 +25,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/mypage")
 @RequiredArgsConstructor
 public class MyPageController {
+
     private final GetMyPageUseCase getMyPageUseCase;
 
     private final GetUserChallengesUseCase getUserChallengesUseCase;
     private final GetJalingobiImgUseCase getJalingobiImgUseCase;
     private final UpdateProfileUseCase updateProfileUseCase;
     private final LogoutUseCase logoutUseCase;
+    private final WithdrawalUseCase withdrawalUseCase;
     private final QuitChallengeUseCase quitChallengeUseCase;
 
     @Operation(summary = "마이페이지 조회 API")
@@ -70,6 +72,14 @@ public class MyPageController {
     public Response<CustomExceptionStatus> logout() {
 
         logoutUseCase.execute(getCurrentUserSocialId());
+        return ResponseService.getDataResponse(CustomExceptionStatus.SUCCESS);
+    }
+
+    @Operation(summary = "사용자 탈퇴 API")
+    @DeleteMapping("/withdrawal")
+    public Response<CustomExceptionStatus> withdrawal() {
+
+        withdrawalUseCase.execute(getCurrentUserSocialId());
         return ResponseService.getDataResponse(CustomExceptionStatus.SUCCESS);
     }
 
