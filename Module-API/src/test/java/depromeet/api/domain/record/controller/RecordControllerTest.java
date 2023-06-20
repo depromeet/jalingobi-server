@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import depromeet.api.config.security.filter.JwtRequestFilter;
 import depromeet.api.domain.record.dto.request.CreateRecordRequest;
+import depromeet.api.domain.record.dto.request.UpdateRecordRequest;
 import depromeet.api.domain.record.dto.response.CreateRecordResponse;
 import depromeet.api.domain.record.usecase.CreateRecordUseCase;
 import depromeet.api.domain.record.usecase.DeleteRecordUseCase;
@@ -98,7 +99,7 @@ class RecordControllerTest {
                         .build();
 
         MockHttpServletRequestBuilder requestBuilder =
-                MockMvcRequestBuilders.post("/record/{challengeId}/create", 1)
+                MockMvcRequestBuilders.post("/record/{challengeId}", 1)
                         .with(csrf())
                         .content(objectMapper.writeValueAsString(createRecordRequest))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -136,7 +137,7 @@ class RecordControllerTest {
                         .build();
 
         MockHttpServletRequestBuilder requestBuilder =
-                MockMvcRequestBuilders.post("/record/{challengeId}/create", 1)
+                MockMvcRequestBuilders.post("/record/{challengeId}", 1)
                         .with(csrf())
                         .characterEncoding("UTF-8")
                         .content(objectMapper.writeValueAsString(createRecordRequest))
@@ -161,8 +162,8 @@ class RecordControllerTest {
     @DisplayName("[PATCH] 챌린지 기록 수정")
     public void UpdateRecordTest() throws Exception {
         // given
-        CreateRecordRequest updateRecordRequest =
-                CreateRecordRequest.builder()
+        UpdateRecordRequest updateRecordRequest =
+                UpdateRecordRequest.builder()
                         .price(4000)
                         .title("커피")
                         .content("커피는 맛있어")
