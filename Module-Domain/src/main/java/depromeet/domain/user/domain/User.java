@@ -63,4 +63,12 @@ public class User extends BaseTime {
     public String getProfileNickname() {
         return this.getProfile().getNickname();
     }
+
+    public void plusScore() {
+        if (score < 6) score++;
+    }
+
+    public void minusScore() {
+        if (score > 0) score--;
+    }
 }

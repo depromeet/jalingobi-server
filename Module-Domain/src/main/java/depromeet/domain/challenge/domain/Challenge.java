@@ -225,4 +225,12 @@ public class Challenge extends BaseTime {
 
         return StatusType.NOTHING.getName();
     }
+
+    public void open() {
+        this.active = true;
+    }
+
+    public void close() {
+        this.active = false;
+    }
 }
