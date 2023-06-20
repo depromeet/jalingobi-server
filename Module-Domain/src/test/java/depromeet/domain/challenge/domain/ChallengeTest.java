@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
 import depromeet.domain.challenge.domain.keyword.ChallengeKeywords;
+import depromeet.domain.user.domain.User;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class ChallengeTest {
                         "/test.jpg",
                         mock(ChallengeKeywords.class),
                         30,
-                        "socialId",
+                        mock(User.class),
                         new ArrayList<>(),
                         mock(ChallengeCategories.class),
                         new Duration(period, startAt, startAt.plusDays(period)));
@@ -58,7 +59,7 @@ public class ChallengeTest {
                         "/test.jpg",
                         mock(ChallengeKeywords.class),
                         30,
-                        "socialId",
+                        mock(User.class),
                         new ArrayList<>(),
                         mock(ChallengeCategories.class),
                         new Duration(period, startAt, startAt.plusDays(period)));
@@ -85,7 +86,7 @@ public class ChallengeTest {
                         "/test.jpg",
                         mock(ChallengeKeywords.class),
                         30,
-                        "socialId",
+                        mock(User.class),
                         new ArrayList<>(),
                         mock(ChallengeCategories.class),
                         new Duration(period, startAt, startAt.plusDays(period)));
@@ -108,7 +109,7 @@ public class ChallengeTest {
                         "/test.jpg",
                         mock(ChallengeKeywords.class),
                         30,
-                        "socialId",
+                        mock(User.class),
                         new ArrayList<>(),
                         mock(ChallengeCategories.class),
                         new Duration(period, startAt, startAt.plusDays(period)));
