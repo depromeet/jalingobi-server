@@ -9,6 +9,7 @@ import depromeet.domain.challenge.exception.ChallengeCannotBeUpdatedAfterStartEx
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.keyword.domain.Keyword;
 import depromeet.domain.rule.domain.ChallengeRule;
+import depromeet.domain.user.domain.User;
 import depromeet.domain.userchallenge.domain.UserChallenge;
 import depromeet.domain.userchallenge.exception.ChallengeIsFullException;
 import depromeet.domain.userchallenge.exception.ChallengeIsStartedException;
@@ -50,8 +51,9 @@ public class Challenge extends BaseTime {
     @Column(name = "available_count", nullable = false)
     private int availableCount;
 
-    @Column(name = "created_by", nullable = false)
-    private String createdBy;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @OneToMany(mappedBy = "challenge")
     private List<UserChallenge> userChallenges;
@@ -73,7 +75,7 @@ public class Challenge extends BaseTime {
             String imgUrl,
             ChallengeKeywords challengeKeywords,
             int availableCount,
-            String createdBy,
+            User user,
             List<ChallengeRule> challengeRules,
             ChallengeCategories challengeCategories,
             Duration duration) {
@@ -83,7 +85,7 @@ public class Challenge extends BaseTime {
                 .imgUrl(imgUrl)
                 .challengeKeywords(challengeKeywords)
                 .availableCount(availableCount)
-                .createdBy(createdBy)
+                .user(user)
                 .challengeRules(challengeRules)
                 .challengeCategories(challengeCategories)
                 .duration(duration)
@@ -112,7 +114,7 @@ public class Challenge extends BaseTime {
     }
 
     public boolean isNotWrittenBy(String createdBy) {
-        return !this.createdBy.equals(createdBy);
+        return !this.user.getSocial().getId().equals(createdBy);
     }
 
     private boolean isStarted(final LocalDate localdate) {
