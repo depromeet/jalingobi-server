@@ -84,4 +84,15 @@ public class UserChallenge extends BaseTime {
         }
         this.currentCharge = rest;
     }
+
+    public void checkResult() {
+        // 목표 금액 이하면서 기록을 한 번 이상 작성했을시 성공
+        if (currentCharge <= goalCharge && records.size() > 0) {
+            this.status = Status.SUCCESS;
+            user.plusScore();
+        } else {
+            this.status = Status.FAILURE;
+            user.minusScore();
+        }
+    }
 }
