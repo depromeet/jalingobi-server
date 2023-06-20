@@ -38,7 +38,7 @@ public class Challenge extends BaseTime {
     private String title;
 
     @Column(nullable = false)
-    private int price;
+    private Integer price;
 
     private String imgUrl;
 
@@ -49,7 +49,7 @@ public class Challenge extends BaseTime {
     @Embedded private ChallengeKeywords challengeKeywords;
 
     @Column(name = "available_count", nullable = false)
-    private int availableCount;
+    private Integer availableCount;
 
     @OneToOne
     @JoinColumn(name = "user_id")
