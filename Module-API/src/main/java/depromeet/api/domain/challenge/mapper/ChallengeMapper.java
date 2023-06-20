@@ -11,6 +11,7 @@ import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.challenge.domain.ChallengeCategories;
 import depromeet.domain.challenge.domain.Duration;
 import depromeet.domain.challenge.domain.keyword.ChallengeKeywords;
+import depromeet.domain.user.domain.User;
 import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 
@@ -18,14 +19,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ChallengeMapper {
 
-    public Challenge toEntity(CreateChallengeRequest createChallengeRequest, String createdBy) {
+    public Challenge toEntity(CreateChallengeRequest createChallengeRequest, User user) {
         return Challenge.createChallenge(
                 createChallengeRequest.getTitle(),
                 createChallengeRequest.getPrice(),
                 createChallengeRequest.getImageUrl(),
                 new ChallengeKeywords(),
                 createChallengeRequest.getAvailableCount(),
-                createdBy,
+                user,
                 new ArrayList<>(),
                 new ChallengeCategories(),
                 Duration.builder()
