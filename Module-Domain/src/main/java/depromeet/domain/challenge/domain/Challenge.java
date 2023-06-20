@@ -53,7 +53,7 @@ public class Challenge extends BaseTime {
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private User createdBy;
 
     @OneToMany(mappedBy = "challenge")
     private List<UserChallenge> userChallenges;
@@ -85,7 +85,7 @@ public class Challenge extends BaseTime {
                 .imgUrl(imgUrl)
                 .challengeKeywords(challengeKeywords)
                 .availableCount(availableCount)
-                .user(user)
+                .createdBy(user)
                 .challengeRules(challengeRules)
                 .challengeCategories(challengeCategories)
                 .duration(duration)
@@ -114,7 +114,7 @@ public class Challenge extends BaseTime {
     }
 
     public boolean isNotWrittenBy(String createdBy) {
-        return !this.user.getSocial().getId().equals(createdBy);
+        return !this.createdBy.getSocial().getId().equals(createdBy);
     }
 
     private boolean isStarted(final LocalDate localdate) {
