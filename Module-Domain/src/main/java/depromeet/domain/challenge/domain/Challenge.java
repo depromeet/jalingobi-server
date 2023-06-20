@@ -233,4 +233,13 @@ public class Challenge extends BaseTime {
     public void close() {
         this.active = false;
     }
+
+    public Boolean isActive() {
+        return this.active;
+    }
+
+    public boolean isEnd() {
+        LocalDate now = LocalDate.now();
+        return now.isAfter(duration.getEndAt());
+    }
 }

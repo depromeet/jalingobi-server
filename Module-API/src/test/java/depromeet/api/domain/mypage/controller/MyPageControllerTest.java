@@ -9,10 +9,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import depromeet.api.config.security.filter.JwtRequestFilter;
-import depromeet.api.domain.feed.usecase.QuitChallengeUseCase;
 import depromeet.api.domain.mypage.dto.request.UpdateProfileRequest;
 import depromeet.api.domain.mypage.dto.response.GetMyPageResponse;
 import depromeet.api.domain.mypage.usecase.*;
+import depromeet.api.domain.mypage.usecase.QuitChallengeUseCase;
 import depromeet.api.util.AuthenticationUtil;
 import depromeet.domain.user.domain.Platform;
 import depromeet.domain.user.domain.Profile;
