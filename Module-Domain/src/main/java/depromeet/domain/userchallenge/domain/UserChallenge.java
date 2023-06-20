@@ -32,6 +32,9 @@ public class UserChallenge extends BaseTime {
 
     private String nickname;
 
+    @Column(name = "goal_charge", nullable = false)
+    private Integer goalCharge;
+
     @Column(name = "current_charge", nullable = false)
     private Integer currentCharge;
 
@@ -60,6 +63,7 @@ public class UserChallenge extends BaseTime {
                 .challenge(challenge)
                 .imgUrl(imgUrl)
                 .nickname(nickname)
+                .goalCharge(challenge.getPrice())
                 .currentCharge(0)
                 .status(Status.PROCEEDING)
                 .build();
