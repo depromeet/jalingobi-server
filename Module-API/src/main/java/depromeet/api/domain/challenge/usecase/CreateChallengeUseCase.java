@@ -38,7 +38,7 @@ public class CreateChallengeUseCase {
     @Transactional
     public CreateChallengeResponse execute(CreateChallengeRequest request, String socialId) {
         User currentUser = userAdaptor.findUser(socialId);
-        Challenge savedChallenge = challengeAdaptor.save(createChallenge(request, socialId));
+        Challenge savedChallenge = challengeAdaptor.save(createChallenge(request, currentUser));
 
         UserChallenge userChallenge =
                 UserChallenge.createUserChallenge(
@@ -51,7 +51,7 @@ public class CreateChallengeUseCase {
         return challengeMapper.toCreateChallengeResponse(savedChallenge.getId());
     }
 
-    public Challenge createChallenge(CreateChallengeRequest request, String socialId) {
+    public Challenge createChallenge(CreateChallengeRequest request, User user) {
 
         List<Keyword> keywords = keywordAdaptor.findOrCreateKeywords(request.getKeywords());
         List<Category> categories =
@@ -60,7 +60,7 @@ public class CreateChallengeUseCase {
                                 .map(name -> CategoryType.of(name).toString())
                                 .collect(Collectors.toList()));
 
-        Challenge challenge = challengeMapper.toEntity(request, socialId);
+        Challenge challenge = challengeMapper.toEntity(request, user);
 
         challenge.addCategories(categories);
         challenge.addRules(challengeRuleMapper.toEntities(request.getChallengeRule()));
