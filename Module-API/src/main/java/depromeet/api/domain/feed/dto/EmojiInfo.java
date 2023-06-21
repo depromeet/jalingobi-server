@@ -50,9 +50,9 @@ public class EmojiInfo {
                 record.getEmojis().stream()
                         .map(Emoji::getType)
                         .collect(Collectors.groupingBy(EmojiType::getValue, Collectors.counting()));
-        this.crazy = emojiCountMap.get(EmojiType.CRAZY_BEGGAR.getValue());
-        this.regretful = emojiCountMap.get(EmojiType.REGRETFUL_BEGGAR.getValue());
-        this.wellDone = emojiCountMap.get(EmojiType.WELL_DONE_BEGGAR.getValue());
+        this.crazy = emojiCountMap.getOrDefault(EmojiType.CRAZY_BEGGAR.getValue(), 0L);
+        this.regretful = emojiCountMap.getOrDefault(EmojiType.REGRETFUL_BEGGAR.getValue(), 0L);
+        this.wellDone = emojiCountMap.getOrDefault(EmojiType.WELL_DONE_BEGGAR.getValue(), 0L);
 
         List<Comment> comments = record.getComments();
         this.comment = comments.size();

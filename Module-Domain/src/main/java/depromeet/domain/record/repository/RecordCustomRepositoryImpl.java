@@ -44,7 +44,8 @@ public class RecordCustomRepositoryImpl implements RecordCustomRepository {
                 .fetchJoin()
                 .join(record.userChallenge, userChallenge)
                 .fetchJoin()
-                .where(record.challenge.id.eq(challengeId).and(record.id.gt(recordId)))
+                .where(record.challenge.id.eq(challengeId).and(record.id.lt(recordId)))
+                .orderBy(record.createdAt.desc())
                 .limit(limit)
                 .fetch();
     }
@@ -58,6 +59,7 @@ public class RecordCustomRepositoryImpl implements RecordCustomRepository {
                 .join(record.userChallenge, userChallenge)
                 .fetchJoin()
                 .where(record.challenge.id.eq(challengeId))
+                .orderBy(record.createdAt.desc())
                 .limit(limit)
                 .fetch();
     }

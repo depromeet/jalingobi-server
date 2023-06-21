@@ -32,6 +32,9 @@ public class UserChallenge extends BaseTime {
 
     private String nickname;
 
+    @Column(name = "goal_charge", nullable = false)
+    private Integer goalCharge;
+
     @Column(name = "current_charge", nullable = false)
     private Integer currentCharge;
 
@@ -60,6 +63,7 @@ public class UserChallenge extends BaseTime {
                 .challenge(challenge)
                 .imgUrl(imgUrl)
                 .nickname(nickname)
+                .goalCharge(challenge.getPrice())
                 .currentCharge(0)
                 .status(Status.PROCEEDING)
                 .build();
@@ -79,5 +83,16 @@ public class UserChallenge extends BaseTime {
             throw NegativeChargeException.EXCEPTION;
         }
         this.currentCharge = rest;
+    }
+
+    public void checkResult() {
+        // 목표 금액 이하면서 기록을 한 번 이상 작성했을시 성공
+        if (currentCharge <= goalCharge && records.size() > 0) {
+            this.status = Status.SUCCESS;
+            user.plusScore();
+        } else {
+            this.status = Status.FAILURE;
+            user.minusScore();
+        }
     }
 }

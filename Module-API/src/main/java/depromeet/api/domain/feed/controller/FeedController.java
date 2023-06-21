@@ -2,6 +2,8 @@ package depromeet.api.domain.feed.controller;
 
 import static depromeet.api.util.AuthenticationUtil.getCurrentUserSocialId;
 
+import depromeet.api.domain.feed.dto.request.GetChallengeFeedRequest;
+import depromeet.api.domain.feed.dto.request.GetMyRoomFeedRequest;
 import depromeet.api.domain.feed.dto.response.*;
 import depromeet.api.domain.feed.usecase.*;
 import depromeet.common.response.Response;
@@ -11,8 +13,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import javax.websocket.server.PathParam;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,10 +75,12 @@ public class FeedController {
                         content = @Content())
             })
     @GetMapping("/my-room/feed")
-    public Response<GetMyRoomFeedResponse> getMyRoomFeed(@PathParam("offset") Integer offset) {
+    public Response<GetMyRoomFeedResponse> getMyRoomFeed(
+            @Valid @ParameterObject GetMyRoomFeedRequest getMyRoomFeedRequest) {
 
         return ResponseService.getDataResponse(
-                getMyRoomFeedUseCase.execute(getCurrentUserSocialId(), offset));
+                getMyRoomFeedUseCase.execute(
+                        getCurrentUserSocialId(), getMyRoomFeedRequest.getOffset()));
     }
 
     @Operation(summary = "챌린지 방 피드 API", description = "챌린지 방에 있는 기록들을 20개씩 가져옵니다.")
@@ -90,10 +95,12 @@ public class FeedController {
     @GetMapping("/{challengeId}/feed")
     public Response<GetChallengeFeedResponse> getChallengeFeed(
             @PathVariable("challengeId") Long challengeId,
-            @PathParam("offsetRecordId") Long offsetRecordId) {
+            @Valid @ParameterObject GetChallengeFeedRequest getChallengeFeedRequest) {
 
         return ResponseService.getDataResponse(
                 getChallengeFeedUseCase.execute(
-                        getCurrentUserSocialId(), challengeId, offsetRecordId));
+                        getCurrentUserSocialId(),
+                        challengeId,
+                        getChallengeFeedRequest.getOffsetRecordId()));
     }
 }

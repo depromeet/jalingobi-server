@@ -11,13 +11,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @PropertySource("classpath:application-domain.yml")
 @EntityScan(basePackageClasses = {ModuleDomainApplication.class})
 @EnableJpaRepositories(basePackageClasses = {ModuleDomainApplication.class})
 @EnableJpaAuditing
+@EnableScheduling
 @Configuration
-public class JpaConfig {
+public class DomainConfig {
 
     @PersistenceContext private EntityManager entityManager;
 
