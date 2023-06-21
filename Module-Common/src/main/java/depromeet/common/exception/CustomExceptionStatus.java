@@ -79,6 +79,8 @@ public enum CustomExceptionStatus {
     CHALLENGE_IS_STARTED(false, 2402, "시작한 챌린지에는 참여할 수 없습니다."),
     DUPLICATE_PARTICIPATION(false, 2403, "같은 챌린지에 중복 참여는 불가능합니다."),
     STATUS_NOT_FOUND(false, 2405, "챌린지 상태가 존재하지 않습니다."),
+    END_CHALLENGE_CANNOT_QUIT(false, 2406, "종료된 챌린지는 나갈 수 없습니다."),
+    CREATOR_CANNOT_QUIT(false, 2407, "챌린지 생성자는 챌린지를 나갈 수 없습니다."),
 
     // comment
     COMMENT_NOT_BELONG_TO_USER(false, 2500, "댓글을 작성한 유저가 아닙니다."),
