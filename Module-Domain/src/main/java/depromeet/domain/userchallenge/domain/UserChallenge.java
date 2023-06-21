@@ -7,8 +7,10 @@ import depromeet.domain.jalingobi.domain.Level;
 import depromeet.domain.record.domain.Record;
 import depromeet.domain.user.domain.User;
 import depromeet.domain.userchallenge.exception.NegativeChargeException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.*;
 import lombok.*;
 
@@ -53,6 +55,7 @@ public class UserChallenge extends BaseTime {
     @JoinColumn(name = "challenge_id", nullable = false)
     private Challenge challenge;
 
+    @Builder.Default
     @OneToMany(mappedBy = "userChallenge", cascade = CascadeType.REMOVE)
     private List<Record> records = new ArrayList<>();
 
@@ -86,8 +89,19 @@ public class UserChallenge extends BaseTime {
     }
 
     public void checkResult() {
-        // 목표 금액 이하면서 기록을 한 번 이상 작성했을시 성공
-        if (currentCharge <= goalCharge && records.size() > 0) {
+        int size =
+                records.stream()
+                        .map(record -> record.getCreatedAt())
+                        .map(LocalDateTime::toLocalDate)
+                        .distinct()
+                        .collect(Collectors.toList())
+                        .size();
+        int period = challenge.getDuration().getPeriod();
+
+        int recordPercent = (size * 100) / period;
+
+        // 목표 금액 이하면서 기록을 N % 이상 작성했을시 성공
+        if (currentCharge <= goalCharge && recordPercent >= 70) {
             this.status = Status.SUCCESS;
             user.plusScore();
         } else {
