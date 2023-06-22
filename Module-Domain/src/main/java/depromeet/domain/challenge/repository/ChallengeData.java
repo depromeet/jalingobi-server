@@ -2,6 +2,7 @@ package depromeet.domain.challenge.repository;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,7 @@ public class ChallengeData {
     private int price;
     private List<String> keywords;
     private LocalDate startAt;
+    private LocalDateTime createdAt;
     private int period;
     private String status;
 
@@ -32,6 +34,7 @@ public class ChallengeData {
             String imgUrl,
             int price,
             LocalDate startAt,
+            LocalDateTime createdAt,
             int period) {
         this.id = id;
         this.title = title;
@@ -40,10 +43,15 @@ public class ChallengeData {
         this.imgUrl = imgUrl;
         this.price = price;
         this.startAt = startAt;
+        this.createdAt = createdAt;
         this.period = period;
     }
 
     public void setKeywordNames(List<String> keywordNames) {
         this.keywords = keywordNames;
+    }
+
+    public void setChallengeStatus(String status) {
+        this.status = status;
     }
 }
