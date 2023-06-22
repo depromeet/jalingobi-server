@@ -65,7 +65,7 @@ public class UserChallenge extends BaseTime {
                 .nickname(nickname)
                 .goalCharge(challenge.getPrice())
                 .currentCharge(0)
-                .status(Status.PROCEEDING)
+                .status(Status.WAITING)
                 .build();
     }
 
