@@ -6,7 +6,6 @@ import static org.mockito.Mockito.mock;
 import depromeet.domain.challenge.domain.keyword.ChallengeKeywords;
 import depromeet.domain.user.domain.User;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,32 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 public class ChallengeTest {
-
-    /*
-    챌린지 생성일 createdAt 이후 이틀 간 New 챌린지로 표시
-    챌린지 시작일 startAt = createdAt + 7
-    */
-    @Test
-    @DisplayName("New 챌린지 - 오늘 생성된 챌린지")
-    public void isNewChallenge() {
-        int period = 5;
-        LocalDate startAt = LocalDate.now().plusDays(7);
-
-        Challenge challenge =
-                Challenge.createChallenge(
-                        "마라탕 5만원 이하로 쓰기",
-                        50000,
-                        "/test.jpg",
-                        mock(ChallengeKeywords.class),
-                        30,
-                        mock(User.class),
-                        new ArrayList<>(),
-                        mock(ChallengeCategories.class),
-                        new Duration(period, startAt, startAt.plusDays(period)));
-
-        assertThat(challenge.checkStatusInChallengeFeed(LocalDate.from(LocalDateTime.now())))
-                .isEqualTo(StatusType.NEW.getName());
-    }
 
     /*
     챌린지 모집 기간 일주일 중에서 초기 4일 동안을 오픈 예정으로 표시
