@@ -17,4 +17,8 @@ public abstract class BaseTime {
     @CreatedDate protected LocalDateTime createdAt;
 
     @LastModifiedDate protected LocalDateTime updatedAt;
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }
