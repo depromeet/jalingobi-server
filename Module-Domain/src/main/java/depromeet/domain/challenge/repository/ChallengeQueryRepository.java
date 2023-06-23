@@ -85,6 +85,7 @@ public class ChallengeQueryRepository {
                 challenge.imgUrl,
                 challenge.price,
                 challenge.duration.startAt,
+                challenge.createdAt,
                 challenge.duration.period);
     }
 
