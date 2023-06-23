@@ -13,6 +13,7 @@ import depromeet.api.domain.challenge.usecase.GetChallengeInfiniteScrollFeedUseC
 import depromeet.domain.challenge.domain.ChallengeSlice;
 import depromeet.domain.challenge.repository.ChallengeData;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -50,7 +51,15 @@ public class ChallengeFeedControllerTest {
         String sortType = "price";
         ChallengeData challengeData =
                 new ChallengeData(
-                        1L, "마라탕 10만원 이하로 쓰기", 2, 10, "/test.jpg", 100000, LocalDate.now(), 5);
+                        1L,
+                        "마라탕 10만원 이하로 쓰기",
+                        2,
+                        10,
+                        "/test.jpg",
+                        100000,
+                        LocalDate.now(),
+                        LocalDateTime.now().minusDays(7),
+                        5);
         List<ChallengeData> data = new ArrayList<>();
         data.add(challengeData);
         ChallengeSlice challengeSlice = new ChallengeSlice(data, true);

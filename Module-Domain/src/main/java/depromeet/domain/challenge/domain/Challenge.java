@@ -186,14 +186,6 @@ public class Challenge extends BaseTime {
         return challengeRules.stream().map(ChallengeRule::getContent).collect(toList());
     }
 
-    private boolean isNewChallenge(final LocalDate createdAt) {
-        final LocalDate currentDate = LocalDate.now();
-        final LocalDate beforeCreatedAt = LocalDate.from(createdAt.minusDays(1));
-        final LocalDate untilNewDate = LocalDate.from(createdAt.plusDays(3));
-
-        return currentDate.isAfter(beforeCreatedAt) && currentDate.isBefore(untilNewDate);
-    }
-
     private boolean isApproachingDeadline(final LocalDate startDate) {
         final LocalDate currentDate = LocalDate.now();
         final LocalDate DeadlineStart = startDate.minusDays(4);
@@ -212,14 +204,6 @@ public class Challenge extends BaseTime {
 
     public String checkStatusInChallengeDetail(final LocalDate createdAt) {
         if (isComingSoon(createdAt)) return StatusType.COMING_SOON.getName();
-        if (isApproachingDeadline(this.getDuration().getStartAt()))
-            return StatusType.APPROACHING_DEADLINE.getName();
-
-        return StatusType.NOTHING.getName();
-    }
-
-    public String checkStatusInChallengeFeed(final LocalDate createdAt) {
-        if (isNewChallenge(createdAt)) return StatusType.NEW.getName();
         if (isApproachingDeadline(this.getDuration().getStartAt()))
             return StatusType.APPROACHING_DEADLINE.getName();
 
