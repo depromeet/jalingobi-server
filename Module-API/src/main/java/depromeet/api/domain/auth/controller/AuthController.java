@@ -60,6 +60,15 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
+    @Operation(summary = "토큰 reissue API", description = "Refresh Token을 이용해 Access Token을 재발급합니다.")
+    @ApiResponses(
+            value = {
+                @ApiResponse(responseCode = "200"),
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "유효하지 않은 Refresh Token으로 요청했을 때",
+                        content = @Content())
+            })
     public CommonResponse refreshToken(HttpServletRequest request) {
         String refreshToken = cookieUtil.getCookie(request, "RefreshToken").getValue();
         String accessToken = refreshTokenUseCase.checkRefreshToken(refreshToken);

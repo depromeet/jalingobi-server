@@ -8,12 +8,15 @@ import depromeet.api.domain.emoji.usecase.CreateEmojiUseCase;
 import depromeet.api.domain.emoji.usecase.DeleteEmojiUseCase;
 import depromeet.common.response.CommonResponse;
 import depromeet.common.response.ResponseService;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "이모지", description = "이모지 API")
+@Tag(name = "이모지", description = "이모지 CUD API")
 @RestController
 @RequestMapping("/record")
 @RequiredArgsConstructor
@@ -23,6 +26,14 @@ public class EmojiController {
     private final DeleteEmojiUseCase deleteEmojiUseCase;
 
     @PutMapping("/{recordId}/emoji")
+    @ApiResponses(
+            value = {
+                @ApiResponse(responseCode = "200"),
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "잘못된 요청값을 전달한 경우",
+                        content = @Content())
+            })
     public CommonResponse createRecordEmoji(
             @PathVariable long recordId,
             @RequestBody @Valid CreateEmojiRequest createEmojiRequest) {
@@ -31,6 +42,14 @@ public class EmojiController {
     }
 
     @DeleteMapping("/{recordId}/emoji")
+    @ApiResponses(
+            value = {
+                @ApiResponse(responseCode = "200"),
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "잘못된 요청값을 전달한 경우",
+                        content = @Content())
+            })
     public CommonResponse deleteRecordEmoji(
             @PathVariable long recordId, @RequestBody @Valid DeleteEmojiRequest request) {
         deleteEmojiUseCase.execute(getCurrentUserSocialId(), recordId, request.getType());
