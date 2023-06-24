@@ -162,7 +162,7 @@ public class ChallengeControllerTest {
                 .andDo(print())
                 .andExpectAll(
                         status().isOk(),
-                        jsonPath("$.result.categories").value(response.getCategories()),
+                        jsonPath("$.result.category").value(response.getCategory()),
                         jsonPath("$.result.title").value(response.getTitle()),
                         jsonPath("$.result.price").value(response.getPrice()),
                         jsonPath("$.result.imgUrl").value(response.getImgUrl()),
@@ -217,8 +217,7 @@ public class ChallengeControllerTest {
     @Test
     @DisplayName("챌린지 상세 조회")
     public void getChallengeTest() throws Exception {
-        List<String> categories = new ArrayList<>();
-        categories.add("식비");
+        String category = "식비";
 
         List<String> keywords = new ArrayList<>();
         keywords.add("#마라탕");
@@ -236,7 +235,7 @@ public class ChallengeControllerTest {
         GetChallengeResponse response =
                 GetChallengeResponse.builder()
                         .challengeId(1L)
-                        .categories(categories)
+                        .category(category)
                         .title("마라탕 5만원 이하로 쓰기")
                         .price(50000)
                         .challengeImgUrl("/test.jpg")
