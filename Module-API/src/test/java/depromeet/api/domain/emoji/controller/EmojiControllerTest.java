@@ -69,7 +69,7 @@ class EmojiControllerTest {
     public void CreateRecordEmojiTest() throws Exception {
         // given
         CreateEmojiRequest createEmojiRequest =
-                CreateEmojiRequest.builder().type(EmojiType.CRAZY_BEGGAR.getValue()).build();
+                CreateEmojiRequest.builder().type(EmojiType.CRAZY.toString()).build();
 
         MockHttpServletRequestBuilder requestBuilder =
                 MockMvcRequestBuilders.put("/record/{recordId}/emoji", 1)
@@ -92,7 +92,7 @@ class EmojiControllerTest {
     public void DeleteRecordEmojiTest() throws Exception {
         // given
         DeleteEmojiRequest deleteEmojiRequest =
-                DeleteEmojiRequest.builder().type(EmojiType.CRAZY_BEGGAR.getValue()).build();
+                DeleteEmojiRequest.builder().type(EmojiType.CRAZY.toString()).build();
         MockHttpServletRequestBuilder requestBuilder =
                 MockMvcRequestBuilders.delete("/record/{recordId}/emoji", 1)
                         .with(csrf())

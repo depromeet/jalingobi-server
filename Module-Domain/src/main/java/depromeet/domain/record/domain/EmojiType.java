@@ -9,11 +9,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum EmojiType {
-    WELL_DONE_BEGGAR("잘한거지"),
-    REGRETFUL_BEGGAR("후회할거지"),
-    CRAZY_BEGGAR("미친거지");
+    WELLDONE("WELLDONE"),
+    REGRETFUL("REGRETFUL"),
+    CRAZY("CRAZY");
 
-    private final String value;
+    private String value;
 
     public static EmojiType of(String source) {
         return Arrays.stream(EmojiType.values())
