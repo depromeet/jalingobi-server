@@ -1,6 +1,7 @@
 package depromeet.api.domain.feed.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import depromeet.domain.comment.domain.Comment;
 import depromeet.domain.emoji.domain.Emoji;
 import depromeet.domain.record.domain.EmojiType;
@@ -22,13 +23,16 @@ public class EmojiInfo {
     private String selected = null;
 
     @Schema(description = "CRAZY", example = "2")
-    private Long CRAZY;
+    @JsonProperty("CRAZY")
+    private Long crazy;
 
     @Schema(description = "REGRETFUL", example = "0")
-    private Long REGRETFUL;
+    @JsonProperty("REGRETFUL")
+    private Long regretful;
 
     @Schema(description = "WELLDONE", example = "3")
-    private Long WELLDONE;
+    @JsonProperty("WELLDONE")
+    private Long wellDone;
 
     @Schema(description = "댓글수", example = "5")
     private Integer comment;
@@ -51,9 +55,9 @@ public class EmojiInfo {
                         .collect(
                                 Collectors.groupingBy(
                                         emojiType -> emojiType.toString(), Collectors.counting()));
-        CRAZY = emojiCountMap.get(EmojiType.CRAZY.toString());
-        REGRETFUL = emojiCountMap.get(EmojiType.REGRETFUL.toString());
-        WELLDONE = emojiCountMap.get(EmojiType.WELLDONE.toString());
+        crazy = emojiCountMap.get(EmojiType.CRAZY.toString());
+        regretful = emojiCountMap.get(EmojiType.REGRETFUL.toString());
+        wellDone = emojiCountMap.get(EmojiType.WELLDONE.toString());
 
         List<Comment> comments = record.getComments();
         this.comment = comments.size();

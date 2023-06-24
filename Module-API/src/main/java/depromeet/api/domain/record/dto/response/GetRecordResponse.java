@@ -1,6 +1,7 @@
 package depromeet.api.domain.record.dto.response;
 
 
+import depromeet.api.domain.feed.dto.EmojiInfo;
 import depromeet.api.domain.record.dto.CommentInfo;
 import depromeet.api.domain.record.dto.RecordInfo;
 import depromeet.domain.record.domain.Record;
@@ -24,6 +25,8 @@ public class GetRecordResponse {
 
     private RecordInfo recordInfo;
 
+    private EmojiInfo emojiInfo;
+
     private List<CommentInfo> commentInfoList;
 
     public static GetRecordResponse of(Record record, Long myUserChallengeId) {
@@ -32,6 +35,7 @@ public class GetRecordResponse {
 
         RecordUserInfo userInfo = new RecordUserInfo(record.getUserChallenge());
         RecordInfo recordInfo = new RecordInfo(record);
+        EmojiInfo emojiInfo = new EmojiInfo(record);
 
         List<CommentInfo> commentInfoList =
                 record.getComments().stream()
@@ -42,6 +46,7 @@ public class GetRecordResponse {
                 .isMine(isMine)
                 .userInfo(userInfo)
                 .recordInfo(recordInfo)
+                .emojiInfo(emojiInfo)
                 .commentInfoList(commentInfoList)
                 .build();
     }
