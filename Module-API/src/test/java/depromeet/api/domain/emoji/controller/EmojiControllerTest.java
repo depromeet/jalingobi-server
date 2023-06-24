@@ -1,19 +1,17 @@
 package depromeet.api.domain.emoji.controller;
 
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import depromeet.api.config.security.filter.JwtRequestFilter;
 import depromeet.api.domain.emoji.dto.request.CreateEmojiRequest;
 import depromeet.api.domain.emoji.dto.request.DeleteEmojiRequest;
-import depromeet.api.domain.emoji.dto.response.CreateEmojiResponse;
-import depromeet.api.domain.emoji.dto.response.DeleteEmojiResponse;
 import depromeet.api.domain.emoji.usecase.CreateEmojiUseCase;
 import depromeet.api.domain.emoji.usecase.DeleteEmojiUseCase;
 import depromeet.api.util.AuthenticationUtil;
@@ -73,13 +71,6 @@ class EmojiControllerTest {
         CreateEmojiRequest createEmojiRequest =
                 CreateEmojiRequest.builder().type(EmojiType.CRAZY_BEGGAR.getValue()).build();
 
-        CreateEmojiResponse createEmojiResponse =
-                CreateEmojiResponse.builder()
-                        .emojisCount(1)
-                        .type(createEmojiRequest.getType())
-                        .selected(true)
-                        .build();
-
         MockHttpServletRequestBuilder requestBuilder =
                 MockMvcRequestBuilders.put("/record/{recordId}/emoji", 1)
                         .with(csrf())
@@ -91,16 +82,9 @@ class EmojiControllerTest {
         String socialId = "socialId";
 
         when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
-        when(createEmojiUseCase.execute(anyString(), anyLong(), any()))
-                .thenReturn(createEmojiResponse);
-        mockMvc.perform(requestBuilder)
-                .andDo(print())
-                .andExpectAll(
-                        status().isOk(),
-                        jsonPath("$.result.emojisCount")
-                                .value(createEmojiResponse.getEmojisCount()),
-                        jsonPath("$.result.type").value(createEmojiResponse.getType()),
-                        jsonPath("$.result.selected").value(createEmojiResponse.getSelected()));
+        willDoNothing().given(createEmojiUseCase).execute(anyString(), anyLong(), any());
+
+        mockMvc.perform(requestBuilder).andDo(print()).andExpectAll(status().isOk());
     }
 
     @Test
@@ -109,10 +93,6 @@ class EmojiControllerTest {
         // given
         DeleteEmojiRequest deleteEmojiRequest =
                 DeleteEmojiRequest.builder().type(EmojiType.CRAZY_BEGGAR.getValue()).build();
-
-        DeleteEmojiResponse deleteEmojiResponse =
-                DeleteEmojiResponse.builder().emojisCount(0).selected(false).build();
-
         MockHttpServletRequestBuilder requestBuilder =
                 MockMvcRequestBuilders.delete("/record/{recordId}/emoji", 1)
                         .with(csrf())
@@ -120,18 +100,11 @@ class EmojiControllerTest {
                         .characterEncoding("UTF-8")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON);
-
         String socialId = "socialId";
 
         when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
-        when(deleteEmojiUseCase.execute(anyString(), anyLong(), anyString()))
-                .thenReturn(deleteEmojiResponse);
-        mockMvc.perform(requestBuilder)
-                .andDo(print())
-                .andExpectAll(
-                        status().isOk(),
-                        jsonPath("$.result.emojisCount")
-                                .value(deleteEmojiResponse.getEmojisCount()),
-                        jsonPath("$.result.selected").value(deleteEmojiResponse.getSelected()));
+        willDoNothing().given(deleteEmojiUseCase).execute(anyString(), anyLong(), anyString());
+
+        mockMvc.perform(requestBuilder).andDo(print()).andExpectAll(status().isOk());
     }
 }
