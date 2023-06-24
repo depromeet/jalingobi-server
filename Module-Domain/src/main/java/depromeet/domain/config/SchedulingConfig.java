@@ -40,9 +40,5 @@ public class SchedulingConfig {
                         yesterday, ChallengeStatusType.CLOSE.toString());
 
         challenges.stream().forEach(challenge -> challenge.close());
-
-        challenges.stream()
-                .flatMap(challenge -> challenge.getUserChallenges().stream())
-                .forEach(userChallenge -> userChallenge.checkResult());
     }
 }

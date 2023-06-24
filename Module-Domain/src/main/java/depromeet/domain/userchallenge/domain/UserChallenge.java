@@ -88,7 +88,7 @@ public class UserChallenge extends BaseTime {
         this.currentCharge = rest;
     }
 
-    public void checkResult() {
+    public void endChallenge() {
         int size =
                 records.stream()
                         .map(record -> record.getCreatedAt())
@@ -101,12 +101,16 @@ public class UserChallenge extends BaseTime {
         int recordPercent = (size * 100) / period;
 
         // 목표 금액 이하면서 기록을 N % 이상 작성했을시 성공
-        if (currentCharge <= goalCharge && recordPercent >= 70) {
-            this.status = Status.SUCCESS;
+        if (status == Status.PROCEEDING && currentCharge <= goalCharge && recordPercent >= 70) {
+            status = Status.SUCCESS;
             user.plusScore();
         } else {
-            this.status = Status.FAILURE;
+            status = Status.FAILURE;
             user.minusScore();
         }
+    }
+
+    public void startChallenge() {
+        if (status == Status.WAITING) status = Status.PROCEEDING;
     }
 }
