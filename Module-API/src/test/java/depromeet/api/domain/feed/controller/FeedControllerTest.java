@@ -160,7 +160,7 @@ class FeedControllerTest {
 
         EmojiInfo emojiInfo =
                 EmojiInfo.builder()
-                        .selectedEmoji("미친거지")
+                        .selected("CRAZY")
                         .crazy(2L)
                         .regretful(0L)
                         .wellDone(3L)
@@ -213,13 +213,13 @@ class FeedControllerTest {
                                 .value(challengeInfo.getImgUrl()),
                         jsonPath("$.result.myFeedList[0].challengeInfo.title")
                                 .value(challengeInfo.getTitle()),
-                        jsonPath("$.result.myFeedList[0].emojiInfo.selectedEmoji")
-                                .value(emojiInfo.getSelectedEmoji()),
-                        jsonPath("$.result.myFeedList[0].emojiInfo.crazy")
+                        jsonPath("$.result.myFeedList[0].emojiInfo.selected")
+                                .value(emojiInfo.getSelected()),
+                        jsonPath("$.result.myFeedList[0].emojiInfo.CRAZY")
                                 .value(emojiInfo.getCrazy()),
-                        jsonPath("$.result.myFeedList[0].emojiInfo.regretful")
+                        jsonPath("$.result.myFeedList[0].emojiInfo.REGRETFUL")
                                 .value(emojiInfo.getRegretful()),
-                        jsonPath("$.result.myFeedList[0].emojiInfo.wellDone")
+                        jsonPath("$.result.myFeedList[0].emojiInfo.WELLDONE")
                                 .value(emojiInfo.getWellDone()),
                         jsonPath("$.result.myFeedList[0].emojiInfo.comment")
                                 .value(emojiInfo.getComment()));
@@ -250,7 +250,7 @@ class FeedControllerTest {
 
         EmojiInfo emojiInfo =
                 EmojiInfo.builder()
-                        .selectedEmoji("미친거지")
+                        .selected("CRAZY")
                         .crazy(2L)
                         .regretful(0L)
                         .wellDone(3L)
@@ -309,13 +309,13 @@ class FeedControllerTest {
                                 .value(feedRecordInfo.getContent()),
                         jsonPath("$.result.challengeFeedList[0].recordInfo.price")
                                 .value(feedRecordInfo.getPrice()),
-                        jsonPath("$.result.challengeFeedList[0].emojiInfo.selectedEmoji")
-                                .value(emojiInfo.getSelectedEmoji()),
-                        jsonPath("$.result.challengeFeedList[0].emojiInfo.crazy")
+                        jsonPath("$.result.challengeFeedList[0].emojiInfo.selected")
+                                .value(emojiInfo.getSelected()),
+                        jsonPath("$.result.challengeFeedList[0].emojiInfo.CRAZY")
                                 .value(emojiInfo.getCrazy()),
-                        jsonPath("$.result.challengeFeedList[0].emojiInfo.regretful")
+                        jsonPath("$.result.challengeFeedList[0].emojiInfo.REGRETFUL")
                                 .value(emojiInfo.getRegretful()),
-                        jsonPath("$.result.challengeFeedList[0].emojiInfo.wellDone")
+                        jsonPath("$.result.challengeFeedList[0].emojiInfo.WELLDONE")
                                 .value(emojiInfo.getWellDone()),
                         jsonPath("$.result.challengeFeedList[0].emojiInfo.comment")
                                 .value(emojiInfo.getComment()));
