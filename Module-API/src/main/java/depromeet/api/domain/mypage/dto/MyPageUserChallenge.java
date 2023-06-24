@@ -57,7 +57,7 @@ public class MyPageUserChallenge {
                 .challengeId(challenge.getId())
                 .title(challenge.getTitle())
                 .imgUrl(challenge.getImgUrl())
-                .active(challenge.getActive())
+                .active(challenge.isActive())
                 .duration(dateInfo)
                 .availableCount(challenge.getAvailableCount())
                 .status(status.getValue())

@@ -2,6 +2,7 @@ package depromeet.api.domain.feed.dto.response;
 
 
 import depromeet.api.domain.feed.dto.ParticipatedChallenge;
+import depromeet.domain.challenge.domain.ChallengeStatusType;
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.userchallenge.domain.UserChallenge;
 import java.util.Comparator;
@@ -27,7 +28,9 @@ public class GetMyChallengeListResponse {
                         .collect(Collectors.toList());
 
         // 맨 앞에 내 방 정보 추가
-        ParticipatedChallenge myRoom = new ParticipatedChallenge(0L, "내 방", "baseImg", true);
+        ParticipatedChallenge myRoom =
+                new ParticipatedChallenge(
+                        0L, "내 방", "baseImg", ChallengeStatusType.PROCEEDING.toString());
         participatedChallengeList.add(0, myRoom);
 
         return new GetMyChallengeListResponse(participatedChallengeList);
