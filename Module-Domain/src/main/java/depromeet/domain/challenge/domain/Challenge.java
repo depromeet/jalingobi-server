@@ -18,7 +18,6 @@ import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 @Builder
 @Getter
@@ -42,9 +41,8 @@ public class Challenge extends BaseTime {
 
     private String imgUrl;
 
-    @Builder.Default
-    @ColumnDefault("false")
-    private Boolean active = false;
+    @Enumerated(EnumType.STRING)
+    private ChallengeStatusType status;
 
     @Embedded private ChallengeKeywords challengeKeywords;
 
@@ -85,6 +83,7 @@ public class Challenge extends BaseTime {
                 .imgUrl(imgUrl)
                 .challengeKeywords(challengeKeywords)
                 .availableCount(availableCount)
+                .status(ChallengeStatusType.RECRUITING)
                 .createdBy(user)
                 .challengeRules(challengeRules)
                 .challengeCategories(challengeCategories)
@@ -211,15 +210,16 @@ public class Challenge extends BaseTime {
     }
 
     public void open() {
-        this.active = true;
+        this.status = ChallengeStatusType.PROCEEDING;
     }
 
     public void close() {
-        this.active = false;
+        this.status = ChallengeStatusType.CLOSE;
     }
 
     public Boolean isActive() {
-        return this.active;
+        if (this.status.equals(ChallengeStatusType.PROCEEDING)) return true;
+        return false;
     }
 
     public boolean isEnd() {
