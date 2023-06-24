@@ -2,7 +2,6 @@ package depromeet.api.domain.emoji.usecase;
 
 
 import depromeet.api.domain.emoji.dto.request.CreateEmojiRequest;
-import depromeet.api.domain.emoji.dto.response.CreateEmojiResponse;
 import depromeet.common.annotation.UseCase;
 import depromeet.domain.record.adaptor.RecordAdaptor;
 import depromeet.domain.record.domain.Record;
@@ -22,15 +21,12 @@ public class CreateEmojiUseCase {
     private final RecordAdaptor recordAdaptor;
 
     @Transactional
-    public CreateEmojiResponse execute(
-            String socialId, Long recordId, CreateEmojiRequest createEmojiRequest) {
+    public void execute(String socialId, Long recordId, CreateEmojiRequest createEmojiRequest) {
         User user = userAdaptor.findUser(socialId);
         Record record = recordAdaptor.findRecord(recordId);
         UserChallenge userChallenge =
                 userChallengeAdaptor.findUserChallenge(record.getChallenge(), user);
 
         record.reactEmoji(userChallenge, createEmojiRequest.getType());
-
-        return new CreateEmojiResponse(record.getEmojiCounts(), createEmojiRequest.getType(), true);
     }
 }
