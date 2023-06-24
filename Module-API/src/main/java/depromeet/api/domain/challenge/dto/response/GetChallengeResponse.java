@@ -13,7 +13,7 @@ public class GetChallengeResponse {
 
     private long challengeId;
 
-    private List<String> categories;
+    private String category;
 
     private String title;
 
@@ -40,7 +40,7 @@ public class GetChallengeResponse {
         DateInfoResponse dateInfoResponse = new DateInfoResponse();
         return GetChallengeResponse.builder()
                 .challengeId(challenge.getId())
-                .categories(challenge.getChallengeCategories().getCategoryNames())
+                .category(challenge.getChallengeCategories().getCategoryNames().get(0))
                 .title(challenge.getTitle())
                 .price(challenge.getPrice())
                 .challengeImgUrl(challenge.getImgUrl())
