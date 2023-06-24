@@ -21,15 +21,15 @@ public class ParticipatedChallenge {
     @Schema(description = "챌린지 대표 이미지", example = "이미지 URL")
     private String imgUrl;
 
-    @Schema(description = "챌린지 진행 여부")
-    private Boolean active;
+    @Schema(description = "챌린지 진행 여부 - RECRUITING, PROCEEDING 둘 중 하나의 값", example = "PROCEEDING")
+    private String status;
 
     public static ParticipatedChallenge createParticipatedChallenge(Challenge challenge) {
         return ParticipatedChallenge.builder()
                 .challengeId(challenge.getId())
                 .title(challenge.getTitle())
                 .imgUrl(challenge.getImgUrl())
-                .active(challenge.getActive())
+                .status(challenge.getStatus().toString())
                 .build();
     }
 }

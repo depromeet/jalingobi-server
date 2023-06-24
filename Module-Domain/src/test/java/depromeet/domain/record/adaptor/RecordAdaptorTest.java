@@ -65,7 +65,7 @@ class RecordAdaptorTest {
                         .imgUrl("")
                         .challengeKeywords(challengeKeywords)
                         .availableCount(5)
-                        .createdBy("정유니")
+                        .createdBy(user)
                         .duration(
                                 Duration.builder()
                                         .period(10)

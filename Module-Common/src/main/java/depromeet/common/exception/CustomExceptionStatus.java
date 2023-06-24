@@ -11,6 +11,7 @@ public enum CustomExceptionStatus {
     BAD_REQUEST(false, 1001, "잘못된 요청입니다."),
     TOO_MANY_REQUEST(false, 1002, "잠시 후에 다시 시도해주세요."),
     INTERNAL_SERVER_ERROR(false, 1003, "서버 내부에서 문제가 발생하였습니다."),
+    LIST_NOT_NULL_ERROR(false, 1004, "비어있는 리스트 입니다."),
 
     // auth
     REQUEST_ERROR(false, 1100, "입력 값을 확인해 주세요."),
@@ -57,6 +58,7 @@ public enum CustomExceptionStatus {
     RECORD_NOT_FOUND(false, 2000, "유효하지 않은 평가 점수입니다."),
     RECORD_EVALUATION_NOT_VALID(false, 2001, "유효하지 않은 평가 점수입니다."),
     INVALID_RECORD_USER(false, 2002, "해당 지출을 기록한 사용자가 아닙니다."),
+    CHARGE_CANNOT_BE_NEGATIVE(false, 2003, "현재 지출 비용은 마이너스 값이 될 수 없습니다."),
 
     // category
     CATEGORY_NOT_FOUND(false, 2100, "존재하지 않는 카테고리입니다."),
@@ -77,13 +79,16 @@ public enum CustomExceptionStatus {
     CHALLENGE_IS_STARTED(false, 2402, "시작한 챌린지에는 참여할 수 없습니다."),
     DUPLICATE_PARTICIPATION(false, 2403, "같은 챌린지에 중복 참여는 불가능합니다."),
     STATUS_NOT_FOUND(false, 2405, "챌린지 상태가 존재하지 않습니다."),
+    END_CHALLENGE_CANNOT_QUIT(false, 2406, "종료된 챌린지는 나갈 수 없습니다."),
+    CREATOR_CANNOT_QUIT(false, 2407, "챌린지 생성자는 챌린지를 나갈 수 없습니다."),
 
     // comment
     COMMENT_NOT_BELONG_TO_USER(false, 2500, "댓글을 작성한 유저가 아닙니다."),
 
     // jalingobi
     JALINGOBI_LEVEL_NOT_FOUND(false, 2600, "현재 점수에 해당하는 자린고비 레벨이 없습니다."),
-    JALINGOBI_NOT_FOUND(false, 2601, "존재하지 않는 자린고비 입니다.");
+    JALINGOBI_NOT_FOUND(false, 2601, "존재하지 않는 자린고비 입니다."),
+    SMALL_TALK_NOT_FOUND(false, 2602, "해당 레벨에는 자린고비 한마디가 존재하지 않습니다.");
 
     private final boolean isSuccess;
     private final int code;

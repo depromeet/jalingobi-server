@@ -5,6 +5,7 @@ import depromeet.domain.user.domain.Profile;
 import depromeet.domain.user.domain.Social;
 import depromeet.domain.userchallenge.domain.Status;
 import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,18 +15,25 @@ public class GetMyPageResponse {
     private Social social;
     private Profile profile;
     private Boolean notification;
-    private Map<Status, Integer> userChallengeResult;
+    private Map<String, Integer> userChallengeResult;
 
     public static GetMyPageResponse of(
             Social social,
             Profile profile,
             Boolean notification,
-            Map<Status, Integer> userChallengeResult) {
+            Map<Status, Integer> challengeResult) {
+
+        Map<String, Integer> result =
+                challengeResult.entrySet().stream()
+                        .collect(
+                                Collectors.toMap(
+                                        entry -> entry.getKey().getValue(), Map.Entry::getValue));
+
         return GetMyPageResponse.builder()
                 .social(social)
                 .profile(profile)
                 .notification(notification)
-                .userChallengeResult(userChallengeResult)
+                .userChallengeResult(result)
                 .build();
     }
 }

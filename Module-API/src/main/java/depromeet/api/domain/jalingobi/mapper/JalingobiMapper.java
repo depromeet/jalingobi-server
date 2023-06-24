@@ -2,6 +2,7 @@ package depromeet.api.domain.jalingobi.mapper;
 
 
 import depromeet.api.domain.jalingobi.dto.response.GetJalingobiResponse;
+import depromeet.api.domain.jalingobi.dto.response.GetSmallTalkResponse;
 import depromeet.common.annotation.Mapper;
 import depromeet.domain.jalingobi.domain.Jalingobi;
 import depromeet.domain.jalingobi.domain.Level;
@@ -14,5 +15,9 @@ public class JalingobiMapper {
     public GetJalingobiResponse toGetJalingobiResponse(
             List<Jalingobi> jalingobiList, Level userLevel) {
         return GetJalingobiResponse.of(jalingobiList, userLevel);
+    }
+
+    public GetSmallTalkResponse toGetSmallTalkResponse(String smallTalk) {
+        return GetSmallTalkResponse.of(smallTalk);
     }
 }

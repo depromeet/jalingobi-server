@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 @Adaptor
 @RequiredArgsConstructor
 public class JalingobiAdaptor {
+
     private final JalingobiRepository jalingobiRepository;
 
     public List<Jalingobi> findAll() {

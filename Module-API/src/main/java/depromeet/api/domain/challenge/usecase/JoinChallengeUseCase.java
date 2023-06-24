@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class JoinChallengeUseCase {
 
@@ -21,7 +21,7 @@ public class JoinChallengeUseCase {
     private final ChallengeAdaptor challengeAdaptor;
     private final UserChallengeAdaptor userChallengeAdaptor;
 
-    public void execute(
+    public synchronized void execute(
             String socialId, JoinChallengeRequest joinChallengeRequest, Long challengeId) {
         User user = userAdaptor.findUser(socialId);
         Challenge challenge = challengeAdaptor.findChallenge(challengeId);
@@ -34,7 +34,7 @@ public class JoinChallengeUseCase {
                 UserChallenge.createUserChallenge(
                         user,
                         challenge,
-                        joinChallengeRequest.getNickname(),
-                        joinChallengeRequest.getCurrentCharge()));
+                        joinChallengeRequest.getImgUrl(),
+                        joinChallengeRequest.getNickname()));
     }
 }
