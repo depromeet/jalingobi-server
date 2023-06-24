@@ -4,11 +4,9 @@ import static depromeet.api.util.AuthenticationUtil.getCurrentUserSocialId;
 
 import depromeet.api.domain.emoji.dto.request.CreateEmojiRequest;
 import depromeet.api.domain.emoji.dto.request.DeleteEmojiRequest;
-import depromeet.api.domain.emoji.dto.response.CreateEmojiResponse;
-import depromeet.api.domain.emoji.dto.response.DeleteEmojiResponse;
 import depromeet.api.domain.emoji.usecase.CreateEmojiUseCase;
 import depromeet.api.domain.emoji.usecase.DeleteEmojiUseCase;
-import depromeet.common.response.Response;
+import depromeet.common.response.CommonResponse;
 import depromeet.common.response.ResponseService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
@@ -25,17 +23,17 @@ public class EmojiController {
     private final DeleteEmojiUseCase deleteEmojiUseCase;
 
     @PutMapping("/{recordId}/emoji")
-    public Response<CreateEmojiResponse> createRecordEmoji(
+    public CommonResponse createRecordEmoji(
             @PathVariable long recordId,
             @RequestBody @Valid CreateEmojiRequest createEmojiRequest) {
-        return ResponseService.getDataResponse(
-                createEmojiUseCase.execute(getCurrentUserSocialId(), recordId, createEmojiRequest));
+        createEmojiUseCase.execute(getCurrentUserSocialId(), recordId, createEmojiRequest);
+        return ResponseService.getSuccessResponse();
     }
 
     @DeleteMapping("/{recordId}/emoji")
-    public Response<DeleteEmojiResponse> deleteRecordEmoji(
+    public CommonResponse deleteRecordEmoji(
             @PathVariable long recordId, @RequestBody @Valid DeleteEmojiRequest request) {
-        return ResponseService.getDataResponse(
-                deleteEmojiUseCase.execute(getCurrentUserSocialId(), recordId, request.getType()));
+        deleteEmojiUseCase.execute(getCurrentUserSocialId(), recordId, request.getType());
+        return ResponseService.getSuccessResponse();
     }
 }
