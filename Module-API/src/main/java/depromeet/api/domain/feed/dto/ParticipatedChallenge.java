@@ -2,6 +2,7 @@ package depromeet.api.domain.feed.dto;
 
 
 import depromeet.domain.challenge.domain.Challenge;
+import depromeet.domain.challenge.domain.ChallengeStatusType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,14 +23,14 @@ public class ParticipatedChallenge {
     private String imgUrl;
 
     @Schema(description = "챌린지 진행 여부")
-    private Boolean active;
+    private String status;
 
     public static ParticipatedChallenge createParticipatedChallenge(Challenge challenge) {
         return ParticipatedChallenge.builder()
                 .challengeId(challenge.getId())
                 .title(challenge.getTitle())
                 .imgUrl(challenge.getImgUrl())
-                .active(challenge.getActive())
+                .status(ChallengeStatusType.PROCEEDING.toString())
                 .build();
     }
 }
