@@ -203,6 +203,7 @@ public class Challenge extends BaseTime {
 
     public String checkStatusInChallengeDetail(final LocalDate createdAt) {
         if (isComingSoon(createdAt)) return StatusType.COMING_SOON.getName();
+        // 리팩토링 예정
         if (isApproachingDeadline(this.getDuration().getStartAt()))
             return StatusType.APPROACHING_DEADLINE.getName();
 
@@ -210,20 +211,28 @@ public class Challenge extends BaseTime {
     }
 
     public void open() {
-        this.status = ChallengeStatusType.PROCEEDING;
+        if (isRecruiting()) {
+            status = ChallengeStatusType.PROCEEDING;
+            userChallenges.stream().forEach(userChallenge -> userChallenge.startChallenge());
+        }
     }
 
     public void close() {
-        this.status = ChallengeStatusType.CLOSE;
+        if (isProceeding()) {
+            status = ChallengeStatusType.CLOSE;
+            userChallenges.stream().forEach(userChallenge -> userChallenge.endChallenge());
+        }
     }
 
-    public Boolean isActive() {
-        if (this.status.equals(ChallengeStatusType.PROCEEDING)) return true;
-        return false;
+    public Boolean isProceeding() {
+        return (status == ChallengeStatusType.PROCEEDING);
+    }
+
+    public Boolean isRecruiting() {
+        return (status == ChallengeStatusType.RECRUITING);
     }
 
     public boolean isEnd() {
-        LocalDate now = LocalDate.now();
-        return now.isAfter(duration.getEndAt());
+        return status == ChallengeStatusType.CLOSE;
     }
 }

@@ -1,6 +1,5 @@
 package depromeet.domain.userchallenge.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.challenge.domain.Duration;
@@ -38,7 +37,7 @@ class UserChallengeTest {
         }
 
         // when
-        userChallenge.checkResult();
+        userChallenge.endChallenge();
 
         // then
         Assertions.assertEquals(Status.SUCCESS, userChallenge.getStatus());
@@ -70,7 +69,7 @@ class UserChallengeTest {
         }
 
         // when
-        userChallenge.checkResult();
+        userChallenge.endChallenge();
 
         // then
         Assertions.assertEquals(Status.FAILURE, userChallenge.getStatus());
