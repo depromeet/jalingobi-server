@@ -113,4 +113,8 @@ public class UserChallenge extends BaseTime {
     public void startChallenge() {
         if (status == Status.WAITING) status = Status.PROCEEDING;
     }
+
+    public boolean isWaitingOrProceeding() {
+        return (status == Status.WAITING || status == Status.PROCEEDING);
+    }
 }
