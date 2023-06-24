@@ -2,6 +2,7 @@ package depromeet.domain.config;
 
 
 import depromeet.domain.challenge.domain.Challenge;
+import depromeet.domain.challenge.domain.ChallengeStatusType;
 import depromeet.domain.challenge.repository.ChallengeRepository;
 import java.time.LocalDate;
 import java.util.List;
@@ -23,7 +24,9 @@ public class SchedulingConfig {
     public void openChallenge() {
         log.info("openChallenge");
         LocalDate now = LocalDate.now();
-        List<Challenge> challenges = challengeRepository.findStartChallenge(now, false);
+        List<Challenge> challenges =
+                challengeRepository.findStartChallenge(
+                        now, ChallengeStatusType.PROCEEDING.toString());
         challenges.stream().forEach(challenge -> challenge.open());
     }
 
@@ -32,7 +35,9 @@ public class SchedulingConfig {
     public void closeChallenge() {
         log.info("closeChallenge");
         LocalDate yesterday = LocalDate.now().minusDays(1);
-        List<Challenge> challenges = challengeRepository.findEndChallenge(yesterday, true);
+        List<Challenge> challenges =
+                challengeRepository.findEndChallenge(
+                        yesterday, ChallengeStatusType.CLOSE.toString());
 
         challenges.stream().forEach(challenge -> challenge.close());
 
