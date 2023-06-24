@@ -20,6 +20,7 @@ import depromeet.api.domain.feed.usecase.GetChallengeProceedingInfoUseCase;
 import depromeet.api.domain.feed.usecase.GetMyChallengeListUseCase;
 import depromeet.api.domain.feed.usecase.GetMyRoomFeedUseCase;
 import depromeet.api.util.AuthenticationUtil;
+import depromeet.domain.challenge.domain.ChallengeStatusType;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +82,7 @@ class FeedControllerTest {
                         .challengeId(12L)
                         .title("마라탕 안먹기")
                         .imgUrl("imgUrl")
-                        .active(true)
+                        .status(ChallengeStatusType.PROCEEDING.toString())
                         .build();
         participatedChallengeList.add(response);
 
@@ -105,8 +106,8 @@ class FeedControllerTest {
                                 .value(response.getTitle()),
                         jsonPath("$.result.participatedChallengeList[0].imgUrl")
                                 .value(response.getImgUrl()),
-                        jsonPath("$.result.participatedChallengeList[0].active")
-                                .value(response.getActive()));
+                        jsonPath("$.result.participatedChallengeList[0].status")
+                                .value(response.getStatus()));
     }
 
     @Test
