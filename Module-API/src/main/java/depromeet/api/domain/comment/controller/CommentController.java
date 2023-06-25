@@ -12,6 +12,10 @@ import depromeet.common.response.CommonResponse;
 import depromeet.common.response.Response;
 import depromeet.common.response.ResponseService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/record")
 @RequiredArgsConstructor
+@Tag(name = "댓글", description = "댓글 CUD API")
 public class CommentController {
 
     private final CreateCommentUseCase createCommentUseCase;
@@ -27,6 +32,14 @@ public class CommentController {
 
     @Operation(summary = "댓글 생성 API", description = "댓글을 생성합니다.")
     @PostMapping("/{recordId}/comment")
+    @ApiResponses(
+            value = {
+                @ApiResponse(responseCode = "200"),
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "잘못된 요청값을 전달한 경우",
+                        content = @Content())
+            })
     public Response<CreateCommentResponse> createComment(
             @PathVariable long recordId, @Valid @RequestBody CreateCommentRequest request) {
         return ResponseService.getDataResponse(createCommentUseCase.execute(recordId, request));
@@ -34,6 +47,14 @@ public class CommentController {
 
     @Operation(summary = "댓글 수정 API", description = "댓글을 수정합니다.")
     @PutMapping("/{recordId}/comment/{commentId}")
+    @ApiResponses(
+            value = {
+                @ApiResponse(responseCode = "200"),
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "잘못된 요청값을 전달한 경우",
+                        content = @Content())
+            })
     public CommonResponse updateComment(
             @PathVariable long recordId,
             @PathVariable long commentId,
@@ -44,6 +65,14 @@ public class CommentController {
 
     @Operation(summary = "댓글 삭제 API", description = "댓글을 삭제합니다.")
     @DeleteMapping("/{recordId}/comment/{commentId}")
+    @ApiResponses(
+            value = {
+                @ApiResponse(responseCode = "200"),
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "잘못된 요청값을 전달한 경우",
+                        content = @Content())
+            })
     public CommonResponse deleteComment(@PathVariable long recordId, @PathVariable long commentId) {
         deleteCommentUsecase.execute(getCurrentUserSocialId(), commentId);
         return ResponseService.getSuccessResponse();

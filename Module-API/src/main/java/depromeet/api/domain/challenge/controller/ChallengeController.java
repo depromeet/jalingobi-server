@@ -23,6 +23,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/challenge")
 @RequiredArgsConstructor
+@Tag(name = "챌린지", description = "챌린지 CRUD API")
 public class ChallengeController {
 
     private final CreateChallengeUseCase challengeUseCase;
@@ -86,6 +88,15 @@ public class ChallengeController {
     }
 
     @PostMapping("/join/{challengeId}")
+    @Operation(summary = "챌린지 참가 API", description = "유저가 해당 챌린지에 참가합니다.")
+    @ApiResponses(
+            value = {
+                @ApiResponse(responseCode = "200"),
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "잘못된 요청값을 전달한 경우",
+                        content = @Content())
+            })
     public CommonResponse joinChallenge(
             @PathVariable Long challengeId,
             @RequestBody @Valid JoinChallengeRequest createUserChallengeRequest) {
@@ -95,11 +106,29 @@ public class ChallengeController {
     }
 
     @GetMapping("/{challengeId}")
+    @Operation(summary = "챌린지 상세정보 API", description = "특정 챌린지의 상세정보를 보여줍니다.")
+    @ApiResponses(
+            value = {
+                @ApiResponse(responseCode = "200"),
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "잘못된 요청값을 전달한 경우",
+                        content = @Content())
+            })
     public Response<GetChallengeResponse> getChallenge(@PathVariable long challengeId) {
         return ResponseService.getDataResponse(getChallengeUseCase.execute(challengeId));
     }
 
     @GetMapping("/random-nickname")
+    @Operation(summary = "랜덤 닉네임 API", description = "챌린지에서 사용할 랜덤 닉네임을 조회합니다.")
+    @ApiResponses(
+            value = {
+                @ApiResponse(responseCode = "200"),
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "잘못된 요청값을 전달한 경우",
+                        content = @Content())
+            })
     public Response<CreateRandomNicknameResponse> createRandomNickname(
             @RequestParam String category) {
         CategoryType.of(category);
