@@ -6,6 +6,7 @@ import depromeet.api.domain.mypage.dto.request.UpdateProfileRequest;
 import depromeet.api.domain.mypage.dto.response.GetJalingobiImgResponse;
 import depromeet.api.domain.mypage.dto.response.GetMyPageResponse;
 import depromeet.api.domain.mypage.dto.response.GetUserChallengesResponse;
+import depromeet.api.domain.mypage.dto.response.QuitChallengeResponse;
 import depromeet.api.domain.mypage.usecase.*;
 import depromeet.api.domain.mypage.usecase.QuitChallengeUseCase;
 import depromeet.common.exception.CustomExceptionStatus;
@@ -83,10 +84,10 @@ public class MyPageController {
                         content = @Content())
             })
     @DeleteMapping("/challenge/{challengeId}")
-    public Response<CustomExceptionStatus> quitChallenge(
+    public Response<QuitChallengeResponse> quitChallenge(
             @PathVariable("challengeId") Long challengeId) {
 
         quitChallengeUseCase.execute(getCurrentUserSocialId(), challengeId);
-        return ResponseService.getDataResponse(CustomExceptionStatus.SUCCESS);
+        return ResponseService.getDataResponse(new QuitChallengeResponse(challengeId));
     }
 }
