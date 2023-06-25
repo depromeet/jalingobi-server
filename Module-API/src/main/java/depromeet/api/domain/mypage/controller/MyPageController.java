@@ -2,12 +2,12 @@ package depromeet.api.domain.mypage.controller;
 
 import static depromeet.api.util.AuthenticationUtil.getCurrentUserSocialId;
 
-import depromeet.api.domain.feed.usecase.QuitChallengeUseCase;
 import depromeet.api.domain.mypage.dto.request.UpdateProfileRequest;
 import depromeet.api.domain.mypage.dto.response.GetJalingobiImgResponse;
 import depromeet.api.domain.mypage.dto.response.GetMyPageResponse;
 import depromeet.api.domain.mypage.dto.response.GetUserChallengesResponse;
 import depromeet.api.domain.mypage.usecase.*;
+import depromeet.api.domain.mypage.usecase.QuitChallengeUseCase;
 import depromeet.common.exception.CustomExceptionStatus;
 import depromeet.common.response.Response;
 import depromeet.common.response.ResponseService;

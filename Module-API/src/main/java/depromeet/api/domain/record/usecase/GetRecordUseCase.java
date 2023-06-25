@@ -11,6 +11,7 @@ import depromeet.domain.user.domain.User;
 import depromeet.domain.userchallenge.adaptor.UserChallengeAdaptor;
 import depromeet.domain.userchallenge.domain.UserChallenge;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @UseCase
@@ -22,6 +23,7 @@ public class GetRecordUseCase {
 
     private final RecordMapper recordMapper;
 
+    @Transactional(readOnly = true)
     public GetRecordResponse execute(String socialId, Long challengeId, Long recordId) {
         User user = userAdaptor.findUser(socialId);
         UserChallenge userChallenge =

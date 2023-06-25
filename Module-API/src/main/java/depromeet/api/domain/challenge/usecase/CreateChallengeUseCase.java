@@ -15,6 +15,8 @@ import depromeet.domain.keyword.adaptor.KeywordAdaptor;
 import depromeet.domain.keyword.domain.Keyword;
 import depromeet.domain.user.adaptor.UserAdaptor;
 import depromeet.domain.user.domain.User;
+import depromeet.domain.userchallenge.adaptor.UserChallengeAdaptor;
+import depromeet.domain.userchallenge.domain.UserChallenge;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -31,15 +33,26 @@ public class CreateChallengeUseCase {
     private final CategoryAdaptor categoryAdaptor;
     private final UserAdaptor userAdaptor;
     private final KeywordAdaptor keywordAdaptor;
+    private final UserChallengeAdaptor userChallengeAdaptor;
 
     @Transactional
     public CreateChallengeResponse execute(CreateChallengeRequest request, String socialId) {
-        return challengeMapper.toCreateChallengeResponse(
-                challengeAdaptor.save(createChallenge(request, socialId)).getId());
+        User currentUser = userAdaptor.findUser(socialId);
+        Challenge savedChallenge = challengeAdaptor.save(createChallenge(request, currentUser));
+
+        UserChallenge userChallenge =
+                UserChallenge.createUserChallenge(
+                        currentUser,
+                        savedChallenge,
+                        currentUser.getProfileImgUrl(),
+                        currentUser.getProfileNickname());
+        userChallengeAdaptor.joinChallenge(userChallenge);
+
+        return challengeMapper.toCreateChallengeResponse(savedChallenge.getId());
     }
 
-    public Challenge createChallenge(CreateChallengeRequest request, String socialId) {
-        User currentUser = userAdaptor.findUser(socialId);
+    public Challenge createChallenge(CreateChallengeRequest request, User user) {
+
         List<Keyword> keywords = keywordAdaptor.findOrCreateKeywords(request.getKeywords());
         List<Category> categories =
                 categoryAdaptor.findOrExceptionCategories(
@@ -47,7 +60,7 @@ public class CreateChallengeUseCase {
                                 .map(name -> CategoryType.of(name).toString())
                                 .collect(Collectors.toList()));
 
-        Challenge challenge = challengeMapper.toEntity(request, socialId);
+        Challenge challenge = challengeMapper.toEntity(request, user);
 
         challenge.addCategories(categories);
         challenge.addRules(challengeRuleMapper.toEntities(request.getChallengeRule()));

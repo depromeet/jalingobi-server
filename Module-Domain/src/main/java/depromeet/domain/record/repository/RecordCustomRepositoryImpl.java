@@ -1,6 +1,7 @@
 package depromeet.domain.record.repository;
 
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import depromeet.domain.challenge.domain.QChallenge;
 import depromeet.domain.record.domain.QRecord;
@@ -24,7 +25,7 @@ public class RecordCustomRepositoryImpl implements RecordCustomRepository {
                 .selectFrom(record)
                 .join(record.challenge, challenge)
                 .fetchJoin()
-                .where(record.user.id.eq(userId))
+                .where(isEqualUser(userId))
                 .orderBy(record.createdAt.desc())
                 .offset(offset)
                 .limit(limit)
@@ -33,7 +34,7 @@ public class RecordCustomRepositoryImpl implements RecordCustomRepository {
 
     @Override
     public Integer countMyRecordList(Long userId) {
-        return queryFactory.selectFrom(record).where(record.user.id.eq(userId)).fetch().size();
+        return queryFactory.selectFrom(record).where(isEqualUser(userId)).fetch().size();
     }
 
     @Override
@@ -44,7 +45,8 @@ public class RecordCustomRepositoryImpl implements RecordCustomRepository {
                 .fetchJoin()
                 .join(record.userChallenge, userChallenge)
                 .fetchJoin()
-                .where(record.challenge.id.eq(challengeId).and(record.id.gt(recordId)))
+                .where(isEqualChallenge(challengeId).and(offsetRecordId(recordId)))
+                .orderBy(record.createdAt.desc())
                 .limit(limit)
                 .fetch();
     }
@@ -57,17 +59,29 @@ public class RecordCustomRepositoryImpl implements RecordCustomRepository {
                 .fetchJoin()
                 .join(record.userChallenge, userChallenge)
                 .fetchJoin()
-                .where(record.challenge.id.eq(challengeId))
+                .where(isEqualChallenge(challengeId))
+                .orderBy(record.createdAt.desc())
                 .limit(limit)
                 .fetch();
     }
 
     @Override
     public Integer countChallengeRecordList(Long challengeId) {
-        return queryFactory
-                .selectFrom(record)
-                .where(record.challenge.id.eq(challengeId))
-                .fetch()
-                .size();
+        return queryFactory.selectFrom(record).where(isEqualChallenge(challengeId)).fetch().size();
+    }
+
+    private BooleanBuilder offsetRecordId(Long recordId) {
+        if (recordId != null) return new BooleanBuilder(record.id.lt(recordId));
+        else return new BooleanBuilder();
+    }
+
+    private BooleanBuilder isEqualChallenge(Long challengeId) {
+        if (challengeId != null) return new BooleanBuilder(record.id.lt(challengeId));
+        else return new BooleanBuilder();
+    }
+
+    private BooleanBuilder isEqualUser(Long userId) {
+        if (userId != null) return new BooleanBuilder(record.id.lt(userId));
+        else return new BooleanBuilder();
     }
 }

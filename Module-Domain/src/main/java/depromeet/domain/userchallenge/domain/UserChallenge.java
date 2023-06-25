@@ -6,8 +6,11 @@ import depromeet.domain.config.BaseTime;
 import depromeet.domain.jalingobi.domain.Level;
 import depromeet.domain.record.domain.Record;
 import depromeet.domain.user.domain.User;
+import depromeet.domain.userchallenge.exception.NegativeChargeException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.*;
 import lombok.*;
 
@@ -31,6 +34,9 @@ public class UserChallenge extends BaseTime {
 
     private String nickname;
 
+    @Column(name = "goal_charge", nullable = false)
+    private Integer goalCharge;
+
     @Column(name = "current_charge", nullable = false)
     private Integer currentCharge;
 
@@ -49,22 +55,66 @@ public class UserChallenge extends BaseTime {
     @JoinColumn(name = "challenge_id", nullable = false)
     private Challenge challenge;
 
+    @Builder.Default
     @OneToMany(mappedBy = "userChallenge", cascade = CascadeType.REMOVE)
     private List<Record> records = new ArrayList<>();
 
     public static UserChallenge createUserChallenge(
-            User user, Challenge challenge, String imgUrl, String nickname, int currentCharge) {
+            User user, Challenge challenge, String imgUrl, String nickname) {
         return UserChallenge.builder()
                 .user(user)
                 .challenge(challenge)
                 .imgUrl(imgUrl)
                 .nickname(nickname)
-                .currentCharge(currentCharge)
-                .status(Status.PROCEEDING)
+                .goalCharge(challenge.getPrice())
+                .currentCharge(0)
+                .status(Status.WAITING)
                 .build();
     }
 
     public int getUserLevel() {
         return Level.getEnumTypeByScore(this.getUser().getScore()).getScore();
+    }
+
+    public void addCharge(int price) {
+        this.currentCharge += price;
+    }
+
+    public void removeCharge(int price) {
+        int rest = this.currentCharge - price;
+        if (rest < 0) {
+            throw NegativeChargeException.EXCEPTION;
+        }
+        this.currentCharge = rest;
+    }
+
+    public void endChallenge() {
+        int size =
+                records.stream()
+                        .map(record -> record.getCreatedAt())
+                        .map(LocalDateTime::toLocalDate)
+                        .distinct()
+                        .collect(Collectors.toList())
+                        .size();
+        int period = challenge.getDuration().getPeriod();
+
+        int recordPercent = (size * 100) / period;
+
+        // 목표 금액 이하면서 기록을 N % 이상 작성했을시 성공
+        if (status == Status.PROCEEDING && currentCharge <= goalCharge && recordPercent >= 70) {
+            status = Status.SUCCESS;
+            user.plusScore();
+        } else {
+            status = Status.FAILURE;
+            user.minusScore();
+        }
+    }
+
+    public void startChallenge() {
+        if (status == Status.WAITING) status = Status.PROCEEDING;
+    }
+
+    public boolean isWaitingOrProceeding() {
+        return (status == Status.WAITING || status == Status.PROCEEDING);
     }
 }

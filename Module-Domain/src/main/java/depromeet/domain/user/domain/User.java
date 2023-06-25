@@ -2,7 +2,6 @@ package depromeet.domain.user.domain;
 
 
 import depromeet.domain.config.BaseTime;
-import depromeet.domain.user.exception.AlreadyWithdrawalUserException;
 import depromeet.domain.userchallenge.domain.UserChallenge;
 import java.util.List;
 import javax.persistence.*;
@@ -26,9 +25,6 @@ public class User extends BaseTime {
     @Embedded private Social social;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
-
-    @Enumerated(EnumType.STRING)
     @Column(length = 10, nullable = false)
     private Role role;
 
@@ -48,13 +44,7 @@ public class User extends BaseTime {
 
         Profile profile = Profile.createProfile(nickname, email);
         Social social = Social.createSocial(socialId, platform);
-        return User.builder()
-                .profile(profile)
-                .social(social)
-                .role(Role.USER)
-                .status(Status.NORMAL)
-                .score(1)
-                .build();
+        return User.builder().profile(profile).social(social).role(Role.USER).score(1).build();
     }
 
     /** 비즈니스 메서드 */
@@ -66,14 +56,19 @@ public class User extends BaseTime {
         this.profile.updateProfile(nickname, profileImgUrl);
     }
 
-    public void withdrawal() {
-        if (status.equals(Status.DELETED)) {
-            throw AlreadyWithdrawalUserException.EXCEPTION;
-        }
+    public String getProfileImgUrl() {
+        return this.getProfile().getImgUrl();
+    }
 
-        this.status = Status.DELETED;
-        this.profile.withdrawal();
-        this.notification = Boolean.FALSE;
-        this.score = 0;
+    public String getProfileNickname() {
+        return this.getProfile().getNickname();
+    }
+
+    public void plusScore() {
+        if (score < 6) score++;
+    }
+
+    public void minusScore() {
+        if (score > 0) score--;
     }
 }

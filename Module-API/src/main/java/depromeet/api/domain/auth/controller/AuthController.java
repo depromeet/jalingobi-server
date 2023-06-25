@@ -6,7 +6,6 @@ import depromeet.api.domain.auth.dto.response.KakaoAuthResponse;
 import depromeet.api.domain.auth.usecase.KakaoAuthUseCase;
 import depromeet.api.domain.auth.usecase.RefreshTokenUseCase;
 import depromeet.api.util.CookieUtil;
-import depromeet.common.response.CommonResponse;
 import depromeet.common.response.Response;
 import depromeet.common.response.ResponseService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -60,7 +59,16 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    public CommonResponse refreshToken(HttpServletRequest request) {
+    @Operation(summary = "토큰 reissue API", description = "Refresh Token을 이용해 Access Token을 재발급합니다.")
+    @ApiResponses(
+            value = {
+                @ApiResponse(responseCode = "200"),
+                @ApiResponse(
+                        responseCode = "400",
+                        description = "유효하지 않은 Refresh Token으로 요청했을 때",
+                        content = @Content())
+            })
+    public Response<KakaoAuthResponse> refreshToken(HttpServletRequest request) {
         String refreshToken = cookieUtil.getCookie(request, "RefreshToken").getValue();
         String accessToken = refreshTokenUseCase.checkRefreshToken(refreshToken);
         return ResponseService.getDataResponse(KakaoAuthResponse.of(refreshToken, accessToken));

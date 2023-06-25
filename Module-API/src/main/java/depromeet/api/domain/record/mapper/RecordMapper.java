@@ -32,8 +32,8 @@ public class RecordMapper {
                 Evaluation.getEnumTypeByValue(createRecordRequest.getEvaluation()));
     }
 
-    public CreateRecordResponse toCreateRecordResponse(Record record, User user) {
-        return CreateRecordResponse.of(record, user);
+    public CreateRecordResponse toCreateRecordResponse(Record record) {
+        return CreateRecordResponse.of(record);
     }
 
     public GetRecordResponse toGetRecordResponse(Record record, Long myUserChallengeId) {

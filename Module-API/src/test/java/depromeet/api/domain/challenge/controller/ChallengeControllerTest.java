@@ -16,6 +16,7 @@ import depromeet.api.domain.challenge.dto.response.*;
 import depromeet.api.domain.challenge.mapper.ChallengeMapper;
 import depromeet.api.domain.challenge.usecase.*;
 import depromeet.api.util.AuthenticationUtil;
+import depromeet.domain.challenge.domain.StatusType;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -161,7 +162,7 @@ public class ChallengeControllerTest {
                 .andDo(print())
                 .andExpectAll(
                         status().isOk(),
-                        jsonPath("$.result.categories").value(response.getCategories()),
+                        jsonPath("$.result.category").value(response.getCategory()),
                         jsonPath("$.result.title").value(response.getTitle()),
                         jsonPath("$.result.price").value(response.getPrice()),
                         jsonPath("$.result.imgUrl").value(response.getImgUrl()),
@@ -196,11 +197,7 @@ public class ChallengeControllerTest {
     public void joinChallengeTest() throws Exception {
         String socialId = "socialId";
         JoinChallengeRequest createUserChallengeRequest =
-                JoinChallengeRequest.builder()
-                        .nickname("닉네임")
-                        .currentCharge(10000)
-                        .imgUrl("/test.jpg")
-                        .build();
+                JoinChallengeRequest.builder().nickname("닉네임").imgUrl("/test.jpg").build();
 
         when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
         willDoNothing().given(createUserChallengeUseCase).execute(anyString(), any(), anyLong());
@@ -220,8 +217,7 @@ public class ChallengeControllerTest {
     @Test
     @DisplayName("챌린지 상세 조회")
     public void getChallengeTest() throws Exception {
-        List<String> categories = new ArrayList<>();
-        categories.add("식비");
+        String category = "식비";
 
         List<String> keywords = new ArrayList<>();
         keywords.add("#마라탕");
@@ -239,7 +235,7 @@ public class ChallengeControllerTest {
         GetChallengeResponse response =
                 GetChallengeResponse.builder()
                         .challengeId(1L)
-                        .categories(categories)
+                        .category(category)
                         .title("마라탕 5만원 이하로 쓰기")
                         .price(50000)
                         .challengeImgUrl("/test.jpg")
@@ -248,6 +244,7 @@ public class ChallengeControllerTest {
                         .participantsInfo(profileResponses)
                         .rules(rules)
                         .isRecruiting(false)
+                        .status(StatusType.NOTHING.getName())
                         .dateInfo(new DateInfoResponse(7, startAt, endAt))
                         .build();
 

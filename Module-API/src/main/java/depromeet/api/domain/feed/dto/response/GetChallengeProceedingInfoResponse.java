@@ -28,7 +28,7 @@ public class GetChallengeProceedingInfoResponse {
     public static GetChallengeProceedingInfoResponse of(UserChallenge userChallenge) {
         Integer goalCharge = userChallenge.getChallenge().getPrice();
         Integer currentCharge = userChallenge.getCurrentCharge();
-        Integer percent = currentCharge / goalCharge * 100;
+        Integer percent = (currentCharge * 100) / goalCharge;
 
         LocalDate today = LocalDate.now();
         LocalDate endDate = userChallenge.getChallenge().getDuration().getEndAt();
