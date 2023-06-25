@@ -23,7 +23,7 @@ public class UpdateChallengeRequest {
     @NotNull(message = "챌린지 ID를 입력하세요.")
     private Long ChallengeId;
 
-    @Schema(description = "챌린지가 속한 카테고리", example = "[\"식비\"]")
+    @Schema(description = "챌린지가 속한 카테고리", example = "[\"FOOD\"]")
     @NotNull(message = "카테고리를 선택하세요.")
     private List<@NotBlank String> categories;
 

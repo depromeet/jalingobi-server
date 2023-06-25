@@ -36,7 +36,7 @@ public class CategoryAdaptor {
 
     @Transactional
     public Category createCategory(CategoryType category) {
-        Category categoryEntity = Category.builder().name(category.getName()).build();
+        Category categoryEntity = Category.builder().name(category.toString()).build();
         return categoryRepository.save(categoryEntity);
     }
 }
