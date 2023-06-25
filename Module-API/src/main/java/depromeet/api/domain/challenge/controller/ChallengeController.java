@@ -14,6 +14,7 @@ import depromeet.api.domain.challenge.usecase.CreateChallengeUseCase;
 import depromeet.api.domain.challenge.usecase.DeleteChallengeUseCase;
 import depromeet.api.domain.challenge.usecase.JoinChallengeUseCase;
 import depromeet.api.domain.challenge.usecase.UpdateChallengeUseCase;
+import depromeet.api.domain.challenge.validator.CreateChallengeValidator;
 import depromeet.api.util.RandomNicknameGenerator;
 import depromeet.common.response.CommonResponse;
 import depromeet.common.response.Response;
@@ -39,6 +40,7 @@ public class ChallengeController {
     private final DeleteChallengeUseCase deleteChallengeUseCase;
     private final JoinChallengeUseCase joinUserChallengeUseCase;
     private final GetChallengeUseCase getChallengeUseCase;
+    private final CreateChallengeValidator createChallengeValidator;
 
     @Operation(summary = "챌린지 생성 API", description = "챌린지를 생성합니다.")
     @ApiResponses(
@@ -52,6 +54,7 @@ public class ChallengeController {
     @PostMapping
     public Response<CreateChallengeResponse> createChallenge(
             @RequestBody @Valid CreateChallengeRequest challengeRequest) {
+        createChallengeValidator.validate(challengeRequest);
         return ResponseService.getDataResponse(
                 challengeUseCase.execute(challengeRequest, getCurrentUserSocialId()));
     }
