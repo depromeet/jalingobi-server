@@ -22,9 +22,7 @@ public class WithdrawalUseCase {
         User user = userAdaptor.findUser(socialId);
 
         user.withdrawal();
-
-        List<UserChallenge> userChallenges =
-                userChallengeAdaptor.findUserChallengeList(user.getId());
+        List<UserChallenge> userChallenges = user.getUserChallenges();
         if (!userChallenges.isEmpty()) {
             userChallenges.forEach(userChallengeAdaptor::quitChallenge);
         }
