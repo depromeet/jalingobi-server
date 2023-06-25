@@ -46,7 +46,7 @@ public class ChallengeFeedControllerTest {
     @Test
     @DisplayName("챌린지 탐색")
     public void searchChallenge() throws Exception {
-        String category = "식비";
+        String category = "FOOD";
         String filter = "all";
         String sortType = "price";
         ChallengeData challengeData =

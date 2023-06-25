@@ -78,7 +78,7 @@ public class ChallengeControllerTest {
     @DisplayName("챌린지 생성")
     public void createChallengeTest() throws Exception {
         List<String> categories = new ArrayList<>();
-        categories.add("식비");
+        categories.add("FOOD");
 
         List<String> keywords = new ArrayList<>();
         keywords.add("#마라탕");
@@ -125,7 +125,7 @@ public class ChallengeControllerTest {
         String socialId = "socialId";
 
         List<String> categories = new ArrayList<>();
-        categories.add("식비");
+        categories.add("FOOD");
 
         List<String> keywords = new ArrayList<>();
         keywords.add("#마라탕");
@@ -217,7 +217,7 @@ public class ChallengeControllerTest {
     @Test
     @DisplayName("챌린지 상세 조회")
     public void getChallengeTest() throws Exception {
-        String category = "식비";
+        String category = "FOOD";
 
         List<String> keywords = new ArrayList<>();
         keywords.add("#마라탕");
@@ -260,7 +260,7 @@ public class ChallengeControllerTest {
     @Test
     @DisplayName("챌린지에서 사용할 랜덤 닉네임 생성")
     public void createRandomNicknameTest() throws Exception {
-        mockMvc.perform(get("/challenge/random-nickname").param("category", "식비"))
+        mockMvc.perform(get("/challenge/random-nickname").param("category", "FOOD"))
                 .andDo(print())
                 .andExpectAll(status().isOk(), jsonPath("$.result.nickname").isNotEmpty());
     }
