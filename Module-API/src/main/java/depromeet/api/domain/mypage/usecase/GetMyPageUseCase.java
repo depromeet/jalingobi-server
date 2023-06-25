@@ -42,8 +42,10 @@ public class GetMyPageUseCase {
     private Map<Status, Integer> checkUserChallengeStatusCount(List<UserChallenge> challengeList) {
         Map<Status, Integer> userChallengeResult = new HashMap<>();
 
+        // 진행 중은 대기 + 진행
+        int waitingCount = countUserChallengeByStatus(challengeList, Status.WAITING);
         int proceedingCount = countUserChallengeByStatus(challengeList, Status.PROCEEDING);
-        userChallengeResult.put(Status.PROCEEDING, proceedingCount);
+        userChallengeResult.put(Status.PROCEEDING, waitingCount + proceedingCount);
         int successCount = countUserChallengeByStatus(challengeList, Status.SUCCESS);
         userChallengeResult.put(Status.SUCCESS, successCount);
         // 완료는 성공 + 실패
