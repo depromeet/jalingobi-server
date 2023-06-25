@@ -42,8 +42,8 @@ public class MyPageUserChallenge {
     @Schema(description = "챌린지 기간에 따른 상태 태그 [new, 마감임박, 오픈 예정, 해당없음]", example = "[\"마감임박\"]")
     private String statusTag;
 
-    @Schema(description = "챌린지 카테고리  [\"식비\"] ")
-    private List<String> categories;
+    @Schema(description = "챌린지 카테고리", example = "FOOD")
+    private String category;
 
     @Schema(description = "챌린지 키워드 [\"#마라탕\", \"#배달\"]")
     private List<String> keywords;
@@ -64,7 +64,7 @@ public class MyPageUserChallenge {
                 .statusTag(
                         challenge.checkStatusInChallengeDetail(
                                 LocalDate.from(challenge.getCreatedAt())))
-                .categories(challenge.getChallengeCategories().getCategoryNames())
+                .category(challenge.getChallengeCategories().getCategoryNames().get(0))
                 .keywords(challenge.getChallengeKeywords().getKeywordNames())
                 .participantCount(challenge.getUserChallenges().size())
                 .build();
