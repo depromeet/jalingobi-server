@@ -5,10 +5,7 @@ import static depromeet.api.util.AuthenticationUtil.getCurrentUserSocialId;
 import depromeet.api.domain.challenge.dto.request.CreateChallengeRequest;
 import depromeet.api.domain.challenge.dto.request.JoinChallengeRequest;
 import depromeet.api.domain.challenge.dto.request.UpdateChallengeRequest;
-import depromeet.api.domain.challenge.dto.response.CreateChallengeResponse;
-import depromeet.api.domain.challenge.dto.response.CreateRandomNicknameResponse;
-import depromeet.api.domain.challenge.dto.response.GetChallengeResponse;
-import depromeet.api.domain.challenge.dto.response.UpdateChallengeResponse;
+import depromeet.api.domain.challenge.dto.response.*;
 import depromeet.api.domain.challenge.usecase.*;
 import depromeet.api.domain.challenge.usecase.CreateChallengeUseCase;
 import depromeet.api.domain.challenge.usecase.DeleteChallengeUseCase;
@@ -85,9 +82,9 @@ public class ChallengeController {
                         content = @Content())
             })
     @DeleteMapping("/{challengeId}")
-    public CommonResponse deleteChallenge(@PathVariable Long challengeId) {
-        deleteChallengeUseCase.execute(challengeId, getCurrentUserSocialId());
-        return ResponseService.getSuccessResponse();
+    public Response<DeleteChallengeResponse> deleteChallenge(@PathVariable Long challengeId) {
+        return ResponseService.getDataResponse(
+                deleteChallengeUseCase.execute(challengeId, getCurrentUserSocialId()));
     }
 
     @PostMapping("/join/{challengeId}")

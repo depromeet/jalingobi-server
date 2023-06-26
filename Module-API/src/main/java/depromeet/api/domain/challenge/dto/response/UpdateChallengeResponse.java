@@ -12,6 +12,9 @@ import lombok.Getter;
 @Getter
 public class UpdateChallengeResponse {
 
+    @Schema(description = "챌린지 ID", example = "1")
+    private long challengeId;
+
     @Schema(description = "챌린지가 속한 카테고리", example = "FOOD")
     private String category;
 
@@ -44,6 +47,7 @@ public class UpdateChallengeResponse {
 
     public static UpdateChallengeResponse of(UpdateChallengeRequest updateChallengeRequest) {
         return UpdateChallengeResponse.builder()
+                .challengeId(updateChallengeRequest.getChallengeId())
                 .category(updateChallengeRequest.getCategories().get(0))
                 .title(updateChallengeRequest.getTitle())
                 .price(updateChallengeRequest.getPrice())
