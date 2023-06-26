@@ -15,6 +15,7 @@ import depromeet.api.domain.challenge.dto.request.UpdateChallengeRequest;
 import depromeet.api.domain.challenge.dto.response.*;
 import depromeet.api.domain.challenge.mapper.ChallengeMapper;
 import depromeet.api.domain.challenge.usecase.*;
+import depromeet.api.domain.challenge.validator.CreateChallengeValidator;
 import depromeet.api.util.AuthenticationUtil;
 import depromeet.domain.challenge.domain.StatusType;
 import java.time.LocalDate;
@@ -59,6 +60,8 @@ public class ChallengeControllerTest {
     @MockBean JoinChallengeUseCase createUserChallengeUseCase;
 
     @MockBean GetChallengeUseCase getChallengeUseCase;
+
+    @MockBean CreateChallengeValidator createChallengeValidator;
 
     ChallengeMapper challengeMapper = new ChallengeMapper();
 
