@@ -15,6 +15,7 @@ import depromeet.api.domain.challenge.dto.request.UpdateChallengeRequest;
 import depromeet.api.domain.challenge.dto.response.*;
 import depromeet.api.domain.challenge.mapper.ChallengeMapper;
 import depromeet.api.domain.challenge.usecase.*;
+import depromeet.api.domain.challenge.validator.CreateChallengeValidator;
 import depromeet.api.util.AuthenticationUtil;
 import depromeet.domain.challenge.domain.StatusType;
 import java.time.LocalDate;
@@ -60,6 +61,8 @@ public class ChallengeControllerTest {
 
     @MockBean GetChallengeUseCase getChallengeUseCase;
 
+    @MockBean CreateChallengeValidator createChallengeValidator;
+
     ChallengeMapper challengeMapper = new ChallengeMapper();
 
     private static MockedStatic<AuthenticationUtil> authenticationUtil;
@@ -78,7 +81,7 @@ public class ChallengeControllerTest {
     @DisplayName("챌린지 생성")
     public void createChallengeTest() throws Exception {
         List<String> categories = new ArrayList<>();
-        categories.add("식비");
+        categories.add("FOOD");
 
         List<String> keywords = new ArrayList<>();
         keywords.add("#마라탕");
@@ -117,6 +120,8 @@ public class ChallengeControllerTest {
                                 .characterEncoding("UTF-8"))
                 .andDo(print())
                 .andExpectAll(status().isOk(), jsonPath("$.result.id").value(response.getId()));
+
+        verify(challengeUseCase, times(1)).execute(any(), anyString());
     }
 
     @Test
@@ -125,7 +130,7 @@ public class ChallengeControllerTest {
         String socialId = "socialId";
 
         List<String> categories = new ArrayList<>();
-        categories.add("식비");
+        categories.add("FOOD");
 
         List<String> keywords = new ArrayList<>();
         keywords.add("#마라탕");
@@ -162,6 +167,7 @@ public class ChallengeControllerTest {
                 .andDo(print())
                 .andExpectAll(
                         status().isOk(),
+                        jsonPath("$.result.challengeId").value(response.getChallengeId()),
                         jsonPath("$.result.category").value(response.getCategory()),
                         jsonPath("$.result.title").value(response.getTitle()),
                         jsonPath("$.result.price").value(response.getPrice()),
@@ -181,13 +187,15 @@ public class ChallengeControllerTest {
     @DisplayName("챌린지 삭제")
     public void deleteChallengeTest() throws Exception {
         String socialId = "socialId";
+        long challengeId = 1L;
 
         when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
-        willDoNothing().given(deleteChallengeUseCase).execute(anyLong(), anyString());
+        when(deleteChallengeUseCase.execute(challengeId, socialId))
+                .thenReturn(DeleteChallengeResponse.builder().challengeId(challengeId).build());
 
         mockMvc.perform(delete("/challenge/{challengeId}", 1L))
                 .andDo(print())
-                .andExpectAll(status().isOk());
+                .andExpectAll(status().isOk(), jsonPath("$.result.challengeId").value(challengeId));
 
         verify(deleteChallengeUseCase, times(1)).execute(anyLong(), anyString());
     }
@@ -217,7 +225,7 @@ public class ChallengeControllerTest {
     @Test
     @DisplayName("챌린지 상세 조회")
     public void getChallengeTest() throws Exception {
-        String category = "식비";
+        String category = "FOOD";
 
         List<String> keywords = new ArrayList<>();
         keywords.add("#마라탕");
@@ -260,7 +268,7 @@ public class ChallengeControllerTest {
     @Test
     @DisplayName("챌린지에서 사용할 랜덤 닉네임 생성")
     public void createRandomNicknameTest() throws Exception {
-        mockMvc.perform(get("/challenge/random-nickname").param("category", "식비"))
+        mockMvc.perform(get("/challenge/random-nickname").param("category", "FOOD"))
                 .andDo(print())
                 .andExpectAll(status().isOk(), jsonPath("$.result.nickname").isNotEmpty());
     }
