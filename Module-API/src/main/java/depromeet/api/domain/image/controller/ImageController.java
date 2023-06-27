@@ -27,11 +27,9 @@ public class ImageController {
     @Operation(summary = "presigned url을 발급받는 API")
     @PostMapping("/presigned")
     public Response<IssuePresignedUrlResponse> createPresigned(
-            @RequestBody IssuePresignedUrlRequest getPresignedUrlRequest) {
+            @RequestBody IssuePresignedUrlRequest issuePresignedUrlRequest) {
+
         return ResponseService.getDataResponse(
-                getPresignedUrlUseCase.execute(
-                        getCurrentUserSocialId(),
-                        getPresignedUrlRequest.getImageFileExtension(),
-                        getPresignedUrlRequest.getType()));
+                getPresignedUrlUseCase.execute(getCurrentUserSocialId(), issuePresignedUrlRequest));
     }
 }
