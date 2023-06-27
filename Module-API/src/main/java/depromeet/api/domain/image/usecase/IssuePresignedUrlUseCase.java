@@ -22,7 +22,6 @@ public class IssuePresignedUrlUseCase {
 
         return IssuePresignedUrlResponse.from(
                 uploadPresignedUrlService.execute(
-                        socialId,
                         issuePresignedUrlRequest.getImageFileExtension(),
                         issuePresignedUrlRequest.getType()));
     }
