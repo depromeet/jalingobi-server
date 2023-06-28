@@ -21,13 +21,21 @@ public class Profile {
     @Column(nullable = false)
     private String imgUrl;
 
+    /** 생성 메서드 */
     public static Profile createProfile(String name, String email) {
         String imgUrl = ImageUrlUtil.defaultImgUrl;
         return Profile.builder().nickname(name).email(email).imgUrl(imgUrl).build();
     }
 
+    /** 비즈니스 메서드 */
     public void updateProfile(String nickname, String profileImgUrl) {
         this.nickname = nickname;
         this.imgUrl = profileImgUrl;
+    }
+
+    public void withdrawal() {
+        this.nickname = "[탈퇴 유저] 집나간 자린고비";
+        this.email = "";
+        this.imgUrl = "";
     }
 }

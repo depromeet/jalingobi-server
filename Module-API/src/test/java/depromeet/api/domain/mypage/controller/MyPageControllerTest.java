@@ -47,12 +47,14 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @AutoConfigureDataJpa
 @AutoConfigureMockMvc(addFilters = false)
 class MyPageControllerTest {
+
     @Autowired private MockMvc mockMvc;
     @MockBean private GetMyPageUseCase getMyPageUseCase;
     @MockBean private GetUserChallengesUseCase getUserChallengesUseCase;
     @MockBean private GetJalingobiImgUseCase getJalingobiImgUseCase;
     @MockBean private UpdateProfileUseCase updateProfileUseCase;
     @MockBean private LogoutUseCase logoutUseCase;
+    @MockBean private WithdrawalUseCase withdrawalUseCase;
     @MockBean private QuitChallengeUseCase quitChallengeUseCase;
 
     private static MockedStatic<AuthenticationUtil> authenticationUtil;

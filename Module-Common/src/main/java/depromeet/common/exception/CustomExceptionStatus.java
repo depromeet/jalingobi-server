@@ -24,6 +24,7 @@ public enum CustomExceptionStatus {
     // user
     ACCOUNT_NOT_FOUND(false, 1200, "사용자를 찾을 수 없습니다."),
     ACCOUNT_NOT_VALID(false, 1201, "유효한 사용자가 아닙니다."),
+    ALREADY_WITHDRAWAL_USER(false, 1202, "이미 탈퇴한 유저입니다."),
 
     // [POST] /user
     POST_USERS_EMPTY_NAME(false, 1300, "닉네임을 입력해주세요."),
