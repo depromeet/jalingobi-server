@@ -5,10 +5,11 @@ import static depromeet.api.util.AuthenticationUtil.getCurrentUserSocialId;
 import depromeet.api.domain.comment.dto.request.CreateCommentRequest;
 import depromeet.api.domain.comment.dto.request.UpdateCommentRequest;
 import depromeet.api.domain.comment.dto.response.CreateCommentResponse;
+import depromeet.api.domain.comment.dto.response.DeleteCommentResponse;
+import depromeet.api.domain.comment.dto.response.UpdateCommentResponse;
 import depromeet.api.domain.comment.usecase.CreateCommentUseCase;
 import depromeet.api.domain.comment.usecase.DeleteCommentUseCase;
 import depromeet.api.domain.comment.usecase.UpdateCommentUseCase;
-import depromeet.common.response.CommonResponse;
 import depromeet.common.response.Response;
 import depromeet.common.response.ResponseService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -55,12 +56,12 @@ public class CommentController {
                         description = "잘못된 요청값을 전달한 경우",
                         content = @Content())
             })
-    public CommonResponse updateComment(
+    public Response<UpdateCommentResponse> updateComment(
             @PathVariable long recordId,
             @PathVariable long commentId,
             @RequestBody @Valid UpdateCommentRequest request) {
-        updateCommentUseCase.execute(request, getCurrentUserSocialId(), commentId);
-        return ResponseService.getSuccessResponse();
+        return ResponseService.getDataResponse(
+                updateCommentUseCase.execute(request, getCurrentUserSocialId(), commentId));
     }
 
     @Operation(summary = "댓글 삭제 API", description = "댓글을 삭제합니다.")
@@ -73,8 +74,9 @@ public class CommentController {
                         description = "잘못된 요청값을 전달한 경우",
                         content = @Content())
             })
-    public CommonResponse deleteComment(@PathVariable long recordId, @PathVariable long commentId) {
-        deleteCommentUsecase.execute(getCurrentUserSocialId(), commentId);
-        return ResponseService.getSuccessResponse();
+    public Response<DeleteCommentResponse> deleteComment(
+            @PathVariable long recordId, @PathVariable long commentId) {
+        return ResponseService.getDataResponse(
+                deleteCommentUsecase.execute(getCurrentUserSocialId(), commentId));
     }
 }

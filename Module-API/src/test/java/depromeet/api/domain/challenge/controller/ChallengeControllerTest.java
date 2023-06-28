@@ -120,6 +120,8 @@ public class ChallengeControllerTest {
                                 .characterEncoding("UTF-8"))
                 .andDo(print())
                 .andExpectAll(status().isOk(), jsonPath("$.result.id").value(response.getId()));
+
+        verify(challengeUseCase, times(1)).execute(any(), anyString());
     }
 
     @Test
@@ -165,6 +167,7 @@ public class ChallengeControllerTest {
                 .andDo(print())
                 .andExpectAll(
                         status().isOk(),
+                        jsonPath("$.result.challengeId").value(response.getChallengeId()),
                         jsonPath("$.result.category").value(response.getCategory()),
                         jsonPath("$.result.title").value(response.getTitle()),
                         jsonPath("$.result.price").value(response.getPrice()),
@@ -184,13 +187,15 @@ public class ChallengeControllerTest {
     @DisplayName("챌린지 삭제")
     public void deleteChallengeTest() throws Exception {
         String socialId = "socialId";
+        long challengeId = 1L;
 
         when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
-        willDoNothing().given(deleteChallengeUseCase).execute(anyLong(), anyString());
+        when(deleteChallengeUseCase.execute(challengeId, socialId))
+                .thenReturn(DeleteChallengeResponse.builder().challengeId(challengeId).build());
 
         mockMvc.perform(delete("/challenge/{challengeId}", 1L))
                 .andDo(print())
-                .andExpectAll(status().isOk());
+                .andExpectAll(status().isOk(), jsonPath("$.result.challengeId").value(challengeId));
 
         verify(deleteChallengeUseCase, times(1)).execute(anyLong(), anyString());
     }

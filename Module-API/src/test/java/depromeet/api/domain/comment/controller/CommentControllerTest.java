@@ -2,7 +2,6 @@ package depromeet.api.domain.comment.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -14,6 +13,8 @@ import depromeet.api.config.security.filter.JwtRequestFilter;
 import depromeet.api.domain.comment.dto.request.CreateCommentRequest;
 import depromeet.api.domain.comment.dto.request.UpdateCommentRequest;
 import depromeet.api.domain.comment.dto.response.CreateCommentResponse;
+import depromeet.api.domain.comment.dto.response.DeleteCommentResponse;
+import depromeet.api.domain.comment.dto.response.UpdateCommentResponse;
 import depromeet.api.domain.comment.usecase.CreateCommentUseCase;
 import depromeet.api.domain.comment.usecase.DeleteCommentUseCase;
 import depromeet.api.domain.comment.usecase.UpdateCommentUseCase;
@@ -105,17 +106,19 @@ public class CommentControllerTest {
     @DisplayName("댓글 수정")
     public void updateCommentTest() throws Exception {
         UpdateCommentRequest request = UpdateCommentRequest.builder().content("반가워요!").build();
+        long commentId = 1L;
 
         when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
-        willDoNothing().given(updateCommentUseCase).execute(any(), anyString(), anyLong());
+        when(updateCommentUseCase.execute(any(), anyString(), anyLong()))
+                .thenReturn(UpdateCommentResponse.builder().commentId(commentId).build());
 
         mockMvc.perform(
-                        put("/record/{recordId}/comment/{commentId}", 1L, 1L)
+                        put("/record/{recordId}/comment/{commentId}", 1L, commentId)
                                 .content(objectMapper.writeValueAsString(request))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .characterEncoding("UTF-8"))
                 .andDo(print())
-                .andExpectAll(status().isOk());
+                .andExpectAll(status().isOk(), jsonPath("$.result.commentId").value(commentId));
 
         verify(updateCommentUseCase, times(1)).execute(any(), anyString(), anyLong());
     }
@@ -123,13 +126,15 @@ public class CommentControllerTest {
     @Test
     @DisplayName("댓글 삭제")
     public void deleteCommentTest() throws Exception {
+        long commentId = 1L;
 
         when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
-        willDoNothing().given(deleteCommentUseCase).execute(anyString(), anyLong());
+        when(deleteCommentUseCase.execute(AuthenticationUtil.getCurrentUserSocialId(), commentId))
+                .thenReturn(DeleteCommentResponse.builder().commentId(commentId).build());
 
-        mockMvc.perform(delete("/record/{recordId}/comment/{commentId}", 1L, 1L))
+        mockMvc.perform(delete("/record/{recordId}/comment/{commentId}", 1L, commentId))
                 .andDo(print())
-                .andExpectAll(status().isOk());
+                .andExpectAll(status().isOk(), jsonPath("$.result.commentId").value(commentId));
 
         verify(deleteCommentUseCase, times(1)).execute(anyString(), anyLong());
     }
