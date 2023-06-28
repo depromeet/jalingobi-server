@@ -35,9 +35,9 @@ public class ChallengeFeedController {
                         content = @Content())
             })
     public Response<ChallengeSlice> searchChallenges(
-            @RequestParam(required = false) final String category,
+            @RequestParam(required = false, defaultValue = "") final String category,
             @RequestParam(required = false, defaultValue = "recruit") String filter,
-            @RequestParam(required = false) String sortType,
+            @RequestParam(required = false, defaultValue = "") String sortType,
             @PageableDefault final Pageable pageable) {
         return ResponseService.getDataResponse(
                 getChallengeInfiniteScrollFeedUseCase.execute(
