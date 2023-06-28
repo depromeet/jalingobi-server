@@ -50,10 +50,10 @@ public class ConditionFilter {
     }
 
     private BooleanExpression beforeStarted() {
-        return challenge.duration.startAt.lt(LocalDate.now());
+        return challenge.duration.startAt.gt(LocalDate.now());
     }
 
     private BooleanExpression beforeEnd() {
-        return challenge.duration.endAt.goe(LocalDate.now());
+        return challenge.duration.endAt.gt(LocalDate.now());
     }
 }
