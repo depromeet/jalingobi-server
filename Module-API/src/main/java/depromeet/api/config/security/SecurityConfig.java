@@ -58,15 +58,15 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOriginPatterns(Arrays.asList("https://*.jalingobi.com", "https://jalingobi.com", "*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedOriginPatterns(Arrays.asList("https://*.jalingobi.com", "https://jalingobi.com", "http://localhost:3000"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setExposedHeaders(Arrays.asList("*"));
         // 쿠키를 전송하려면 이 값을 true로 설정해야합니다.
         configuration.setAllowCredentials(true);
 
         // pre-flight 요청의 캐시 기간을 설정합니다.
-        configuration.setMaxAge(3600L);
+        configuration.setMaxAge(43200L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
