@@ -52,6 +52,7 @@ public enum CustomExceptionStatus {
     CHALLENGE_CANNOT_BE_UPDATED_AFTER_START(false, 1804, "시작된 챌린지는 수정할 수 없습니다."),
     INVALID_CHALLENGE_START_AT(false, 1805, "챌린지 시작일자는 생성일자 + 7입니다."),
     INVALID_CHALLENGE_END_AT(false, 1806, "챌린지 종료일자는 시작일자 + 챌린지 기간입니다."),
+    CHALLENGE_NOT_IN_PROCEEDING(false, 1807, "진행 중인 챌린지가 아닙니다."),
 
     // feed
     FEED_NOT_FOUND(false, 1900, "요청한 날짜에 피드가 없습니다."),
