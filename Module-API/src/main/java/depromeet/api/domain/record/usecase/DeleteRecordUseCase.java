@@ -20,6 +20,7 @@ public class DeleteRecordUseCase {
     public void execute(Long recordId, String socialId) {
 
         Record record = recordAdaptor.findRecord(recordId);
+        recordValidator.validateProceedingChallenge(record.getChallenge());
         recordValidator.validateCorrectUserRecord(record, socialId);
 
         UserChallenge userChallenge = record.getUserChallenge();

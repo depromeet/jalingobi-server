@@ -18,7 +18,7 @@ public class IssuePresignedUrlUseCase {
     public IssuePresignedUrlResponse execute(
             String socialId, IssuePresignedUrlRequest issuePresignedUrlRequest) {
 
-        userAdaptor.doesUserExist(socialId);
+        userAdaptor.isExistUser(socialId);
 
         return IssuePresignedUrlResponse.from(
                 uploadPresignedUrlService.execute(
