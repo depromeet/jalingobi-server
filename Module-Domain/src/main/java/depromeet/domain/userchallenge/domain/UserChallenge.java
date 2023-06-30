@@ -7,10 +7,8 @@ import depromeet.domain.jalingobi.domain.Level;
 import depromeet.domain.record.domain.Record;
 import depromeet.domain.user.domain.User;
 import depromeet.domain.userchallenge.exception.NegativeChargeException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.persistence.*;
 import lombok.*;
 
@@ -89,19 +87,20 @@ public class UserChallenge extends BaseTime {
     }
 
     public void endChallenge() {
-        int size =
-                records.stream()
-                        .map(record -> record.getCreatedAt())
-                        .map(LocalDateTime::toLocalDate)
-                        .distinct()
-                        .collect(Collectors.toList())
-                        .size();
-        int period = challenge.getDuration().getPeriod();
+        //        int size =
+        //                records.stream()
+        //                        .map(record -> record.getCreatedAt())
+        //                        .map(LocalDateTime::toLocalDate)
+        //                        .distinct()
+        //                        .collect(Collectors.toList())
+        //                        .size();
+        //        int period = challenge.getDuration().getPeriod();
+        //
+        //        int recordPercent = (size * 100) / period;
+        //        && recordPercent >= 70
 
-        int recordPercent = (size * 100) / period;
-
-        // 목표 금액 이하면서 기록을 N % 이상 작성했을시 성공
-        if (status == Status.PROCEEDING && currentCharge <= goalCharge && recordPercent >= 70) {
+        // 목표 금액 이하일시 성공 [기록을 N % 이상 작성해야하는 조건 추가 예정]
+        if (status == Status.PROCEEDING && currentCharge <= goalCharge) {
             status = Status.SUCCESS;
             user.plusScore();
         } else {

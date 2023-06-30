@@ -6,6 +6,7 @@ import depromeet.common.response.Response;
 import depromeet.common.response.ResponseService;
 import depromeet.domain.challenge.domain.ChallengeSlice;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -38,7 +39,7 @@ public class ChallengeFeedController {
             @RequestParam(required = false, defaultValue = "") final String category,
             @RequestParam(required = false, defaultValue = "recruit") String filter,
             @RequestParam(required = false, defaultValue = "") String sortType,
-            @PageableDefault final Pageable pageable) {
+            @PageableDefault @Parameter(hidden = true) final Pageable pageable) {
         return ResponseService.getDataResponse(
                 getChallengeInfiniteScrollFeedUseCase.execute(
                         category, filter, sortType, pageable));

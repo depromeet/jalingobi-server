@@ -44,7 +44,7 @@ class UserChallengeTest {
         Assertions.assertEquals(2, user.getScore());
     }
 
-    @Test
+    //    @Test - 추후 기록일수 조건 추가될때 추가
     @DisplayName("챌린지 종료시 조건 검증 - 실패")
     void checkResult_Failure() {
         // given
