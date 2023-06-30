@@ -3,6 +3,7 @@ package depromeet.api.domain.challenge.controller;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -10,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import depromeet.api.config.security.filter.JwtRequestFilter;
 import depromeet.api.domain.challenge.usecase.GetChallengeInfiniteScrollFeedUseCase;
+import depromeet.api.domain.challenge.validator.ChallengeFeedValidator;
 import depromeet.domain.challenge.domain.ChallengeSlice;
 import depromeet.domain.challenge.repository.ChallengeData;
 import java.time.LocalDate;
@@ -43,6 +45,8 @@ public class ChallengeFeedControllerTest {
 
     @MockBean GetChallengeInfiniteScrollFeedUseCase getChallengeInfiniteScrollFeedUseCase;
 
+    @MockBean ChallengeFeedValidator challengeFeedValidator;
+
     @Test
     @DisplayName("챌린지 탐색")
     public void searchChallenge() throws Exception {
@@ -67,6 +71,7 @@ public class ChallengeFeedControllerTest {
         when(getChallengeInfiniteScrollFeedUseCase.execute(
                         anyString(), anyString(), anyString(), any()))
                 .thenReturn(challengeSlice);
+        willDoNothing().given(challengeFeedValidator).validateCategory(anyString());
 
         mockMvc.perform(
                         MockMvcRequestBuilders.get("/challenge/search")
