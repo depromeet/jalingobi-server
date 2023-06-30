@@ -99,9 +99,9 @@ public class ChallengeController {
             })
     public CommonResponse joinChallenge(
             @PathVariable Long challengeId,
-            @RequestBody @Valid JoinChallengeRequest createUserChallengeRequest) {
+            @RequestBody @Valid JoinChallengeRequest joinChallengeRequest) {
         joinUserChallengeUseCase.execute(
-                getCurrentUserSocialId(), createUserChallengeRequest, challengeId);
+                getCurrentUserSocialId(), joinChallengeRequest, challengeId);
         return ResponseService.getSuccessResponse();
     }
 
