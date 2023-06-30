@@ -30,11 +30,15 @@ public class JoinChallengeUseCase {
         challenge.validateCurrentUserCount();
         challenge.validateDuplicatedParticipation(socialId);
 
+        // custom user profile만 thumbnail 이미지로 저장
+        String thumbnailImgUrl = getThumbnailImgUrl(joinChallengeRequest.getImgUrl());
+
         userChallengeAdaptor.joinChallenge(
                 UserChallenge.createUserChallenge(
-                        user,
-                        challenge,
-                        joinChallengeRequest.getImgUrl(),
-                        joinChallengeRequest.getNickname()));
+                        user, challenge, thumbnailImgUrl, joinChallengeRequest.getNickname()));
+    }
+
+    private String getThumbnailImgUrl(String imgUrl) {
+        return imgUrl.replace("original/", "thumb/");
     }
 }

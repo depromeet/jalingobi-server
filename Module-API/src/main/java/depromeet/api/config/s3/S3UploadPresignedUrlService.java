@@ -30,11 +30,10 @@ public class S3UploadPresignedUrlService {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public ImageUrlDto execute(
-            String socialId, ImageFileExtension fileExtension, ImageUploadType type) {
+    public ImageUrlDto execute(ImageFileExtension fileExtension, ImageUploadType type) {
         String valueFileExtension = fileExtension.getUploadExtension();
         String valueType = type.getType();
-        String fileName = createFileName(socialId, valueFileExtension, valueType);
+        String fileName = createFileName(valueFileExtension, valueType);
         log.info(fileName);
 
         GeneratePresignedUrlRequest generatePresignedUrlRequest =
@@ -44,8 +43,8 @@ public class S3UploadPresignedUrlService {
         return ImageUrlDto.of(url.toString(), fileName);
     }
 
-    private String createFileName(String socialId, String fileExtension, String valueType) {
-        return valueType + "/" + socialId + "/" + UUID.randomUUID() + "." + fileExtension;
+    private String createFileName(String fileExtension, String valueType) {
+        return valueType + "/original/" + UUID.randomUUID() + "." + fileExtension;
     }
 
     // 업로드용 Pre-Signed URL을 생성하기 때문에, PUT을 지정
