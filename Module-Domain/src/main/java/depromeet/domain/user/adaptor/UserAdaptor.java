@@ -34,7 +34,7 @@ public class UserAdaptor {
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
 
-    public void doesUserExist(String socialId) {
+    public void isExistUser(String socialId) {
         boolean isExist = userRepository.existsBySocialId(socialId);
 
         if (!isExist) {
