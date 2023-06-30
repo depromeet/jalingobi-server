@@ -27,6 +27,7 @@ public class UpdateRecordUseCase {
     public void execute(Long recordId, String socialId, UpdateRecordRequest updateRecordRequest) {
         Record record = recordAdaptor.findRecord(recordId);
 
+        recordValidator.validateProceedingChallenge(record.getChallenge());
         recordValidator.validateCorrectUserRecord(record, socialId);
 
         Optional<String> currentImgUrl = Optional.ofNullable(record.getImgUrl());
