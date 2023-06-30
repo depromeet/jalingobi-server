@@ -10,18 +10,17 @@ public class ChallengeStatusUtil {
 
     private boolean isNewChallenge(final LocalDate createdAt) {
         final LocalDate currentDate = LocalDate.now();
-        final LocalDate beforeCreatedAt = LocalDate.from(createdAt.minusDays(1));
-        final LocalDate untilNewDate = LocalDate.from(createdAt.plusDays(3));
+        final LocalDate startNew = LocalDate.from(createdAt.minusDays(1));
+        final LocalDate endNew = LocalDate.from(createdAt.plusDays(3));
 
-        return currentDate.isAfter(beforeCreatedAt) && currentDate.isBefore(untilNewDate);
+        return currentDate.isAfter(startNew) && currentDate.isBefore(endNew);
     }
 
     private boolean isApproachingDeadline(final LocalDate startDate) {
         final LocalDate currentDate = LocalDate.now();
-        final LocalDate DeadlineStart = startDate.minusDays(4);
-        final LocalDate afterStartDate = startDate.plusDays(1);
+        final LocalDate startDeadline = startDate.minusDays(4);
 
-        return currentDate.isAfter(DeadlineStart) && currentDate.isBefore(afterStartDate);
+        return currentDate.isAfter(startDeadline) && currentDate.isBefore(startDate);
     }
 
     public String checkStatusInChallengeFeed(final LocalDate createdAt, final LocalDate startedAt) {
