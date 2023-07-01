@@ -28,6 +28,9 @@ public class RecordInfo {
     @Schema(description = "가격", example = "5000")
     private Integer price;
 
+    @Schema(description = "평가", example = "CRAZY")
+    private String evaluation;
+
     @Schema(description = "기록 작성일")
     private LocalDateTime date;
 
@@ -37,6 +40,7 @@ public class RecordInfo {
         this.title = record.getTitle();
         this.content = record.getContent();
         this.price = record.getPrice();
+        this.evaluation = record.getEvaluation().toString();
         this.date = record.getCreatedAt();
     }
 }
