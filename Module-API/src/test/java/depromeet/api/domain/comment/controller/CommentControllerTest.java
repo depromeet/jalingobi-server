@@ -109,7 +109,7 @@ public class CommentControllerTest {
         long commentId = 1L;
 
         when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
-        when(updateCommentUseCase.execute(any(), anyString(), anyLong()))
+        when(updateCommentUseCase.execute(any(), anyString(), anyLong(), anyLong()))
                 .thenReturn(UpdateCommentResponse.builder().commentId(commentId).build());
 
         mockMvc.perform(
@@ -120,7 +120,7 @@ public class CommentControllerTest {
                 .andDo(print())
                 .andExpectAll(status().isOk(), jsonPath("$.result.commentId").value(commentId));
 
-        verify(updateCommentUseCase, times(1)).execute(any(), anyString(), anyLong());
+        verify(updateCommentUseCase, times(1)).execute(any(), anyString(), anyLong(), anyLong());
     }
 
     @Test
@@ -129,13 +129,13 @@ public class CommentControllerTest {
         long commentId = 1L;
 
         when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
-        when(deleteCommentUseCase.execute(AuthenticationUtil.getCurrentUserSocialId(), commentId))
+        when(deleteCommentUseCase.execute(anyString(), anyLong(), anyLong()))
                 .thenReturn(DeleteCommentResponse.builder().commentId(commentId).build());
 
         mockMvc.perform(delete("/record/{recordId}/comment/{commentId}", 1L, commentId))
                 .andDo(print())
                 .andExpectAll(status().isOk(), jsonPath("$.result.commentId").value(commentId));
 
-        verify(deleteCommentUseCase, times(1)).execute(anyString(), anyLong());
+        verify(deleteCommentUseCase, times(1)).execute(anyString(), anyLong(), anyLong());
     }
 }
