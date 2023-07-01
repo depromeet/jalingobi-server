@@ -27,6 +27,7 @@ public class Comment extends BaseTime {
     @JoinColumn(name = "challenge_record_id")
     private Record record;
 
+    @Column(length = 200, nullable = false)
     private String content;
 
     @Builder
