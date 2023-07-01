@@ -15,15 +15,15 @@ public class GetMyPageResponse {
     private Social social;
     private Profile profile;
     private Boolean notification;
-    private Map<String, Integer> userChallengeResult;
+    private Map<String, Long> userChallengeResult;
 
     public static GetMyPageResponse of(
             Social social,
             Profile profile,
             Boolean notification,
-            Map<Status, Integer> challengeResult) {
+            Map<Status, Long> challengeResult) {
 
-        Map<String, Integer> result =
+        Map<String, Long> result =
                 challengeResult.entrySet().stream()
                         .collect(
                                 Collectors.toMap(
