@@ -141,7 +141,6 @@ public class ChallengeControllerTest {
 
         UpdateChallengeRequest request =
                 UpdateChallengeRequest.builder()
-                        .ChallengeId(1L)
                         .categories(categories)
                         .title("마라탕 5만원 이하로 쓰기")
                         .price(50000)
@@ -154,10 +153,10 @@ public class ChallengeControllerTest {
                         .endAt(LocalDate.of(2023, 6, 15))
                         .build();
 
-        UpdateChallengeResponse response = challengeMapper.toUpdateChallengeResponse(request);
+        UpdateChallengeResponse response = challengeMapper.toUpdateChallengeResponse(request, 1L);
 
         when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
-        when(updateChallengeUseCase.execute(any(), anyString())).thenReturn(response);
+        when(updateChallengeUseCase.execute(any(), anyLong(), anyString())).thenReturn(response);
 
         mockMvc.perform(
                         put("/challenge/{challengeId}", 1L)
@@ -180,7 +179,7 @@ public class ChallengeControllerTest {
                         jsonPath("$.result.endAt").value(String.valueOf(response.getEndAt())));
 
         verify(updateChallengeUseCase, times(1))
-                .execute(any(UpdateChallengeRequest.class), anyString());
+                .execute(any(UpdateChallengeRequest.class), anyLong(), anyString());
     }
 
     @Test
