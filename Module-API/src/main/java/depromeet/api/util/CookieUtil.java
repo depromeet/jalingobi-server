@@ -22,12 +22,12 @@ public class CookieUtil {
     }
 
     public Cookie setRefreshToken(String value) {
-        Cookie token = new Cookie("RefreshToken", value);
-        token.setHttpOnly(true);
-        token.setSecure(true);
-        token.setMaxAge(jwtUtil.getRefreshTokenExpiryDate());
-        token.setPath("/");
-        return token;
+        Cookie cookie = new Cookie("RefreshToken", value);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setMaxAge(jwtUtil.getRefreshTokenExpiryDate());
+        cookie.setPath("/");
+        return cookie;
     }
 
     public Cookie getCookie(HttpServletRequest req, String cookieName) {

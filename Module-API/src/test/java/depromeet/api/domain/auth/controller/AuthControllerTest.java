@@ -90,7 +90,7 @@ public class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON);
 
         when(cookieUtil.getCookie(any(), anyString())).thenReturn(cookie);
-        when(refreshTokenUseCase.checkRefreshToken(anyString())).thenReturn(newAccessToken);
+        when(refreshTokenUseCase.execute(anyString())).thenReturn(newAccessToken);
 
         mockMvc.perform(requestBuilder)
                 .andDo(print())
