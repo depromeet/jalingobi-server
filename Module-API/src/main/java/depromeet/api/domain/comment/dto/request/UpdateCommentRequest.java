@@ -13,7 +13,7 @@ public class UpdateCommentRequest {
 
     @Schema(description = "댓글 내용", example = "안녕")
     @NotBlank(message = "댓글을 입력하세요.")
-    @Size(min = 1, max = 2000, message = "내용은 2,000자 이하입니다.")
+    @Size(min = 1, max = 200, message = "내용은 200자 이하입니다.")
     private String content;
 
     private UpdateCommentRequest() {}
