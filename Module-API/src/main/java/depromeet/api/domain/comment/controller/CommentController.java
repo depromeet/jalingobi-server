@@ -61,7 +61,8 @@ public class CommentController {
             @PathVariable long commentId,
             @RequestBody @Valid UpdateCommentRequest request) {
         return ResponseService.getDataResponse(
-                updateCommentUseCase.execute(request, getCurrentUserSocialId(), commentId));
+                updateCommentUseCase.execute(
+                        request, getCurrentUserSocialId(), commentId, recordId));
     }
 
     @Operation(summary = "댓글 삭제 API", description = "댓글을 삭제합니다.")
@@ -77,6 +78,6 @@ public class CommentController {
     public Response<DeleteCommentResponse> deleteComment(
             @PathVariable long recordId, @PathVariable long commentId) {
         return ResponseService.getDataResponse(
-                deleteCommentUsecase.execute(getCurrentUserSocialId(), commentId));
+                deleteCommentUsecase.execute(getCurrentUserSocialId(), commentId, recordId));
     }
 }
