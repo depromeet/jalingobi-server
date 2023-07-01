@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @UseCase
-@Transactional(readOnly = true)
 public class GetMyRoomFeedUseCase {
 
     private final RecordAdaptor recordAdaptor;
@@ -22,6 +21,7 @@ public class GetMyRoomFeedUseCase {
     private final RecordListMapper recordListMapper;
     private final Integer LIMIT = 20;
 
+    @Transactional(readOnly = true)
     public GetMyRoomFeedResponse execute(String socialId, Integer offset) {
 
         User user = userAdaptor.findUser(socialId);

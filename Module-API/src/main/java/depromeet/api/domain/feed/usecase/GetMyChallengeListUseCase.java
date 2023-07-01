@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @UseCase
-@Transactional(readOnly = true)
 public class GetMyChallengeListUseCase {
 
     private final UserChallengeAdaptor userChallengeAdaptor;
