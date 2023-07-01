@@ -9,16 +9,15 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum Evaluation {
-    ONE(1),
-    TWO(2),
-    THREE(3),
-    FOUR(4);
+    WELLDONE("WELLDONE"),
+    REGRETFUL("REGRETFUL"),
+    CRAZY("CRAZY");
 
-    private final int value;
+    private final String value;
 
-    public static Evaluation getEnumTypeByValue(int value) {
+    public static Evaluation getEnumTypeByValue(String value) {
         return Arrays.stream(Evaluation.values())
-                .filter(type -> type.getValue() == value)
+                .filter(type -> type.getValue().equals(value))
                 .findFirst()
                 .orElseThrow(() -> RecordEvaluationNotFoundException.EXCEPTION);
     }
