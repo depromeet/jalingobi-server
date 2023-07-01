@@ -32,7 +32,10 @@ public class CreateRecordRequest {
     @Size(min = 1, max = 80, message = "내용은 80자 이하입니다.")
     private String content;
 
-    @Schema(nullable = true, example = "지출 사진 링크")
+    @Schema(
+            nullable = true,
+            example =
+                    "https://jalingobi-bucket-test.s3.ap-northeast-2.amazonaws.com/record/original/java.png")
     private String imgUrl;
 
     @Schema(description = "지출 평가, WELLDONE | REGRETFUL | CRAZY 중에서 선택 가능합니다.")
