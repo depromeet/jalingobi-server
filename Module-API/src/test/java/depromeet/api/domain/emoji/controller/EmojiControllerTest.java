@@ -15,7 +15,7 @@ import depromeet.api.domain.emoji.dto.request.DeleteEmojiRequest;
 import depromeet.api.domain.emoji.usecase.CreateEmojiUseCase;
 import depromeet.api.domain.emoji.usecase.DeleteEmojiUseCase;
 import depromeet.api.util.AuthenticationUtil;
-import depromeet.domain.record.domain.EmojiType;
+import depromeet.domain.emoji.domain.EmojiType;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -69,7 +69,7 @@ class EmojiControllerTest {
     public void CreateRecordEmojiTest() throws Exception {
         // given
         CreateEmojiRequest createEmojiRequest =
-                CreateEmojiRequest.builder().type(EmojiType.CRAZY.toString()).build();
+                CreateEmojiRequest.builder().type(EmojiType.CRAZY).build();
 
         MockHttpServletRequestBuilder requestBuilder =
                 MockMvcRequestBuilders.put("/record/{recordId}/emoji", 1)
@@ -92,7 +92,7 @@ class EmojiControllerTest {
     public void DeleteRecordEmojiTest() throws Exception {
         // given
         DeleteEmojiRequest deleteEmojiRequest =
-                DeleteEmojiRequest.builder().type(EmojiType.CRAZY.toString()).build();
+                DeleteEmojiRequest.builder().type(EmojiType.CRAZY).build();
         MockHttpServletRequestBuilder requestBuilder =
                 MockMvcRequestBuilders.delete("/record/{recordId}/emoji", 1)
                         .with(csrf())
@@ -103,7 +103,7 @@ class EmojiControllerTest {
         String socialId = "socialId";
 
         when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
-        willDoNothing().given(deleteEmojiUseCase).execute(anyString(), anyLong(), anyString());
+        willDoNothing().given(deleteEmojiUseCase).execute(anyString(), anyLong(), any());
 
         mockMvc.perform(requestBuilder).andDo(print()).andExpectAll(status().isOk());
     }

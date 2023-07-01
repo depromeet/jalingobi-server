@@ -4,7 +4,7 @@ package depromeet.api.domain.feed.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import depromeet.domain.comment.domain.Comment;
 import depromeet.domain.emoji.domain.Emoji;
-import depromeet.domain.record.domain.EmojiType;
+import depromeet.domain.emoji.domain.EmojiType;
 import depromeet.domain.record.domain.Record;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;

@@ -85,12 +85,12 @@ public class Record extends BaseTime {
 
     /** 비즈니스 메서드 */
     public void updateRecord(
-            int price, String title, String content, String imgUrl, int evaluation) {
+            int price, String title, String content, String imgUrl, Evaluation evaluation) {
         this.price = price;
         this.title = title;
         this.content = content;
         this.imgUrl = imgUrl;
-        this.evaluation = Evaluation.getEnumTypeByValue(evaluation);
+        this.evaluation = evaluation;
     }
 
     public void reactEmoji(UserChallenge userChallenge, String type) {
