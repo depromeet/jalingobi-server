@@ -1,6 +1,7 @@
 package depromeet.api.domain.record.validator;
 
 
+import depromeet.api.domain.record.exception.InvalidChallengeStatusException;
 import depromeet.api.domain.record.exception.InvalidUserChallengeException;
 import depromeet.api.domain.record.exception.InvalidUserRecordException;
 import depromeet.domain.challenge.domain.Challenge;
@@ -20,6 +21,12 @@ public class RecordValidator {
     public void validateCorrectUserRecord(Record record, String socialId) {
         if (!record.getUser().isSameUser(socialId)) {
             throw InvalidUserRecordException.EXCEPTION;
+        }
+    }
+
+    public void validateProceedingChallenge(Challenge challenge) {
+        if (!challenge.isProceeding()) {
+            throw InvalidChallengeStatusException.EXCEPTION;
         }
     }
 }

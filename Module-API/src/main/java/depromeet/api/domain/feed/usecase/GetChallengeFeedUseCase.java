@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @UseCase
-@Transactional(readOnly = true)
 public class GetChallengeFeedUseCase {
 
     private final RecordAdaptor recordAdaptor;
@@ -26,6 +25,7 @@ public class GetChallengeFeedUseCase {
 
     private final Integer LIMIT = 20;
 
+    @Transactional(readOnly = true)
     public GetChallengeFeedResponse execute(String socialId, Long challengeId, Long recordId) {
         User user = userAdaptor.findUser(socialId);
         UserChallenge userChallenge =
