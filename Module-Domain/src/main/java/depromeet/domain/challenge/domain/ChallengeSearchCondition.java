@@ -8,7 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ChallengeSearchCondition {
 
-    private String category;
+    private CategoryType category;
     private String filter;
     private String sortType;
 }

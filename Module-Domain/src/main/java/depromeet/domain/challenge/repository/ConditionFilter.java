@@ -4,6 +4,7 @@ import static depromeet.domain.challenge.domain.QChallenge.challenge;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import depromeet.domain.challenge.domain.CategoryType;
 import depromeet.domain.challenge.domain.ChallengeSearchCondition;
 import java.time.LocalDate;
 
@@ -22,8 +23,8 @@ public class ConditionFilter {
         return booleanBuilder;
     }
 
-    private void filterByCategory(BooleanBuilder booleanBuilder, String category) {
-        if (!category.isBlank()) {
+    private void filterByCategory(BooleanBuilder booleanBuilder, CategoryType category) {
+        if (category != null) {
             booleanBuilder.and(
                     challenge
                             .challengeCategories
@@ -31,7 +32,7 @@ public class ConditionFilter {
                             .any()
                             .category
                             .name
-                            .eq(category));
+                            .eq(category.toString()));
         }
     }
 

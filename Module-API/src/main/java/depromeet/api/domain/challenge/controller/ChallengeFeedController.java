@@ -2,9 +2,10 @@ package depromeet.api.domain.challenge.controller;
 
 
 import depromeet.api.domain.challenge.usecase.GetChallengeInfiniteScrollFeedUseCase;
-import depromeet.api.domain.challenge.validator.ChallengeFeedValidator;
+import depromeet.common.annotation.ValidEnum;
 import depromeet.common.response.Response;
 import depromeet.common.response.ResponseService;
+import depromeet.domain.challenge.domain.CategoryType;
 import depromeet.domain.challenge.domain.ChallengeSlice;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChallengeFeedController {
 
     private final GetChallengeInfiniteScrollFeedUseCase getChallengeInfiniteScrollFeedUseCase;
-    private final ChallengeFeedValidator challengeFeedValidator;
 
     @GetMapping("/challenge/search")
     @Operation(summary = "챌린지 탐색 API", description = "조건에 따라 챌린지를 탐색합니다.")
@@ -38,11 +38,12 @@ public class ChallengeFeedController {
                         content = @Content())
             })
     public Response<ChallengeSlice> searchChallenges(
-            @RequestParam(required = false, defaultValue = "") final String category,
+            @RequestParam(required = false, defaultValue = "")
+                    @ValidEnum(enumClass = CategoryType.class, message = "유효하지 않은 카테고리 파라미터입니다.")
+                    final CategoryType category,
             @RequestParam(required = false, defaultValue = "recruit") String filter,
             @RequestParam(required = false, defaultValue = "") String sortType,
             @PageableDefault @Parameter(hidden = true) final Pageable pageable) {
-        challengeFeedValidator.validateCategory(category);
         return ResponseService.getDataResponse(
                 getChallengeInfiniteScrollFeedUseCase.execute(
                         category, filter, sortType, pageable));
