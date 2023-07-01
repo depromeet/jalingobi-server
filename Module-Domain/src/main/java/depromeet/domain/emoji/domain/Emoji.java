@@ -1,7 +1,6 @@
 package depromeet.domain.emoji.domain;
 
 
-import depromeet.domain.record.domain.EmojiType;
 import depromeet.domain.record.domain.Record;
 import depromeet.domain.userchallenge.domain.UserChallenge;
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package depromeet.domain.record.domain;
+package depromeet.domain.emoji.domain;
 
 
 import depromeet.domain.emoji.exception.EmojiNotFoundException;

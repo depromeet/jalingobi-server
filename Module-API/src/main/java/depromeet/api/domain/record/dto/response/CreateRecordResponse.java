@@ -17,7 +17,7 @@ public class CreateRecordResponse {
     private String title;
     private String content;
     private String imgUrl;
-    private Integer evaluation;
+    private String evaluation;
     private RecordUserInfo userInfo;
 
     public static CreateRecordResponse of(Record record) {
