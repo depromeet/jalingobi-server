@@ -37,6 +37,7 @@ public class QuitChallengeUseCase {
                 userChallengeAdaptor.findUserChallenge(challengeId, user.getId());
 
         if (challenge.isProceeding()) user.minusScore();
+
         userChallengeAdaptor.quitChallenge(userChallenge);
     }
 }
