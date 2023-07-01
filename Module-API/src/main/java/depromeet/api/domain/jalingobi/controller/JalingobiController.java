@@ -21,16 +21,16 @@ public class JalingobiController {
     private final GetJalingobiUseCase getJalingobiUseCase;
     private final GetSmallTalkUseCase getSmallTalkUseCase;
 
-    @Operation(summary = "자린고비 홈 조회 API")
     @GetMapping()
+    @Operation(summary = "자린고비 홈 조회 API")
     public Response<GetJalingobiResponse> getJalingobiHome() {
 
         return ResponseService.getDataResponse(
                 getJalingobiUseCase.execute(getCurrentUserSocialId()));
     }
 
-    @Operation(summary = "자린고비 한마디 조회 API")
     @GetMapping("/small-talk/{jalingobiId}")
+    @Operation(summary = "자린고비 한마디 조회 API")
     public Response<GetSmallTalkResponse> getJalingobiSmallTalk(
             @PathVariable("jalingobiId") Long jalingobiId) {
 

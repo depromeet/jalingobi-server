@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ResponseService {
 
-    public static CommonResponse getSuccessResponse() {
-        CommonResponse response = new CommonResponse();
+    public static Response getSuccessResponse() {
+        Response response = new Response();
         response.setIsSuccess(CustomExceptionStatus.SUCCESS.isSuccess());
         response.setCode(CustomExceptionStatus.SUCCESS.getCode());
         response.setMessage(CustomExceptionStatus.SUCCESS.getMessage());
@@ -24,8 +24,8 @@ public class ResponseService {
         return response;
     }
 
-    public static CommonResponse getExceptionResponse(CustomExceptionStatus status) {
-        CommonResponse response = new CommonResponse();
+    public static Response getExceptionResponse(CustomExceptionStatus status) {
+        Response response = new Response();
         response.setIsSuccess(status.isSuccess());
         response.setCode(status.getCode());
         response.setMessage(status.getMessage());
