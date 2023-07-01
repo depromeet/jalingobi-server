@@ -7,9 +7,6 @@ import depromeet.common.response.ResponseService;
 import depromeet.domain.challenge.domain.ChallengeSlice;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -27,14 +24,6 @@ public class ChallengeFeedController {
 
     @GetMapping("/challenge/search")
     @Operation(summary = "챌린지 탐색 API", description = "조건에 따라 챌린지를 탐색합니다.")
-    @ApiResponses(
-            value = {
-                @ApiResponse(responseCode = "200"),
-                @ApiResponse(
-                        responseCode = "400",
-                        description = "잘못된 요청값을 전달한 경우",
-                        content = @Content())
-            })
     public Response<ChallengeSlice> searchChallenges(
             @RequestParam(required = false, defaultValue = "") final String category,
             @RequestParam(required = false, defaultValue = "recruit") String filter,

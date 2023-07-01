@@ -33,6 +33,7 @@ public class AuthController {
     private final RefreshTokenUseCase refreshTokenUseCase;
     private final CookieUtil cookieUtil;
 
+    @PostMapping("/kakao")
     @Operation(
             summary = "KAKAO 소셜로그인 API",
             description = "사용자 인증 이후, access[body]/refresh[cookie] token을 발급합니다.")
@@ -49,7 +50,6 @@ public class AuthController {
                         description = "유효하지 않은 토큰으로 요청하거나, 다른 플랫폼에 해당 이메일로 가입된 계정이 있을 경우",
                         content = @Content())
             })
-    @PostMapping("/kakao")
     public Response<KakaoAuthResponse> authKakao(
             @RequestBody @Valid KakaoAuthRequest reqAuth, HttpServletResponse response) {
 
