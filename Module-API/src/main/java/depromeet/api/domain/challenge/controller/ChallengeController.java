@@ -13,7 +13,6 @@ import depromeet.api.domain.challenge.usecase.JoinChallengeUseCase;
 import depromeet.api.domain.challenge.usecase.UpdateChallengeUseCase;
 import depromeet.api.domain.challenge.validator.CreateChallengeValidator;
 import depromeet.api.util.RandomNicknameGenerator;
-import depromeet.common.response.CommonResponse;
 import depromeet.common.response.Response;
 import depromeet.common.response.ResponseService;
 import depromeet.domain.challenge.domain.CategoryType;
@@ -97,12 +96,12 @@ public class ChallengeController {
                         description = "잘못된 요청값을 전달한 경우",
                         content = @Content())
             })
-    public CommonResponse joinChallenge(
+    public Response<JoinChallengeResponse> joinChallenge(
             @PathVariable Long challengeId,
-            @RequestBody @Valid JoinChallengeRequest joinChallengeRequest) {
-        joinUserChallengeUseCase.execute(
-                getCurrentUserSocialId(), joinChallengeRequest, challengeId);
-        return ResponseService.getSuccessResponse();
+            @RequestBody(required = false) @Valid JoinChallengeRequest joinChallengeRequest) {
+        return ResponseService.getDataResponse(
+                joinUserChallengeUseCase.execute(
+                        getCurrentUserSocialId(), joinChallengeRequest, challengeId));
     }
 
     @GetMapping("/{challengeId}")
