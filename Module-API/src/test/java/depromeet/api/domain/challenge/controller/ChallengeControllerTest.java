@@ -1,7 +1,6 @@
 package depromeet.api.domain.challenge.controller;
 
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -201,14 +200,21 @@ public class ChallengeControllerTest {
     }
 
     @Test
-    @DisplayName("챌린지 참가")
-    public void joinChallengeTest() throws Exception {
+    @DisplayName("챌린지 참가 - 커스텀 프로필 사용")
+    public void joinChallengeUsingCustomProfileTest() throws Exception {
         String socialId = "socialId";
         JoinChallengeRequest createUserChallengeRequest =
                 JoinChallengeRequest.builder().nickname("닉네임").imgUrl("/test.jpg").build();
+        JoinChallengeResponse joinChallengeResponse =
+                JoinChallengeResponse.builder()
+                        .title("외식비 30만원 이하로 쓰기")
+                        .startAt(LocalDate.now())
+                        .rules(List.of("광고 금지", "욕설 금지"))
+                        .build();
 
         when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
-        willDoNothing().given(createUserChallengeUseCase).execute(anyString(), any(), anyLong());
+        when(createUserChallengeUseCase.execute(anyString(), any(), anyLong()))
+                .thenReturn(joinChallengeResponse);
 
         mockMvc.perform(
                         post("/challenge/join/{challengeId}", 1L)
@@ -217,7 +223,41 @@ public class ChallengeControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .characterEncoding("UTF-8"))
                 .andDo(print())
-                .andExpectAll(status().isOk());
+                .andExpectAll(
+                        status().isOk(),
+                        jsonPath("$.result.title").value(joinChallengeResponse.getTitle()),
+                        jsonPath("$.result.startAt")
+                                .value(joinChallengeResponse.getStartAt().toString()),
+                        jsonPath("$.result.rules.length()")
+                                .value(joinChallengeResponse.getRules().size()));
+
+        verify(createUserChallengeUseCase, times(1)).execute(anyString(), any(), anyLong());
+    }
+
+    @Test
+    @DisplayName("챌린지 참가 - 기본 프로필 사용")
+    public void joinChallengeUsingDefaultProfileTest() throws Exception {
+        String socialId = "socialId";
+        JoinChallengeResponse joinChallengeResponse =
+                JoinChallengeResponse.builder()
+                        .title("외식비 30만원 이하로 쓰기")
+                        .startAt(LocalDate.now())
+                        .rules(List.of("광고 금지", "욕설 금지"))
+                        .build();
+
+        when(AuthenticationUtil.getCurrentUserSocialId()).thenReturn(socialId);
+        when(createUserChallengeUseCase.execute(anyString(), any(), anyLong()))
+                .thenReturn(joinChallengeResponse);
+
+        mockMvc.perform(post("/challenge/join/{challengeId}", 1L))
+                .andDo(print())
+                .andExpectAll(
+                        status().isOk(),
+                        jsonPath("$.result.title").value(joinChallengeResponse.getTitle()),
+                        jsonPath("$.result.startAt")
+                                .value(joinChallengeResponse.getStartAt().toString()),
+                        jsonPath("$.result.rules.length()")
+                                .value(joinChallengeResponse.getRules().size()));
 
         verify(createUserChallengeUseCase, times(1)).execute(anyString(), any(), anyLong());
     }
