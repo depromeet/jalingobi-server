@@ -2,8 +2,8 @@ package depromeet.api.domain.emoji.usecase;
 
 
 import depromeet.common.annotation.UseCase;
+import depromeet.domain.emoji.domain.EmojiType;
 import depromeet.domain.record.adaptor.RecordAdaptor;
-import depromeet.domain.record.domain.EmojiType;
 import depromeet.domain.record.domain.Record;
 import depromeet.domain.user.adaptor.UserAdaptor;
 import depromeet.domain.user.domain.User;

@@ -15,7 +15,7 @@ import depromeet.api.domain.emoji.dto.request.DeleteEmojiRequest;
 import depromeet.api.domain.emoji.usecase.CreateEmojiUseCase;
 import depromeet.api.domain.emoji.usecase.DeleteEmojiUseCase;
 import depromeet.api.util.AuthenticationUtil;
-import depromeet.domain.record.domain.EmojiType;
+import depromeet.domain.emoji.domain.EmojiType;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;

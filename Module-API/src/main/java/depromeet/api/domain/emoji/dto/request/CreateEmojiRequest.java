@@ -2,7 +2,7 @@ package depromeet.api.domain.emoji.dto.request;
 
 
 import depromeet.common.annotation.ValidEnum;
-import depromeet.domain.record.domain.EmojiType;
+import depromeet.domain.emoji.domain.EmojiType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
