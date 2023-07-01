@@ -69,7 +69,8 @@ public class ChallengeController {
     public Response<UpdateChallengeResponse> updateChallenge(
             @PathVariable Long challengeId, @RequestBody UpdateChallengeRequest challengeRequest) {
         return ResponseService.getDataResponse(
-                updateChallengeUseCase.execute(challengeRequest, getCurrentUserSocialId()));
+                updateChallengeUseCase.execute(
+                        challengeRequest, challengeId, getCurrentUserSocialId()));
     }
 
     @Operation(summary = "챌린지 삭제 API", description = "챌린지를 삭제합니다.")
