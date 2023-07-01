@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import depromeet.api.config.security.filter.JwtRequestFilter;
 import depromeet.api.domain.auth.dto.request.KakaoAuthRequest;
 import depromeet.api.domain.auth.dto.response.KakaoAuthResponse;
+import depromeet.api.domain.auth.dto.response.TokenResponse;
 import depromeet.api.domain.auth.usecase.KakaoAuthUseCase;
 import depromeet.api.domain.auth.usecase.RefreshTokenUseCase;
 import depromeet.api.util.CookieUtil;
@@ -82,6 +83,7 @@ public class AuthControllerTest {
     public void refreshTokenTest() throws Exception {
         String refreshToken = "refresh-token";
         String newAccessToken = "new-access-token";
+        TokenResponse tokenResponse = new TokenResponse(null, newAccessToken);
         Cookie cookie = new Cookie("REFRESH_TOKEN", refreshToken);
 
         MockHttpServletRequestBuilder requestBuilder =
@@ -90,7 +92,7 @@ public class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON);
 
         when(cookieUtil.getCookie(any(), anyString())).thenReturn(cookie);
-        when(refreshTokenUseCase.checkRefreshToken(anyString())).thenReturn(newAccessToken);
+        when(refreshTokenUseCase.execute(anyString())).thenReturn(tokenResponse);
 
         mockMvc.perform(requestBuilder)
                 .andDo(print())
