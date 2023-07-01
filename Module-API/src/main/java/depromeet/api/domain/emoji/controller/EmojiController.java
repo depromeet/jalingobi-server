@@ -6,7 +6,7 @@ import depromeet.api.domain.emoji.dto.request.CreateEmojiRequest;
 import depromeet.api.domain.emoji.dto.request.DeleteEmojiRequest;
 import depromeet.api.domain.emoji.usecase.CreateEmojiUseCase;
 import depromeet.api.domain.emoji.usecase.DeleteEmojiUseCase;
-import depromeet.common.response.CommonResponse;
+import depromeet.common.response.Response;
 import depromeet.common.response.ResponseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,7 +25,7 @@ public class EmojiController {
 
     @PutMapping("/{recordId}/emoji")
     @Operation(summary = "이모지 생성 및 수정 API", description = "이모지를 생성 및 수정합니다.")
-    public CommonResponse createRecordEmoji(
+    public Response createRecordEmoji(
             @PathVariable long recordId,
             @RequestBody @Valid CreateEmojiRequest createEmojiRequest) {
         createEmojiUseCase.execute(getCurrentUserSocialId(), recordId, createEmojiRequest);
@@ -34,7 +34,7 @@ public class EmojiController {
 
     @DeleteMapping("/{recordId}/emoji")
     @Operation(summary = "이모지 삭제 API", description = "이미 등록된 이모지를 삭제합니다.")
-    public CommonResponse deleteRecordEmoji(
+    public Response deleteRecordEmoji(
             @PathVariable long recordId, @RequestBody @Valid DeleteEmojiRequest request) {
         deleteEmojiUseCase.execute(getCurrentUserSocialId(), recordId, request.getType());
         return ResponseService.getSuccessResponse();

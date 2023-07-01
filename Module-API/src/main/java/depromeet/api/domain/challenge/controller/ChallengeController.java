@@ -13,7 +13,6 @@ import depromeet.api.domain.challenge.usecase.JoinChallengeUseCase;
 import depromeet.api.domain.challenge.usecase.UpdateChallengeUseCase;
 import depromeet.api.domain.challenge.validator.CreateChallengeValidator;
 import depromeet.api.util.RandomNicknameGenerator;
-import depromeet.common.response.CommonResponse;
 import depromeet.common.response.Response;
 import depromeet.common.response.ResponseService;
 import depromeet.domain.challenge.domain.CategoryType;
@@ -62,7 +61,7 @@ public class ChallengeController {
 
     @PostMapping("/join/{challengeId}")
     @Operation(summary = "챌린지 참가 API", description = "유저가 해당 챌린지에 참가합니다.")
-    public CommonResponse joinChallenge(
+    public Response joinChallenge(
             @PathVariable Long challengeId,
             @RequestBody @Valid JoinChallengeRequest createUserChallengeRequest) {
         joinUserChallengeUseCase.execute(
