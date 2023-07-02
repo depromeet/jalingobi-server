@@ -30,15 +30,9 @@ public class UpdateRecordUseCase {
         recordValidator.validateCorrectUserRecord(record, socialId);
         recordValidator.validateProceedingChallenge(record.getChallenge());
 
-        Optional<String> currentImgUrl = Optional.ofNullable(record.getImgUrl());
-        if (currentImgUrl.isPresent()) {
-            String imgUrl = currentImgUrl.get();
-            String key = getKey(imgUrl);
-            uploadPresignedUrlService.deleteImage(key);
-        }
-        UserChallenge userChallenge = record.getUserChallenge();
-        userChallenge.removeCharge(record.getPrice());
-        userChallenge.addCharge(updateRecordRequest.getPrice());
+        removeS3OldImage(record);
+
+        updateCharge(record, updateRecordRequest);
 
         record.updateRecord(
                 updateRecordRequest.getPrice(),
@@ -51,5 +45,20 @@ public class UpdateRecordUseCase {
     private String getKey(String imgUrl) {
         String[] splitUrl = imgUrl.split(prefix);
         return splitUrl[1];
+    }
+
+    private void removeS3OldImage(Record record) {
+        Optional<String> currentImgUrl = Optional.ofNullable(record.getImgUrl());
+        if (currentImgUrl.isPresent()) {
+            String imgUrl = currentImgUrl.get();
+            String key = getKey(imgUrl);
+            uploadPresignedUrlService.deleteImage(key);
+        }
+    }
+
+    private void updateCharge(Record record, UpdateRecordRequest updateRecordRequest) {
+        UserChallenge userChallenge = record.getUserChallenge();
+        userChallenge.removeCharge(record.getPrice());
+        userChallenge.addCharge(updateRecordRequest.getPrice());
     }
 }
