@@ -18,8 +18,7 @@ import org.springframework.context.annotation.Configuration;
                         description = "Depromeet 13기 1팀 API 명세서",
                         version = "v1"),
         servers = {
-                @Server(url = "https://api.jalingobi.com", description = "Test Server"),
-                @Server(url = "http://localhost:8080", description = "Local Server")
+                @Server(url = "/", description = "Current Server")
         })
 @Configuration
 public class SwaggerConfig {
