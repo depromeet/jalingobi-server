@@ -82,10 +82,10 @@ class MyPageControllerTest {
         Profile profile = Profile.createProfile(nickname, email);
         Social social = Social.createSocial(socialId, platform);
 
-        Map<String, Integer> userChallengeResult = new HashMap<>();
-        userChallengeResult.put(Status.SUCCESS.getValue(), 1);
-        userChallengeResult.put(Status.PROCEEDING.getValue(), 2);
-        userChallengeResult.put(Status.COMPLETED.getValue(), 3);
+        Map<String, Long> userChallengeResult = new HashMap<>();
+        userChallengeResult.put(Status.SUCCESS.getValue(), 1L);
+        userChallengeResult.put(Status.PROCEEDING.getValue(), 2L);
+        userChallengeResult.put(Status.COMPLETED.getValue(), 3L);
 
         GetMyPageResponse getMyPageResponse =
                 GetMyPageResponse.builder()

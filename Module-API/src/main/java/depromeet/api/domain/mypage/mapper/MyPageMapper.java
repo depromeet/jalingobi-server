@@ -20,7 +20,7 @@ public class MyPageMapper {
             Social social,
             Profile profile,
             Boolean notification,
-            Map<Status, Integer> userChallengeResult) {
+            Map<Status, Long> userChallengeResult) {
         return GetMyPageResponse.of(social, profile, notification, userChallengeResult);
     }
 
