@@ -49,7 +49,8 @@ public class ChallengeController {
     public Response<UpdateChallengeResponse> updateChallenge(
             @PathVariable Long challengeId, @RequestBody UpdateChallengeRequest challengeRequest) {
         return ResponseService.getDataResponse(
-                updateChallengeUseCase.execute(challengeRequest, getCurrentUserSocialId()));
+                updateChallengeUseCase.execute(
+                        challengeRequest, challengeId, getCurrentUserSocialId()));
     }
 
     @DeleteMapping("/{challengeId}")

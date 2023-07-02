@@ -147,8 +147,11 @@ public class Challenge extends BaseTime {
         return true;
     }
 
-    public void updateTitle(String title) {
+    public void update(String title, int price, String imgUrl, int availableCount) {
         this.title = title;
+        this.price = price;
+        this.imgUrl = imgUrl;
+        this.availableCount = availableCount;
     }
 
     public void updateChallengeCategories(List<Category> categories) {
@@ -156,21 +159,9 @@ public class Challenge extends BaseTime {
         addCategories(categories);
     }
 
-    public void updatePrice(int price) {
-        this.price = price;
-    }
-
-    public void updateImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
     public void updateKeywords(List<Keyword> keywords) {
         challengeKeywords.clear();
         addKeywords(keywords);
-    }
-
-    public void updateAvailableCount(int availableCount) {
-        this.availableCount = availableCount;
     }
 
     public void updateChallengeRules(List<ChallengeRule> rules) {

@@ -42,8 +42,8 @@ public class ChallengeMapper {
     }
 
     public UpdateChallengeResponse toUpdateChallengeResponse(
-            UpdateChallengeRequest updateChallengeRequest) {
-        return UpdateChallengeResponse.of(updateChallengeRequest);
+            UpdateChallengeRequest updateChallengeRequest, long challengeId) {
+        return UpdateChallengeResponse.of(updateChallengeRequest, challengeId);
     }
 
     public GetChallengeResponse toGetChallengeResponse(Challenge challenge) {

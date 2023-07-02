@@ -45,9 +45,10 @@ public class UpdateChallengeResponse {
     @Schema(description = "챌린지 종료 일자", example = "2023-06-07")
     private LocalDate endAt;
 
-    public static UpdateChallengeResponse of(UpdateChallengeRequest updateChallengeRequest) {
+    public static UpdateChallengeResponse of(
+            UpdateChallengeRequest updateChallengeRequest, long challengeId) {
         return UpdateChallengeResponse.builder()
-                .challengeId(updateChallengeRequest.getChallengeId())
+                .challengeId(challengeId)
                 .category(updateChallengeRequest.getCategories().get(0))
                 .title(updateChallengeRequest.getTitle())
                 .price(updateChallengeRequest.getPrice())
