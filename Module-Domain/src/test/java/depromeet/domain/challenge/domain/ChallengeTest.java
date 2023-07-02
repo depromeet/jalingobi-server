@@ -16,13 +16,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class ChallengeTest {
 
     /*
-    챌린지 모집 기간 일주일 중에서 초기 4일 동안을 오픈 예정으로 표시
+    챌린지 모집 기간 일주일 중에서 초기 4일 동안은 'N일 뒤 시작'으로 표시
      */
     @Test
-    @DisplayName("오픈예정 챌린지")
-    public void isComingSoon() {
+    @DisplayName("N일 뒤 시작으로 표시할 챌린지")
+    public void isBeforeApproachingDeadline() {
         int period = 5;
-        LocalDate createdAt = LocalDate.now().plusDays(4);
+        LocalDate createdAt = LocalDate.now().plusDays(5);
         LocalDate startAt = createdAt.plusDays(7);
 
         Challenge challenge =
@@ -38,7 +38,7 @@ public class ChallengeTest {
                         new Duration(period, startAt, startAt.plusDays(period)));
 
         assertThat(challenge.checkStatusInChallengeDetail(LocalDate.from(createdAt)))
-                .isEqualTo(StatusType.COMING_SOON.getName());
+                .isEqualTo("5일 뒤 시작");
     }
 
     /*
