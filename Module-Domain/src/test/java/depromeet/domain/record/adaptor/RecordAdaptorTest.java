@@ -85,7 +85,7 @@ class RecordAdaptorTest {
 
         Record record =
                 Record.createRecord(
-                        challenge, user, userChallenge, 4000, "커피", "커피는 무죄", "", Evaluation.ONE);
+                        challenge, user, userChallenge, 4000, "커피", "커피는 무죄", "", Evaluation.CRAZY);
 
         given(recordRepository.save(record)).willReturn(record);
 

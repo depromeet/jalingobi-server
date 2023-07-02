@@ -2,6 +2,7 @@ package depromeet.api.domain.emoji.usecase;
 
 
 import depromeet.common.annotation.UseCase;
+import depromeet.domain.emoji.domain.EmojiType;
 import depromeet.domain.record.adaptor.RecordAdaptor;
 import depromeet.domain.record.domain.Record;
 import depromeet.domain.user.adaptor.UserAdaptor;
@@ -20,12 +21,12 @@ public class DeleteEmojiUseCase {
     private final UserChallengeAdaptor userChallengeAdaptor;
 
     @Transactional
-    public void execute(String socialId, Long recordId, String type) {
+    public void execute(String socialId, Long recordId, EmojiType type) {
         User source = userAdaptor.findUser(socialId);
         Record target = recordAdaptor.findRecord(recordId);
         UserChallenge userChallenge =
                 userChallengeAdaptor.findUserChallenge(target.getChallenge(), source);
 
-        target.unReactEmoji(userChallenge, type);
+        target.unReactEmoji(userChallenge, type.getValue());
     }
 }

@@ -24,14 +24,12 @@ public class ImageController {
     private final IssuePresignedUrlUseCase getPresignedUrlUseCase;
 
     // type은 [record, profile, custom-profile, challenge] 이게 폴더 명이 될거임.
-    @Operation(summary = "presigned url을 발급받는 API")
     @PostMapping("/presigned")
+    @Operation(summary = "presigned url을 발급받는 API")
     public Response<IssuePresignedUrlResponse> createPresigned(
-            @RequestBody IssuePresignedUrlRequest getPresignedUrlRequest) {
+            @RequestBody IssuePresignedUrlRequest issuePresignedUrlRequest) {
+
         return ResponseService.getDataResponse(
-                getPresignedUrlUseCase.execute(
-                        getCurrentUserSocialId(),
-                        getPresignedUrlRequest.getImageFileExtension(),
-                        getPresignedUrlRequest.getType()));
+                getPresignedUrlUseCase.execute(getCurrentUserSocialId(), issuePresignedUrlRequest));
     }
 }

@@ -33,9 +33,10 @@ public class UpdateChallengeUseCase {
     private final ChallengeMapper challengeMapper;
 
     @Transactional
-    public UpdateChallengeResponse execute(UpdateChallengeRequest request, String socialId) {
+    public UpdateChallengeResponse execute(
+            UpdateChallengeRequest request, long challengeId, String socialId) {
         User user = userAdaptor.findUser(socialId);
-        Challenge challenge = challengeAdaptor.findChallenge(request.getChallengeId());
+        Challenge challenge = challengeAdaptor.findChallenge(challengeId);
         if (challenge.isNotWrittenBy(socialId)) {
             throw ChallengeNotBelongToUserException.EXCEPTION;
         }
@@ -49,15 +50,16 @@ public class UpdateChallengeUseCase {
                                 .collect(Collectors.toList()));
         List<ChallengeRule> challengeRules = ChallengeRule.createRule(request.getRules());
 
-        challenge.updateTitle(request.getTitle());
-        challenge.updatePrice(request.getPrice());
-        challenge.updateImgUrl(request.getImgUrl());
-        challenge.updateAvailableCount(request.getAvailableCount());
+        challenge.update(
+                request.getTitle(),
+                request.getPrice(),
+                request.getImgUrl(),
+                request.getAvailableCount());
         challenge.updateChallengeRules(challengeRules);
         challenge.updateChallengeCategories(categories);
         challenge.updateKeywords(keywords);
         challenge.updateDuration(request.getPeriod(), request.getStartAt(), request.getEndAt());
 
-        return challengeMapper.toUpdateChallengeResponse(request);
+        return challengeMapper.toUpdateChallengeResponse(request, challengeId);
     }
 }

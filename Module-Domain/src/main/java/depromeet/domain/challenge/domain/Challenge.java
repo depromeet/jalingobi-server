@@ -15,6 +15,7 @@ import depromeet.domain.userchallenge.exception.ChallengeIsFullException;
 import depromeet.domain.userchallenge.exception.ChallengeIsStartedException;
 import depromeet.domain.userchallenge.exception.DuplicateParticipationException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import javax.persistence.*;
 import lombok.*;
@@ -146,8 +147,11 @@ public class Challenge extends BaseTime {
         return true;
     }
 
-    public void updateTitle(String title) {
+    public void update(String title, int price, String imgUrl, int availableCount) {
         this.title = title;
+        this.price = price;
+        this.imgUrl = imgUrl;
+        this.availableCount = availableCount;
     }
 
     public void updateChallengeCategories(List<Category> categories) {
@@ -155,21 +159,9 @@ public class Challenge extends BaseTime {
         addCategories(categories);
     }
 
-    public void updatePrice(int price) {
-        this.price = price;
-    }
-
-    public void updateImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
     public void updateKeywords(List<Keyword> keywords) {
         challengeKeywords.clear();
         addKeywords(keywords);
-    }
-
-    public void updateAvailableCount(int availableCount) {
-        this.availableCount = availableCount;
     }
 
     public void updateChallengeRules(List<ChallengeRule> rules) {
@@ -188,12 +180,10 @@ public class Challenge extends BaseTime {
     private boolean isApproachingDeadline(final LocalDate startDate) {
         final LocalDate currentDate = LocalDate.now();
         final LocalDate DeadlineStart = startDate.minusDays(4);
-        final LocalDate afterStartDate = startDate.plusDays(1);
-
-        return currentDate.isAfter(DeadlineStart) && currentDate.isBefore(afterStartDate);
+        return currentDate.isAfter(DeadlineStart) && currentDate.isBefore(startDate);
     }
 
-    private boolean isComingSoon(final LocalDate startDate) {
+    private boolean isBeforeApproachingDeadline(final LocalDate startDate) {
         final LocalDate currentDate = LocalDate.now();
         final LocalDate comingSoonStart = startDate.minusDays(8);
         final LocalDate comingSoonEnd = startDate.minusDays(3);
@@ -201,8 +191,13 @@ public class Challenge extends BaseTime {
         return currentDate.isAfter(comingSoonStart) && currentDate.isBefore(comingSoonEnd);
     }
 
+    private long getDiffDay(final LocalDate createdAt) {
+        return ChronoUnit.DAYS.between(LocalDate.now(), createdAt);
+    }
+
     public String checkStatusInChallengeDetail(final LocalDate createdAt) {
-        if (isComingSoon(createdAt)) return StatusType.COMING_SOON.getName();
+        if (isBeforeApproachingDeadline(createdAt))
+            return String.format("%d%s", getDiffDay(createdAt), StatusType.AFTER_DAY.getName());
         // 리팩토링 예정
         if (isApproachingDeadline(this.getDuration().getStartAt()))
             return StatusType.APPROACHING_DEADLINE.getName();

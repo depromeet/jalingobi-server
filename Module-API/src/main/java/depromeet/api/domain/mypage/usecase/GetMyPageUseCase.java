@@ -34,32 +34,30 @@ public class GetMyPageUseCase {
 
         List<UserChallenge> challengeList =
                 userChallengeAdaptor.findUserChallengeList(user.getId());
-        Map<Status, Integer> userChallengeResult = checkUserChallengeStatusCount(challengeList);
+        Map<Status, Long> userChallengeResult = checkUserChallengeStatusCount(challengeList);
 
         return myPageMapper.toGetMyPageResponse(social, profile, notification, userChallengeResult);
     }
 
-    private Map<Status, Integer> checkUserChallengeStatusCount(List<UserChallenge> challengeList) {
-        Map<Status, Integer> userChallengeResult = new HashMap<>();
+    private Map<Status, Long> checkUserChallengeStatusCount(List<UserChallenge> challengeList) {
+        Map<Status, Long> userChallengeResult = new HashMap<>();
 
         // 진행 중은 대기 + 진행
-        int waitingCount = countUserChallengeByStatus(challengeList, Status.WAITING);
-        int proceedingCount = countUserChallengeByStatus(challengeList, Status.PROCEEDING);
+        long waitingCount = countUserChallengeByStatus(challengeList, Status.WAITING);
+        long proceedingCount = countUserChallengeByStatus(challengeList, Status.PROCEEDING);
         userChallengeResult.put(Status.PROCEEDING, waitingCount + proceedingCount);
-        int successCount = countUserChallengeByStatus(challengeList, Status.SUCCESS);
+        long successCount = countUserChallengeByStatus(challengeList, Status.SUCCESS);
         userChallengeResult.put(Status.SUCCESS, successCount);
         // 완료는 성공 + 실패
-        int failureCount = countUserChallengeByStatus(challengeList, Status.FAILURE);
+        long failureCount = countUserChallengeByStatus(challengeList, Status.FAILURE);
         userChallengeResult.put(Status.COMPLETED, successCount + failureCount);
 
         return userChallengeResult;
     }
 
-    private int countUserChallengeByStatus(List<UserChallenge> challengeList, Status status) {
-        long count =
-                challengeList.stream()
-                        .filter(userChallenge -> userChallenge.getStatus() == status)
-                        .count();
-        return (int) count;
+    private long countUserChallengeByStatus(List<UserChallenge> challengeList, Status status) {
+        return challengeList.stream()
+                .filter(userChallenge -> userChallenge.getStatus() == status)
+                .count();
     }
 }

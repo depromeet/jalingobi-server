@@ -1,6 +1,8 @@
 package depromeet.api.domain.record.dto.request;
 
 
+import depromeet.common.annotation.ValidEnum;
+import depromeet.domain.record.domain.Evaluation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -32,11 +34,14 @@ public class UpdateRecordRequest {
     @Size(min = 1, max = 80, message = "내용은 80자 이하입니다.")
     private String content;
 
-    @Schema(nullable = true, example = "지출 사진 링크")
+    @Schema(
+            nullable = true,
+            example =
+                    "https://jalingobi-bucket-test.s3.ap-northeast-2.amazonaws.com/record/original/java.png")
     private String imgUrl;
 
-    @Schema(description = "지출 평가, [1,2,3,4] 중에서 선택 가능합니다.")
+    @Schema(description = "지출 평가, WELLDONE | REGRETFUL | CRAZY 중에서 선택 가능합니다.")
     @NotNull(message = "지출 평가를 입력해주세요.")
-    @Range(min = 1, max = 4, message = "점수는 1부터 4까지 입니다.")
-    private Integer evaluation;
+    @ValidEnum(enumClass = Evaluation.class, message = "유효하지 않은 Evaluation 파라미터입니다.")
+    private Evaluation evaluation;
 }

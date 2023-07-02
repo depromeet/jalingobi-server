@@ -86,11 +86,7 @@ public class ImageControllerTest {
 
         String socialId = "socialId";
         given(AuthenticationUtil.getCurrentUserSocialId()).willReturn(socialId);
-        given(
-                        issuePresignedUrlUseCase.execute(
-                                anyString(),
-                                any(ImageFileExtension.class),
-                                any(ImageUploadType.class)))
+        given(issuePresignedUrlUseCase.execute(anyString(), any(IssuePresignedUrlRequest.class)))
                 .willReturn(issuePresignedUrlResponse);
 
         mockMvc.perform(requestBuilder)

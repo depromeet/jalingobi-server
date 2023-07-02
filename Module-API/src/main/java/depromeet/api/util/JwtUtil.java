@@ -127,4 +127,24 @@ public class JwtUtil {
         storeRefreshToken(id, tokenInfo.getRefreshToken());
         return tokenInfo;
     }
+
+    public String issueRefreshToken(String id, Platform platform, Role role) {
+        String refreshToken = generateRefreshToken(id, role, platform);
+        storeRefreshToken(id, refreshToken);
+        return refreshToken;
+    }
+
+    public TokenInfo reissue(String id, Platform platform, Role role, String refreshToken) {
+        String accessToken = generateAccessToken(id, role, platform);
+
+        Date expiredTime = getExpiredTime(refreshToken);
+        Date currentTime = new Date();
+        if (expiredTime.getTime() - currentTime.getTime() < (refreshTokenExpiryDate / 2)) {
+            refreshToken = issueRefreshToken(id, platform, role);
+        } else {
+            refreshToken = null;
+        }
+
+        return new TokenInfo(accessToken, refreshToken);
+    }
 }
