@@ -11,8 +11,8 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
 
     @Query(
             value =
-                    "SELECT c FROM Challenge c WHERE c.duration.startAt = :now AND c.status = :status")
-    List<Challenge> findStartChallenge(LocalDate now, String status);
+                    "SELECT c FROM Challenge c WHERE c.duration.startAt = :today AND c.status = :status")
+    List<Challenge> findStartChallenge(LocalDate today, String status);
 
     @Query(
             value =
