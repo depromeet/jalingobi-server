@@ -9,7 +9,6 @@ import depromeet.api.domain.mypage.dto.response.GetUserChallengesResponse;
 import depromeet.api.domain.mypage.dto.response.QuitChallengeResponse;
 import depromeet.api.domain.mypage.usecase.*;
 import depromeet.api.domain.mypage.usecase.QuitChallengeUseCase;
-import depromeet.common.exception.CustomExceptionStatus;
 import depromeet.common.response.Response;
 import depromeet.common.response.ResponseService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -58,27 +57,27 @@ public class MyPageController {
 
     @PatchMapping("/profile")
     @Operation(summary = "사용자 프로필을 수정하는 API")
-    public Response<CustomExceptionStatus> updateUserProfile(
+    public Response updateUserProfile(
             @RequestBody @Valid UpdateProfileRequest updateRecordRequest) {
 
         updateProfileUseCase.execute(getCurrentUserSocialId(), updateRecordRequest);
-        return ResponseService.getDataResponse(CustomExceptionStatus.SUCCESS);
+        return ResponseService.getSuccessResponse();
     }
 
     @PostMapping("/logout")
     @Operation(summary = "사용자 로그아웃 API")
-    public Response<CustomExceptionStatus> logout() {
+    public Response logout() {
 
         logoutUseCase.execute(getCurrentUserSocialId());
-        return ResponseService.getDataResponse(CustomExceptionStatus.SUCCESS);
+        return ResponseService.getSuccessResponse();
     }
 
     @DeleteMapping("/withdrawal")
     @Operation(summary = "사용자 탈퇴 API")
-    public Response<CustomExceptionStatus> withdrawal() {
+    public Response withdrawal() {
 
         withdrawalUseCase.execute(getCurrentUserSocialId());
-        return ResponseService.getDataResponse(CustomExceptionStatus.SUCCESS);
+        return ResponseService.getSuccessResponse();
     }
 
     @DeleteMapping("/challenge/{challengeId}")
