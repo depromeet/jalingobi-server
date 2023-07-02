@@ -64,8 +64,7 @@ public class ChallengeFeedControllerTest {
         data.add(challengeData);
         ChallengeSlice challengeSlice = new ChallengeSlice(data, true);
 
-        when(getChallengeInfiniteScrollFeedUseCase.execute(
-                        anyString(), anyString(), anyString(), any()))
+        when(getChallengeInfiniteScrollFeedUseCase.execute(any(), anyString(), anyString(), any()))
                 .thenReturn(challengeSlice);
 
         mockMvc.perform(

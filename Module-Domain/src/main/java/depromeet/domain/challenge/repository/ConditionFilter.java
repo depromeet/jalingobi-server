@@ -23,9 +23,8 @@ public class ConditionFilter {
         return booleanBuilder;
     }
 
-    private void filterByCategory(BooleanBuilder booleanBuilder, String category) {
-        if (!category.isBlank()) {
-            CategoryType categoryType = CategoryType.of(category);
+    private void filterByCategory(BooleanBuilder booleanBuilder, CategoryType category) {
+        if (category != null) {
             booleanBuilder.and(
                     challenge
                             .challengeCategories
@@ -33,7 +32,7 @@ public class ConditionFilter {
                             .any()
                             .category
                             .name
-                            .eq(String.valueOf(categoryType)));
+                            .eq(category.toString()));
         }
     }
 

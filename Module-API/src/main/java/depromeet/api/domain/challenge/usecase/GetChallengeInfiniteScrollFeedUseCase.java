@@ -3,6 +3,7 @@ package depromeet.api.domain.challenge.usecase;
 
 import depromeet.api.util.ChallengeStatusUtil;
 import depromeet.common.annotation.UseCase;
+import depromeet.domain.challenge.domain.CategoryType;
 import depromeet.domain.challenge.domain.ChallengeSearchCondition;
 import depromeet.domain.challenge.domain.ChallengeSlice;
 import depromeet.domain.challenge.repository.ChallengeData;
@@ -22,7 +23,7 @@ public class GetChallengeInfiniteScrollFeedUseCase {
     private final ChallengeStatusUtil challengeStatusUtil;
 
     public ChallengeSlice execute(
-            final String category,
+            final CategoryType category,
             final String filter,
             final String sortType,
             final Pageable pageable) {
