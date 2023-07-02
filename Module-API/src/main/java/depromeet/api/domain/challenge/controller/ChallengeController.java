@@ -61,12 +61,12 @@ public class ChallengeController {
 
     @PostMapping("/join/{challengeId}")
     @Operation(summary = "챌린지 참가 API", description = "유저가 해당 챌린지에 참가합니다.")
-    public Response joinChallenge(
+    public Response<JoinChallengeResponse> joinChallenge(
             @PathVariable Long challengeId,
-            @RequestBody @Valid JoinChallengeRequest joinChallengeRequest) {
-        joinUserChallengeUseCase.execute(
-                getCurrentUserSocialId(), joinChallengeRequest, challengeId);
-        return ResponseService.getSuccessResponse();
+            @RequestBody(required = false) @Valid JoinChallengeRequest joinChallengeRequest) {
+        return ResponseService.getDataResponse(
+                joinUserChallengeUseCase.execute(
+                        getCurrentUserSocialId(), joinChallengeRequest, challengeId));
     }
 
     @GetMapping("/{challengeId}")
