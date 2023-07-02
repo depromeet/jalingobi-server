@@ -8,7 +8,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Response<T> extends CommonResponse {
+public class Response<T> {
+
+    protected Boolean isSuccess;
+
+    protected int code;
+
+    protected String message;
 
     private T result;
 }

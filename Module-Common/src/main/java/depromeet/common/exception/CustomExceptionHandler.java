@@ -1,7 +1,7 @@
 package depromeet.common.exception;
 
 
-import depromeet.common.response.CommonResponse;
+import depromeet.common.response.Response;
 import depromeet.common.response.ResponseService;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public CommonResponse handleValidationExceptions(MethodArgumentNotValidException exception) {
+    public Response<?> handleValidationExceptions(MethodArgumentNotValidException exception) {
         Map<String, String> errorMessages = new HashMap<>();
         exception
                 .getBindingResult()
@@ -37,7 +37,7 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(CustomException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    protected CommonResponse customException(CustomException customException) {
+    protected Response customException(CustomException customException) {
         CustomExceptionStatus status = customException.getCustomExceptionStatus();
         return ResponseService.getExceptionResponse(status);
     }

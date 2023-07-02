@@ -3,6 +3,7 @@ package depromeet.api.domain.auth.controller;
 
 import depromeet.api.domain.auth.dto.request.KakaoAuthRequest;
 import depromeet.api.domain.auth.dto.response.KakaoAuthResponse;
+import depromeet.api.domain.auth.dto.response.TokenResponse;
 import depromeet.api.domain.auth.usecase.KakaoAuthUseCase;
 import depromeet.api.domain.auth.usecase.RefreshTokenUseCase;
 import depromeet.api.util.CookieUtil;
@@ -33,6 +34,7 @@ public class AuthController {
     private final RefreshTokenUseCase refreshTokenUseCase;
     private final CookieUtil cookieUtil;
 
+    @PostMapping("/kakao")
     @Operation(
             summary = "KAKAO 소셜로그인 API",
             description = "사용자 인증 이후, access[body]/refresh[cookie] token을 발급합니다.")
@@ -49,7 +51,6 @@ public class AuthController {
                         description = "유효하지 않은 토큰으로 요청하거나, 다른 플랫폼에 해당 이메일로 가입된 계정이 있을 경우",
                         content = @Content())
             })
-    @PostMapping("/kakao")
     public Response<KakaoAuthResponse> authKakao(
             @RequestBody @Valid KakaoAuthRequest reqAuth, HttpServletResponse response) {
 
@@ -58,7 +59,6 @@ public class AuthController {
         return ResponseService.getDataResponse(kakaoAuthResponse);
     }
 
-    @PostMapping("/refresh")
     @Operation(summary = "토큰 reissue API", description = "Refresh Token을 이용해 Access Token을 재발급합니다.")
     @ApiResponses(
             value = {
@@ -68,9 +68,14 @@ public class AuthController {
                         description = "유효하지 않은 Refresh Token으로 요청했을 때",
                         content = @Content())
             })
-    public Response<KakaoAuthResponse> refreshToken(HttpServletRequest request) {
+    @PostMapping("/refresh")
+    public Response<TokenResponse> refreshToken(
+            HttpServletRequest request, HttpServletResponse response) {
         String refreshToken = cookieUtil.getCookie(request, "RefreshToken").getValue();
-        String accessToken = refreshTokenUseCase.checkRefreshToken(refreshToken);
-        return ResponseService.getDataResponse(KakaoAuthResponse.of(refreshToken, accessToken));
+        TokenResponse tokenResponse = refreshTokenUseCase.execute(refreshToken);
+
+        if (tokenResponse.isExistRefreshToken())
+            response.addCookie(cookieUtil.setRefreshToken(tokenResponse.getRefreshToken()));
+        return ResponseService.getDataResponse(tokenResponse);
     }
 }
