@@ -99,8 +99,10 @@ public class UserChallenge extends BaseTime {
         //        int recordPercent = (size * 100) / period;
         //        && recordPercent >= 70
 
+        int size = records.size();
+
         // 목표 금액 이하일시 성공 [기록을 N % 이상 작성해야하는 조건 추가 예정]
-        if (status == Status.PROCEEDING && currentCharge <= goalCharge) {
+        if (status == Status.PROCEEDING && currentCharge <= goalCharge && size > 0) {
             status = Status.SUCCESS;
             user.plusScore();
         } else {
