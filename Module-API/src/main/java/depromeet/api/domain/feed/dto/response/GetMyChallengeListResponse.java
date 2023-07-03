@@ -30,8 +30,14 @@ public class GetMyChallengeListResponse {
 
         // 맨 앞에 내 방 정보 추가
         ParticipatedChallenge myRoom =
-                new ParticipatedChallenge(
-                        0L, "내 방", "baseImg", ChallengeStatusType.PROCEEDING.toString());
+                ParticipatedChallenge.builder()
+                        .challengeId(0L)
+                        .title("내 방")
+                        .imgUrl("baseImg")
+                        .status(ChallengeStatusType.PROCEEDING.toString())
+                        .maxParticipants(0)
+                        .participants(0)
+                        .build();
         participatedChallengeList.add(0, myRoom);
 
         return new GetMyChallengeListResponse(participatedChallengeList);
