@@ -26,7 +26,7 @@ public class CreateChallengeValidator {
             throw InvalidChallengeStartAtException.EXCEPTION;
         }
 
-        if (!createChallengeRequest.getEndAt().isEqual(startAt.plusDays(period))) {
+        if (!createChallengeRequest.getEndAt().isEqual(startAt.plusDays(period - 1))) {
             log.info("챌린지 종료일자 {}가 유효하지 않음", createChallengeRequest.getEndAt());
             throw InvalidChallengeEndAtException.EXCEPTION;
         }
