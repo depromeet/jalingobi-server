@@ -23,10 +23,10 @@ public class SchedulingConfig {
     @Scheduled(cron = "0 0 0 * * *")
     public void openChallenge() {
         log.info("openChallenge");
-        LocalDate now = LocalDate.now();
+        LocalDate today = LocalDate.now();
         List<Challenge> challenges =
                 challengeRepository.findStartChallenge(
-                        now, ChallengeStatusType.PROCEEDING.toString());
+                        today, ChallengeStatusType.PROCEEDING.toString());
         challenges.stream().forEach(challenge -> challenge.open());
     }
 
