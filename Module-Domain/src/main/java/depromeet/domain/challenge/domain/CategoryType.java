@@ -10,7 +10,8 @@ public enum CategoryType {
     FOOD,
     HOBBY_LEISURE,
     FASHION_BEAUTY,
-    TRANSPORTATION_AUTOMOBILE;
+    TRANSPORTATION_AUTOMOBILE,
+    CULTURAL_LIFE;
 
     public static CategoryType of(String source) {
         return Arrays.stream(CategoryType.values())
