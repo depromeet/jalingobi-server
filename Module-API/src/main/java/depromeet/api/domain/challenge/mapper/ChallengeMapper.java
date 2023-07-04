@@ -24,7 +24,6 @@ public class ChallengeMapper {
         return Challenge.createChallenge(
                 createChallengeRequest.getTitle(),
                 createChallengeRequest.getPrice(),
-                createChallengeRequest.getImageUrl(),
                 new ChallengeKeywords(),
                 createChallengeRequest.getAvailableCount(),
                 user,

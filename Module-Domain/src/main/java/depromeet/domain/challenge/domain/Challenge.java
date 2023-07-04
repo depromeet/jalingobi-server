@@ -71,7 +71,6 @@ public class Challenge extends BaseTime {
     public static Challenge createChallenge(
             String title,
             int price,
-            String imgUrl,
             ChallengeKeywords challengeKeywords,
             int availableCount,
             User user,
@@ -81,7 +80,6 @@ public class Challenge extends BaseTime {
         return Challenge.builder()
                 .title(title)
                 .price(price)
-                .imgUrl(imgUrl)
                 .challengeKeywords(challengeKeywords)
                 .availableCount(availableCount)
                 .status(ChallengeStatusType.RECRUITING)
@@ -104,6 +102,14 @@ public class Challenge extends BaseTime {
 
     public void addKeywords(List<Keyword> keywords) {
         challengeKeywords.addAll(this, keywords);
+    }
+
+    public void addDefaultImage(String category) {
+        this.imgUrl = CategoryType.valueOf(category).getDefaultUrl();
+    }
+
+    public void addImage(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public boolean isParticipateChallengeUser(String socialId) {
