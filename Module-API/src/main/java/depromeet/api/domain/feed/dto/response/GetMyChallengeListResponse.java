@@ -17,6 +17,8 @@ import lombok.Data;
 @Data
 public class GetMyChallengeListResponse {
     private List<ParticipatedChallenge> participatedChallengeList;
+    private static final String myRoomImg =
+            "https://jalingobi-bucket-test.s3.ap-northeast-2.amazonaws.com/challenge/default/my_room.png";
 
     public static GetMyChallengeListResponse of(List<UserChallenge> userChallengeList) {
         List<ParticipatedChallenge> participatedChallengeList =
@@ -33,7 +35,7 @@ public class GetMyChallengeListResponse {
                 ParticipatedChallenge.builder()
                         .challengeId(0L)
                         .title("내 방")
-                        .imgUrl("baseImg")
+                        .imgUrl(myRoomImg)
                         .status(ChallengeStatusType.PROCEEDING.toString())
                         .maxParticipants(0)
                         .participants(0)
