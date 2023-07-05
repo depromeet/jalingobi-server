@@ -39,7 +39,8 @@ public class ChallengeController {
     @Operation(summary = "챌린지 생성 API", description = "챌린지를 생성합니다.")
     public Response<CreateChallengeResponse> createChallenge(
             @RequestBody @Valid CreateChallengeRequest challengeRequest) {
-        createChallengeValidator.validate(challengeRequest);
+        // todo: test 이후 주석 삭제
+        //        createChallengeValidator.validate(challengeRequest);
         return ResponseService.getDataResponse(
                 challengeUseCase.execute(challengeRequest, getCurrentUserSocialId()));
     }
