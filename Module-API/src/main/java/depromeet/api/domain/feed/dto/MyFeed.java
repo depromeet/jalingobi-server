@@ -35,6 +35,10 @@ public class MyFeed {
     @AllArgsConstructor
     @Data
     public static class ChallengeInfo {
+
+        @Schema(description = "챌린지 ID", example = "5")
+        private Long id;
+
         @Schema(example = "챌린지 이미지 URL")
         private String imgUrl;
 
@@ -42,6 +46,7 @@ public class MyFeed {
         private String title;
 
         public ChallengeInfo(Challenge challenge) {
+            this.id = challenge.getId();
             this.imgUrl = challenge.getImgUrl();
             this.title = challenge.getTitle();
         }
