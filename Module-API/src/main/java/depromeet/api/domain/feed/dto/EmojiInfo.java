@@ -55,9 +55,9 @@ public class EmojiInfo {
                         .collect(
                                 Collectors.groupingBy(
                                         emojiType -> emojiType.toString(), Collectors.counting()));
-        crazy = emojiCountMap.get(EmojiType.CRAZY.toString());
-        regretful = emojiCountMap.get(EmojiType.REGRETFUL.toString());
-        wellDone = emojiCountMap.get(EmojiType.WELLDONE.toString());
+        crazy = emojiCountMap.getOrDefault(EmojiType.CRAZY.toString(), 0L);
+        regretful = emojiCountMap.getOrDefault(EmojiType.REGRETFUL.toString(), 0L);
+        wellDone = emojiCountMap.getOrDefault(EmojiType.WELLDONE.toString(), 0L);
 
         List<Comment> comments = record.getComments();
         this.comment = comments.size();
