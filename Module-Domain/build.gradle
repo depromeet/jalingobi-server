@@ -4,6 +4,7 @@ jar { enabled = true }
 dependencies {
     api 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'com.mysql:mysql-connector-j'
+    implementation 'io.hypersistence:hypersistence-utils-hibernate-55:3.5.0'
 
     // Querydsl
     implementation "com.querydsl:querydsl-core" // querydsl
