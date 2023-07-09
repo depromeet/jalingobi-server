@@ -14,17 +14,21 @@ import depromeet.domain.userchallenge.domain.UserChallenge;
 import depromeet.domain.userchallenge.exception.ChallengeIsFullException;
 import depromeet.domain.userchallenge.exception.ChallengeIsStartedException;
 import depromeet.domain.userchallenge.exception.DuplicateParticipationException;
+import io.hypersistence.utils.hibernate.type.json.JsonType;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import javax.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 @Builder
 @Getter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@TypeDef(name = "json", typeClass = JsonType.class)
 public class Challenge extends BaseTime {
 
     @Id
@@ -40,7 +44,9 @@ public class Challenge extends BaseTime {
     @Column(nullable = false)
     private Integer price;
 
-    private String imgUrl;
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
+    private Image image;
 
     @Enumerated(EnumType.STRING)
     private ChallengeStatusType status;
@@ -104,12 +110,27 @@ public class Challenge extends BaseTime {
         challengeKeywords.addAll(this, keywords);
     }
 
-    public void addDefaultImage(String category) {
-        this.imgUrl = CategoryType.valueOf(category).getDefaultUrl();
+    private String parsingTitle() {
+        if (this.title.contains("커피")) return FoodDetailType.COFFEE.name();
+        else if (this.title.contains("배달")) return FoodDetailType.DELIVERY.name();
+        return "";
     }
 
-    public void addImage(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public String getDefaultImage(String category) {
+        String foodType = parsingTitle();
+        if (!foodType.isBlank()) return FoodDetailType.valueOf(foodType).getDefaultUrl();
+        return CategoryType.valueOf(category).getDefaultUrl();
+    }
+
+    private String getThumb(String category) {
+        String foodType = parsingTitle();
+        if (!foodType.isBlank()) return FoodDetailType.valueOf(foodType).getThumbUrl();
+        return CategoryType.valueOf(category).getThumbUrl();
+    }
+
+    public void addImage(String defaultUrl, String category) {
+        String thumbUrl = getThumb(category);
+        this.image = new Image(defaultUrl, thumbUrl);
     }
 
     public boolean isParticipateChallengeUser(String socialId) {
@@ -156,7 +177,7 @@ public class Challenge extends BaseTime {
     public void update(String title, int price, String imgUrl, int availableCount) {
         this.title = title;
         this.price = price;
-        this.imgUrl = imgUrl;
+        this.image = new Image(imgUrl, this.image.getThumbUrl());
         this.availableCount = availableCount;
     }
 

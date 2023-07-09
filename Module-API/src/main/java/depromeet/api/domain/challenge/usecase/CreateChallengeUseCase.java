@@ -62,8 +62,11 @@ public class CreateChallengeUseCase {
 
         Challenge challenge = challengeMapper.toEntity(request, user);
 
-        if (request.getImageUrl() != null) challenge.addImage(request.getImageUrl());
-        else challenge.addDefaultImage(request.getCategory().get(0));
+        String defaultUrl = "";
+        if (request.getImageUrl() != null) defaultUrl = request.getImageUrl();
+        else defaultUrl = challenge.getDefaultImage(request.getCategory().get(0));
+
+        challenge.addImage(defaultUrl, request.getCategory().get(0));
 
         challenge.addCategories(categories);
         challenge.addRules(challengeRuleMapper.toEntities(request.getChallengeRule()));
