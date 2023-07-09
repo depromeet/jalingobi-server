@@ -8,6 +8,7 @@ import depromeet.domain.category.domain.Category;
 import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.challenge.domain.ChallengeCategories;
 import depromeet.domain.challenge.domain.Duration;
+import depromeet.domain.challenge.domain.Image;
 import depromeet.domain.challenge.domain.keyword.ChallengeKeywords;
 import depromeet.domain.keyword.domain.Keyword;
 import depromeet.domain.record.domain.Evaluation;
@@ -62,7 +63,7 @@ class RecordAdaptorTest {
                         .challengeCategories(challengeCategories)
                         .title("식비 줄이기 챌린지")
                         .price(5000)
-                        .imgUrl("")
+                        .image(new Image("/test.png", "/thumb/test.png"))
                         .challengeKeywords(challengeKeywords)
                         .availableCount(5)
                         .createdBy(user)
