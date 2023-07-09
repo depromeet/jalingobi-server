@@ -24,12 +24,22 @@ public class ParticipatedChallenge {
     @Schema(description = "챌린지 진행 여부 - RECRUITING, PROCEEDING 둘 중 하나의 값", example = "PROCEEDING")
     private String status;
 
+    @Schema(description = "최대 참여 인원", example = "20")
+    private Integer maxParticipants;
+
+    @Schema(description = "현재 참여 인원", example = "12")
+    private Integer participants;
+
     public static ParticipatedChallenge createParticipatedChallenge(Challenge challenge) {
+        Integer participants = challenge.getUserChallenges().size();
+
         return ParticipatedChallenge.builder()
                 .challengeId(challenge.getId())
                 .title(challenge.getTitle())
                 .imgUrl(challenge.getImage().getThumbUrl())
                 .status(challenge.getStatus().toString())
+                .maxParticipants(challenge.getAvailableCount())
+                .participants(participants)
                 .build();
     }
 }

@@ -83,6 +83,8 @@ class FeedControllerTest {
                         .title("마라탕 안먹기")
                         .imgUrl("imgUrl")
                         .status(ChallengeStatusType.PROCEEDING.toString())
+                        .maxParticipants(20)
+                        .participants(12)
                         .build();
         participatedChallengeList.add(response);
 
@@ -107,7 +109,11 @@ class FeedControllerTest {
                         jsonPath("$.result.participatedChallengeList[0].imgUrl")
                                 .value(response.getImgUrl()),
                         jsonPath("$.result.participatedChallengeList[0].status")
-                                .value(response.getStatus()));
+                                .value(response.getStatus()),
+                        jsonPath("$.result.participatedChallengeList[0].maxParticipants")
+                                .value(response.getMaxParticipants()),
+                        jsonPath("$.result.participatedChallengeList[0].participants")
+                                .value(response.getParticipants()));
     }
 
     @Test

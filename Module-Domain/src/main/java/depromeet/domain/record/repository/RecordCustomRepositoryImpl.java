@@ -45,7 +45,7 @@ public class RecordCustomRepositoryImpl implements RecordCustomRepository {
                 .fetchJoin()
                 .join(record.userChallenge, userChallenge)
                 .fetchJoin()
-                .where(isEqualChallenge(challengeId).and(offsetRecordId(recordId)))
+                .where(isEqualChallenge(challengeId).and(isLessThanOffsetRecordId(recordId)))
                 .orderBy(record.createdAt.desc())
                 .limit(limit)
                 .fetch();
@@ -70,18 +70,18 @@ public class RecordCustomRepositoryImpl implements RecordCustomRepository {
         return queryFactory.selectFrom(record).where(isEqualChallenge(challengeId)).fetch().size();
     }
 
-    private BooleanBuilder offsetRecordId(Long recordId) {
+    private BooleanBuilder isLessThanOffsetRecordId(Long recordId) {
         if (recordId != null) return new BooleanBuilder(record.id.lt(recordId));
         else return new BooleanBuilder();
     }
 
     private BooleanBuilder isEqualChallenge(Long challengeId) {
-        if (challengeId != null) return new BooleanBuilder(record.id.lt(challengeId));
+        if (challengeId != null) return new BooleanBuilder(record.challenge.id.eq(challengeId));
         else return new BooleanBuilder();
     }
 
     private BooleanBuilder isEqualUser(Long userId) {
-        if (userId != null) return new BooleanBuilder(record.id.lt(userId));
+        if (userId != null) return new BooleanBuilder(record.user.id.eq(userId));
         else return new BooleanBuilder();
     }
 }

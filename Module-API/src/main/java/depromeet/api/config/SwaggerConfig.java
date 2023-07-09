@@ -3,6 +3,7 @@ package depromeet.api.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springdoc.core.GroupedOpenApi;
@@ -15,7 +16,10 @@ import org.springframework.context.annotation.Configuration;
                 @Info(
                         title = "자린고비 API 명세서",
                         description = "Depromeet 13기 1팀 API 명세서",
-                        version = "v1"))
+                        version = "v1"),
+        servers = {
+                @Server(url = "/", description = "Current Server")
+        })
 @Configuration
 public class SwaggerConfig {
 
