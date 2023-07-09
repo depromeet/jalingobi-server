@@ -47,7 +47,7 @@ public class MyFeed {
 
         public ChallengeInfo(Challenge challenge) {
             this.id = challenge.getId();
-            this.imgUrl = challenge.getImgUrl();
+            this.imgUrl = challenge.getImage().getThumbUrl();
             this.title = challenge.getTitle();
         }
     }
