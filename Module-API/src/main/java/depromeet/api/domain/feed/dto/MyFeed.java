@@ -42,7 +42,7 @@ public class MyFeed {
         private String title;
 
         public ChallengeInfo(Challenge challenge) {
-            this.imgUrl = challenge.getImgUrl();
+            this.imgUrl = challenge.getImage().getThumbUrl();
             this.title = challenge.getTitle();
         }
     }
