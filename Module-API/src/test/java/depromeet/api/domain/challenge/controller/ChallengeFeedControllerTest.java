@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import depromeet.api.config.security.filter.JwtRequestFilter;
 import depromeet.api.domain.challenge.usecase.GetChallengeInfiniteScrollFeedUseCase;
 import depromeet.domain.challenge.domain.ChallengeSlice;
+import depromeet.domain.challenge.domain.Image;
 import depromeet.domain.challenge.repository.ChallengeData;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -55,7 +56,7 @@ public class ChallengeFeedControllerTest {
                         "마라탕 10만원 이하로 쓰기",
                         2,
                         10,
-                        "/test.jpg",
+                        new Image("/test.png", "/thumb/test.png"),
                         100000,
                         LocalDate.now(),
                         LocalDateTime.now().minusDays(7),

@@ -1,6 +1,7 @@
 package depromeet.domain.challenge.repository;
 
 
+import depromeet.domain.challenge.domain.Image;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,7 +19,7 @@ public class ChallengeData {
     private String title;
     private int currentPeopleCount;
     private int availablePeopleCount;
-    private String imgUrl;
+    private String image;
     private int price;
     private List<String> keywords;
     private LocalDate startAt;
@@ -31,7 +32,7 @@ public class ChallengeData {
             String title,
             int currentPeopleCount,
             int availablePeopleCount,
-            String imgUrl,
+            Image image,
             int price,
             LocalDate startAt,
             LocalDateTime createdAt,
@@ -40,7 +41,7 @@ public class ChallengeData {
         this.title = title;
         this.currentPeopleCount = currentPeopleCount;
         this.availablePeopleCount = availablePeopleCount;
-        this.imgUrl = imgUrl;
+        this.image = image.getThumbUrl();
         this.price = price;
         this.startAt = startAt;
         this.createdAt = createdAt;

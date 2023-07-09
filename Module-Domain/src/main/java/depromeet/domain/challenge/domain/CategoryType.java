@@ -7,10 +7,19 @@ import lombok.Getter;
 
 @Getter
 public enum CategoryType {
-    FOOD,
-    HOBBY_LEISURE,
-    FASHION_BEAUTY,
-    TRANSPORTATION_AUTOMOBILE;
+    FOOD(DefaultImageProperties.food, ThumbImageProperties.food),
+    HOBBY_LEISURE(DefaultImageProperties.hobby, ThumbImageProperties.hobby),
+    FASHION_BEAUTY(DefaultImageProperties.fashionBeauty, ThumbImageProperties.fashionBeauty),
+    TRANSPORTATION_AUTOMOBILE(
+            DefaultImageProperties.transportation, ThumbImageProperties.transportation);
+
+    private final String defaultUrl;
+    private final String thumbUrl;
+
+    CategoryType(String defaultUrl, String thumbUrl) {
+        this.defaultUrl = defaultUrl;
+        this.thumbUrl = thumbUrl;
+    }
 
     public static CategoryType of(String source) {
         return Arrays.stream(CategoryType.values())

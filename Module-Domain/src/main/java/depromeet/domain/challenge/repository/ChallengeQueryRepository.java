@@ -82,7 +82,7 @@ public class ChallengeQueryRepository {
                 challenge.title,
                 challenge.userChallenges.size(),
                 challenge.availableCount,
-                challenge.imgUrl,
+                challenge.image,
                 challenge.price,
                 challenge.duration.startAt,
                 challenge.createdAt,
