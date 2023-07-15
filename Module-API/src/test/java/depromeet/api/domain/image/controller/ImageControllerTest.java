@@ -74,7 +74,7 @@ public class ImageControllerTest {
         IssuePresignedUrlResponse issuePresignedUrlResponse =
                 IssuePresignedUrlResponse.builder()
                         .presignedUrl("dasfgsdfadagdsafgdsagsd")
-                        .key("profile/userid/dahjfhlfa.jpg")
+                        .imgUrl("profile/userid/dahjfhlfa.jpg")
                         .build();
 
         MockHttpServletRequestBuilder requestBuilder =
@@ -95,6 +95,6 @@ public class ImageControllerTest {
                         status().isOk(),
                         jsonPath("$.result.presignedUrl")
                                 .value(issuePresignedUrlResponse.getPresignedUrl()),
-                        jsonPath("$.result.key").value(issuePresignedUrlResponse.getKey()));
+                        jsonPath("$.result.imgUrl").value(issuePresignedUrlResponse.getImgUrl()));
     }
 }
