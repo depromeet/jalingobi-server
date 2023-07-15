@@ -55,7 +55,9 @@ public class AuthController {
             @RequestBody @Valid KakaoAuthRequest reqAuth, HttpServletResponse response) {
 
         KakaoAuthResponse kakaoAuthResponse = kakaoAuthUseCase.execute(reqAuth);
-        response.addCookie(cookieUtil.setRefreshToken(kakaoAuthResponse.getRefreshToken()));
+        //
+        // response.addCookie(cookieUtil.setRefreshToken(kakaoAuthResponse.getRefreshToken()));
+        cookieUtil.setRefreshToken(response, kakaoAuthResponse.getRefreshToken());
         return ResponseService.getDataResponse(kakaoAuthResponse);
     }
 
@@ -74,8 +76,11 @@ public class AuthController {
         String refreshToken = cookieUtil.getCookie(request, "RefreshToken").getValue();
         TokenResponse tokenResponse = refreshTokenUseCase.execute(refreshToken);
 
-        if (tokenResponse.isExistRefreshToken())
-            response.addCookie(cookieUtil.setRefreshToken(tokenResponse.getRefreshToken()));
+        if (tokenResponse.isExistRefreshToken()) {
+            //
+            // response.addCookie(cookieUtil.setRefreshToken(tokenResponse.getRefreshToken()));
+            cookieUtil.setRefreshToken(response, tokenResponse.getRefreshToken());
+        }
         return ResponseService.getDataResponse(tokenResponse);
     }
 }

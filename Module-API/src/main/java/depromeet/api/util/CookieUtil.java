@@ -4,7 +4,10 @@ package depromeet.api.util;
 import depromeet.common.annotation.Util;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 
 @RequiredArgsConstructor
 @Util
@@ -28,6 +31,19 @@ public class CookieUtil {
         cookie.setMaxAge(jwtUtil.getRefreshTokenExpiryDate());
         cookie.setPath("/");
         return cookie;
+    }
+
+    public void setRefreshToken(HttpServletResponse response, String value) {
+        ResponseCookie cookie =
+                ResponseCookie.from("RefreshToken", value)
+                        .path("/")
+                        .sameSite("None")
+                        .httpOnly(false)
+                        .secure(true)
+                        .maxAge(jwtUtil.getRefreshTokenExpiryDate())
+                        .build();
+
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
     }
 
     public Cookie getCookie(HttpServletRequest req, String cookieName) {
