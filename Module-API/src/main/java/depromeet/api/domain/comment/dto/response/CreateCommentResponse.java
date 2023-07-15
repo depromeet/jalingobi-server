@@ -14,6 +14,9 @@ public class CreateCommentResponse {
     @Schema(description = "댓글 ID", example = "1")
     private Long id;
 
+    @Schema(description = "댓글 작성자의 ID", example = "1")
+    private Long commenterId;
+
     @Schema(description = "댓글을 쓴 유저의 프로필 이미지", example = "/test.jpg")
     private String imgUrl;
 
@@ -24,15 +27,16 @@ public class CreateCommentResponse {
     private String content;
 
     @Schema(description = "댓글 작성 일자")
-    private LocalDateTime createdAt;
+    private LocalDateTime commentDate;
 
     public static CreateCommentResponse of(Comment comment, String imgUrl, String nickname) {
         return CreateCommentResponse.builder()
                 .id(comment.getId())
+                .commenterId(comment.getUserChallenge().getId())
                 .content(comment.getContent())
                 .imgUrl(imgUrl)
                 .nickname(nickname)
-                .createdAt(comment.getCreatedAt())
+                .commentDate(comment.getCreatedAt())
                 .build();
     }
 }
