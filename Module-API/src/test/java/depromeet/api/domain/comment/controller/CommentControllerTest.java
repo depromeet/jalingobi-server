@@ -78,10 +78,11 @@ public class CommentControllerTest {
         CreateCommentResponse response =
                 CreateCommentResponse.builder()
                         .id(1L)
+                        .commenterId(1L)
                         .imgUrl("test.jpg")
                         .nickname("test")
                         .content(request.getContent())
-                        .createdAt(LocalDateTime.now())
+                        .commentDate(LocalDateTime.now())
                         .build();
 
         when(createCommentUseCase.execute(anyLong(), any())).thenReturn(response);
@@ -95,6 +96,7 @@ public class CommentControllerTest {
                 .andExpectAll(
                         status().isOk(),
                         jsonPath("$.result.id").value(response.getId()),
+                        jsonPath("$.result.commenterId").value(response.getCommenterId()),
                         jsonPath("$.result.imgUrl").value(response.getImgUrl()),
                         jsonPath("$.result.nickname").value(response.getNickname()),
                         jsonPath("$.result.content").value(response.getContent()));
