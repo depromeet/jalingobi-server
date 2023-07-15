@@ -117,17 +117,17 @@ class MyPageControllerTest {
                                 .value(getMyPageResponse.getProfile().getImgUrl()),
                         jsonPath("$.result.notification")
                                 .value(getMyPageResponse.getNotification()),
-                        jsonPath("$.result.userChallengeResult.성공")
+                        jsonPath("$.result.userChallengeResult.SUCCESS")
                                 .value(
                                         getMyPageResponse
                                                 .getUserChallengeResult()
                                                 .get(Status.SUCCESS.getValue())),
-                        jsonPath("$.result.userChallengeResult.참가중")
+                        jsonPath("$.result.userChallengeResult.PROCEEDING")
                                 .value(
                                         getMyPageResponse
                                                 .getUserChallengeResult()
                                                 .get(Status.PROCEEDING.getValue())),
-                        jsonPath("$.result.userChallengeResult.완료")
+                        jsonPath("$.result.userChallengeResult.COMPLETED")
                                 .value(
                                         getMyPageResponse
                                                 .getUserChallengeResult()
