@@ -38,7 +38,7 @@ public class CookieUtil {
                 ResponseCookie.from("RefreshToken", value)
                         .path("/")
                         .sameSite("None")
-                        .httpOnly(true)
+                        .httpOnly(false)
                         .secure(true)
                         .maxAge(jwtUtil.getRefreshTokenExpiryDate())
                         .build();
