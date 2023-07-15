@@ -9,11 +9,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum Status {
-    WAITING("대기중"),
-    PROCEEDING("참가중"),
-    SUCCESS("성공"),
-    FAILURE("실패"),
-    COMPLETED("완료");
+    WAITING("WAITING"),
+    PROCEEDING("PROCEEDING"),
+    SUCCESS("SUCCESS"),
+    FAILURE("FAILURE"),
+    COMPLETED("COMPLETED");
 
     private final String value;
 
