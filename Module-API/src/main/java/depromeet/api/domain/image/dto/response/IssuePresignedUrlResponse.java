@@ -15,7 +15,8 @@ public class IssuePresignedUrlResponse {
 
     @Schema(
             description = "s3에 저장될 경로",
-            example = "https://jalingobi-bucket-test.s3.ap-northeast-2.amazonaws.com/record/original/7e3e0dca-2491-4764-80f2-593166d9712b.png")
+            example =
+                    "https://jalingobi-bucket-test.s3.ap-northeast-2.amazonaws.com/record/original/7e3e0dca-2491-4764-80f2-593166d9712b.png")
     private final String imgUrl;
 
     public static IssuePresignedUrlResponse from(ImageUrlDto urlDto) {
