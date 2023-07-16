@@ -2,7 +2,7 @@ package depromeet.api.domain.image.dto.response;
 
 
 import depromeet.api.domain.image.dto.ImageUrlDto;
-import depromeet.api.util.ImageUrlUtil;
+import depromeet.api.util.ApiImageUrlUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +20,7 @@ public class IssuePresignedUrlResponse {
     private final String imgUrl;
 
     public static IssuePresignedUrlResponse from(ImageUrlDto urlDto) {
-        String imgUrl = ImageUrlUtil.prefix + urlDto.getKey();
+        String imgUrl = ApiImageUrlUtil.prefix + urlDto.getKey();
 
         return IssuePresignedUrlResponse.builder()
                 .presignedUrl(urlDto.getPresignedUrl())

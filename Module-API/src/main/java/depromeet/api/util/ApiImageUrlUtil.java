@@ -5,7 +5,7 @@ import depromeet.common.annotation.Util;
 import org.springframework.beans.factory.annotation.Value;
 
 @Util
-public class ImageUrlUtil {
+public class ApiImageUrlUtil {
     public static String prefix;
 
     @Value("${image.prefix}")
