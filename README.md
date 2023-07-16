@@ -1,4 +1,5 @@
-# 💸 자린고비
+# <img src='https://github.com/depromeet/jalingobi-server/assets/97580782/575b1ca4-a811-4bc6-b9d4-3677c2eb322d' width='100px'><img src='https://github.com/depromeet/jalingobi-server/assets/97580782/bd305d44-6589-4fb5-bcd4-81f389667354' width='220px'> 
+
 
 [![Java CI with Gradle](https://github.com/depromeet/13th-1team-backend/actions/workflows/ci.yml/badge.svg)](https://github.com/depromeet/13th-1team-backend/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/depromeet/jalingobi-server/branch/dev/graph/badge.svg?token=B69BV6TYNQ)](https://codecov.io/gh/depromeet/jalingobi-server)
@@ -6,7 +7,6 @@
 ✨ [Server 팀 WiKi](https://github.com/depromeet/13th-1team-backend/wiki)
 
 🖥️ [Client 팀 Repository](https://github.com/depromeet/13th-1th-frontend)
-
 
 ---
 
