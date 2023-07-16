@@ -5,7 +5,7 @@ import depromeet.common.annotation.Util;
 import org.springframework.beans.factory.annotation.Value;
 
 @Util
-public class ImageUrlUtil {
+public class DomainImageUrlUtil {
     public static String defaultImgUrl;
 
     @Value("${image.default.profile}")

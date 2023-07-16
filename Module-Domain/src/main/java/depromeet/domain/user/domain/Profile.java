@@ -1,7 +1,7 @@
 package depromeet.domain.user.domain;
 
 
-import depromeet.domain.user.util.ImageUrlUtil;
+import depromeet.domain.user.util.DomainImageUrlUtil;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import lombok.*;
@@ -23,7 +23,7 @@ public class Profile {
 
     /** 생성 메서드 */
     public static Profile createProfile(String name, String email) {
-        String imgUrl = ImageUrlUtil.defaultImgUrl;
+        String imgUrl = DomainImageUrlUtil.defaultImgUrl;
         return Profile.builder().nickname(name).email(email).imgUrl(imgUrl).build();
     }
 
