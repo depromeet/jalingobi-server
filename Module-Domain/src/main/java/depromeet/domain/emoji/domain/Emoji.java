@@ -38,6 +38,10 @@ public class Emoji {
                 .build();
     }
 
+    public String getType() {
+        return type.getValue();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
