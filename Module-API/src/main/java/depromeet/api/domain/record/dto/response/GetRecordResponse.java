@@ -57,11 +57,11 @@ public class GetRecordResponse {
         private String nickname;
 
         @Schema(example = "사용자 이미지 URL")
-        private String userImgUrl;
+        private String imgUrl;
 
         public RecordUserInfo(UserChallenge userChallenge) {
             this.nickname = userChallenge.getNickname();
-            this.userImgUrl = userChallenge.getImgUrl();
+            this.imgUrl = userChallenge.getImgUrl();
         }
     }
 }
