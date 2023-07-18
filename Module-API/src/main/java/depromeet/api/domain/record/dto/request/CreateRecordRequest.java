@@ -27,9 +27,8 @@ public class CreateRecordRequest {
     @Size(min = 1, max = 16, message = "지출 명은 16자 이하입니다.")
     private String title;
 
-    @Schema(minimum = "1", maximum = "80", example = "지출 내용")
-    @NotBlank(message = "내용을 입력해주세요.")
-    @Size(min = 1, max = 80, message = "내용은 80자 이하입니다.")
+    @Schema(minimum = "0", maximum = "80", example = "지출 내용")
+    @Size(max = 80, message = "내용은 최대 80자까지 입력할 수 있습니다.")
     private String content;
 
     @Schema(
