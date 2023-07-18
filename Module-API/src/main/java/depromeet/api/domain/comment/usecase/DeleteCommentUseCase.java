@@ -18,6 +18,7 @@ public class DeleteCommentUseCase {
 
     @Transactional
     public DeleteCommentResponse execute(String socialId, long commentId, long recordId) {
+
         recordAdaptor.findRecord(recordId);
 
         Comment comment = commentAdaptor.findComment(commentId);
