@@ -90,14 +90,7 @@ class RecordControllerTest {
                         .evaluation(Evaluation.CRAZY)
                         .build();
 
-        CreateRecordResponse createRecordResponse =
-                CreateRecordResponse.builder()
-                        .id(1L)
-                        .title("커피")
-                        .content("커피는 무죄야")
-                        .imgUrl("")
-                        .evaluation("CRAZY")
-                        .build();
+        CreateRecordResponse createRecordResponse = CreateRecordResponse.builder().id(1L).build();
 
         MockHttpServletRequestBuilder requestBuilder =
                 MockMvcRequestBuilders.post("/record/{challengeId}", 1)
@@ -116,12 +109,7 @@ class RecordControllerTest {
                 .andDo(print())
                 .andExpectAll(
                         status().isOk(),
-                        jsonPath("$.result.id").value(createRecordResponse.getId()),
-                        jsonPath("$.result.title").value(createRecordResponse.getTitle()),
-                        jsonPath("$.result.content").value(createRecordResponse.getContent()),
-                        jsonPath("$.result.imgUrl").value(createRecordResponse.getImgUrl()),
-                        jsonPath("$.result.evaluation")
-                                .value(createRecordResponse.getEvaluation()));
+                        jsonPath("$.result.id").value(createRecordResponse.getId()));
     }
 
     @DisplayName("[예외 테스트] name null 예외 발생")
@@ -172,14 +160,7 @@ class RecordControllerTest {
                         .evaluation(Evaluation.CRAZY)
                         .build();
 
-        CreateRecordResponse createRecordResponse =
-                CreateRecordResponse.builder()
-                        .id(1L)
-                        .title("커피")
-                        .content("커피는 무죄야")
-                        .imgUrl("")
-                        .evaluation("CRAZY")
-                        .build();
+        CreateRecordResponse createRecordResponse = CreateRecordResponse.builder().id(1L).build();
 
         MockHttpServletRequestBuilder requestBuilder =
                 MockMvcRequestBuilders.patch("/record/{recordId}", 1)
@@ -201,14 +182,7 @@ class RecordControllerTest {
     @DisplayName("[Delete] 챌린지 기록 삭제")
     public void DeleteRecordTest() throws Exception {
         // given
-        CreateRecordResponse createRecordResponse =
-                CreateRecordResponse.builder()
-                        .id(1L)
-                        .title("커피")
-                        .content("커피는 무죄야")
-                        .imgUrl("")
-                        .evaluation("CRAZY")
-                        .build();
+        CreateRecordResponse createRecordResponse = CreateRecordResponse.builder().id(1L).build();
 
         MockHttpServletRequestBuilder requestBuilder =
                 MockMvcRequestBuilders.delete("/record/{recordId}", 1)
