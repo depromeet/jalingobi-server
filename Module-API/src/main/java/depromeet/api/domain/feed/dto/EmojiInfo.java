@@ -45,7 +45,10 @@ public class EmojiInfo {
                         .filter((e) -> e.getUserChallenge().getId() == myUserChallengeId)
                         .findAny();
 
-        if (selected.isPresent()) this.selected = selected.get().toString();
+        if (selected.isPresent()) {
+            Emoji selectedEmoji = selected.get();
+            this.selected = selectedEmoji.getType();
+        }
     }
 
     public EmojiInfo(Record record) {
@@ -54,7 +57,7 @@ public class EmojiInfo {
                         .map(Emoji::getType)
                         .collect(
                                 Collectors.groupingBy(
-                                        emojiType -> emojiType.toString(), Collectors.counting()));
+                                        emojiType -> emojiType, Collectors.counting()));
         crazy = emojiCountMap.getOrDefault(EmojiType.CRAZY.toString(), 0L);
         regretful = emojiCountMap.getOrDefault(EmojiType.REGRETFUL.toString(), 0L);
         wellDone = emojiCountMap.getOrDefault(EmojiType.WELLDONE.toString(), 0L);
