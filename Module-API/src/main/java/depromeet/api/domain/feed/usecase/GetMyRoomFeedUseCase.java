@@ -23,11 +23,10 @@ public class GetMyRoomFeedUseCase {
 
     @Transactional(readOnly = true)
     public GetMyRoomFeedResponse execute(String socialId, Integer offset) {
-
         User user = userAdaptor.findUser(socialId);
         List<Record> myRecordList = recordAdaptor.findMyRecordList(user.getId(), offset, LIMIT);
         Integer total = recordAdaptor.countMyRecordList(user.getId());
 
-        return recordListMapper.toGetMyRoomFeedResponse(myRecordList, total, LIMIT);
+        return recordListMapper.toGetMyRoomFeedResponse(myRecordList, user.getId(), total, LIMIT);
     }
 }

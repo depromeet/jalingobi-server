@@ -37,21 +37,7 @@ public class EmojiInfo {
     @Schema(description = "댓글수", example = "5")
     private Integer comment;
 
-    public EmojiInfo(Record record, Long myUserChallengeId) {
-        this(record);
-
-        Optional<Emoji> selected =
-                record.getEmojis().stream()
-                        .filter((e) -> e.getUserChallenge().getId() == myUserChallengeId)
-                        .findAny();
-
-        if (selected.isPresent()) {
-            Emoji selectedEmoji = selected.get();
-            this.selected = selectedEmoji.getType();
-        }
-    }
-
-    public EmojiInfo(Record record) {
+    public EmojiInfo(Record record, String selected) {
         Map<String, Long> emojiCountMap =
                 record.getEmojis().stream()
                         .map(Emoji::getType)
@@ -64,5 +50,51 @@ public class EmojiInfo {
 
         List<Comment> comments = record.getComments();
         this.comment = comments.size();
+        this.selected = selected;
+    }
+
+    public static EmojiInfo createMyRoomEmojiInfo(Record record, Long userId) {
+        Optional<Emoji> selected =
+                record.getEmojis().stream()
+                        .filter((e) -> e.getUserChallenge().getUser().getId() == userId)
+                        .findAny();
+
+        String selectedEmojiType = null;
+        if (selected.isPresent()) {
+            Emoji selectedEmoji = selected.get();
+            selectedEmojiType = selectedEmoji.getType();
+        }
+
+        return new EmojiInfo(record, selectedEmojiType);
+    }
+
+    public static EmojiInfo createChallengeRoomEmojiInfo(Record record, Long userChallengeId) {
+        Optional<Emoji> selected =
+                record.getEmojis().stream()
+                        .filter((e) -> e.getUserChallenge().getId() == userChallengeId)
+                        .findAny();
+
+        String selectedEmojiType = null;
+        if (selected.isPresent()) {
+            Emoji selectedEmoji = selected.get();
+            selectedEmojiType = selectedEmoji.getType();
+        }
+
+        return new EmojiInfo(record, selectedEmojiType);
+    }
+
+    public static EmojiInfo createRecordEmojiInfo(Record record, Long userChallengeId) {
+        Optional<Emoji> selected =
+                record.getEmojis().stream()
+                        .filter((e) -> e.getUserChallenge().getId() == userChallengeId)
+                        .findAny();
+
+        String selectedEmojiType = null;
+        if (selected.isPresent()) {
+            Emoji selectedEmoji = selected.get();
+            selectedEmojiType = selectedEmoji.getType();
+        }
+
+        return new EmojiInfo(record, selectedEmojiType);
     }
 }

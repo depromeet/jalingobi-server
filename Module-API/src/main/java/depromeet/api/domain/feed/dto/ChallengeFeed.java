@@ -22,12 +22,12 @@ public class ChallengeFeed {
 
     private EmojiInfo emojiInfo;
 
-    public static ChallengeFeed createChallengeFeed(Record record, Long myUserChallengeId) {
-        Boolean isMine = record.getUserChallenge().getId() == myUserChallengeId;
+    public static ChallengeFeed createChallengeFeed(Record record, Long userChallengeId) {
+        Boolean isMine = record.getUserChallenge().getId() == userChallengeId;
 
         FeedUserInfo userInfo = new FeedUserInfo(record.getUserChallenge());
         FeedRecordInfo recordInfo = new FeedRecordInfo(record);
-        EmojiInfo emojiInfo = new EmojiInfo(record, myUserChallengeId);
+        EmojiInfo emojiInfo = EmojiInfo.createChallengeRoomEmojiInfo(record, userChallengeId);
 
         return ChallengeFeed.builder()
                 .isMine(isMine)

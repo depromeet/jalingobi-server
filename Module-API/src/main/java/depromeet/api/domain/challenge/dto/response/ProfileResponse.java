@@ -16,6 +16,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProfileResponse {
 
+    @Schema(description = "유저 아이디", example = "1")
+    private Long userId;
+
     @Schema(description = "유저의 프로필 이미지", example = "user.jpg")
     private String imgUrl;
 
@@ -30,6 +33,7 @@ public class ProfileResponse {
                 .map(
                         userChallenge ->
                                 new ProfileResponse(
+                                        userChallenge.getUser().getId(),
                                         userChallenge.getImgUrl(),
                                         userChallenge.getNickname(),
                                         userChallenge.getUserLevel()))
