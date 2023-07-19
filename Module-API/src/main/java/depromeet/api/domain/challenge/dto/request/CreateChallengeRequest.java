@@ -31,7 +31,7 @@ public class CreateChallengeRequest {
     private Integer price;
 
     @Schema(description = "챌린지 대표 이미지", example = "/test.jpg")
-    private String imageUrl;
+    private String imgUrl;
 
     @Schema(description = "키워드", example = "[\"#배달비\", \"#10만원챌린지\"]")
     @NotNull(message = "키워드를 입력하세요.")

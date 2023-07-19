@@ -29,7 +29,6 @@ public class ChallengeTest {
                 Challenge.createChallenge(
                         "마라탕 5만원 이하로 쓰기",
                         50000,
-                        "/test.jpg",
                         mock(ChallengeKeywords.class),
                         30,
                         mock(User.class),
@@ -56,7 +55,6 @@ public class ChallengeTest {
                 Challenge.createChallenge(
                         "마라탕 5만원 이하로 쓰기",
                         50000,
-                        "/test.jpg",
                         mock(ChallengeKeywords.class),
                         30,
                         mock(User.class),
@@ -79,7 +77,6 @@ public class ChallengeTest {
                 Challenge.createChallenge(
                         "마라탕 5만원 이하로 쓰기",
                         50000,
-                        "/test.jpg",
                         mock(ChallengeKeywords.class),
                         30,
                         mock(User.class),

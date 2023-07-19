@@ -2,6 +2,7 @@ package depromeet.api.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import depromeet.domain.challenge.domain.Image;
 import depromeet.domain.challenge.domain.StatusType;
 import depromeet.domain.challenge.repository.ChallengeData;
 import java.time.LocalDate;
@@ -32,7 +33,7 @@ public class ChallengeStatusUtilTest {
                         "마라탕 5만원 이하로 쓰기",
                         10,
                         30,
-                        "/test.jpg",
+                        new Image("/test.png", "/thumb/test.png"),
                         50000,
                         startAt,
                         LocalDateTime.now(),
@@ -61,7 +62,7 @@ public class ChallengeStatusUtilTest {
                         "마라탕 5만원 이하로 쓰기",
                         10,
                         30,
-                        "/test.jpg",
+                        new Image("/test.png", "/thumb/test.png"),
                         50000,
                         startAt,
                         LocalDateTime.now(),
@@ -86,7 +87,7 @@ public class ChallengeStatusUtilTest {
                         "마라탕 5만원 이하로 쓰기",
                         10,
                         30,
-                        "/test.jpg",
+                        new Image("/test.png", "/thumb/test.png"),
                         50000,
                         startAt,
                         LocalDateTime.now(),
