@@ -46,7 +46,7 @@ public class Challenge extends BaseTime {
 
     @Type(type = "json")
     @Column(columnDefinition = "json")
-    private Image image;
+    private Image imgUrl;
 
     @Enumerated(EnumType.STRING)
     private ChallengeStatusType status;
@@ -130,7 +130,7 @@ public class Challenge extends BaseTime {
 
     public void addImage(String defaultUrl, String category) {
         String thumbUrl = getThumb(category);
-        this.image = new Image(defaultUrl, thumbUrl);
+        this.imgUrl = new Image(defaultUrl, thumbUrl);
     }
 
     public boolean isParticipateChallengeUser(String socialId) {
@@ -177,7 +177,7 @@ public class Challenge extends BaseTime {
     public void update(String title, int price, String imgUrl, int availableCount) {
         this.title = title;
         this.price = price;
-        this.image = new Image(imgUrl, this.image.getThumbUrl());
+        this.imgUrl = new Image(imgUrl, this.imgUrl.getThumbUrl());
         this.availableCount = availableCount;
     }
 
