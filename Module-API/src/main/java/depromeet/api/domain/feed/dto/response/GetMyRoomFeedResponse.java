@@ -26,11 +26,14 @@ public class GetMyRoomFeedResponse {
 
     private List<MyFeed> myFeedList;
 
-    public static GetMyRoomFeedResponse of(List<Record> recordList, Integer total, Integer limit) {
+    public static GetMyRoomFeedResponse of(
+            List<Record> recordList, Long userId, Integer total, Integer limit) {
         Integer current = recordList.size();
 
         List<MyFeed> myFeeds =
-                recordList.stream().map(MyFeed::createMyFeed).collect(Collectors.toList());
+                recordList.stream()
+                        .map(record -> MyFeed.createMyFeed(record, userId))
+                        .collect(Collectors.toList());
 
         return GetMyRoomFeedResponse.builder()
                 .total(total)

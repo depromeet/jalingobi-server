@@ -50,7 +50,7 @@ public class Comment extends BaseTime {
     }
 
     public void isCommenter(String socialId) {
-        if (!this.getRecord().getUser().getSocial().getId().equals(socialId))
+        if (!this.getUserChallenge().getUser().getSocial().getId().equals(socialId))
             throw CommentNotBelongToUserException.EXCEPTION;
     }
 

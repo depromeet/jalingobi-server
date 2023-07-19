@@ -29,17 +29,17 @@ public class GetRecordResponse {
 
     private List<CommentInfo> commentInfoList;
 
-    public static GetRecordResponse of(Record record, Long myUserChallengeId) {
+    public static GetRecordResponse of(Record record, Long userChallengeId) {
 
-        Boolean isMine = record.getUserChallenge().getId() == myUserChallengeId;
+        Boolean isMine = record.getUserChallenge().getId() == userChallengeId;
 
         RecordUserInfo userInfo = new RecordUserInfo(record.getUserChallenge());
         RecordInfo recordInfo = new RecordInfo(record);
-        EmojiInfo emojiInfo = new EmojiInfo(record);
+        EmojiInfo emojiInfo = EmojiInfo.createRecordEmojiInfo(record, userChallengeId);
 
         List<CommentInfo> commentInfoList =
                 record.getComments().stream()
-                        .map((comment -> CommentInfo.createCommentInfo(comment, myUserChallengeId)))
+                        .map((comment -> CommentInfo.createCommentInfo(comment, userChallengeId)))
                         .collect(Collectors.toList());
 
         return GetRecordResponse.builder()
@@ -57,11 +57,11 @@ public class GetRecordResponse {
         private String nickname;
 
         @Schema(example = "사용자 이미지 URL")
-        private String userImgUrl;
+        private String imgUrl;
 
         public RecordUserInfo(UserChallenge userChallenge) {
             this.nickname = userChallenge.getNickname();
-            this.userImgUrl = userChallenge.getImgUrl();
+            this.imgUrl = userChallenge.getImgUrl();
         }
     }
 }

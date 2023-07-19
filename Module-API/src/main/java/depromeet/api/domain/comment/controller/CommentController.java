@@ -32,7 +32,8 @@ public class CommentController {
     @Operation(summary = "댓글 생성 API", description = "댓글을 생성합니다.")
     public Response<CreateCommentResponse> createComment(
             @PathVariable long recordId, @Valid @RequestBody CreateCommentRequest request) {
-        return ResponseService.getDataResponse(createCommentUseCase.execute(recordId, request));
+        return ResponseService.getDataResponse(
+                createCommentUseCase.execute(recordId, request, getCurrentUserSocialId()));
     }
 
     @PutMapping("/{recordId}/comment/{commentId}")

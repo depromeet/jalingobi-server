@@ -6,6 +6,7 @@ import depromeet.domain.comment.domain.Comment;
 import depromeet.domain.comment.exception.CommentNotFoundException;
 import depromeet.domain.comment.repository.CommentRepository;
 import depromeet.domain.record.domain.Record;
+import depromeet.domain.userchallenge.domain.UserChallenge;
 import lombok.RequiredArgsConstructor;
 
 @Adaptor
@@ -14,8 +15,8 @@ public class CommentAdaptor {
 
     private final CommentRepository commentRepository;
 
-    public Comment addComment(Record record, String content) {
-        Comment comment = Comment.create(record.getUserChallenge(), record, content);
+    public Comment addComment(Record record, String content, UserChallenge userChallenge) {
+        Comment comment = Comment.create(userChallenge, record, content);
         return commentRepository.save(comment);
     }
 
