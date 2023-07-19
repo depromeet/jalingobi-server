@@ -63,7 +63,7 @@ class RecordAdaptorTest {
                         .challengeCategories(challengeCategories)
                         .title("식비 줄이기 챌린지")
                         .price(5000)
-                        .image(new Image("/test.png", "/thumb/test.png"))
+                        .imgUrl(new Image("/test.png", "/thumb/test.png"))
                         .challengeKeywords(challengeKeywords)
                         .availableCount(5)
                         .createdBy(user)
