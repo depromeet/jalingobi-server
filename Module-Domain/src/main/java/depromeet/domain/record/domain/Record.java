@@ -5,6 +5,7 @@ import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.comment.domain.Comment;
 import depromeet.domain.config.BaseTime;
 import depromeet.domain.emoji.domain.Emoji;
+import depromeet.domain.record.exception.NoMatchEmojiException;
 import depromeet.domain.user.domain.User;
 import depromeet.domain.userchallenge.domain.UserChallenge;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 import javax.persistence.*;
 import lombok.*;
 
+@EqualsAndHashCode
 @Builder
 @Entity
 @Table(name = "challenge_record")
@@ -100,7 +102,13 @@ public class Record extends BaseTime {
     }
 
     public void unReactEmoji(UserChallenge userChallenge, String type) {
-        Emoji emoji = Emoji.createEmoji(userChallenge, this, type);
+        Emoji emoji =
+                emojis.stream()
+                        .filter(e -> e.getUserChallenge() == userChallenge)
+                        .filter(e -> e.getType() == type)
+                        .findAny()
+                        .orElseThrow(() -> NoMatchEmojiException.EXCEPTION);
+
         emojis.remove(emoji);
     }
 
