@@ -19,7 +19,7 @@ public class ChallengeData {
     private String title;
     private int currentPeopleCount;
     private int availablePeopleCount;
-    private String image;
+    private String imgUrl;
     private int price;
     private List<String> keywords;
     private LocalDate startAt;
@@ -41,7 +41,7 @@ public class ChallengeData {
         this.title = title;
         this.currentPeopleCount = currentPeopleCount;
         this.availablePeopleCount = availablePeopleCount;
-        this.image = image.getThumbUrl();
+        this.imgUrl = image.getThumbUrl();
         this.price = price;
         this.startAt = startAt;
         this.createdAt = createdAt;
