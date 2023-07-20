@@ -53,7 +53,7 @@ public class GetChallengeResponse {
                 .category(challenge.getChallengeCategories().getCategoryNames().get(0))
                 .title(challenge.getTitle())
                 .price(challenge.getPrice())
-                .challengeImgUrl(challenge.getImgUrl())
+                .challengeImgUrl(challenge.getImgUrl().getDefaultUrl())
                 .keywords(challenge.getChallengeKeywords().getKeywordNames())
                 .headCount(
                         new HeadCountResponse(

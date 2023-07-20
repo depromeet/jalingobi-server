@@ -94,7 +94,7 @@ public class ChallengeControllerTest {
                         .category(categories)
                         .title("마라탕 5만원 이하로 쓰기")
                         .price(50000)
-                        .imageUrl("test.jpg")
+                        .imgUrl("test.jpg")
                         .keywords(keywords)
                         .availableCount(30)
                         .challengeRule(rules)
