@@ -9,6 +9,7 @@ import depromeet.domain.user.domain.User;
 import depromeet.domain.userchallenge.domain.UserChallenge;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.*;
 import lombok.*;
 
@@ -94,9 +95,19 @@ public class Record extends BaseTime {
     }
 
     public void reactEmoji(UserChallenge userChallenge, String type) {
-        emojis.clear();
-        Emoji emoji = Emoji.createEmoji(userChallenge, this, type);
-        emojis.add(emoji);
+        Optional<Emoji> emoji =
+                emojis.stream()
+                        .filter(e -> e.getUserChallenge() == userChallenge)
+                        .filter(e -> e.getRecord() == this)
+                        .findFirst();
+
+        Emoji newEmoji = Emoji.createEmoji(userChallenge, this, type);
+
+        if (emoji.isPresent()) {
+            emojis.remove(emoji.get());
+        }
+
+        emojis.add(newEmoji);
     }
 
     public void unReactEmoji(UserChallenge userChallenge, String type) {
