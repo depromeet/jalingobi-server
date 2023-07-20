@@ -76,6 +76,7 @@ public enum CustomExceptionStatus {
     // emoji
     EMOJI_NOT_FOUND(false, 2300, "이모지가 존재하지 않습니다."),
     DUPLICATED_EMOJI(false, 2301, "이미 반응했던 이모지가 중복됩니다."),
+    NO_MATCH_EMOJI(false, 2302, "삭제하려는 이모지가 존재하지 않습니다."),
 
     // userChallenge
     USER_NOT_PARTICIPATED_IN_CHALLENGE(false, 2400, "해당 챌린지에 참여중인 유저가 아닙니다."),
