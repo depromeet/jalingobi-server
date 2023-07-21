@@ -1,7 +1,6 @@
 package depromeet.api.domain.record.dto.request;
 
 
-import depromeet.common.annotation.ValidEnum;
 import depromeet.domain.record.domain.Evaluation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.NotBlank;
