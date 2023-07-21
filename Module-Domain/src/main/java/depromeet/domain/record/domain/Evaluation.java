@@ -10,7 +10,8 @@ import lombok.Getter;
 public enum Evaluation {
     WELLDONE("WELLDONE"),
     REGRETFUL("REGRETFUL"),
-    CRAZY("CRAZY");
+    CRAZY("CRAZY"),
+    NOTHING("NOTHING");
 
     private final String value;
 
@@ -18,6 +19,6 @@ public enum Evaluation {
         return Arrays.stream(Evaluation.values())
                 .filter(type -> type.getValue().equals(value))
                 .findFirst()
-                .orElse(null);
+                .orElse(NOTHING);
     }
 }
