@@ -19,10 +19,10 @@ public class MyFeed {
 
     private EmojiInfo emojiInfo;
 
-    public static MyFeed createMyFeed(Record record) {
+    public static MyFeed createMyFeed(Record record, Long userId) {
         FeedRecordInfo recordInfo = new FeedRecordInfo(record);
         ChallengeInfo challengeInfo = new ChallengeInfo(record.getChallenge());
-        EmojiInfo emojiInfo = new EmojiInfo(record);
+        EmojiInfo emojiInfo = EmojiInfo.createMyRoomEmojiInfo(record, userId);
 
         return MyFeed.builder()
                 .recordInfo(recordInfo)
@@ -47,7 +47,7 @@ public class MyFeed {
 
         public ChallengeInfo(Challenge challenge) {
             this.id = challenge.getId();
-            this.imgUrl = challenge.getImgUrl();
+            this.imgUrl = challenge.getImgUrl().getThumbUrl();
             this.title = challenge.getTitle();
         }
     }

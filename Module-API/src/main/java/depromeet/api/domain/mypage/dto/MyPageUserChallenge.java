@@ -1,6 +1,7 @@
 package depromeet.api.domain.mypage.dto;
 
 
+import depromeet.api.util.ChallengeStatusUtil;
 import depromeet.domain.challenge.domain.Challenge;
 import depromeet.domain.userchallenge.domain.Status;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -39,7 +40,7 @@ public class MyPageUserChallenge {
     @Schema(description = "챌린지 결과")
     private String status;
 
-    @Schema(description = "챌린지 기간에 따른 상태 태그 [new, 마감임박, 오픈 예정, 해당없음]", example = "[\"마감임박\"]")
+    @Schema(description = "챌린지 기간에 따른 상태 태그 [new, 마감임박, 오픈 예정, 해당없음]", example = "마감임박")
     private String statusTag;
 
     @Schema(description = "챌린지 카테고리", example = "FOOD")
@@ -51,19 +52,21 @@ public class MyPageUserChallenge {
     public static MyPageUserChallenge createParticipatedChallenge(
             Challenge challenge, Status status) {
 
+        ChallengeStatusUtil challengeStatusUtil = new ChallengeStatusUtil();
         DateInfo dateInfo = new DateInfo(challenge.getDuration());
 
         return MyPageUserChallenge.builder()
                 .challengeId(challenge.getId())
                 .title(challenge.getTitle())
-                .imgUrl(challenge.getImgUrl())
+                .imgUrl(challenge.getImgUrl().getThumbUrl())
                 .active(challenge.isProceeding())
                 .duration(dateInfo)
                 .availableCount(challenge.getAvailableCount())
                 .status(status.getValue())
                 .statusTag(
-                        challenge.checkStatusInChallengeDetail(
-                                LocalDate.from(challenge.getCreatedAt())))
+                        challengeStatusUtil.checkStatusInChallengeFeed(
+                                LocalDate.from(challenge.getCreatedAt()),
+                                challenge.getDuration().getStartAt()))
                 .category(challenge.getChallengeCategories().getCategoryNames().get(0))
                 .keywords(challenge.getChallengeKeywords().getKeywordNames())
                 .participantCount(challenge.getUserChallenges().size())

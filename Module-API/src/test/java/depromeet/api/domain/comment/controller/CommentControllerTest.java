@@ -85,7 +85,7 @@ public class CommentControllerTest {
                         .commentDate(LocalDateTime.now())
                         .build();
 
-        when(createCommentUseCase.execute(anyLong(), any())).thenReturn(response);
+        when(createCommentUseCase.execute(anyLong(), any(), anyString())).thenReturn(response);
 
         mockMvc.perform(
                         post("/record/{recordId}/comment", 1L)
@@ -101,7 +101,7 @@ public class CommentControllerTest {
                         jsonPath("$.result.nickname").value(response.getNickname()),
                         jsonPath("$.result.content").value(response.getContent()));
 
-        verify(createCommentUseCase, times(1)).execute(anyLong(), any());
+        verify(createCommentUseCase, times(1)).execute(anyLong(), any(), anyString());
     }
 
     @Test

@@ -30,8 +30,9 @@ public class QuitChallengeUseCase {
         if (challenge.isEnd()) throw EndChallengeCannotQuitException.EXCEPTION;
 
         // 챌린지 생성자는 나가기 불가
-        if (user.getId() == challenge.getCreatedBy().getId())
+        if (isChallengeCreator(user, challenge)) {
             throw CreatorCannotQuitException.EXCEPTION;
+        }
 
         UserChallenge userChallenge =
                 userChallengeAdaptor.findUserChallenge(challengeId, user.getId());
@@ -39,5 +40,9 @@ public class QuitChallengeUseCase {
         if (challenge.isProceeding()) user.minusScore();
 
         userChallengeAdaptor.quitChallenge(userChallenge);
+    }
+
+    private boolean isChallengeCreator(User user, Challenge challenge) {
+        return user.getId() == challenge.getCreatedBy().getId();
     }
 }

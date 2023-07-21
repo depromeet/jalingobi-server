@@ -20,19 +20,23 @@ public class ChallengeFeed {
 
     private FeedRecordInfo recordInfo;
 
+    private ChallengeInfo challengeInfo;
+
     private EmojiInfo emojiInfo;
 
-    public static ChallengeFeed createChallengeFeed(Record record, Long myUserChallengeId) {
-        Boolean isMine = record.getUserChallenge().getId() == myUserChallengeId;
+    public static ChallengeFeed createChallengeFeed(Record record, Long userChallengeId) {
+        Boolean isMine = record.getUserChallenge().getId() == userChallengeId;
 
         FeedUserInfo userInfo = new FeedUserInfo(record.getUserChallenge());
         FeedRecordInfo recordInfo = new FeedRecordInfo(record);
-        EmojiInfo emojiInfo = new EmojiInfo(record, myUserChallengeId);
+        ChallengeInfo challengeInfo = new ChallengeInfo(record.getChallenge().getId());
+        EmojiInfo emojiInfo = EmojiInfo.createChallengeRoomEmojiInfo(record, userChallengeId);
 
         return ChallengeFeed.builder()
                 .isMine(isMine)
                 .userInfo(userInfo)
                 .recordInfo(recordInfo)
+                .challengeInfo(challengeInfo)
                 .emojiInfo(emojiInfo)
                 .build();
     }
@@ -54,6 +58,17 @@ public class ChallengeFeed {
             this.imgUrl = userChallenge.getImgUrl();
             this.nickname = userChallenge.getNickname();
             this.currentCharge = userChallenge.getCurrentCharge();
+        }
+    }
+
+    @Data
+    public static class ChallengeInfo {
+
+        @Schema(description = "챌린지 ID", example = "5")
+        private Long id;
+
+        public ChallengeInfo(Long id) {
+            this.id = id;
         }
     }
 }

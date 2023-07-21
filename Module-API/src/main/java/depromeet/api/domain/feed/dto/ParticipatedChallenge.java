@@ -36,7 +36,7 @@ public class ParticipatedChallenge {
         return ParticipatedChallenge.builder()
                 .challengeId(challenge.getId())
                 .title(challenge.getTitle())
-                .imgUrl(challenge.getImgUrl())
+                .imgUrl(challenge.getImgUrl().getThumbUrl())
                 .status(challenge.getStatus().toString())
                 .maxParticipants(challenge.getAvailableCount())
                 .participants(participants)
