@@ -33,13 +33,12 @@ public class Record extends BaseTime {
     @Column(length = 16, nullable = false)
     private String title;
 
-    @Column(length = 80, nullable = false)
+    @Column(length = 80)
     private String content;
 
     @Column private String imgUrl;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Evaluation evaluation;
 
     @ManyToOne(fetch = FetchType.LAZY)

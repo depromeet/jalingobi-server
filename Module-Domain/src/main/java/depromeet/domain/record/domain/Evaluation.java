@@ -1,6 +1,7 @@
 package depromeet.domain.record.domain;
 
 
+import java.util.Arrays;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,4 +13,11 @@ public enum Evaluation {
     CRAZY("CRAZY");
 
     private final String value;
+
+    public static Evaluation getEnumTypeByValue(String value) {
+        return Arrays.stream(Evaluation.values())
+                .filter(type -> type.getValue().equals(value))
+                .findFirst()
+                .orElse(null);
+    }
 }
