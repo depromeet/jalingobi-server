@@ -19,6 +19,7 @@ import depromeet.api.domain.record.usecase.DeleteRecordUseCase;
 import depromeet.api.domain.record.usecase.GetRecordUseCase;
 import depromeet.api.domain.record.usecase.UpdateRecordUseCase;
 import depromeet.api.util.AuthenticationUtil;
+import depromeet.domain.record.domain.Evaluation;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -86,7 +87,7 @@ class RecordControllerTest {
                         .title("커피")
                         .content("커피는 무죄야")
                         .imgUrl("")
-                        .evaluation("CRAZY")
+                        .evaluation(Evaluation.CRAZY)
                         .build();
 
         CreateRecordResponse createRecordResponse = CreateRecordResponse.builder().id(1L).build();
@@ -121,7 +122,7 @@ class RecordControllerTest {
                         .title(" ")
                         .content("커피는 무죄야")
                         .imgUrl("")
-                        .evaluation("CRAZY")
+                        .evaluation(Evaluation.CRAZY)
                         .build();
 
         MockHttpServletRequestBuilder requestBuilder =
@@ -156,7 +157,7 @@ class RecordControllerTest {
                         .title("커피")
                         .content("커피는 맛있어")
                         .imgUrl("")
-                        .evaluation("CRAZY")
+                        .evaluation(Evaluation.CRAZY)
                         .build();
 
         CreateRecordResponse createRecordResponse = CreateRecordResponse.builder().id(1L).build();

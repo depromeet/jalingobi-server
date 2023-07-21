@@ -6,7 +6,6 @@ import depromeet.api.domain.record.dto.request.UpdateRecordRequest;
 import depromeet.api.domain.record.validator.RecordValidator;
 import depromeet.common.annotation.UseCase;
 import depromeet.domain.record.adaptor.RecordAdaptor;
-import depromeet.domain.record.domain.Evaluation;
 import depromeet.domain.record.domain.Record;
 import depromeet.domain.userchallenge.domain.UserChallenge;
 import java.util.Optional;
@@ -40,7 +39,7 @@ public class UpdateRecordUseCase {
                 updateRecordRequest.getTitle(),
                 updateRecordRequest.getContent(),
                 updateRecordRequest.getImgUrl(),
-                Evaluation.getEnumTypeByValue(updateRecordRequest.getEvaluation()));
+                updateRecordRequest.getEvaluation());
     }
 
     private String getKey(String imgUrl) {

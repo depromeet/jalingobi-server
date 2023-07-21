@@ -1,6 +1,8 @@
 package depromeet.api.domain.record.dto.request;
 
 
+import depromeet.common.annotation.ValidEnum;
+import depromeet.domain.record.domain.Evaluation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -38,5 +40,6 @@ public class UpdateRecordRequest {
     private String imgUrl;
 
     @Schema(description = "지출 평가, WELLDONE | REGRETFUL | CRAZY 중에서 선택 가능합니다.")
-    private String evaluation;
+    @ValidEnum(enumClass = Evaluation.class, message = "유효하지 않은 Evaluation 파라미터입니다.")
+    private Evaluation evaluation;
 }
