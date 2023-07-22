@@ -20,7 +20,7 @@ public class ChallengeRule {
     @Column(name = "challenge_rule_id")
     private Long id;
 
-    @Column(length = 18, nullable = false)
+    @Column(length = 30, nullable = false)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
