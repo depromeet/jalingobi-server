@@ -1,9 +1,9 @@
-# <img src='https://github.com/depromeet/jalingobi-server/assets/97580782/79aac9af-b91f-4b1c-8dc3-711da77a9332' width='200px' align=left><img src='https://github.com/depromeet/jalingobi-server/assets/97580782/bd305d44-6589-4fb5-bcd4-81f389667354' width='200px'>
+# <img src='https://github.com/depromeet/jalingobi-server/assets/97580782/79aac9af-b91f-4b1c-8dc3-711da77a9332' width='190px' align=left><img src='https://github.com/depromeet/jalingobi-server/assets/97580782/bd305d44-6589-4fb5-bcd4-81f389667354' width='200px'>
 
 [![Java CI with Gradle](https://github.com/depromeet/13th-1team-backend/actions/workflows/ci.yml/badge.svg)](https://github.com/depromeet/13th-1team-backend/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/depromeet/jalingobi-server/branch/dev/graph/badge.svg?token=B69BV6TYNQ)](https://codecov.io/gh/depromeet/jalingobi-server) <br>
-거지들의 이야기로 쌓이는 소비습관, **자린고비**
+[![codecov](https://codecov.io/gh/depromeet/jalingobi-server/branch/dev/graph/badge.svg?token=B69BV6TYNQ)](https://codecov.io/gh/depromeet/jalingobi-server)
 
+거지들의 이야기로 쌓이는 소비습관, **자린고비**
 
 [jalingobi.com](https://jalingobi.com/) | [자린고비 Behance](https://www.behance.net/gallery/175690517/-Improve-your-spending-habit-with-your-group) |
 [자린고비 Notion]() | [Server 팀 WiKi](https://github.com/depromeet/13th-1team-backend/wiki)
