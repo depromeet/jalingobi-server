@@ -1,7 +1,7 @@
 # <img src='https://github.com/depromeet/jalingobi-server/assets/97580782/575b1ca4-a811-4bc6-b9d4-3677c2eb322d' width='160px' align=left><img src='https://github.com/depromeet/jalingobi-server/assets/97580782/bd305d44-6589-4fb5-bcd4-81f389667354' width='200px'>
 
 [![Java CI with Gradle](https://github.com/depromeet/13th-1team-backend/actions/workflows/ci.yml/badge.svg)](https://github.com/depromeet/13th-1team-backend/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/depromeet/jalingobi-server/branch/dev/graph/badge.svg?token=B69BV6TYNQ)](https://codecov.io/gh/depromeet/jalingobi-server)
+[![codecov](https://codecov.io/gh/depromeet/jalingobi-server/branch/dev/graph/badge.svg?token=B69BV6TYNQ)](https://codecov.io/gh/depromeet/jalingobi-server) <br>
 거지들의 이야기로 쌓이는 소비습관, **자린고비**
 
 서비스에 대해 더 알고 싶다면?
