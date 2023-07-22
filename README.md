@@ -1,16 +1,15 @@
-# <img src='https://github.com/depromeet/jalingobi-server/assets/97580782/575b1ca4-a811-4bc6-b9d4-3677c2eb322d' width='160px' align=left><img src='https://github.com/depromeet/jalingobi-server/assets/97580782/bd305d44-6589-4fb5-bcd4-81f389667354' width='200px'>
+# <img src='https://github.com/depromeet/jalingobi-server/assets/97580782/79aac9af-b91f-4b1c-8dc3-711da77a9332' width='200px' align=left><img src='https://github.com/depromeet/jalingobi-server/assets/97580782/bd305d44-6589-4fb5-bcd4-81f389667354' width='200px'>
 
 [![Java CI with Gradle](https://github.com/depromeet/13th-1team-backend/actions/workflows/ci.yml/badge.svg)](https://github.com/depromeet/13th-1team-backend/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/depromeet/jalingobi-server/branch/dev/graph/badge.svg?token=B69BV6TYNQ)](https://codecov.io/gh/depromeet/jalingobi-server) <br>
 거지들의 이야기로 쌓이는 소비습관, **자린고비**
 
-서비스에 대해 더 알고 싶다면?
 
 [jalingobi.com](https://jalingobi.com/) | [자린고비 Behance](https://www.behance.net/gallery/175690517/-Improve-your-spending-habit-with-your-group) |
 [자린고비 Notion]() | [Server 팀 WiKi](https://github.com/depromeet/13th-1team-backend/wiki)
 | [Client 팀 Repository](https://github.com/depromeet/13th-1th-frontend)
 
----
+<br>
 
 ## 🐟 자린고비를 소개합니다
 
@@ -37,6 +36,8 @@
     3. 소비 유형별 지출 목표 설정
     4. 지출 기록 습관화
     5. 목표 달성 보상
+
+<br>
 
 ## 🏃‍♀️ ️기능을 소개합니다
 
@@ -65,6 +66,8 @@
 
 ![](https://github.com/depromeet/jalingobi-server/assets/97580782/8a0ac36d-d4f7-4f6a-85d6-f5fd4d894ad4)
 
+<br>
+
 ## ⚙️ 기술을 소개합니다
 
 ### System Architecture
@@ -90,6 +93,7 @@
 ![AWS](https://img.shields.io/badge/-AWS-orange?logo=Amazon%20AWS&logoColor=white&style=flat)
 ![Github--Actions](https://img.shields.io/badge/-Github--Actions-0006ff?logo=GitHub%20Actions&logoColor=white&style=flat)
 
+<br>
 
 ## 👨‍👩‍👧‍👦 Owner: 팀원 소개
 
