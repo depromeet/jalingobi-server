@@ -170,7 +170,7 @@ public class Challenge extends BaseTime {
     }
 
     public boolean isRecruiting(final LocalDate localDate) {
-        if (isStarted(localDate.minusDays(1))) return false;
+        if (isStarted(localDate)) return false;
         return true;
     }
 
